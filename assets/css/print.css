@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap');
+/*font-family: 'Open Sans', sans-serif;  FOR SIDEBARS */
+/* font-family: 'Roboto', sans-serif; FOR HEADINGS */
+
+html,body
+{
+	margin: 0px;
+	height: 100%;
+	padding: 0px !important;
+	background-color: #F7F7F7;
+}
+.wrapper {
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+#sidebar {
+	min-width: 250px;
+	max-width: 250px;
+	background: #2C2C2C;
+	color: #fff;
+	transition: all 0.3s;
+	height: 100%;
+	overflow: auto;
+}
+.nactive {
+	color: #FFFFFF !important;
+	background: #DEBE26 !important;
+}
+#sidebar.active{
+	margin-left: -250px;
+	box-shadow: none;
+}
+.sublink
+{
+	background: #157D50 !important;
+}
+.sublink:hover
+{
+	background: #C6F7E2 !important;
+}
+#sidebar .sidebar-header {
+	padding: 20px;
+	background: #2C2C2C;
+}
+
+#sidebar ul.components {
+	background: #2C2C2C;
+}
+
+#sidebar ul p {
+	color: #fff;
+	padding: 10px;
+}
+
+#sidebar ul li a {
+	padding: 12px;
+	padding-left: 21px;
+	font-size: 15px;
+	display: block;
+	background: #2C2C2C;
+	font-family: 'Open Sans', sans-serif;
+}
+
+#sidebar ul li a:hover {
+	color: #FFFFFF;
+	background: #DEBE26;
+}
+a[data-toggle="collapse"] {
+	position: relative;
+}
+
+.dropdown-toggle::after {
+	display: block;
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%);
+}
+
+.collapseSettings li a {
+	font-size: 0.8em !important;
+	padding-left: 30px !important;
+	background: #454444 !important;
+	font-family: 'Open Sans', sans-serif;
+}
+.rcontent
+{
+	padding: 21px;
+	border-radius: 6px;
+	box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.1);
+	margin-top: 21px;
+	margin-bottom: 21px;
+	background-color: #FFFFFF;
+}
+.footer
+{
+	padding: 21px;
+	background-color: #0B0B0B;
+	font-family: 'Open Sans', sans-serif;
+	width: 100%;
+	color: #EFEFEF;
+	-webkit-box-shadow: 0px 0px 21px 6px rgba(0,0,0,0.19);
+	-moz-box-shadow: 0px 0px 21px 6px rgba(0,0,0,0.19);
+	box-shadow: 0px 0px 21px 6px rgba(0,0,0,0.19);
+}
+.header
+{
+	width: 100%;
+}
+#content {
+	width: 100%;
+	padding: 20px;
+	min-height: 100vh;
+	transition: all 0.3s;
+	overflow: none;
+}
+.ncontent
+{
+	margin-left: 250px;
+}
+.shContent
+{
+	margin-left: 0px;
+}
+.progressBar{
+	position: relative;
+	width: 100%;
+	height: 40px;
+	background: #eeeeee;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	box-shadow: 0 1px 2px #222;
+}
+.progressBarTitle{
+	position: absolute;
+	width: 100px;
+	height: 40px;
+	padding-left: 10px;
+	float: left;
+	font-weight: bold;
+	color: #fff;
+	line-height: 2.5;
+	z-index: 10000;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	box-shadow: 2px 0 2px #333;
+	text-shadow: 1px 1px 1px #000;
+}
+.progress_value{
+	position: relative;
+	float: right;
+	padding-right: 10px;
+	line-height: 2.5;
+	font-weight: bold;
+	color: #ffffff;
+	z-index: 10000;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.progress{
+	height: 40px;
+	position: absolute;
+	border-radius: 5px;
+	box-shadow: 2px 0 2px #555;
+}
+.progressRemainingColor {
+	background: #1a237e;
+}
+.progressRemaining {
+	background: #5c6bc0;
+}
+.link-s { text-decoration: none; color: #FFFFFF; }
+.link-s:hover { text-decoration: none; }
+.fa , .fas { margin-right: 5px; }
+.dc-links { text-decoration: none; }
+.dc-links:hover { text-decoration: none; }
+/* Mobile devices */
+@media (min-width: 1px) {
+	.e-title { text-align: center; border-left: none;  }
+	.e-det { text-align: center; }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+	.e-title { text-align: left; border-left: 4px solid #989898; }
+	.e-det { text-align: left; }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
+
+@media (max-width: 768px) {
+	#sidebar {
+		margin-left: -250px;
+		box-shadow: none;
+	}
+	.ncontent
+	{
+		margin-left: 0px;
+	}
+	.shContent
+	{
+		margin-left: 250px;
+	}
+	#sidebar.active {
+		margin-left: 0px;
+		box-shadow: 3px 0px 10px 3px rgba(0, 0, 0, 0.1);
+	}
+	#sidebarCollapse span {
+		display: none;
+	}
+	.align-con
+	{
+		text-align: center;
+	}
+}
+
+@media (min-width: 768px) {
+	.modal-xl {
+		width: 75%;
+		max-width:1200px;
+	}
+}
+
+@media print
+{    
+    .PrintExclude, .PrintExclude *
+    {
+        display: none !important;
+    }
+}

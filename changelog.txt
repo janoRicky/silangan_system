@@ -1,0 +1,5 @@
+New:
+- Application Date
+- Non-numerical values to Height, Weight, and Contact (Previously "Phone") Number.
+- Gender is labeled as "Sex" instead.
+- Moved "New" button to top.
