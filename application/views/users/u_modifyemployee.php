@@ -37,11 +37,16 @@
 										<label>Position</label>
 										<input class="form-control" type="text" name="PositionDesired" autocomplete="off" value="<?php echo $PositionDesired; ?>">
 									</div>
-									<!-- waaaaaaaaaaaaaaaaaaaiiiiiiiiiiiiiiiiiittttttttttttttt -->
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Employed Date</label>
 										<input class="form-control" type="date" name="AppliedOn" value="<?php echo $AppliedOn; ?>">
 									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Person Recommending</label>
+										<input class="form-control" type="text" name="PersonRecommending" autocomplete="off" value="<?php echo $PersonRecommending; ?>">
+									</div>
+								</div>
+								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Contract Type</label>
 										<select class="form-control" name="ContractType">
@@ -111,6 +116,12 @@
 										<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $MiddleInitial; ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
+										<label>Nickname</label>
+										<input class="form-control" type="text" name="Nickname" autocomplete="off" value="<?php echo $Nickname; ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-2">
 										<label>Gender</label>
 										<select class="form-control" name="Gender">
 											<option value="Male" <?php if ($Gender == 'Male') {
@@ -125,8 +136,6 @@
 											</option>
 										</select>
 									</div>
-								</div>
-								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Age</label>
 										<input class="form-control" type="number" name="Age" autocomplete="off" value="<?php echo $Age; ?>">
@@ -143,6 +152,8 @@
 										<label>Religion</label>
 										<input class="form-control" type="text" name="Religion" autocomplete="off" value="<?php echo $Religion; ?>">
 									</div>
+								</div>
+								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Birth Date</label>
 										<input class="form-control" type="date" name="bDate" value="<?php echo $BirthDate; ?>">
@@ -150,6 +161,24 @@
 									<div class="form-group col-sm-12 col-md-5">
 										<label>Birth Place</label>
 										<input class="form-control" type="text" name="bPlace" autocomplete="off" value="<?php echo $BirthPlace; ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Mother's Name</label>
+										<input class="form-control" type="text" name="MotherName" autocomplete="off" value="<?php echo $MotherName; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Occupation</label>
+										<input class="form-control" type="text" name="MotherOccupation" autocomplete="off" value="<?php echo $MotherOccupation; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Mother's Name</label>
+										<input class="form-control" type="text" name="FatherName" autocomplete="off" value="<?php echo $FatherName; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Occupation</label>
+										<input class="form-control" type="text" name="FatherOccupation" autocomplete="off" value="<?php echo $FatherOccupation; ?>">
 									</div>
 								</div>
 								<div class="form-row">
@@ -182,10 +211,16 @@
 											</option>
 										</select>
 									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Name of Spouse</label>
+										<input class="form-control" type="text" name="SpouseName" autocomplete="off" value="<?php echo $SpouseName; ?>">
+									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>No. of Children</label>
 										<input class="form-control" type="number" name="No_Children" autocomplete="off" value="<?php echo $No_OfChildren; ?>">
 									</div>
+								</div>
+								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Phone Number</label>
 										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $Phone_No; ?>">
@@ -344,6 +379,49 @@
 									</div>
 								</div>
 								
+								<div class="form-row pb-5 pt-5">
+									<div class="pb-3">
+										<h5><i class="fas fa-stream"></i> Character References</h5>
+									</div>
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<table class="table table-condensed">
+												<thead>
+													<th>Name</th>
+													<th>Position</th>
+													<th>Company / Address</th>
+													<th class="text-center">Remove</th>
+												</thead>
+												<tbody>
+													<?php if ($GetCharRef->num_rows() > 0) { ?>
+														<?php foreach ($GetCharRef->result_array() as $row): ?>
+															<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+																<tr>
+																	<td><?php echo $row['RefName'];?></td>
+																	<td><?php echo $row['RefPosition'];?></td>
+																	<td><?php echo $row['CompanyAddress'];?></td>
+																	<td class="text-center"><input type="checkbox" name="CharRefCheckbox[]" value="<?php echo $row['Char_Ref_No']; ?>"></td>
+																</tr>
+															<?php } ?>
+														<?php endforeach ?>
+													<?php } else { ?>
+														<tr class="w-100 text-center">
+															<td colspan="7">
+																<h5>
+																	No Data
+																</h5>
+															</td>
+														</tr>
+													<?php } ?>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div id="charRefs" class="" style="width: 100%;">
+										
+									</div>
+								</div>
+
 								<div class="form-row pt-5 pb-4">
 									<div class="form-group mr-auto">
 										<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
@@ -473,11 +551,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="Mach_Operated" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal fade" id="refFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Machine Operated</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Character References</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -485,15 +563,25 @@
 				<div class="modal-body">
 					<form action="#" method="post">
 						<div class="form-row">
-							<div class="form-group col-sm-12 col-md-12">
-								<label>Machine Name</label>
-								<input id="MachineName" class="form-control" type="text" name="">
+							<div class="form-group col-sm-8">
+								<label>Name</label>
+								<input id="RefName" class="form-control" type="text" name="RefName">
+							</div>
+							<div class="form-group col-sm-4">
+								<label>Position</label>
+								<input id="RefPosition" class="form-control" type="text" name="RefPosition">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-sm-12">
+								<label>Company / Address</label>
+								<input id="CompanyAddress" class="form-control" type="text" name="CompanyAddress">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button id="add_machop" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
+					<button id="add_charRef" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
 				</div>
 			</div>
 		</div>
@@ -631,33 +719,39 @@
         });
 		$('#empskills').load("<?php echo site_url('Main_Controller/showSkills');?>");
 
-		// ADD Machine Operated
-		$('#add_machop').click(function(){
 
-			var MachineName = $('#MachineName').val();
+		// Cart Character References
+		$('#add_charRef').click(function(){
+
+			var RefName = $('#RefName').val();
+			var RefPosition = $('#RefPosition').val();
+			var CompanyAddress = $('#CompanyAddress').val();
 			
+
 			$.ajax({
-				url : "<?php echo site_url('Main_Controller/Add_MachineOP');?>",
+				url : "<?php echo site_url('Main_Controller/atcRef');?>",
 				method : "POST",
-				data : {MachineName: MachineName},
+				data : {RefName: RefName, RefPosition: RefPosition, CompanyAddress: CompanyAddress},
 				success: function(data){
-					$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
+					$('#RefName').val("");
+					$('#RefPosition').val("");
+					$('#CompanyAddress').val("");
+					$('#charRefs').load("<?php echo site_url('Main_Controller/showRef');?>");
 				}
 			});
 		});
-		$(document).on('click','.removemachine',function(){
+		$(document).on('click','.remoach',function(){
 			var row_id = $(this).attr("id");
-            // alert(row_id);
             $.ajax({
-            	url : "<?php echo site_url('Main_Controller/remomanchine');?>",
+            	url : "<?php echo site_url('Main_Controller/removeRef');?>",
             	method : "POST",
             	data : {row_id : row_id},
             	success :function(data){
-            		$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
+            		$('#charRefs').load("<?php echo site_url('Main_Controller/showRef');?>");
             	}
             });
         });
-		$('#mach_Op').load("<?php echo site_url('Main_Controller/ShowMachineOperated');?>");
+		$('#charRefs').load("<?php echo site_url('Main_Controller/showRef');?>");
 	});
 </script>
 </html>

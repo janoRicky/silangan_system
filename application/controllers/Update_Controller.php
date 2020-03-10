@@ -408,6 +408,10 @@ class Update_Controller extends CI_Controller {
 					$listCheck = "'" . implode("','", $AcadHCheckbox) . "'";
 					$this->Model_Deletes->RemoveAcadHistory($listCheck);
 
+					$CharRefCheckbox = $this->input->post('CharRefCheckbox');
+					$listCheck = "'" . implode("','", $CharRefCheckbox) . "'";
+					$this->Model_Deletes->RemoveCharRef($listCheck);
+
 					$EmpRecordCheckbox = $this->input->post('EmpRecordCheckbox');
 					$listCheck = "'" . implode("','", $EmpRecordCheckbox) . "'";
 					$this->Model_Deletes->RemoveEmpRecord($listCheck);
@@ -429,6 +433,17 @@ class Update_Controller extends CI_Controller {
 
 							);
 							$this->Model_Inserts->InsertAcadH($data);
+						}
+					}
+					if (isset($_SESSION["ref_cart"])) {
+						foreach ($_SESSION["ref_cart"] as $s_da) {
+							$data = array(
+								'ApplicantID' => $ApplicantID,
+								'RefName' => $s_da['ref_cart']['RefName'],
+								'RefPosition' => $s_da['ref_cart']['RefPosition'],
+								'CompanyAddress' => $s_da['ref_cart']['CompanyAddress'],
+							);
+							$this->Model_Inserts->InsertCharRef($data);
 						}
 					}
 					if (isset($_SESSION["emp_cart"])) {
@@ -477,6 +492,7 @@ class Update_Controller extends CI_Controller {
 					// 	}
 					// }
 					unset($_SESSION["acadcart"]);
+					unset($_SESSION["ref_cart"]);
 					unset($_SESSION["emp_cart"]);
 					unset($_SESSION["mach_cart"]);
 					// unset($_SESSION["rela_cart"]); 

@@ -51,6 +51,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetEmployeeCharRef($ApplicantID)
+	{
+		$SQL = "SELECT * FROM char_references WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetEmploymentDetails($ApplicantID)
 	{
 		$SQL = "SELECT * FROM employment_record WHERE ApplicantID = '$ApplicantID'";

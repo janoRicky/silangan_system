@@ -112,6 +112,7 @@
 	{
 		$this->load->model('Model_Deletes');
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -122,23 +123,23 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
 		// CHART
-		$result =  $this->Model_Selects->GetApplicantSkills();
+		// $result =  $this->Model_Selects->GetApplicantSkills();
 
-		$record = $result->result();
-		$data = [];
+		// $record = $result->result();
+		// $data = [];
 
-		foreach($record as $row) {
-			$data['label'][] = $row->PositionGroup;
-			$data['data'][] = (int) $row->count;
-		}
-		$data['chart_data'] = json_encode($data);
-		$edata = [];
-		$GetApplicantSkillsExpired = $this->Model_Selects->GetApplicantSkillsExpired();
-		$edata['data'][] = $GetApplicantSkillsExpired->num_rows();
-		foreach($GetApplicantSkillsExpired->result_array() as $row) {
-			$edata['label'][] = $row['PositionGroup'];
-		}
-		$data['chart_data_expired'] = json_encode($edata);
+		// foreach($record as $row) {
+		// 	$data['label'][] = $row->PositionGroup;
+		// 	$data['data'][] = (int) $row->count;
+		// }
+		// $data['chart_data'] = json_encode($data);
+		// $edata = [];
+		// $GetApplicantSkillsExpired = $this->Model_Selects->GetApplicantSkillsExpired();
+		// $edata['data'][] = $GetApplicantSkillsExpired->num_rows();
+		// foreach($GetApplicantSkillsExpired->result_array() as $row) {
+		// 	$edata['label'][] = $row['PositionGroup'];
+		// }
+		// $data['chart_data_expired'] = json_encode($edata);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
@@ -288,6 +289,7 @@
 	public function V_Applicants()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -308,6 +310,7 @@
 	public function V_ApplicantsExpired()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -328,6 +331,7 @@
 	public function V_Archived()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -349,6 +353,7 @@
 	public function V_Blacklisted()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -370,6 +375,7 @@
 	public function Employee()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -389,6 +395,7 @@
 	public function ViewEmployee()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -409,6 +416,7 @@
 					'EmployeeID' => $ged['EmployeeID'],
 					'ApplicantID' => $ged['ApplicantID'],
 					'PositionDesired' => $ged['PositionDesired'],
+					'PersonRecommending' => $ged['PersonRecommending'],
 					'ContractType' => $ged['ContractType'],
 					'SalaryType' => $ged['SalaryType'],
 					'Rate' => $ged['Rate'],
@@ -416,6 +424,7 @@
 					'LastName' => $ged['LastName'],
 					'FirstName' => $ged['FirstName'],
 					'MiddleInitial' => $ged['MiddleInitial'],
+					'Nickname' => $ged['Nickname'],
 					'Gender' => $ged['Gender'],
 					'Age' => $ged['Age'],
 					'Height' => $ged['Height'],
@@ -423,6 +432,10 @@
 					'Religion' => $ged['Religion'],
 					'BirthDate' => $ged['BirthDate'],
 					'BirthPlace' => $ged['BirthPlace'],
+					'MotherName' => $ged['MotherName'],
+					'MotherOccupation' => $ged['MotherOccupation'],
+					'FatherName' => $ged['FatherName'],
+					'FatherOccupation' => $ged['FatherOccupation'],
 					'Citizenship' => $ged['Citizenship'],
 					'CivilStatus' => $ged['CivilStatus'],
 					'No_OfChildren' => $ged['No_OfChildren'],
@@ -446,6 +459,7 @@
 
 
 					'ClientEmployed' => $ged['ClientEmployed'],
+					'SpouseName' => $ged['SpouseName'],
 					'DateStarted' => $ged['DateStarted'],
 					'DateEnds' => $ged['DateEnds'],
 					'AppliedOn' => $ged['AppliedOn'],
@@ -456,6 +470,7 @@
 				);
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
+				$data['GetCharRef'] = $this->Model_Selects->GetEmployeeCharRef($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
 				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
 				$data['get_employee'] = $this->Model_Selects->GetEmployee();
@@ -471,7 +486,7 @@
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb" style="background-color: transparent;">
-							<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
 							<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
 						</ol>
 					</nav>';
@@ -499,6 +514,7 @@
 	public function ModifyEmployee()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -519,6 +535,7 @@
 					'ApplicantID' => $ged['ApplicantID'],
 					'EmployeeID' => $ged['EmployeeID'],
 					'PositionDesired' => $ged['PositionDesired'],
+					'PersonRecommending' => $ged['PersonRecommending'],
 					'ContractType' => $ged['ContractType'],
 					'SalaryType' => $ged['SalaryType'],
 					'Rate' => $ged['Rate'],
@@ -526,6 +543,7 @@
 					'LastName' => $ged['LastName'],
 					'FirstName' => $ged['FirstName'],
 					'MiddleInitial' => $ged['MiddleInitial'],
+					'Nickname' => $ged['Nickname'],
 					'Gender' => $ged['Gender'],
 					'Age' => $ged['Age'],
 					'Height' => $ged['Height'],
@@ -533,8 +551,13 @@
 					'Religion' => $ged['Religion'],
 					'BirthDate' => $ged['BirthDate'],
 					'BirthPlace' => $ged['BirthPlace'],
+					'MotherName' => $ged['MotherName'],
+					'MotherOccupation' => $ged['MotherOccupation'],
+					'FatherName' => $ged['FatherName'],
+					'FatherOccupation' => $ged['FatherOccupation'],
 					'Citizenship' => $ged['Citizenship'],
 					'CivilStatus' => $ged['CivilStatus'],
+					'SpouseName' => $ged['SpouseName'],
 					'No_OfChildren' => $ged['No_OfChildren'],
 					'Phone_No' => $ged['Phone_No'],
 					'Address_Present' => $ged['Address_Present'],
@@ -563,6 +586,7 @@
 				);
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
+				$data['GetCharRef'] = $this->Model_Selects->GetEmployeeCharRef($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
 				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
 				$data['get_employee'] = $this->Model_Selects->GetEmployee();
@@ -603,6 +627,7 @@
 	public function NewEmployee()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -620,6 +645,7 @@
 	public function View_Admins()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -637,6 +663,7 @@
 	public function Clients()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -654,6 +681,7 @@
 	public function PayrollClients()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -672,6 +700,7 @@
 	public function ViewClient()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -715,6 +744,7 @@
 	public function Experimental()
 	{
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
@@ -825,9 +855,11 @@
 				unset($_SESSION["acadcart"][$s_da]);
 				if(empty($_SESSION["acadcart"]))
 					unset($_SESSION["acadcart"]);
+				unset($_SESSION["ref_cart"]);
 			}
 		}
 	}
+
 	// EMPLOYMENT RECORD
 	public function add_toemp()
 	{
@@ -927,6 +959,89 @@
 			}
 		}
 	}
+
+	// CHARACTER REFERENCES
+	public function showRef()
+	{
+
+		if (isset($_SESSION['ref_cart'])) {
+			echo '<hr>';
+			echo '<h6 class="ml-2"><i class="fas fa-save"></i> New Record</h6>';
+			echo '<table class="table table-bordered">
+			<thead>
+				<th>Name</th>
+				<th>Position</th>
+				<th>Company / Address</th>
+				<th>Action</th>
+			</thead>
+			<tbody>';
+			foreach ($_SESSION['ref_cart'] as $s_da) {
+				echo '
+				<tr>
+					<td>
+					'.$s_da['ref_cart']['RefName'] .'
+					</td>
+					<td>
+					'.$s_da['ref_cart']['RefPosition'] .'
+					</td>
+					<td>
+					'.$s_da['ref_cart']['CompanyAddress'] .'
+					</td>
+					<td>
+					<button id="'.$s_da['ref_cart']['c_id'].'" class="remoach btn btn-sm btn-danger" type="button"><i class="fas fa-times"></i> Discard</button>
+					</td>
+				</tr>
+				';
+			}
+			echo '</tbody>
+			</table>
+			<hr>';
+		}
+		echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#refFields"><i class="fas fa-plus"></i> Add Data</button>';
+	}
+	public function atcRef()
+	{
+		$min=10000000;
+		$max=99999999;
+		$rint = random_int($min,$max);
+
+		$RefName = $_POST["RefName"];
+		$Position = $_POST["RefPosition"];
+		$CompanyAddress = $_POST["CompanyAddress"];
+		if ($RefName == NULL || $Position == NULL || $CompanyAddress == NULL) {
+			echo "Error";
+		}
+		else
+		{
+			foreach ($_SESSION["ref_cart"] as $s_da => $row) {
+				if ($row['ref_cart']['c_id'] == $rint) {
+					exit();
+				}
+			}
+			if (!isset($_SESSION ['ref_cart'] )) {
+				$_SESSION ['ref_cart'] = array ();
+			}
+			$data['ref_cart'] = array(
+				'c_id' => $rint,
+				'RefName' => $RefName,
+				'RefPosition' => $Position,
+				'CompanyAddress' => $CompanyAddress,
+			);
+			$_SESSION['ref_cart'][] = $data;
+		}
+	}
+	public function removeRef()
+	{
+		foreach ($_SESSION["ref_cart"] as $s_da => $row) {
+			if ($row['ref_cart']['c_id'] == $_POST['row_id']) {
+				unset($_SESSION["ref_cart"][$s_da]);
+				if(empty($_SESSION["ref_cart"]))
+					unset($_SESSION["ref_cart"]);
+			}
+		}
+	}
+
+
 	// MACHINE OPERATED
 	public function ShowMachineOperated()
 	{

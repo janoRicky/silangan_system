@@ -16,6 +16,7 @@ class Add_Controller extends CI_Controller {
 		# PERSONAL INFORMATION
 		$pImageChecker = $this->input->post('pImageChecker');
 		$PositionDesired = $this->input->post('PositionDesired');
+		$PersonRecommending = $this->input->post('PersonRecommending');
 		$ContractType = $this->input->post('ContractType');
 		$SalaryType = $this->input->post('SalaryType');
 		$Rate = $this->input->post('Rate');
@@ -24,6 +25,7 @@ class Add_Controller extends CI_Controller {
 		$LastName = $this->input->post('LastName');
 		$FirstName = $this->input->post('FirstName');
 		$MI = $this->input->post('MI');
+		$Nickname = $this->input->post('Nickname');
 		$Gender = $this->input->post('Gender');
 		$Age = $this->input->post('Age');
 		$Height = $this->input->post('Height');
@@ -32,8 +34,13 @@ class Add_Controller extends CI_Controller {
 		
 		$bDate = $this->input->post('bDate');
 		$bPlace = $this->input->post('bPlace');
+		$MotherName = $this->input->post('MotherName');
+		$MotherOccupation = $this->input->post('MotherOccupation');
+		$FatherName = $this->input->post('FatherName');
+		$FatherOccupation = $this->input->post('FatherOccupation');
 		$Citizenship = $this->input->post('Citizenship');
 		$CivilStatus = $this->input->post('CivilStatus');
+		$SpouseName = $this->input->post('SpouseName');
 		$No_Children = $this->input->post('No_Children');
 		$PhoneNumber = $this->input->post('PhoneNumber');
 		# DOCUMENTS
@@ -55,16 +62,18 @@ class Add_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($PositionDesired == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL) {
+		if ($PositionDesired == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL || $MotherName == NULL || $MotherOccupation == NULL || $FatherName == NULL || $FatherOccupation == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
 				'PositionDesired' => $PositionDesired,
+				'PersonRecommending' => $PersonRecommending,
 				'ContractType' => $ContractType,
 				'SalaryType' => $SalaryType,
 				'Rate' => $Rate,
 				'LastName' => $LastName,
 				'FirstName' => $FirstName,
 				'MI' => $MI,
+				'Nickname' => $Nickname,
 				'Gender' => $Gender,
 				'Age' => $Age,
 				'Height' => $Height,
@@ -72,8 +81,13 @@ class Add_Controller extends CI_Controller {
 				'Religion' => $Religion,
 				'bDate' => $bDate,
 				'bPlace' => $bPlace,
+				'MotherName' => $MotherName,
+				'MotherOccupation' => $MotherOccupation,
+				'FatherName' => $FatherName,
+				'FatherOccupation' => $FatherOccupation,
 				'Citizenship' => $Citizenship,
 				'CivilStatus' => $CivilStatus,
+				'SpouseName' => $SpouseName,
 				'No_Children' => $No_Children,
 				'PhoneNumber' => $PhoneNumber,
 				'SSS' => $SSS,
@@ -154,6 +168,7 @@ class Add_Controller extends CI_Controller {
 					'ApplicantImage' => $pImage,
 					'ApplicantID' => $customid,
 					'PositionDesired' => $PositionDesired,
+					'PersonRecommending' => $PersonRecommending,
 					'ContractType' => $ContractType,
 					'SalaryType' => $SalaryType,
 					'Rate' => $Rate,
@@ -161,6 +176,7 @@ class Add_Controller extends CI_Controller {
 					'LastName' => ucfirst($LastName),
 					'FirstName' => ucfirst($FirstName),
 					'MiddleInitial' => ucfirst($MI),
+					'Nickname' => $Nickname,
 					'Gender' => $Gender,
 					'Age' => $Age,
 					'Height' => $Height,
@@ -168,8 +184,13 @@ class Add_Controller extends CI_Controller {
 					'Religion' => $Religion,
 					'BirthDate' => $bDate,
 					'BirthPlace' => $bPlace,
+					'MotherName' => $MotherName,
+					'MotherOccupation' => $MotherOccupation,
+					'FatherName' => $FatherName,
+					'FatherOccupation' => $FatherOccupation,
 					'Citizenship' => $Citizenship,
 					'CivilStatus' => $CivilStatus,
+					'SpouseName' => $SpouseName,
 					'No_OfChildren' => $No_Children,
 					
 					'Address_Present' => $Address_Present,
@@ -206,6 +227,18 @@ class Add_Controller extends CI_Controller {
 
 							);
 							$this->Model_Inserts->InsertAcadH($data);
+						}
+					}
+					if (isset($_SESSION["ref_cart"])) {
+						foreach ($_SESSION["ref_cart"] as $s_da) {
+							$data = array(
+								'ApplicantID' => $customid,
+								'RefName' => $s_da['ref_cart']['RefName'],
+								'RefPosition' => $s_da['ref_cart']['RefPosition'],
+								'CompanyAddress' => $s_da['ref_cart']['CompanyAddress']
+
+							);
+							$this->Model_Inserts->InsertCharRef($data);
 						}
 					}
 					if (isset($_SESSION["emp_cart"])) {
@@ -254,6 +287,7 @@ class Add_Controller extends CI_Controller {
 					// 	}
 					// }
 					unset($_SESSION["acadcart"]);
+					unset($_SESSION["ref_cart"]);
 					unset($_SESSION["emp_cart"]);
 					unset($_SESSION["mach_cart"]);
 					// unset($_SESSION["rela_cart"]); 

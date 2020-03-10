@@ -27,6 +27,12 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function RemoveCharRef($listCheck)
+	{
+		$SQL = "DELETE FROM `char_references` WHERE `Char_Ref_No` IN ($listCheck)";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function RemoveEmpRecord($listCheck)
 	{
 		$SQL = "DELETE FROM `employment_record` WHERE `No` IN ($listCheck)";

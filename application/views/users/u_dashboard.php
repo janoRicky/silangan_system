@@ -151,39 +151,45 @@
 							</a>
 						</div>
 					</div>
-					<div id="GraphChartButton" class="col-sm-12 col-lg-12 mt-5 mb-5 chart-hover">
+					<!-- <div id="GraphChartButton" class="col-sm-12 col-lg-12 mt-5 mb-5 chart-hover">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-calendar-week fa-fw chart-hover-static"></i> <?php echo $CurrentYear; ?> Employees
 							</h5>
-						</div>
+						</div> -->
+
 						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
 							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
 						</div> -->
-						<canvas id="ApplicantChart" class="w-100" width="800" height="250"></canvas>
-					</div>
-					<div id="PieChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5">
+						
+						<!-- <canvas id="ApplicantChart" class="w-100" width="800" height="250"></canvas>
+					</div> -->
+					<!-- <div id="PieChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-chart-pie fa-fw"></i> Employees Pool
 							</h5>
-						</div>
+						</div> -->
+
 						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
 							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
 						</div> -->
-						<canvas id="pie-chart" width="800" height="450"></canvas>
+
+						<!-- <canvas id="pie-chart" width="800" height="450"></canvas>
 					</div>
 					<div id="BarChartButton" class="col-sm-12 col-lg-6 mt-5 mb-5">
 						<div class="chart-title text-center">
 							<h5 class="titless">
 								<i class="fas fa-chart-line fa-fw"></i> Total Employed
 							</h5>
-						</div>
+						</div> -->
+
 						<!-- <div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
 							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
 						</div> -->
-						<canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
-					</div>
+
+						<!-- <canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
+					</div> -->
 
 					<!-- LOGBOOK -->
 					<div id="Logbook" class="col-sm-12 col-lg-12 mt-5">

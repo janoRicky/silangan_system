@@ -7,9 +7,9 @@
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="row">
 					<div class="col-sm-12">
-						<!-- <div class="col-sm-12 text-right">
+						<div class="col-sm-12 text-right">
 							<button id="DebugFill" type="button" class="btn btn-primary"><i class="fas fa-vial"></i> Debug Fill</button>
-						</div> -->
+						</div>
 						<div class="p-5">
 							<?php echo $this->session->flashdata('prompts'); ?>
 							<div class="mb-3">
@@ -20,6 +20,29 @@
 							<!-- Start form -->
 							<form action="<?=base_url()?>addNewEmployee" method="POST" enctype="multipart/form-data">
 								<input id="pImageChecker" type="hidden" name="pImageChecker">
+
+								<!-- 
+									
+									Person Recommending
+									Nickname
+									Father, Occupation
+									Mother, Occupation
+									Name of Spouse, if married
+
+									Have you been to manila before
+									Do you have relatives in Manila
+									Please give the name, address and your relation
+									
+									Character references - multiple
+
+									Have you been convicted for violating any law, decree, ordinance, or regulations in any court or tribunal, if yes give particulars
+									Have you been convicted for any breach of infraction by a military, tribunal, or authority or found guilty of any administrative offense, if yes give particulars
+
+									Willing to render overtime work when required any time,yesno
+									Willing to be assigned to other place during your employment with the company,yesno
+
+								 -->
+
 								<div class="form-row mb-2">
 									<div class="form-group col-sm-12">
 										<input type='file' id="imgInp" name="pImage" style="display: none;">
@@ -39,6 +62,12 @@
 										<label>Employed Date</label>
 										<input class="form-control" type="date" name="ApplicationDate" autocomplete="off" value="<?php if ($this->session->flashdata('ApplicationDate')) { echo $this->session->flashdata('ApplicationDate'); } else { echo date('Y-m-d'); } ?>">
 									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Person Recommending</label>
+										<input class="form-control" type="text" name="PersonRecommending" autocomplete="off" value="<?php echo $this->session->flashdata('PersonRecommending'); ?>">
+									</div>
+								</div>
+								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Contract Type</label>
 										<select class="form-control" name="ContractType">
@@ -98,6 +127,12 @@
 										<input class="form-control" type="text" name="MI" autocomplete="off" value="<?php echo $this->session->flashdata('MI'); ?>">
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
+										<label>Nickname</label>
+										<input class="form-control" type="text" name="Nickname" autocomplete="off" value="<?php echo $this->session->flashdata('Nickname'); ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-2">
 										<label>Sex</label>
 										<select class="form-control" name="Gender">
 											<option value="Male" <?php if ($this->session->flashdata('Gender') == 'Male') {
@@ -112,8 +147,6 @@
 											</option>
 										</select>
 									</div>
-								</div>
-								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-1">
 										<label>Age</label>
 										<input class="form-control" type="number" name="Age" autocomplete="off" value="<?php echo $this->session->flashdata('Age'); ?>">
@@ -130,6 +163,8 @@
 										<label>Religion</label>
 										<input class="form-control" type="text" name="Religion" autocomplete="off" value="<?php echo $this->session->flashdata('Religion'); ?>">
 									</div>
+								</div>
+								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Birth Date</label>
 										<input class="form-control" type="date" name="bDate" value="<?php echo $this->session->flashdata('bDate'); ?>">
@@ -137,6 +172,24 @@
 									<div class="form-group col-sm-12 col-md-5">
 										<label>Birth Place</label>
 										<input class="form-control" type="text" name="bPlace" autocomplete="off" value="<?php echo $this->session->flashdata('bPlace'); ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Mother's Name</label>
+										<input class="form-control" type="text" name="MotherName" autocomplete="off" value="<?php echo $this->session->flashdata('MotherName'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Occupation</label>
+										<input class="form-control" type="text" name="MotherOccupation" autocomplete="off" value="<?php echo $this->session->flashdata('MotherOccupation'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Father's Name</label>
+										<input class="form-control" type="text" name="FatherName" autocomplete="off" value="<?php echo $this->session->flashdata('FatherName'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Occupation</label>
+										<input class="form-control" type="text" name="FatherOccupation" autocomplete="off" value="<?php echo $this->session->flashdata('FatherOccupation'); ?>">
 									</div>
 								</div>
 								<div class="form-row">
@@ -169,10 +222,16 @@
 											</option>
 										</select>
 									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Name of Spouse</label>
+										<input class="form-control" type="text" name="SpouseName" autocomplete="off" value="<?php echo $this->session->flashdata('SpouseName'); ?>">
+									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>No. of Children</label>
 										<input class="form-control" type="number" name="No_Children" autocomplete="off" value="<?php echo $this->session->flashdata('No_Children'); ?>">
 									</div>
+								</div>
+								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Contact Number</label>
 										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $this->session->flashdata('PhoneNumber'); ?>">
@@ -247,6 +306,14 @@
 										<h5><i class="fas fa-stream"></i> Employment Record </h5>
 									</div>
 									<div id="empskills" class="" style="width: 100%;">
+										
+									</div>
+								</div>
+								<div class="form-row pb-5 pt-5">
+									<div class="pb-3">
+										<h5><i class="fas fa-stream"></i> Character References</h5>
+									</div>
+									<div id="charRefs" class="" style="width: 100%;">
 										
 									</div>
 								</div>
@@ -383,6 +450,41 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="refFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Character References</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="#" method="post">
+						<div class="form-row">
+							<div class="form-group col-sm-8">
+								<label>Name</label>
+								<input id="RefName" class="form-control" type="text" name="RefName">
+							</div>
+							<div class="form-group col-sm-4">
+								<label>Position</label>
+								<input id="RefPosition" class="form-control" type="text" name="RefPosition">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-sm-12">
+								<label>Company / Address</label>
+								<input id="CompanyAddress" class="form-control" type="text" name="CompanyAddress">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="add_charRef" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <style type="text/css">
 	.in-beni:focus { box-shadow: none; }
@@ -509,6 +611,41 @@
             });
         });
 		$('#empskills').load("<?php echo site_url('Main_Controller/showSkills');?>");
+
+
+		// Cart Character References
+		$('#add_charRef').click(function(){
+
+			var RefName = $('#RefName').val();
+			var RefPosition = $('#RefPosition').val();
+			var CompanyAddress = $('#CompanyAddress').val();
+			
+
+			$.ajax({
+				url : "<?php echo site_url('Main_Controller/atcRef');?>",
+				method : "POST",
+				data : {RefName: RefName, RefPosition: RefPosition, CompanyAddress: CompanyAddress},
+				success: function(data){
+					$('#RefName').val("");
+					$('#RefPosition').val("");
+					$('#CompanyAddress').val("");
+					$('#charRefs').load("<?php echo site_url('Main_Controller/showRef');?>");
+				}
+			});
+		});
+		$(document).on('click','.remoach',function(){
+			var row_id = $(this).attr("id");
+            $.ajax({
+            	url : "<?php echo site_url('Main_Controller/removeRef');?>",
+            	method : "POST",
+            	data : {row_id : row_id},
+            	success :function(data){
+            		$('#charRefs').load("<?php echo site_url('Main_Controller/showRef');?>");
+            	}
+            });
+        });
+		$('#charRefs').load("<?php echo site_url('Main_Controller/showRef');?>");
+
 		// $('#SalaryRaw,#HoursDayOne,#HoursDayTwo,#HoursDayThree,#HoursDayFour,#HoursDayFive,#HoursDaySix').on('input', function() {
 		// 	// TODO: Clean & optimize this.
 		//     $('#SalaryOvertimeFade').fadeIn();

@@ -61,7 +61,8 @@
 							<div class="row w-100 rcontent employee-content">
 								<div class="col-2 employee-static mt-5 d-none d-sm-block">
 									<div class="col-sm-12">
-										<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
+										<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>. <br>
+										"<?php echo $Nickname; ?>"
 									</div>
 									<hr>
 									<div class="col-sm-12 employee-static-item">
@@ -194,8 +195,11 @@
 												<div class="col-sm-2 employee-dynamic-header">
 													<b>Citizenship</b>
 												</div>
-												<div class="col-sm-2 employee-dynamic-header">
+												<div class="col-sm-1 employee-dynamic-header">
 													<b>Civil Status</b>
+												</div>
+												<div class="col-sm-1 employee-dynamic-header">
+													<b>Spouse</b>
 												</div>
 												<div class="col-sm-2 employee-dynamic-header">
 													<b>No. of Children</b>
@@ -211,40 +215,78 @@
 												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $Citizenship; ?>
 												</div>
-												<div class="col-sm-2 employee-dynamic-item">
+												<div class="col-sm-1 employee-dynamic-item">
 													<?php echo $CivilStatus; ?>
+												</div>
+												<div class="col-sm-1 employee-dynamic-item">
+													<?php echo $SpouseName; ?>
 												</div>
 												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $No_OfChildren; ?>
 												</div>
 											</div>
-											<hr class="mt-5 mb-3">
+											<!-- ------------------ -->
 											<div class="row mt-3">
 												<div class="col-sm-3 employee-dynamic-header">
-													<b>Position</b>
+													<b>Mother's Name</b>
+												</div>
+												<div class="col-sm-2 employee-dynamic-header">
+													<b>Mother's Occupation</b>
 												</div>
 												<div class="col-sm-3 employee-dynamic-header">
-													<b>Contract Type</b>
+													<b>Father's Name</b>
 												</div>
-												<div class="col-sm-3 employee-dynamic-header">
-													<b>Salary Type</b>
-												</div>
-												<div class="col-sm-3 employee-dynamic-header">
-													<b>Rate</b>
+												<div class="col-sm-2 employee-dynamic-header">
+													<b>Father's Occupation</b>
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-sm-3 employee-dynamic-item">
+													<?php echo $MotherName; ?>
+												</div>
+												<div class="col-sm-2 employee-dynamic-item">
+													<?php echo $MotherOccupation; ?>
+												</div>
+												<div class="col-sm-3 employee-dynamic-item">
+													<?php echo $FatherName; ?>
+												</div>
+												<div class="col-sm-2 employee-dynamic-item">
+													<?php echo $FatherOccupation; ?>
+												</div>
+											</div>
+											<hr class="mt-5 mb-3">
+											<div class="row mt-3">
+												<div class="col-sm-2 employee-dynamic-header">
+													<b>Position</b>
+												</div>
+												<div class="col-sm-2 employee-dynamic-header">
+													<b>Contract Type</b>
+												</div>
+												<div class="col-sm-2 employee-dynamic-header">
+													<b>Salary Type</b>
+												</div>
+												<div class="col-sm-1 employee-dynamic-header">
+													<b>Rate</b>
+												</div>
+												<div class="col-sm-3 employee-dynamic-header">
+													<b>Person Recommending</b>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $PositionDesired; ?>
 												</div>
-												<div class="col-sm-3 employee-dynamic-item">
+												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $ContractType; ?>
 												</div>
-												<div class="col-sm-3 employee-dynamic-item">
+												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $SalaryType; ?>
 												</div>
-												<div class="col-sm-3 employee-dynamic-item">
+												<div class="col-sm-1 employee-dynamic-item">
 													<?php echo $Rate; ?>
+												</div>
+												<div class="col-sm-3 employee-dynamic-item">
+													<?php echo $PersonRecommending ; ?>
 												</div>
 											</div>
 											<hr class="mt-5 mb-3">
