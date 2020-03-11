@@ -55,9 +55,13 @@ class Add_Controller extends CI_Controller {
 		$HDMF = $this->input->post('HDMF');
 
 		$PhilHealth = $this->input->post('PhilHealth');
+		// $PagIbig = $this->input->post('PagIbig');
 		$ATM_No = $this->input->post('ATM_No');
 
 		
+		$ConLDOR = $this->input->post('ConLDOR');
+		$ConMTAA = $this->input->post('ConMTAA');
+		$CaseAC = $this->input->post('CaseAC');
 		
 
 		# ADDRESSES
@@ -105,7 +109,11 @@ class Add_Controller extends CI_Controller {
 				'ATM_No' => $ATM_No,
 
 				'PhilHealth' => $PhilHealth,
+				// 'PagIbig' => $PagIbig,
 				
+				'ConLDOR' => $ConLDOR,
+				'ConMTAA' => $ConMTAA,
+				'CaseAC' => $CaseAC,
 
 
 				'Address_Present' => $Address_Present,
@@ -217,12 +225,29 @@ class Add_Controller extends CI_Controller {
 					'ATM_No' => $ATM_No,
 
 					'PhilHealth' => $PhilHealth,
+					// 'PagIbig' => $PagIbig,
+
+					'ConLDOR' => $ConLDOR,
+					'ConMTAA' => $ConMTAA,
+					'CaseAC' => $CaseAC,
 
 					'Status' => 'Applicant',
 					'AppliedOn' => $AppliedOn,
 				);
 				$addedEmployee = $this->Model_Inserts->AddThisEmployee($data);
 				if ($addedEmployee == TRUE) {
+					if (isset($_SESSION["bencart"])) {
+						foreach ($_SESSION["bencart"] as $s_da) {
+							$data = array(
+								'ApplicantID' => $customid,
+								'BenWhat' => $s_da['bencart']['BenWhat'],
+								'BenName' => $s_da['bencart']['BenName'],
+								'BenRelation' => $s_da['bencart']['BenRelation'],
+
+							);
+							$this->Model_Inserts->InsertBen($data);
+						}
+					}
 					if (isset($_SESSION["acadcart"])) {
 						foreach ($_SESSION["acadcart"] as $s_da) {
 							$data = array(
@@ -295,6 +320,7 @@ class Add_Controller extends CI_Controller {
 					// 		$this->Model_Inserts->InserBeneficia($data);
 					// 	}
 					// }
+					unset($_SESSION["bencart"]);
 					unset($_SESSION["acadcart"]);
 					unset($_SESSION["ref_cart"]);
 					unset($_SESSION["emp_cart"]);

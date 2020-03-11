@@ -292,8 +292,12 @@ class Update_Controller extends CI_Controller {
 		$HDMF = $this->input->post('HDMF');
 
 		$PhilHealth = $this->input->post('PhilHealth');
+		// $PagIbig = $this->input->post('PagIbig');
 		$ATM_No = $this->input->post('ATM_No');
 
+		$ConLDOR = $this->input->post('ConLDOR');
+		$ConMTAA = $this->input->post('ConMTAA');
+		$CaseAC = $this->input->post('CaseAC');
 
 		$AppliedOn = $this->input->post('AppliedOn');
 
@@ -345,7 +349,12 @@ class Update_Controller extends CI_Controller {
 				'HDMF' => $HDMF,
 				'ATM_No' => $ATM_No,
 
+				'ConLDOR' => $ConLDOR,
+				'ConMTAA' => $ConMTAA,
+				'CaseAC' => $CaseAC,
+
 				'PhilHealth' => $PhilHealth,
+				// 'PagIbig' => $PagIbig,
 				
 
 
@@ -435,12 +444,21 @@ class Update_Controller extends CI_Controller {
 					'HDMF' => $HDMF,
 					'ATM_No' => $ATM_No,
 
+					'ConLDOR' => $ConLDOR,
+					'ConMTAA' => $ConMTAA,
+					'CaseAC' => $CaseAC,
+
 					'PhilHealth' => $PhilHealth,
+					// 'PagIbig' => $PagIbig,
 
 					'AppliedOn' => $AppliedOn,
 				);
 				$addedEmployee = $this->Model_Updates->UpdateEmployee($ApplicantID, $data);
 				if ($addedEmployee == TRUE) {
+
+					$BenCheckbox = $this->input->post('BenCheckbox');
+					$listCheck = "'" . implode("','", $BenCheckbox) . "'";
+					$this->Model_Deletes->RemoveBeneficiary($listCheck);
 
 					$AcadHCheckbox = $this->input->post('AcadHCheckbox');
 					$listCheck = "'" . implode("','", $AcadHCheckbox) . "'";
@@ -458,6 +476,18 @@ class Update_Controller extends CI_Controller {
 					$listCheck = "'" . implode("','", $MachOpCheckbox) . "'";
 					$this->Model_Deletes->RemoveMachineOperated($listCheck);
 
+					if (isset($_SESSION["bencart"])) {
+						foreach ($_SESSION["bencart"] as $s_da) {
+							$data = array(
+								'ApplicantID' => $ApplicantID,
+								'BenWhat' => $s_da['bencart']['BenWhat'],
+								'BenName' => $s_da['bencart']['BenName'],
+								'BenRelation' => $s_da['bencart']['BenRelation'],
+
+							);
+							$this->Model_Inserts->InsertBen($data);
+						}
+					}
 					if (isset($_SESSION["acadcart"])) {
 						foreach ($_SESSION["acadcart"] as $s_da) {
 							$data = array(
@@ -529,6 +559,7 @@ class Update_Controller extends CI_Controller {
 					// 		$this->Model_Inserts->InserBeneficia($data);
 					// 	}
 					// }
+					unset($_SESSION["bencart"]);
 					unset($_SESSION["acadcart"]);
 					unset($_SESSION["ref_cart"]);
 					unset($_SESSION["emp_cart"]);

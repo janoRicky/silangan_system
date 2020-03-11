@@ -8,6 +8,11 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('applicants', $data);
 		return $result;
 	}
+	public function InsertBen($data)
+	{
+		$result = $this->db->insert('beneficiaries', $data);
+		return $result;
+	}
 	public function InsertAcadH($data)
 	{
 		$result = $this->db->insert('acad_history', $data);

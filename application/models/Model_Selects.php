@@ -45,6 +45,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
+	public function GetEmployeeBeneficiaries($ApplicantID)
+	{
+		$SQL = "SELECT * FROM beneficiaries WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function GetEmployeeAcadhis($ApplicantID)
 	{
 		$SQL = "SELECT * FROM acad_history WHERE ApplicantID = '$ApplicantID'";

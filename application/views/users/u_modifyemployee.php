@@ -247,6 +247,44 @@
 								</div>
 								<div class="mt-5 mb-4">
 									<h5>
+										<i class="fas fa-user-alt"></i> Addresses
+									</h5>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Present</label>
+										<input class="form-control" type="text" name="Address_Present" autocomplete="off" value="<?php echo $Address_Present; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Provincial</label>
+										<input class="form-control" type="text" name="Address_Provincial" autocomplete="off" value="<?php echo $Address_Provincial; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Manila</label>
+										<input class="form-control" type="text" name="Address_Manila" autocomplete="off" value="<?php echo $Address_Manila; ?>">
+									</div>
+								</div>
+								<div class="mt-5 mb-4">
+									<h5>
+										<i class="fas fa-user-alt"></i> Convictions/Cases
+									</h5>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-12">
+										<label>Convictions for violations of any law, decree, ordinance, or regulations in any court or tribunal</label>
+										<input class="form-control" type="text" name="ConLDOR" autocomplete="off" value="<?php echo $ConLDOR; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-12">
+										<label>Convictions for any breach of infraction by a military, tribunal, or authority, or found guilty of any administrative offense</label>
+										<input class="form-control" type="text" name="ConMTAA" autocomplete="off" value="<?php echo $ConMTAA; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-12">
+										<label>Pending administrative/criminal cases</label>
+										<input class="form-control" type="text" name="CaseAC" autocomplete="off" value="<?php echo $CaseAC; ?>">
+									</div>
+								</div>
+								<div class="mt-5 mb-4">
+									<h5>
 										<i class="fas fa-user-alt"></i> Documents
 									</h5>
 								</div>
@@ -273,6 +311,10 @@
 										<label>HDMF</label>
 										<input class="form-control" type="text" name="HDMF" autocomplete="off" value="<?php echo $HDMF; ?>">
 									</div>
+									<!-- <div class="form-group col-sm-12 col-lg-3">
+										<label>PAG-IBIG</label>
+										<input class="form-control" type="text" name="PagIbig" autocomplete="off" value="<?php echo $PagIbig; ?>">
+									</div> -->
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>PHILHEALTH</label>
 										<input class="form-control" type="text" name="PhilHealth" autocomplete="off" value="<?php echo $PhilHealth; ?>">
@@ -282,26 +324,49 @@
 										<input class="form-control" type="text" name="ATM_No" autocomplete="off" value="<?php echo $ATM_No; ?>">
 									</div>
 								</div>
-								<div class="mt-5 mb-4">
-									<h5>
-										<i class="fas fa-user-alt"></i> Addresses
-									</h5>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-4">
-										<label>Present</label>
-										<input class="form-control" type="text" name="Address_Present" autocomplete="off" value="<?php echo $Address_Present; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-4">
-										<label>Provincial</label>
-										<input class="form-control" type="text" name="Address_Provincial" autocomplete="off" value="<?php echo $Address_Provincial; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-4">
-										<label>Manila</label>
-										<input class="form-control" type="text" name="Address_Manila" autocomplete="off" value="<?php echo $Address_Manila; ?>">
-									</div>
-								</div>
 								<div class="form-row pb-5 pt-5">
+									<div class="pb-3">
+										<h5><i class="fas fa-stream"></i> Beneficiaries</h5>
+									</div>
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<table class="table table-condensed">
+												<thead>
+													<th></th>
+													<th>Name</th>
+													<th>Relationship</th>
+													<th class="text-center">Remove</th>
+												</thead>
+												<tbody>
+													<?php if ($GetBeneficiaries->num_rows() > 0) { ?>
+														<?php foreach ($GetBeneficiaries->result_array() as $row): ?>
+															<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+																<tr>
+																	<td><?php echo $row['BenWhat'];?></td>
+																	<td><?php echo $row['BenName'];?></td>
+																	<td><?php echo $row['BenRelation'];?></td>
+																	<td class="text-center"><input type="checkbox" name="BenCheckbox[]" value="<?php echo $row['Ben_No']; ?>"></td>
+																</tr>
+															<?php } ?>
+														<?php endforeach ?>
+													<?php } else { ?>
+														<tr class="w-100 text-center">
+															<td colspan="7">
+																<h5>
+																	No Data
+																</h5>
+															</td>
+														</tr>
+													<?php } ?>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div id="beneficiaries" class="" style="width: 100%;">
+										
+									</div>
+								</div>
+								<div class="form-row pb-5">
 									<div class="pb-3">
 										<h5><i class="fas fa-stream"></i> Academic History</h5>
 									</div>
@@ -456,6 +521,51 @@
 	</div>
 
 	<!-- Modal -->
+	<div class="modal fade" id="benFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Beneficiaries</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="#" method="post">
+						<div class="form-row">
+							<div class="form-group col-sm-12">
+								<select id="BenWhat" class="form-control" name="BenWhat">
+									<option hidden="" disabled="" selected="">
+										Choose
+									</option>
+									<option>
+										SSS
+									</option>
+									<!-- <option>
+										PAG-IBIG
+									</option> -->
+									<option>
+										PhilHealth
+									</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-8">
+								<label>Name</label>
+								<input id="BenName" class="form-control" type="text" name="BenName">
+							</div>
+							<div class="form-group col-sm-4">
+								<label>Relationship</label>
+								<input id="BenRelation" class="form-control" type="text" name="BenRelation">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="add_ben" type="submit" class="btn btn-primary" data-dismiss="modal" aria-label="Close"><i class="fas fa-plus"></i> Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="modal fade" id="acadFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -664,6 +774,39 @@
 		$("#imgInp").change(function() {
 			readURL(this);
 		});
+		// Cart Beneficiaries
+		$('#add_ben').click(function(){
+
+			var BenWhat = $('#BenWhat').val();
+			var BenName = $('#BenName').val();
+			var BenRelation = $('#BenRelation').val();
+			
+
+			$.ajax({
+				url : "<?php echo site_url('Main_Controller/atcBen');?>",
+				method : "POST",
+				data : {BenWhat: BenWhat, BenName: BenName, BenRelation: BenRelation},
+				success: function(data){
+					$('#BenWhat option:selected').index();
+					$('#BenName').val("");
+					$('#BenRelation').val("");
+					$('#beneficiaries').load("<?php echo site_url('Main_Controller/showBen');?>");
+				}
+			});
+		});
+		$(document).on('click','.remoach',function(){
+			var row_id = $(this).attr("id");
+            $.ajax({
+            	url : "<?php echo site_url('Main_Controller/removeBen');?>",
+            	method : "POST",
+            	data : {row_id : row_id},
+            	success :function(data){
+            		$('#beneficiaries').load("<?php echo site_url('Main_Controller/showBen');?>");
+            	}
+            });
+        });
+		$('#beneficiaries').load("<?php echo site_url('Main_Controller/showBen');?>");
+
 		// Cart Academic History
 		$('#add_sssscc').click(function(){
 
@@ -691,7 +834,6 @@
 		});
 		$(document).on('click','.remoach',function(){
 			var row_id = $(this).attr("id");
-            // alert(row_id);
             $.ajax({
             	url : "<?php echo site_url('Main_Controller/removeAcad');?>",
             	method : "POST",
@@ -726,7 +868,6 @@
 		});
 		$(document).on('click','.remoaemop',function(){
 			var row_id = $(this).attr("id");
-            // alert(row_id);
             $.ajax({
             	url : "<?php echo site_url('Main_Controller/removeemp');?>",
             	method : "POST",

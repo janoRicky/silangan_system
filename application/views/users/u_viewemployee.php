@@ -52,6 +52,7 @@
 										<li id="TabAcademicBtn" class="employee-tabs-select"><a href="#Academic" onclick="">Academic</a></li>
 										<li id="TabEmploymentsBtn" class="employee-tabs-select"><a href="#Employments" onclick="">Employments</a></li>
 										<li id="TabReferencesBtn" class="employee-tabs-select"><a href="#References" onclick="">References</a></li>
+										<li id="TabBeneficiariesBtn" class="employee-tabs-select"><a href="#Beneficiaries" onclick="">Beneficiaries</a></li>
 										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
 									</ul>
 								</div>
@@ -313,6 +314,37 @@
 												</div>
 											</div>
 											<hr class="mt-5 mb-3">
+											<div class="row mt-3">
+												<div class="col-sm-10 employee-dynamic-header">
+													<b>Convictions for violations of any law, decree, ordinance, or regulations in any court or tribunal</b>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-2 employee-dynamic-item">
+													<?php echo $ConLDOR; ?>
+												</div>
+											</div>
+											<div class="row mt-3">
+												<div class="col-sm-10 employee-dynamic-header">
+													<b>Convictions for any breach of infraction by a military, tribunal, or authority, or found guilty of any administrative offense</b>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-2 employee-dynamic-item">
+													<?php echo $ConMTAA; ?>
+												</div>
+											</div>
+											<div class="row mt-3">
+												<div class="col-sm-10 employee-dynamic-header">
+													<b>Pending administrative/criminal cases</b>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-2 employee-dynamic-item">
+													<?php echo $CaseAC; ?>
+												</div>
+											</div>
+											<hr class="mt-5 mb-3">
 											<div class="row employee-personal-row">
 												<div class="col-sm-2 employee-dynamic-header">
 													<b>S.S.S. No.</b>
@@ -325,6 +357,22 @@
 												</div>
 												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $EffectiveDateCoverage; ?>
+												</div>
+											</div>
+											<!-- <div class="row employee-personal-row mt-4">
+												<div class="col-sm-2 employee-dynamic-header">
+													<b>PAG-IBIG</b>
+												</div>
+												<div class="col-sm-2 employee-dynamic-item">
+													<?php echo $PagIbig; ?>
+												</div>
+											</div> -->
+											<div class="row employee-personal-row mt-4">
+												<div class="col-sm-2 employee-dynamic-header">
+													<b>PHILHEALTH</b>
+												</div>
+												<div class="col-sm-2 employee-dynamic-item">
+													<?php echo $PhilHealth; ?>
 												</div>
 											</div>
 											<div class="row employee-personal-row mt-4">
@@ -349,14 +397,6 @@
 												</div>
 												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $HDMF; ?>
-												</div>
-											</div>
-											<div class="row employee-personal-row mt-4">
-												<div class="col-sm-2 employee-dynamic-header">
-													<b>PHILHEALTH</b>
-												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $PhilHealth; ?>
 												</div>
 											</div>
 											<div class="row employee-personal-row mt-4">
@@ -792,6 +832,44 @@
 											</div>
 										</div>
 									</div>
+									<div id="TabBeneficiaries">
+										<div class="employee-tabs-group-content" id="TabBeneficiaries">
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="table-responsive">
+														<table class="table table-condensed">
+															<thead class="employee-table-header">
+																<th></th>
+																<th>Name</th>
+																<th>Relationship</th>
+															</thead>
+															<tbody>
+																<?php if ($GetBeneficiaries->num_rows() > 0) { ?>
+																	<?php foreach ($GetBeneficiaries->result_array() as $row): ?>
+																		<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+																			<tr>
+																				<td><?php echo $row['BenWhat'];?></td>
+																				<td><?php echo $row['BenName'];?></td>
+																				<td><?php echo $row['BenRelation'];?></td>
+																			</tr>
+																		<?php } ?>
+																	<?php endforeach ?>
+																<?php } else { ?>
+																	<tr class="w-100 text-center">
+																		<td colspan="6">
+																			<h5>
+																				No Data
+																			</h5>
+																		</td>
+																	</tr>
+																<?php } ?>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -941,6 +1019,10 @@
 			else if (hashValue == 'References') {
 				$('#TabReferences').children('.employee-tabs-group-content').show();
 				$('#TabReferencesBtn').addClass('employee-tabs-active');
+			}
+			else if (hashValue == 'Beneficiaries') {
+				$('#TabBeneficiaries').children('.employee-tabs-group-content').show();
+				$('#TabBeneficiariesBtn').addClass('employee-tabs-active');
 			} else {
 				$('#TabPersonal').children('.employee-tabs-group-content').show();
 				$('#TabPersonalBtn').addClass('employee-tabs-active');
@@ -972,6 +1054,10 @@
 				else if (hashValue == 'References') {
 					$('#TabReferences').children('.employee-tabs-group-content').show();
 					$('#TabReferencesBtn').addClass('employee-tabs-active');
+				}
+				else if (hashValue == 'Beneficiaries') {
+					$('#TabBeneficiaries').children('.employee-tabs-group-content').show();
+					$('#TabBeneficiariesBtn').addClass('employee-tabs-active');
 				} else {
 					$('#TabPersonal').children('.employee-tabs-group-content').show();
 					$('#TabPersonalBtn').addClass('employee-tabs-active');
@@ -1012,6 +1098,9 @@
 			});
 			$('#TabReferencesBtn').on('click', function () {
 				$('#TabReferences').children('.employee-tabs-group-content').fadeIn(100);
+			});
+			$('#TabBeneficiariesBtn').on('click', function () {
+				$('#TabBeneficiaries').children('.employee-tabs-group-content').fadeIn(100);
 			});
 			$('#TabNotesBtn').on('click', function () {
 				$('#TabNotes').children('.employee-tabs-group-content').fadeIn(100);

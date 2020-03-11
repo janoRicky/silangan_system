@@ -21,6 +21,12 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}
+	public function RemoveBeneficiary($listCheck)
+	{
+		$SQL = "DELETE FROM `beneficiaries` WHERE `Ben_No` IN ($listCheck)";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function RemoveAcadHistory($listCheck)
 	{
 		$SQL = "DELETE FROM `acad_history` WHERE `Acad_No` IN ($listCheck)";

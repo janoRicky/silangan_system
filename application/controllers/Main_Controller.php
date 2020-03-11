@@ -111,6 +111,7 @@
 	public function Dashboard()
 	{
 		$this->load->model('Model_Deletes');
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -288,6 +289,7 @@
 	
 	public function V_Applicants()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -309,6 +311,7 @@
 	}
 	public function V_ApplicantsExpired()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -330,6 +333,7 @@
 	}
 	public function V_Archived()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -352,6 +356,7 @@
 	}
 	public function V_Blacklisted()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -374,6 +379,7 @@
 	}
 	public function Employee()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -394,6 +400,7 @@
 	}
 	public function ViewEmployee()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -455,8 +462,13 @@
 					'HDMF' => $ged['HDMF'],
 
 					'PhilHealth' => $ged['PhilHealth'],
+					// 'PagIbig' => $ged['PagIbig'],
 
 					'ATM_No' => $ged['ATM_No'],
+
+					'ConLDOR' => $ged['ConLDOR'],
+					'ConMTAA' => $ged['ConMTAA'],
+					'CaseAC' => $ged['CaseAC'],
 
 					'Status' => $ged['Status'],
 
@@ -472,6 +484,7 @@
 
 				);
 				$ApplicantID = $ged['ApplicantID'];
+				$data['GetBeneficiaries'] = $this->Model_Selects->GetEmployeeBeneficiaries($ApplicantID);
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
 				$data['GetCharRef'] = $this->Model_Selects->GetEmployeeCharRef($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
@@ -516,6 +529,7 @@
 	}
 	public function ModifyEmployee()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -578,8 +592,13 @@
 					'HDMF' => $ged['HDMF'],
 
 					'PhilHealth' => $ged['PhilHealth'],
+					// 'PagIbig' => $ged['PagIbig'],
 
 					'ATM_No' => $ged['ATM_No'],
+					
+					'ConLDOR' => $ged['ConLDOR'],
+					'ConMTAA' => $ged['ConMTAA'],
+					'CaseAC' => $ged['CaseAC'],
 
 					'Status' => $ged['Status'],
 
@@ -591,6 +610,7 @@
 
 				);
 				$ApplicantID = $ged['ApplicantID'];
+				$data['GetBeneficiaries'] = $this->Model_Selects->GetEmployeeBeneficiaries($ApplicantID);
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
 				$data['GetCharRef'] = $this->Model_Selects->GetEmployeeCharRef($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
@@ -632,6 +652,7 @@
 	}
 	public function NewEmployee()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -650,6 +671,7 @@
 	}
 	public function View_Admins()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -668,6 +690,7 @@
 	}
 	public function Clients()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -686,6 +709,7 @@
 	}
 	public function PayrollClients()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -705,6 +729,7 @@
 	}
 	public function ViewClient()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -749,6 +774,7 @@
 	}
 	public function Experimental()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
@@ -764,6 +790,87 @@
 			</nav>';
 		$this->load->library('SimpleXLSX');
 		$this->load->view('users/u_experimental',$data);
+	}
+
+	// BENEFICIARIES
+	public function showBen()
+	{
+
+		if (isset($_SESSION['bencart'])) {
+			echo '<hr>';
+			echo '<h6 class="ml-2"><i class="fas fa-save"></i> New Record</h6>';
+			echo '<table class="table table-bordered">
+			<thead>
+				<th></th>
+				<th>Name</th>
+				<th>Relationship</th>
+				<th>Action</th>
+			</thead>
+			<tbody>';
+			foreach ($_SESSION['bencart'] as $s_da) {
+				echo '
+				<tr>
+				<td>
+				'.$s_da['bencart']['BenWhat'] .'
+				</td>
+				<td>
+				'.$s_da['bencart']['BenName'] .'
+				</td>
+				<td>
+				'.$s_da['bencart']['BenRelation'] .'
+				</td>
+				<td>
+					<button id="'.$s_da['bencart']['c_id'].'" class="remoach btn btn-sm btn-danger" type="button"><i class="fas fa-times"></i> Discard</button>
+				</td>
+				</tr>
+				';
+			}
+			echo '</tbody>
+			</table>
+			<hr>';
+		}
+		echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#benFields"><i class="fas fa-plus"></i> Add Data</button>';
+	}
+	public function atcBen()
+	{
+		$min=10000000;
+		$max=99999999;
+		$rint = random_int($min,$max);
+
+		$BenWhat = $_POST["BenWhat"];
+		$BenName = $_POST["BenName"];
+		$BenRelation = $_POST["BenRelation"];
+		if ($BenWhat == NULL || $BenName == NULL || $BenRelation == NULL) {
+			echo "Error";
+		}
+		else
+		{
+			foreach ($_SESSION["bencart"] as $s_da => $row) {
+				if ($row['bencart']['c_id'] == $rint) {
+					exit();
+				}
+			}
+			if (!isset($_SESSION ['bencart'] )) {
+				$_SESSION ['bencart'] = array ();
+			}
+			$data['bencart'] = array(
+				'c_id' => $rint,
+				'BenWhat' => $BenWhat,
+				'BenName' => $BenName,
+				'BenRelation' => $BenRelation,
+			);
+			$_SESSION['bencart'][] = $data;
+		}
+	}
+	public function removeBen()
+	{
+		foreach ($_SESSION["bencart"] as $s_da => $row) {
+			if ($row['bencart']['c_id'] == $_POST['row_id']) {
+				unset($_SESSION["bencart"][$s_da]);
+				if(empty($_SESSION["bencart"]))
+					unset($_SESSION["bencart"]);
+			}
+		}
 	}
 
 	// ACADEMIC HISTORY
@@ -861,7 +968,6 @@
 				unset($_SESSION["acadcart"][$s_da]);
 				if(empty($_SESSION["acadcart"]))
 					unset($_SESSION["acadcart"]);
-				unset($_SESSION["ref_cart"]);
 			}
 		}
 	}
