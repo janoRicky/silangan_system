@@ -1,8 +1,8 @@
 ###################
-WERCHER COOP
+
 ###################
 
-Website dedicated for WERCHER COOPERATIVE™.
+
 
 *******************
 Release Information
