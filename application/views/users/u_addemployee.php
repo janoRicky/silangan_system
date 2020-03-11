@@ -114,7 +114,7 @@
 									</div>
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-4">
+									<div class="form-group col-sm-12 col-md-3">
 										<label>Last Name</label>
 										<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $this->session->flashdata('LastName'); ?>">
 									</div>
@@ -163,6 +163,10 @@
 										<label>Religion</label>
 										<input class="form-control" type="text" name="Religion" autocomplete="off" value="<?php echo $this->session->flashdata('Religion'); ?>">
 									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Citizenship</label>
+										<input class="form-control" type="text" name="Citizenship" autocomplete="off" value="<?php echo $this->session->flashdata('Citizenship'); ?>">
+									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-2">
@@ -175,28 +179,6 @@
 									</div>
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-3">
-										<label>Mother's Name</label>
-										<input class="form-control" type="text" name="MotherName" autocomplete="off" value="<?php echo $this->session->flashdata('MotherName'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-3">
-										<label>Occupation</label>
-										<input class="form-control" type="text" name="MotherOccupation" autocomplete="off" value="<?php echo $this->session->flashdata('MotherOccupation'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-3">
-										<label>Father's Name</label>
-										<input class="form-control" type="text" name="FatherName" autocomplete="off" value="<?php echo $this->session->flashdata('FatherName'); ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-3">
-										<label>Occupation</label>
-										<input class="form-control" type="text" name="FatherOccupation" autocomplete="off" value="<?php echo $this->session->flashdata('FatherOccupation'); ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-4">
-										<label>Citizenship</label>
-										<input class="form-control" type="text" name="Citizenship" autocomplete="off" value="<?php echo $this->session->flashdata('Citizenship'); ?>">
-									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Civil Status</label>
 										<select class="form-control" name="CivilStatus">
@@ -222,7 +204,7 @@
 											</option>
 										</select>
 									</div>
-									<div class="form-group col-sm-12 col-md-4">
+									<div class="form-group col-sm-12 col-md-3">
 										<label>Name of Spouse</label>
 										<input class="form-control" type="text" name="SpouseName" autocomplete="off" value="<?php echo $this->session->flashdata('SpouseName'); ?>">
 									</div>
@@ -230,11 +212,46 @@
 										<label>No. of Children</label>
 										<input class="form-control" type="number" name="No_Children" autocomplete="off" value="<?php echo $this->session->flashdata('No_Children'); ?>">
 									</div>
-								</div>
-								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Contact Number</label>
 										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $this->session->flashdata('PhoneNumber'); ?>">
+									</div>
+								</div>
+								<div class="mt-5 mb-4">
+									<h5>
+										<i class="fas fa-user-alt"></i> Relatives
+									</h5>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Mother's Name</label>
+										<input class="form-control" type="text" name="MotherName" autocomplete="off" value="<?php echo $this->session->flashdata('MotherName'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Occupation</label>
+										<input class="form-control" type="text" name="MotherOccupation" autocomplete="off" value="<?php echo $this->session->flashdata('MotherOccupation'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Father's Name</label>
+										<input class="form-control" type="text" name="FatherName" autocomplete="off" value="<?php echo $this->session->flashdata('FatherName'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Occupation</label>
+										<input class="form-control" type="text" name="FatherOccupation" autocomplete="off" value="<?php echo $this->session->flashdata('FatherOccupation'); ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Name of Relative (in Manila)</label>
+										<input class="form-control" type="text" name="RelName" autocomplete="off" value="<?php echo $this->session->flashdata('RelName'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Relative's Address</label>
+										<input class="form-control" type="text" name="RelAddress" autocomplete="off" value="<?php echo $this->session->flashdata('RelAddress'); ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Relation</label>
+										<input class="form-control" type="text" name="RelRelation" autocomplete="off" value="<?php echo $this->session->flashdata('RelRelation'); ?>">
 									</div>
 								</div>
 								<div class="mt-5 mb-4">

@@ -250,12 +250,14 @@ class Update_Controller extends CI_Controller {
 		# PERSONAL INFORMATION
 		$PositionDesired = $this->input->post('PositionDesired');
 		$ContractType = $this->input->post('ContractType');
+		$PersonRecommending = $this->input->post('PersonRecommending');
 		$SalaryType = $this->input->post('SalaryType');
 		$Rate = $this->input->post('Rate');
 		$SalaryExpected = $this->input->post('SalaryExpected');
 		$LastName = $this->input->post('LastName');
 		$FirstName = $this->input->post('FirstName');
 		$MI = $this->input->post('MI');
+		$Nickname = $this->input->post('Nickname');
 		$Gender = $this->input->post('Gender');
 		$Age = $this->input->post('Age');
 		$Height = $this->input->post('Height');
@@ -266,7 +268,20 @@ class Update_Controller extends CI_Controller {
 		$bPlace = $this->input->post('bPlace');
 		$Citizenship = $this->input->post('Citizenship');
 		$CivilStatus = $this->input->post('CivilStatus');
+		$SpouseName = $this->input->post('SpouseName');
 		$No_Children = $this->input->post('No_Children');
+		$PhoneNumber = $this->input->post('PhoneNumber');
+
+
+		$MotherName = $this->input->post('MotherName');
+		$MotherOccupation = $this->input->post('MotherOccupation');
+		$FatherName = $this->input->post('FatherName');
+		$FatherOccupation = $this->input->post('FatherOccupation');
+		$RelName = $this->input->post('RelName');
+		$RelAddress = $this->input->post('RelAddress');
+		$RelRelation = $this->input->post('RelRelation');
+		$PhoneNumber = $this->input->post('PhoneNumber');
+		$PhoneNumber = $this->input->post('PhoneNumber');
 		$PhoneNumber = $this->input->post('PhoneNumber');
 		# DOCUMENTS
 		$SSS = $this->input->post('SSS');
@@ -293,12 +308,14 @@ class Update_Controller extends CI_Controller {
 				'EmployeeID' => $EmployeeID,
 				'PositionDesired' => $PositionDesired,
 				'ContractType' => $ContractType,
+				'PersonRecommending' => $PersonRecommending,
 				'SalaryType' => $SalaryType,
 				'Rate' => $Rate,
 				'SalaryExpected' => $SalaryExpected,
 				'LastName' => $LastName,
 				'FirstName' => $FirstName,
 				'MI' => $MI,
+				'Nickname' => $Nickname,
 				'Gender' => $Gender,
 				'Age' => $Age,
 				'Height' => $Height,
@@ -308,8 +325,18 @@ class Update_Controller extends CI_Controller {
 				'bPlace' => $bPlace,
 				'Citizenship' => $Citizenship,
 				'CivilStatus' => $CivilStatus,
+				'SpouseName' => $SpouseName,
 				'No_Children' => $No_Children,
 				'PhoneNumber' => $PhoneNumber,
+
+				'MotherName' => $MotherName,
+				'MotherOccupation' => $MotherOccupation,
+				'FatherName' => $FatherName,
+				'FatherOccupation' => $FatherOccupation,
+				'RelName' => $RelName,
+				'RelAddress' => $RelAddress,
+				'RelRelation' => $RelRelation,
+
 				'SSS' => $SSS,
 				'SSS_Effective' => $SSS_Effective,
 				'RCN' => $RCN,
@@ -366,12 +393,14 @@ class Update_Controller extends CI_Controller {
 					'EmployeeID' => $EmployeeID,
 					'PositionDesired' => $PositionDesired,
 					'ContractType' => $ContractType,
+					'PersonRecommending' => $PersonRecommending,
 					'SalaryType' => $SalaryType,
 					'Rate' => $Rate,
 					'SalaryExpected' => $SalaryExpected,
 					'LastName' => ucfirst($LastName),
 					'FirstName' => ucfirst($FirstName),
 					'MiddleInitial' => ucfirst($MI),
+					'Nickname' => ucfirst($Nickname),
 					'Gender' => $Gender,
 					'Age' => $Age,
 					'Height' => $Height,
@@ -381,7 +410,16 @@ class Update_Controller extends CI_Controller {
 					'BirthPlace' => $bPlace,
 					'Citizenship' => $Citizenship,
 					'CivilStatus' => $CivilStatus,
+					'SpouseName' => $SpouseName,
 					'No_OfChildren' => $No_Children,
+
+					'MotherName' => $MotherName,
+					'MotherOccupation' => $MotherOccupation,
+					'FatherName' => $FatherName,
+					'FatherOccupation' => $FatherOccupation,
+					'RelName' => $RelName,
+					'RelAddress' => $RelAddress,
+					'RelRelation' => $RelRelation,
 					
 					'Address_Present' => $Address_Present,
 					'Address_Provincial' => $Address_Provincial,

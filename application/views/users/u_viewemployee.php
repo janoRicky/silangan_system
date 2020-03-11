@@ -51,6 +51,7 @@
 										<?php endif; ?>
 										<li id="TabAcademicBtn" class="employee-tabs-select"><a href="#Academic" onclick="">Academic</a></li>
 										<li id="TabEmploymentsBtn" class="employee-tabs-select"><a href="#Employments" onclick="">Employments</a></li>
+										<li id="TabReferencesBtn" class="employee-tabs-select"><a href="#References" onclick="">References</a></li>
 										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
 									</ul>
 								</div>
@@ -252,6 +253,28 @@
 												</div>
 												<div class="col-sm-2 employee-dynamic-item">
 													<?php echo $FatherOccupation; ?>
+												</div>
+											</div>
+											<div class="row mt-3">
+												<div class="col-sm-4 employee-dynamic-header">
+													<b>Name of Relative (in Manila)</b>
+												</div>
+												<div class="col-sm-4 employee-dynamic-header">
+													<b>Relative's Address</b>
+												</div>
+												<div class="col-sm-2 employee-dynamic-header">
+													<b>Relation</b>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-4 employee-dynamic-item">
+													<?php echo $RelName; ?>
+												</div>
+												<div class="col-sm-4 employee-dynamic-item">
+													<?php echo $RelAddress; ?>
+												</div>
+												<div class="col-sm-2 employee-dynamic-item">
+													<?php echo $RelRelation; ?>
 												</div>
 											</div>
 											<hr class="mt-5 mb-3">
@@ -731,6 +754,44 @@
 											</div>
 										</div>
 									</div>
+									<div id="TabReferences">
+										<div class="employee-tabs-group-content" id="TabReferences">
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="table-responsive">
+														<table class="table table-condensed">
+															<thead class="employee-table-header">
+																<th>Name</th>
+																<th>Position</th>
+																<th>Company / Address</th>
+															</thead>
+															<tbody>
+																<?php if ($GetCharRef->num_rows() > 0) { ?>
+																	<?php foreach ($GetCharRef->result_array() as $row): ?>
+																		<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+																			<tr>
+																				<td><?php echo $row['RefName'];?></td>
+																				<td><?php echo $row['RefPosition'];?></td>
+																				<td><?php echo $row['CompanyAddress'];?></td>
+																			</tr>
+																		<?php } ?>
+																	<?php endforeach ?>
+																<?php } else { ?>
+																	<tr class="w-100 text-center">
+																		<td colspan="6">
+																			<h5>
+																				No Data
+																			</h5>
+																		</td>
+																	</tr>
+																<?php } ?>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -876,6 +937,10 @@
 			else if (hashValue == 'Employments') {
 				$('#TabEmployments').children('.employee-tabs-group-content').show();
 				$('#TabEmploymentsBtn').addClass('employee-tabs-active');
+			}
+			else if (hashValue == 'References') {
+				$('#TabReferences').children('.employee-tabs-group-content').show();
+				$('#TabReferencesBtn').addClass('employee-tabs-active');
 			} else {
 				$('#TabPersonal').children('.employee-tabs-group-content').show();
 				$('#TabPersonalBtn').addClass('employee-tabs-active');
@@ -903,6 +968,10 @@
 				else if (hashValue == 'Employments') {
 					$('#TabEmployments').children('.employee-tabs-group-content').show();
 					$('#TabEmploymentsBtn').addClass('employee-tabs-active');
+				}
+				else if (hashValue == 'References') {
+					$('#TabReferences').children('.employee-tabs-group-content').show();
+					$('#TabReferencesBtn').addClass('employee-tabs-active');
 				} else {
 					$('#TabPersonal').children('.employee-tabs-group-content').show();
 					$('#TabPersonalBtn').addClass('employee-tabs-active');
@@ -940,6 +1009,9 @@
 			});
 			$('#TabEmploymentsBtn').on('click', function () {
 				$('#TabEmployments').children('.employee-tabs-group-content').fadeIn(100);
+			});
+			$('#TabReferencesBtn').on('click', function () {
+				$('#TabReferences').children('.employee-tabs-group-content').fadeIn(100);
 			});
 			$('#TabNotesBtn').on('click', function () {
 				$('#TabNotes').children('.employee-tabs-group-content').fadeIn(100);

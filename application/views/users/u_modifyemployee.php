@@ -103,7 +103,7 @@
 									<?php endif; ?> -->
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-4">
+									<div class="form-group col-sm-12 col-md-3">
 										<label>Last Name</label>
 										<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $LastName; ?>">
 									</div>
@@ -152,6 +152,10 @@
 										<label>Religion</label>
 										<input class="form-control" type="text" name="Religion" autocomplete="off" value="<?php echo $Religion; ?>">
 									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Citizenship</label>
+										<input class="form-control" type="text" name="Citizenship" autocomplete="off" value="<?php echo $Citizenship; ?>">
+									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-2">
@@ -164,28 +168,6 @@
 									</div>
 								</div>
 								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-3">
-										<label>Mother's Name</label>
-										<input class="form-control" type="text" name="MotherName" autocomplete="off" value="<?php echo $MotherName; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-3">
-										<label>Occupation</label>
-										<input class="form-control" type="text" name="MotherOccupation" autocomplete="off" value="<?php echo $MotherOccupation; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-3">
-										<label>Mother's Name</label>
-										<input class="form-control" type="text" name="FatherName" autocomplete="off" value="<?php echo $FatherName; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-3">
-										<label>Occupation</label>
-										<input class="form-control" type="text" name="FatherOccupation" autocomplete="off" value="<?php echo $FatherOccupation; ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-4">
-										<label>Citizenship</label>
-										<input class="form-control" type="text" name="Citizenship" autocomplete="off" value="<?php echo $Citizenship; ?>">
-									</div>
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Civil Status</label>
 										<select class="form-control" name="CivilStatus">
@@ -224,6 +206,43 @@
 									<div class="form-group col-sm-12 col-md-4">
 										<label>Phone Number</label>
 										<input class="form-control" type="text" name="PhoneNumber" autocomplete="off" value="<?php echo $Phone_No; ?>">
+									</div>
+								</div>
+								<div class="mt-5 mb-4">
+									<h5>
+										<i class="fas fa-user-alt"></i> Relatives
+									</h5>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Mother's Name</label>
+										<input class="form-control" type="text" name="MotherName" autocomplete="off" value="<?php echo $MotherName; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Occupation</label>
+										<input class="form-control" type="text" name="MotherOccupation" autocomplete="off" value="<?php echo $MotherOccupation; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Mother's Name</label>
+										<input class="form-control" type="text" name="FatherName" autocomplete="off" value="<?php echo $FatherName; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Occupation</label>
+										<input class="form-control" type="text" name="FatherOccupation" autocomplete="off" value="<?php echo $FatherOccupation; ?>">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Name of Relative (in Manila)</label>
+										<input class="form-control" type="text" name="RelName" autocomplete="off" value="<?php echo $RelName; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Relative's Address</label>
+										<input class="form-control" type="text" name="RelAddress" autocomplete="off" value="<?php echo $RelAddress; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Relation</label>
+										<input class="form-control" type="text" name="RelRelation" autocomplete="off" value="<?php echo $RelRelation; ?>">
 									</div>
 								</div>
 								<div class="mt-5 mb-4">

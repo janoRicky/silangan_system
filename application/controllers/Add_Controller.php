@@ -38,6 +38,9 @@ class Add_Controller extends CI_Controller {
 		$MotherOccupation = $this->input->post('MotherOccupation');
 		$FatherName = $this->input->post('FatherName');
 		$FatherOccupation = $this->input->post('FatherOccupation');
+		$RelName = $this->input->post('RelName');
+		$RelAddress = $this->input->post('RelAddress');
+		$RelRelation = $this->input->post('RelRelation');
 		$Citizenship = $this->input->post('Citizenship');
 		$CivilStatus = $this->input->post('CivilStatus');
 		$SpouseName = $this->input->post('SpouseName');
@@ -85,6 +88,9 @@ class Add_Controller extends CI_Controller {
 				'MotherOccupation' => $MotherOccupation,
 				'FatherName' => $FatherName,
 				'FatherOccupation' => $FatherOccupation,
+				'RelName' => $RelName,
+				'RelAddress' => $RelAddress,
+				'RelRelation' => $RelRelation,
 				'Citizenship' => $Citizenship,
 				'CivilStatus' => $CivilStatus,
 				'SpouseName' => $SpouseName,
@@ -188,6 +194,9 @@ class Add_Controller extends CI_Controller {
 					'MotherOccupation' => $MotherOccupation,
 					'FatherName' => $FatherName,
 					'FatherOccupation' => $FatherOccupation,
+					'RelName' => $RelName,
+					'RelAddress' => $RelAddress,
+					'RelRelation' => $RelRelation,
 					'Citizenship' => $Citizenship,
 					'CivilStatus' => $CivilStatus,
 					'SpouseName' => $SpouseName,
