@@ -96,7 +96,7 @@
 	public function index()
 	{
 		$this->session->unset_userdata('acadcart');
-		redirect('Employees');
+		redirect('Dashboard');
 		// $this->load->view('Login');
 	}
 	public function CheckUserLogin()
@@ -295,15 +295,17 @@
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
-		$header['title'] = 'Employees | Silangan Lumber';
+		$header['title'] = 'Applicants | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Employees">Employees</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Applicant">Applicants</a></li>
 			</ol>
 		</nav>';
-		$data['get_employee'] = $this->Model_Selects->getApplicant();
+		$data['get_employee'] = $this->Model_Selects->GetEmployee();
+		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
 		$this->load->view('users/u_applicant',$data);
@@ -322,11 +324,12 @@
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
 				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ApplicantsExpired">Expired</a></li>
 			</ol>
 		</nav>';
-		$data['get_employee'] = $this->Model_Selects->getApplicant();
+		$data['get_employee'] = $this->Model_Selects->GetEmployee();
+		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
 		$this->load->view('users/u_applicantexpired',$data);
@@ -348,7 +351,7 @@
 				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Blacklisted">Blacklisted</a></li>
 			</ol>
 		</nav>';
-		$data['get_employee'] = $this->Model_Selects->getApplicant();
+		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['GetArchived'] = $this->Model_Selects->GetApplicantArchived();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
@@ -371,7 +374,7 @@
 				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Archived">Archived</a></li>
 			</ol>
 		</nav>';
-		$data['get_employee'] = $this->Model_Selects->getApplicant();
+		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['GetBlacklisted'] = $this->Model_Selects->GetApplicantBlacklisted();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
@@ -390,10 +393,11 @@
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Employee">Employee</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Employee">Employees</a></li>
 			</ol>
 		</nav>';
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
+		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getClientOption'] = $this->Model_Selects->getClientOption();
 		$this->load->view('users/u_users',$data);
@@ -462,7 +466,6 @@
 					'HDMF' => $ged['HDMF'],
 
 					'PhilHealth' => $ged['PhilHealth'],
-					// 'PagIbig' => $ged['PagIbig'],
 
 					'ATM_No' => $ged['ATM_No'],
 
@@ -498,7 +501,15 @@
 				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
 				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID);
 				$data['GetDocumentsNotes'] = $this->Model_Selects->GetDocumentsNotes($ApplicantID);
-				if ($data['Status'] == 'Employed') {
+				// if ($data['Status'] == 'Employed') {
+				// 	$data['Breadcrumb'] = '
+				// 	<nav aria-label="breadcrumb">
+				// 		<ol class="breadcrumb" style="background-color: transparent;">
+				// 			<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+				// 			<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+				// 		</ol>
+				// 	</nav>';
+				// } else {
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb" style="background-color: transparent;">
@@ -506,15 +517,7 @@
 							<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
 						</ol>
 					</nav>';
-				} else {
-					$data['Breadcrumb'] = '
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb" style="background-color: transparent;">
-							<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
-						</ol>
-					</nav>';
-				}
+				// }
 				$this->load->view('users/u_viewemployee',$data);
 			}
 			else
@@ -592,7 +595,6 @@
 					'HDMF' => $ged['HDMF'],
 
 					'PhilHealth' => $ged['PhilHealth'],
-					// 'PagIbig' => $ged['PagIbig'],
 
 					'ATM_No' => $ged['ATM_No'],
 					

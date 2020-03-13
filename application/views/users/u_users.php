@@ -5,7 +5,13 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row silangan-tablelist-container">
+				<div class="col-12 col-sm-12 tabs">
+					<ul>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Employee">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
+					</ul>
+				</div>
+				<div class="row rcontent">
 					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4 class="tabs-icon">
@@ -13,6 +19,9 @@
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right">
+						<a href="<?=base_url()?>NewEmployee" class="btn btn-primary" onclick="// return confirm('Add Employee?')">
+							<i class="fas fa-user-plus"></i> New
+						</a>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
@@ -20,7 +29,7 @@
 							<table id="emp" class="table table-bordered PrintOut" style="width: 100%;">
 								<thead>
 									<tr class="text-center">
-										<th> Applicant </th>
+										<th> Employee </th>
 										<th> Full Name </th>
 										<th> Position </th>
 										<th> Client </th>

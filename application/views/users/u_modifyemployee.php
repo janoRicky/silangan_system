@@ -311,10 +311,6 @@
 										<label>HDMF</label>
 										<input class="form-control" type="text" name="HDMF" autocomplete="off" value="<?php echo $HDMF; ?>">
 									</div>
-									<!-- <div class="form-group col-sm-12 col-lg-3">
-										<label>PAG-IBIG</label>
-										<input class="form-control" type="text" name="PagIbig" autocomplete="off" value="<?php echo $PagIbig; ?>">
-									</div> -->
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>PHILHEALTH</label>
 										<input class="form-control" type="text" name="PhilHealth" autocomplete="off" value="<?php echo $PhilHealth; ?>">
@@ -541,9 +537,9 @@
 									<option>
 										SSS
 									</option>
-									<!-- <option>
-										PAG-IBIG
-									</option> -->
+									<option>
+										HDMF
+									</option>
 									<option>
 										PhilHealth
 									</option>

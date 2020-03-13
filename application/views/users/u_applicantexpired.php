@@ -12,10 +12,8 @@
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="col-12 col-sm-12 tabs">
 					<ul>
-						<li><a href="<?php echo base_url() ?>Employees">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>Employee">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
 						<li class="tabs-active"><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
-						<li><a href="<?php echo base_url() ?>Blacklisted">Blacklisted</a></li>
-						<li><a href="<?php echo base_url() ?>Archived">Archived</a></li>
 					</ul>
 				</div>
 				<div class="row rcontent">
@@ -39,7 +37,7 @@
 										<th> Applicant </th>
 										<th> Full Name </th>
 										<th> Previous Position </th>
-										<th> Sex </th>
+										<th> Gender </th>
 										<th> Applied On </th>
 										<th> Expired Since </th>
 										<th class="PrintExclude"> Action </th>
@@ -106,7 +104,7 @@
 			$Year = date('Y');
 			$Year = substr($Year, 2);
 			// Concatenate them all together
-			$EmployeeID = 'WC' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
+			$EmployeeID = 'SL' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
 			?>
 			if ($(this).val() == '<?php echo $row['ClientID']; ?>') {
 				$(this).closest('#ClientModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');

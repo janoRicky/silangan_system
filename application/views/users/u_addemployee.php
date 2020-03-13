@@ -139,7 +139,7 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-2">
-										<label>Sex</label>
+										<label>Gender</label>
 										<select class="form-control" name="Gender">
 											<option value="Male" <?php if ($this->session->flashdata('Gender') == 'Male') {
 												echo 'selected=""';
@@ -326,10 +326,6 @@
 										<label>HDMF</label>
 										<input class="form-control" type="text" name="HDMF" autocomplete="off" value="<?php echo $this->session->flashdata('HDMF'); ?>">
 									</div>
-									<!-- <div class="form-group col-sm-12 col-lg-3">
-										<label>PAG-IBIG</label>
-										<input class="form-control" type="text" name="PagIbig" autocomplete="off" value="<?php echo $this->session->flashdata('PagIbig'); ?>">
-									</div> -->
 									<div class="form-group col-sm-12 col-lg-3">
 										<label>PHILHEALTH</label>
 										<input class="form-control" type="text" name="PhilHealth" autocomplete="off" value="<?php echo $this->session->flashdata('PhilHealth'); ?>">
@@ -411,7 +407,7 @@
 										SSS
 									</option>
 									<option>
-										PAG-IBIG
+										HDMF
 									</option>
 									<option>
 										PhilHealth
@@ -584,6 +580,183 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- New Contract -->
+	<!-- <div id="TabContract">
+		<div class="employee-tabs-group-content">
+			<?php if ($Status == 'Employed'): ?>
+			<div class="employee-content-header">
+				<div class="row">
+					<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
+					<button class="btn btn-primary btn-sm ml-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+					<div class="ml-auto">
+						<button class="btn btn-primary btn-sm" onClick="printContent('PrintOut')" type="button"><i class="fas fa-print"></i> Print</button>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="col-sm-12 col-md-12 employee-dynamic-header text-center">
+				<b>
+					Days Remaining on Contract
+				</b>
+			</div>
+			<div class="col-sm-12 col-md-12 text-center">
+				<p>
+					<?php
+
+						$currTime = time();
+						$strDateEnds = strtotime($DateEnds);
+						$strDateStarted = strtotime($DateStarted);
+						// PERCENTAGE
+						$rPercentage = (($strDateEnds - $currTime) * 100) / ($strDateEnds - $strDateStarted);
+						$rPercentage = round($rPercentage);
+						// DAYS REMAINING
+						$dateTimeZone = new DateTimeZone("Asia/Manila");
+						$datetime1 = new DateTime('@' . $currTime, $dateTimeZone);
+						$datetime2 = new DateTime('@' . $strDateEnds, $dateTimeZone);
+						$interval = $datetime1->diff($datetime2);
+						if($interval->format('%y years, %m months, %d days') == '0 years, 0 months, 0 days') {
+							echo $interval->format('%H hours, %I minutes, %S seconds');
+						} else {
+							echo $interval->format('%y years, %m months, %d days');
+						}
+					?>
+					<input type="hidden" id="TimeLeft" value="<?php echo $rPercentage;?>">
+				</p>
+			</div>
+			<div class="col-sm-12 col-md-12 PrintExclude">
+				<div class="progressBar">
+					<div class="progressBarTitle progressRemainingColor">Time Left</div>
+					<div class="progress progressRemaining"></div>
+					<div class="progress_value">45%</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="card mb-3" style="max-width: 18rem;">
+						<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tag"></i> Client</b></div>
+						<div class="card-body text-dark">
+							<h5 class="card-title text-center silangan-card-title">
+								<?php
+								// TODO: Find a better solution than this.
+								$found = false;
+								foreach ($get_employee->result_array() as $row) {
+									foreach ($getClientOption->result_array() as $nrow) {
+										if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+											$found = true;
+											echo $nrow['Name'];
+										}
+									}
+								}?>
+							</h5>
+							<p class="card-text">
+								<div class="col-sm-12 employee-static-item text-center mt-3">
+									<div class="col-sm-12 employee-dynamic-header">
+										<b>Contact</b>
+									</div>
+									<div class="col-sm-12">
+										<?php
+										// TODO: Find a better solution than this.
+										$found = false;
+										foreach ($get_employee->result_array() as $row) {
+											foreach ($getClientOption->result_array() as $nrow) {
+												if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+													$found = true;
+													echo $nrow['ContactNumber'];
+												}
+											}
+										}?>
+									</div>
+								</div>
+								<div class="col-sm-12 employee-static-item text-center">
+									<div class="col-sm-12 employee-dynamic-header">
+										<b>Address</b>
+									</div>
+									<div class="col-sm-12">
+										<?php
+										// TODO: Find a better solution than this.
+										$found = false;
+										foreach ($get_employee->result_array() as $row) {
+											foreach ($getClientOption->result_array() as $nrow) {
+												if ($row['ClientEmployed'] == $nrow['ClientID'] && $found == false) {
+													$found = true;
+													echo $nrow['Address'];
+												}
+											}
+										}?>
+									</div>
+								</div>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="card mb-3" style="max-width: 18rem;">
+						<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tie"></i> Position</b></div>
+						<div class="card-body text-dark">
+							<h5 class="card-title text-center silangan-card-title"><?php echo $PositionDesired; ?></h5>
+							<p class="card-text">
+								<div class="col-sm-12 employee-static-item text-center mt-3">
+									<div class="col-sm-12 employee-dynamic-header">
+										<b>Contract Started</b>
+									</div>
+									<div class="col-sm-12">
+										<?php echo $DateStarted; ?>
+									</div>
+								</div>
+								<div class="col-sm-12 employee-static-item text-center">
+									<div class="col-sm-12 employee-dynamic-header">
+										<b>Contract Ends</b>
+									</div>
+									<div class="col-sm-12">
+										<?php echo $DateEnds; ?>
+									</div>
+								</div>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="card mb-3" style="max-width: 18rem;">
+						<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-book"></i> Salary Expected</b></div>
+						<div class="card-body text-dark">
+							<h5 class="card-title text-center silangan-card-title">₱ <?php echo $SalaryExpected; ?></h5>
+							<p class="card-text">
+								<div class="col-sm-12 employee-static-item text-center mt-3">
+									<div class="col-sm-12 employee-dynamic-header">
+										<b>Documents (<?php echo $GetDocuments->num_rows(); ?>)</b>
+									</div>
+									<div class="col-sm-12">
+										<a href="#Documents" class="btn-sm btn btn-primary"><i class="far fa-eye"></i> View</a>
+									</div>
+								</div>
+								<div class="col-sm-12 employee-static-item text-center">
+									<div class="col-sm-12 employee-dynamic-header">
+										<b>Violations (<?php echo $GetDocumentsViolations->num_rows(); ?>)</b>
+									</div>
+									<div class="col-sm-12">
+										<a href="#Documents" class="btn-sm btn btn-danger"><i class="far fa-eye"></i> View</a>
+									</div>
+								</div>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php else: ?>
+			<div class="employee-content-header">
+				<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm mr-auto ModalHire" data-toggle="modal" data-target="#hirthis"><i class="fas fa-plus"></i> New Contract</button>
+				<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
+			</div>
+			<hr>
+			<div class="row mt-4">
+				<div class="col-sm-12">
+					No available contract to show.
+				</div>
+			</div>
+			<?php endif; ?>
+		</div>
+	</div> -->
 </body>
 <style type="text/css">
 	.in-beni:focus { box-shadow: none; }

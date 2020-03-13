@@ -34,7 +34,7 @@
 										<th> Applicant </th>
 										<th> Full Name </th>
 										<th> Previous Position </th>
-										<th> Sex </th>
+										<th> Gender </th>
 										<th> Applied On </th>
 										<th class="PrintExclude"> Action </th>
 									</tr>

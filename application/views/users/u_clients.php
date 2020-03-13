@@ -118,7 +118,7 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('#EmployeeIDSuffix').bind('input', function() {
-			$('#SuffixPreview').val('WC' + $(this).val() + '-####-20');
+			$('#SuffixPreview').val('SL' + $(this).val() + '-####-20');
 		});
 		$('[data-toggle="tooltip"]').tooltip();
 		if (localStorage.getItem('SidebarVisible') == 'true') {

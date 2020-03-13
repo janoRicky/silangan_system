@@ -65,18 +65,17 @@
 				<div class="row p-4">
 					<div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
-							<a href="Employees">
+							<a href="Applicant">
 								<div class="card-headers bcolor3BB515">
 									<div class="row ml-2">
 										<span class="head-text">
-											Employees
+											Applicants
 										</span>
 									</div>
 									<div class="row ml-2">
 										<span class="head-ico-text">
 											<b>
-												<?php if ($result_capp->num_rows() > 0) {
-												echo $result_capp->num_rows(); } ?>
+												<?php if ($result_capp->num_rows() > 0) { echo $result_capp->num_rows(); } ?>
 											</b>
 										</span>
 										<i class="fas fa-user-friends fa-fw card-icon ml-auto mr-2"></i>

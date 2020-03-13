@@ -292,7 +292,6 @@ class Update_Controller extends CI_Controller {
 		$HDMF = $this->input->post('HDMF');
 
 		$PhilHealth = $this->input->post('PhilHealth');
-		// $PagIbig = $this->input->post('PagIbig');
 		$ATM_No = $this->input->post('ATM_No');
 
 		$ConLDOR = $this->input->post('ConLDOR');
@@ -354,7 +353,6 @@ class Update_Controller extends CI_Controller {
 				'CaseAC' => $CaseAC,
 
 				'PhilHealth' => $PhilHealth,
-				// 'PagIbig' => $PagIbig,
 				
 
 
@@ -449,7 +447,6 @@ class Update_Controller extends CI_Controller {
 					'CaseAC' => $CaseAC,
 
 					'PhilHealth' => $PhilHealth,
-					// 'PagIbig' => $PagIbig,
 
 					'AppliedOn' => $AppliedOn,
 				);

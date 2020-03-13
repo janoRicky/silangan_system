@@ -13,10 +13,17 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
+				<div class="col-12 col-sm-12 tabs">
+					<ul>
+						<li><a href="<?php echo base_url() ?>Employee">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
+						<li class="tabs-active"><a href="<?php echo base_url() ?>Applicant">Applicant (<?php echo $get_applicant->num_rows()?>)</a></li>
+						<li><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
+					</ul>
+				</div>
 				<div class="row rcontent">
 					<div class="col-5 PrintPageName PrintOut">
 						<h4 class="tabs-icon">
-							<i class="fas fa-user-friends fa-fw"></i> x <?php echo $get_employee->num_rows() ?>
+							<i class="fas fa-user-friends fa-fw"></i> x <?php echo $get_applicant->num_rows() ?>
 						</h4> 
 					</div>
 					<div class="col-7 text-right">
@@ -34,13 +41,14 @@
 										<th> Employee </th>
 										<th> Full Name </th>
 										<th> Position </th>
-										<th> Sex </th>
+										<th> Gender </th>
 										<th> Employed On </th>
+										<th> Status </th>
 										<th class="PrintExclude"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($get_employee->result_array() as $row): ?>
+									<?php foreach ($get_applicant->result_array() as $row): ?>
 										<tr>
 											<td class="text-center">
 												<div class="col-sm-12">
@@ -61,6 +69,9 @@
 											</td>
 											<td class="text-center align-middle">
 												<?php echo $row['AppliedOn']; ?>
+											</td>
+											<td class="text-center align-middle">
+												<?php echo $row['Status']; ?>
 											</td>
 											<td class="text-center align-middle PrintExclude" width="100">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>"><i class="far fa-eye"></i> View</a>
@@ -97,7 +108,7 @@
 			$Year = date('Y');
 			$Year = substr($Year, 2);
 			// Concatenate them all together
-			$EmployeeID = 'WC' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
+			$EmployeeID = 'SL' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
 			?>
 			if ($(this).val() == '<?php echo $row['ClientID']; ?>') {
 				$(this).closest('#ClientModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');

@@ -154,7 +154,7 @@
 											<!-- ------------------ -->
 											<div class="row mt-4">
 												<div class="col-sm-2 employee-dynamic-header">
-													<b>Sex</b>
+													<b>Gender</b>
 												</div>
 												<div class="col-sm-2 employee-dynamic-header">
 													<b>Age</b>
@@ -313,7 +313,10 @@
 													<?php echo $PersonRecommending ; ?>
 												</div>
 											</div>
+											<?php if(!empty($ConLDOR) || !empty($ConMTAA) || !empty($CaseAC)): ?>
 											<hr class="mt-5 mb-3">
+											<?php endif; ?>
+											<?php if(!empty($ConLDOR)): ?>
 											<div class="row mt-3">
 												<div class="col-sm-10 employee-dynamic-header">
 													<b>Convictions for violations of any law, decree, ordinance, or regulations in any court or tribunal</b>
@@ -324,6 +327,8 @@
 													<?php echo $ConLDOR; ?>
 												</div>
 											</div>
+											<?php endif; ?>
+											<?php if(!empty($ConMTAA)): ?>
 											<div class="row mt-3">
 												<div class="col-sm-10 employee-dynamic-header">
 													<b>Convictions for any breach of infraction by a military, tribunal, or authority, or found guilty of any administrative offense</b>
@@ -334,6 +339,8 @@
 													<?php echo $ConMTAA; ?>
 												</div>
 											</div>
+											<?php endif; ?>
+											<?php if(!empty($CaseAC)): ?>
 											<div class="row mt-3">
 												<div class="col-sm-10 employee-dynamic-header">
 													<b>Pending administrative/criminal cases</b>
@@ -344,6 +351,7 @@
 													<?php echo $CaseAC; ?>
 												</div>
 											</div>
+											<?php endif; ?>
 											<hr class="mt-5 mb-3">
 											<div class="row employee-personal-row">
 												<div class="col-sm-2 employee-dynamic-header">
@@ -359,14 +367,6 @@
 													<?php echo $EffectiveDateCoverage; ?>
 												</div>
 											</div>
-											<!-- <div class="row employee-personal-row mt-4">
-												<div class="col-sm-2 employee-dynamic-header">
-													<b>PAG-IBIG</b>
-												</div>
-												<div class="col-sm-2 employee-dynamic-item">
-													<?php echo $PagIbig; ?>
-												</div>
-											</div> -->
 											<div class="row employee-personal-row mt-4">
 												<div class="col-sm-2 employee-dynamic-header">
 													<b>PHILHEALTH</b>

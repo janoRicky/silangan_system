@@ -55,7 +55,6 @@ class Add_Controller extends CI_Controller {
 		$HDMF = $this->input->post('HDMF');
 
 		$PhilHealth = $this->input->post('PhilHealth');
-		// $PagIbig = $this->input->post('PagIbig');
 		$ATM_No = $this->input->post('ATM_No');
 
 		
@@ -109,7 +108,6 @@ class Add_Controller extends CI_Controller {
 				'ATM_No' => $ATM_No,
 
 				'PhilHealth' => $PhilHealth,
-				// 'PagIbig' => $PagIbig,
 				
 				'ConLDOR' => $ConLDOR,
 				'ConMTAA' => $ConMTAA,
@@ -225,7 +223,6 @@ class Add_Controller extends CI_Controller {
 					'ATM_No' => $ATM_No,
 
 					'PhilHealth' => $PhilHealth,
-					// 'PagIbig' => $PagIbig,
 
 					'ConLDOR' => $ConLDOR,
 					'ConMTAA' => $ConMTAA,
@@ -343,7 +340,7 @@ class Add_Controller extends CI_Controller {
 						'Link' => $LogbookLink,
 					);
 					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-					redirect('Employees');
+					redirect('Employee');
 				}
 				else
 				{
