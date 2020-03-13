@@ -91,16 +91,16 @@
 										<label>Rate</label>
 										<input class="form-control" type="text" name="Rate" autocomplete="off" value="<?php echo $Rate; ?>">
 									</div>
-									<!-- <?php if($Status == 'Employed'): ?>
-									<div class="form-group col-sm-12 col-md-2">
+									<?php if($Status == 'Employed'): ?>
+									<!-- <div class="form-group col-sm-12 col-md-2">
 										<label>Salary</label>
 										<input class="form-control" type="text" name="SalaryExpected" autocomplete="off" value="<?php echo $SalaryExpected; ?>">
-									</div>
+									</div> -->
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Employee ID</label>
 										<input class="form-control" type="text" name="EmployeeID" autocomplete="off" value="<?php echo $EmployeeID; ?>">
 									</div>
-									<?php endif; ?> -->
+									<?php endif; ?>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-3">

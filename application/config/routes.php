@@ -72,6 +72,7 @@ $route['ViewClient'] = 'Main_Controller/ViewClient';
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';
 // CREATE
+$route['addem'] = 'Add_Controller/addem';
 $route['addNewEmployee'] = 'Add_Controller/addNewEmployee';
 $route['Add_NewAdmin'] = 'Add_Controller/Add_NewAdmin';
 $route['Add_newClient'] = 'Add_Controller/Add_newClient';

@@ -63,7 +63,7 @@
 					}
 				</style>
 				<div class="row p-4">
-					<div class="col-md-12 col-lg-3 mb-4">
+					<!-- <div class="col-md-12 col-lg-3 mb-4">
 						<div class="card-container">
 							<a href="Applicant">
 								<div class="card-headers bcolor3BB515">
@@ -83,8 +83,8 @@
 								</div>
 							</a>
 						</div>
-					</div>
-					<div class="col-md-12 col-lg-3 mb-4">
+					</div> -->
+					<div class="col-md-12 col-lg-4 mb-4">
 						<div class="card-container">
 							<a href="Employee">
 								<div class="card-headers" style="background-color: rgba(153, 102, 255, 1);">
@@ -106,7 +106,7 @@
 							</a>
 						</div>
 					</div>
-					<div class="col-md-12 col-lg-3 mb-4">
+					<div class="col-md-12 col-lg-4 mb-4">
 						<div class="card-container">
 							<a href="Clients">
 								<div class="card-headers bcolor199EC4">
@@ -128,7 +128,7 @@
 							</a>
 						</div>
 					</div>
-					<div class="col-md-12 col-lg-3 mb-4">
+					<div class="col-md-12 col-lg-4 mb-4">
 						<div class="card-container">
 							<a href="Admin_List">
 								<div class="card-headers bcolorE75858">

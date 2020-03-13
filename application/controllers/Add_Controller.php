@@ -62,6 +62,12 @@ class Add_Controller extends CI_Controller {
 		$ConMTAA = $this->input->post('ConMTAA');
 		$CaseAC = $this->input->post('CaseAC');
 		
+		$ClientID = $this->input->post('ClientID');
+		$H_Years = $this->input->post('H_Years');
+		$H_Months = $this->input->post('H_Months');
+		$H_Days = $this->input->post('H_Days');
+		$EmployeeID = $this->input->post('EmployeeID');
+
 
 		# ADDRESSES
 		$Address_Present = $this->input->post('Address_Present');
@@ -112,6 +118,9 @@ class Add_Controller extends CI_Controller {
 				'ConLDOR' => $ConLDOR,
 				'ConMTAA' => $ConMTAA,
 				'CaseAC' => $CaseAC,
+
+				'ClientID' => $ClientID,
+				'EmployeeID' => $EmployeeID,
 
 
 				'Address_Present' => $Address_Present,
@@ -287,59 +296,88 @@ class Add_Controller extends CI_Controller {
 							$this->Model_Inserts->InsertEmploymentRecord($data);
 						}
 					}
-					if (isset($_SESSION["mach_cart"])) {
-						foreach ($_SESSION["mach_cart"] as $s_da) {
-							$data = array(
-								'ApplicantID' => $customid,
-								'MachineName' => $s_da['mach_cart']['MachineName'],
-							);
-							$this->Model_Inserts->InsertMachineOperated($data);
-						}
-					}
-					// if (isset($_SESSION["rela_cart"])) {
-					// 	foreach ($_SESSION["rela_cart"] as $s_da) {
-					// 		$data = array(
-					// 			'ApplicantID' => $customid,
-					// 			'Relation' => $s_da['rela_cart']['Relation'],
-					// 			'Name' => $s_da['rela_cart']['rName'],
-					// 			'Occupation' => $s_da['rela_cart']['rOccupation'],
-					// 		);
-					// 		$this->Model_Inserts->InsertRelativesdata($data);
-					// 	}
-					// }
-					// if (isset($_SESSION["beneCart"])) {
-					// 	foreach ($_SESSION["beneCart"] as $s_da) {
-					// 		$data = array(
-					// 			'ApplicantID' => $customid,
-					// 			'Name' => $s_da['beneCart']['BeneName'],
-					// 			'Relationship' => $s_da['beneCart']['BeneRelationship'],
-					// 		);
-					// 		$this->Model_Inserts->InserBeneficia($data);
-					// 	}
-					// }
 					unset($_SESSION["bencart"]);
 					unset($_SESSION["acadcart"]);
 					unset($_SESSION["ref_cart"]);
 					unset($_SESSION["emp_cart"]);
 					unset($_SESSION["mach_cart"]);
-					// unset($_SESSION["rela_cart"]); 
-					// unset($_SESSION["beneCart"]);
-					
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
-					
-					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
-					$LogbookCurrentTime = date('Y-m-d h:i:s A');
-					$LogbookType = 'New';
-					$LogbookEvent = 'New Applicant added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MI) .  '. | ID: ' . $ApplicantID . ')';
-					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-					$data = array(
-						'Time' => $LogbookCurrentTime,
-						'Type' => $LogbookType,
-						'Event' => $LogbookEvent,
-						'Link' => $LogbookLink,
-					);
-					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+			// Add Contract -Start
+					if($H_Days == NULL) {
+						$H_Days = 0;
+					}
+					if($H_Months == NULL) {
+						$H_Months = 0;
+					}
+					if($H_Years == NULL) {
+						$H_Years = 0;
+					}
+					$Temp_ApplicantID = $ApplicantID;
+					$Temp_ApplicantID++;
+
+					if ($ApplicantID == NULL || $ClientID == NULL) {
+						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+						redirect('NewEmployee');
+					}
+					else
+					{
+						$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
+						if ($CheckApplicant->num_rows() > 0) {
+							$row = $CheckApplicant->row_array();
+
+							date_default_timezone_set('Asia/Manila');
+
+							$DateStarted = date('Y-m-d h:i:s A');
+
+							if ($H_Months == NULL) {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 months', strtotime($DateStarted)));
+							} else {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Months.' months', strtotime($DateStarted)));
+							}
+							if ($H_Days == NULL) {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+							} else {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Days.' days', strtotime($DateEnds)));
+							}
+							if ($H_Years == NULL) {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 days', strtotime($DateEnds)));
+							} else {
+								$DateEnds = date('Y-m-d h:i:s A', strtotime('+'.$H_Years.' years', strtotime($DateEnds)));
+							}
+
+							$data = array(
+								'EmployeeID' => $EmployeeID,
+								'ClientEmployed' => $ClientID,
+								'DateStarted' => $DateStarted,
+								'DateEnds' => $DateEnds,
+								'Salary' => $Salary,
+							);
+							$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
+							$data = array(
+								'ClientID' => $ClientID,
+								'FirstName' => $row['FirstName'],
+								'MiddleInitial' => $row['MiddleInitial'],
+								'LastName' => $row['LastName'],
+								'SalaryExpected' => $row['SalaryExpected'],
+							);
+							$EmployNewApplicant = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
+							if ($EmployNewApplicant == TRUE) {
+								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
+							}
+							else
+							{
+								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+								redirect('NewEmployee');
+							}
+						}
+						else
+						{
+							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+							redirect('NewEmployee');
+						}
+					}
+
+			// Add Contract -END
 					redirect('Employee');
 				}
 				else

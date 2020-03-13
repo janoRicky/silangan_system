@@ -659,7 +659,8 @@
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
-
+		
+		$data['getClientOption'] = $this->Model_Selects->getClientOption();
 		$header['title'] = 'New Employee | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '

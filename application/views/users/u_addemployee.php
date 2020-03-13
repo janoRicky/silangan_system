@@ -367,6 +367,41 @@
 										
 									</div>
 								</div>
+								<div class="mt-5 mb-4">
+									<h5>
+										<i class="fas fa-user-alt"></i> Contract
+									</h5>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-3">
+										<label>Branch</label>
+										<select id="ClientSelect" class="form-control" name="ClientID">
+											<?php foreach ($getClientOption->result_array() as $row): ?>
+												<option value="<?=$row['ClientID'];?>">
+													<?=$row['Name'];?>
+												</option>
+											<?php endforeach ?>
+										</select>
+									</div>
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>Years</label>
+										<input class="form-control" type="number" name="H_Years" value="1">
+									</div>
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>Months</label>
+										<input class="form-control" type="number" name="H_Months" value="0">
+									</div>
+									<div class="form-group col-sm-12 col-lg-3">
+										<label>Days</label>
+										<input class="form-control" type="number" name="H_Days" value="0">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-lg-4">
+										<label>Employee ID</label>
+										<input id="EmployeeID" class="form-control" type="text" name="EmployeeID" value="<?php echo $this->session->flashdata('EmployeeID'); ?>">
+									</div>
+								</div>
 								
 								<div class="form-row pt-5 pb-4">
 									<div class="form-group mr-auto">

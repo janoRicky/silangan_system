@@ -83,43 +83,43 @@ class Update_Controller extends CI_Controller {
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
 						// LOGBOOK
-						date_default_timezone_set('Asia/Manila');
-						$LogbookCurrentTime = date('Y-m-d h:i:s A');
-						$LogbookType = 'Employment';
-						$LogbookEvent = 'Applicant ID ' . $Temp_ApplicantID .' has been employed to Client ID ' . $ClientID . ' for ';
-						if($H_Years != 0) {
-							$LogbookEvent = $LogbookEvent . $H_Years;
-							if($H_Years == 1) {
-								$LogbookEvent = $LogbookEvent . ' year, ';
-							} else {
-								$LogbookEvent = $LogbookEvent . ' years, ';
-							}
-						}
-						if($H_Months != 0) {
-							$LogbookEvent = $LogbookEvent . $H_Months;
-							if($H_Months == 1) {
-								$LogbookEvent = $LogbookEvent . ' month, ';
-							} else {
-								$LogbookEvent = $LogbookEvent . ' months, ';
-							}
-						}
-						if($H_Days != 0) {
-							$LogbookEvent = $LogbookEvent . $H_Days;
-							if($H_Days == 1) {
-								$LogbookEvent = $LogbookEvent . ' day, ';
-							} else {
-								$LogbookEvent = $LogbookEvent . ' days, ';
-							}
-						}
-						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $Temp_ApplicantID;
-						$data = array(
-							'Time' => $LogbookCurrentTime,
-							'Type' => $LogbookType,
-							'Event' => $LogbookEvent,
-							'Link' => $LogbookLink,
-						);
-						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						// date_default_timezone_set('Asia/Manila');
+						// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+						// $LogbookType = 'Employment';
+						// $LogbookEvent = 'Applicant ID ' . $Temp_ApplicantID .' has been employed to Client ID ' . $ClientID . ' for ';
+						// if($H_Years != 0) {
+						// 	$LogbookEvent = $LogbookEvent . $H_Years;
+						// 	if($H_Years == 1) {
+						// 		$LogbookEvent = $LogbookEvent . ' year, ';
+						// 	} else {
+						// 		$LogbookEvent = $LogbookEvent . ' years, ';
+						// 	}
+						// }
+						// if($H_Months != 0) {
+						// 	$LogbookEvent = $LogbookEvent . $H_Months;
+						// 	if($H_Months == 1) {
+						// 		$LogbookEvent = $LogbookEvent . ' month, ';
+						// 	} else {
+						// 		$LogbookEvent = $LogbookEvent . ' months, ';
+						// 	}
+						// }
+						// if($H_Days != 0) {
+						// 	$LogbookEvent = $LogbookEvent . $H_Days;
+						// 	if($H_Days == 1) {
+						// 		$LogbookEvent = $LogbookEvent . ' day, ';
+						// 	} else {
+						// 		$LogbookEvent = $LogbookEvent . ' days, ';
+						// 	}
+						// }
+						// $LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
+						// $LogbookLink = base_url() . 'ViewEmployee?id=' . $Temp_ApplicantID;
+						// $data = array(
+						// 	'Time' => $LogbookCurrentTime,
+						// 	'Type' => $LogbookType,
+						// 	'Event' => $LogbookEvent,
+						// 	'Link' => $LogbookLink,
+						// );
+						// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
