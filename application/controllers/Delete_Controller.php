@@ -23,18 +23,18 @@ class Delete_Controller extends CI_Controller {
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
-				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Archival';
-				$LogbookEvent = 'Employee ID ' . $id .' has been archived.';
-				$LogbookLink = base_url() . 'ViewEmployee?id=' . $id;
-				$data = array(
-					'Time' => $LogbookCurrentTime,
-					'Type' => $LogbookType,
-					'Event' => $LogbookEvent,
-					'Link' => $LogbookLink,
-				);
-				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				// date_default_timezone_set('Asia/Manila');
+				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+				// $LogbookType = 'Archival';
+				// $LogbookEvent = 'Employee ID ' . $id .' has been archived.';
+				// $LogbookLink = base_url() . 'ViewEmployee?id=' . $id;
+				// $data = array(
+				// 	'Time' => $LogbookCurrentTime,
+				// 	'Type' => $LogbookType,
+				// 	'Event' => $LogbookEvent,
+				// 	'Link' => $LogbookLink,
+				// );
+				// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -61,18 +61,18 @@ class Delete_Controller extends CI_Controller {
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Admin ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
-				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Deletion';
-				$LogbookEvent = 'Admin ID ' . $id .' has been removed.';
-				$LogbookLink = base_url() . 'Admin_List';
-				$data = array(
-					'Time' => $LogbookCurrentTime,
-					'Type' => $LogbookType,
-					'Event' => $LogbookEvent,
-					'Link' => $LogbookLink,
-				);
-				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				// date_default_timezone_set('Asia/Manila');
+				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+				// $LogbookType = 'Deletion';
+				// $LogbookEvent = 'Admin ID ' . $id .' has been removed.';
+				// $LogbookLink = base_url() . 'Admin_List';
+				// $data = array(
+				// 	'Time' => $LogbookCurrentTime,
+				// 	'Type' => $LogbookType,
+				// 	'Event' => $LogbookEvent,
+				// 	'Link' => $LogbookLink,
+				// );
+				// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -99,18 +99,18 @@ class Delete_Controller extends CI_Controller {
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Client ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
-				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Deletion';
-				$LogbookEvent = 'Client ID ' . $id .' has been removed.';
-				$LogbookLink = base_url() . 'Clients';
-				$data = array(
-					'Time' => $LogbookCurrentTime,
-					'Type' => $LogbookType,
-					'Event' => $LogbookEvent,
-					'Link' => $LogbookLink,
-				);
-				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				// date_default_timezone_set('Asia/Manila');
+				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+				// $LogbookType = 'Deletion';
+				// $LogbookEvent = 'Client ID ' . $id .' has been removed.';
+				// $LogbookLink = base_url() . 'Clients';
+				// $data = array(
+				// 	'Time' => $LogbookCurrentTime,
+				// 	'Type' => $LogbookType,
+				// 	'Event' => $LogbookEvent,
+				// 	'Link' => $LogbookLink,
+				// );
+				// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}

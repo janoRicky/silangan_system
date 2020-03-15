@@ -266,7 +266,7 @@
 								</div>
 								<div class="mt-5 mb-4">
 									<h5>
-										<i class="fas fa-user-alt"></i> Convictions/Cases
+										<i class="fas fa-user-alt"></i> Convictions / Cases
 									</h5>
 								</div>
 								<div class="form-row">

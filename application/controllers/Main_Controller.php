@@ -347,7 +347,7 @@
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
 				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Blacklisted">Blacklisted</a></li>
 			</ol>
 		</nav>';
@@ -370,7 +370,7 @@
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
 				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Archived">Archived</a></li>
 			</ol>
 		</nav>';
@@ -505,7 +505,7 @@
 				// 	$data['Breadcrumb'] = '
 				// 	<nav aria-label="breadcrumb">
 				// 		<ol class="breadcrumb" style="background-color: transparent;">
-				// 			<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+				// 			<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
 				// 			<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
 				// 		</ol>
 				// 	</nav>';
@@ -513,7 +513,7 @@
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb" style="background-color: transparent;">
-							<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
 							<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
 						</ol>
 					</nav>';
@@ -634,7 +634,7 @@
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb" style="background-color: transparent;">
-							<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
 							<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
 							<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
 						</ol>
@@ -666,7 +666,7 @@
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a href="Employees">Employees</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
 				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="NewEmployee">New</a></li>
 			</ol>
 		</nav>';
@@ -699,12 +699,12 @@
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
-		$header['title'] = 'Clients | Silangan Lumber';
+		$header['title'] = 'Branches | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Clients">Clients</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Clients">Branches</a></li>
 			</ol>
 		</nav>';
 		$data['ShowClients'] = $this->Model_Selects->GetClients();

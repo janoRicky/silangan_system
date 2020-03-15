@@ -434,18 +434,18 @@ class Add_Controller extends CI_Controller {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Admin added!</h5></div>');
 
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
-					$LogbookCurrentTime = date('Y-m-d h:i:s A');
-					$LogbookType = 'New';
-					$LogbookEvent = 'New Admin added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) .  '. | Position: ' . $Position . ')';
-					$LogbookLink = base_url() . 'Admin_List';
-					$data = array(
-						'Time' => $LogbookCurrentTime,
-						'Type' => $LogbookType,
-						'Event' => $LogbookEvent,
-						'Link' => $LogbookLink,
-					);
-					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					// date_default_timezone_set('Asia/Manila');
+					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+					// $LogbookType = 'New';
+					// $LogbookEvent = 'New Admin added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) .  '. | Position: ' . $Position . ')';
+					// $LogbookLink = base_url() . 'Admin_List';
+					// $data = array(
+					// 	'Time' => $LogbookCurrentTime,
+					// 	'Type' => $LogbookType,
+					// 	'Event' => $LogbookEvent,
+					// 	'Link' => $LogbookLink,
+					// );
+					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 					redirect('Admin_List');
 				}
 				else
@@ -488,18 +488,18 @@ class Add_Controller extends CI_Controller {
 				if ($InsertNewClient == TRUE) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Client added!</h5></div>');
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
-					$LogbookCurrentTime = date('Y-m-d h:i:s A');
-					$LogbookType = 'New';
-					$LogbookEvent = 'New Client added! (Name: ' . $ClientName . ' | Contact: ' . $ClientContact . ')';
-					$LogbookLink = base_url() . 'Clients';
-					$data = array(
-						'Time' => $LogbookCurrentTime,
-						'Type' => $LogbookType,
-						'Event' => $LogbookEvent,
-						'Link' => $LogbookLink,
-					);
-					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					// date_default_timezone_set('Asia/Manila');
+					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+					// $LogbookType = 'New';
+					// $LogbookEvent = 'New Client added! (Name: ' . $ClientName . ' | Contact: ' . $ClientContact . ')';
+					// $LogbookLink = base_url() . 'Clients';
+					// $data = array(
+					// 	'Time' => $LogbookCurrentTime,
+					// 	'Type' => $LogbookType,
+					// 	'Event' => $LogbookEvent,
+					// 	'Link' => $LogbookLink,
+					// );
+					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 					redirect('Clients');
 				}
 				else

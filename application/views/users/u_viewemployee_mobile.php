@@ -5,7 +5,7 @@
 		<?php if ($Status == 'Employed') {
 			echo base_url() . 'Employee';
 		} else {
-			echo base_url() . 'Employees';
+			echo base_url() . 'ApplicantsExpired';
 		} ?>" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i> Back </a>
 	</div>
 		<div class="col-6 col-sm-6 col-md-6 text-right PrintExclude dropdown">
@@ -57,32 +57,52 @@
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
 			<h6>
-				Position Desired
+				Position
 			</h6>
 		</div>
 		<div class="col-sm-12 col-md-4 e-det">
 			<p>
-				<?php echo $PositionDesired; ?> <?php if($PositionGroup != NULL) { echo ' (' . $PositionGroup . ')'; } ?>
+				<?php echo $PositionDesired; ?>
 			</p>
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
 			<h6>
-				Salary Expected
+				Contract Type
 			</h6>
 		</div>
 		<div class="col-sm-12 col-md-4 e-det">
 			<p>
-				<?php echo $SalaryExpected; ?>
+				<?php echo $ContractType; ?>
 			</p>
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
 			<h6>
-				Applicant ID
+				Salary Type
 			</h6>
 		</div>
 		<div class="col-sm-12 col-md-4 e-det">
 			<p>
-				<?php echo $ApplicantID; ?>
+				<?php echo $SalaryType; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Rate
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $Rate; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Employee ID
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $EmployeeID; ?>
 			</p>
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
@@ -93,6 +113,16 @@
 		<div class="col-sm-12 col-md-4 e-det">
 			<p>
 				<?php echo $LastName; ?> , <?php echo $FirstName; ?>  <?php echo $MiddleInitial; ?>.
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Nickname
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $Nickname; ?>
 			</p>
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
@@ -147,6 +177,16 @@
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
 			<h6>
+				Citizenship
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $Citizenship; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
 				Birth Date
 			</h6>
 		</div>
@@ -167,22 +207,22 @@
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
 			<h6>
-				Citizenship
-			</h6>
-		</div>
-		<div class="col-sm-12 col-md-4 e-det">
-			<p>
-				<?php echo $Citizenship; ?>
-			</p>
-		</div>
-		<div class="col-sm-12 col-md-2 e-title">
-			<h6>
 				Civil Status
 			</h6>
 		</div>
 		<div class="col-sm-12 col-md-4 e-det">
 			<p>
 				<?php echo $CivilStatus; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Name of Spouse
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $SpouseName; ?>
 			</p>
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
@@ -204,20 +244,20 @@
 			<p>
 				<?php if ($Status == 'Employed') { ?>
 					<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
-				<?php } elseif ($Status == 'Applicant') { ?>
-					<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
 				<?php } elseif ($Status == 'Expired') { ?>
-					<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Applicant (Expired)
+					<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Expired
+				<?php } ?> <!-- <?php if ($Status == 'Applicant') { ?>
+					<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
 				<?php } elseif ($Status == 'Blacklisted') { ?>
 					<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Blacklisted
 				<?php } else { ?>
 					<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Unknown
-				<?php } ?>
+				<?php } ?> -->
 			</p>
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
 			<h6>
-				Applied On
+				Employed Date
 			</h6>
 		</div>
 		<div class="col-sm-12 col-md-4 e-det">
@@ -279,6 +319,86 @@
 				<?php endif; ?>
 			</p>
 		</div>
+
+		<!-- Relatives -->
+		<div class="col-sm-12 mt-5 mb-3">
+			<h6>
+				<i class="fas fa-stream"></i> Relatives
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Mother's Name
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $MotherName; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Occupation
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $MotherOccupation; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Father's Name
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $FatherName; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Occupation
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $FatherOccupation; ?>
+			</p>
+		</div>
+
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Relative in Manila
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $RelName; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Relation
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-4 e-det">
+			<p>
+				<?php echo $RelRelation; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-2 e-title">
+			<h6>
+				Relative's Address
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-6 e-det">
+			<p>
+				<?php echo $RelAddress; ?>
+			</p>
+		</div>
+
+		<!-- Address -->
 		<div class="col-sm-12 mt-5 mb-3">
 			<h6>
 				<i class="fas fa-stream"></i> Address
@@ -315,6 +435,45 @@
 			</p>
 		</div>
 	</div>
+	<?php if(!empty($ConLDOR) || !empty($ConMTAA) || !empty($CaseAC)): ?>
+	<div class="row rcontent p-5 PrintOut">
+		<div class="col-sm-12 mb-5">
+			<h5>
+				<i class="fas fa-stream"></i> Convictions / Cases
+			</h5>
+		</div>
+		<div class="col-sm-12 col-md-6 e-title">
+			<h6>
+				Convictions for violations of any law, decree, ordinance, or regulations in any court or tribunal
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-6 e-det">
+			<p>
+				<?php echo $ConLDOR; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-6 e-title">
+			<h6>
+				Convictions for any breach of infraction by a military, tribunal, or authority, or found guilty of any administrative offense
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-6 e-det">
+			<p>
+				<?php echo $ConMTAA; ?>
+			</p>
+		</div>
+		<div class="col-sm-12 col-md-6 e-title">
+			<h6>
+				Pending administrative/criminal cases
+			</h6>
+		</div>
+		<div class="col-sm-12 col-md-6 e-det">
+			<p>
+				<?php echo $CaseAC; ?>
+			</p>
+		</div>
+	</div>
+	<?php endif; ?>
 	<div class="row rcontent p-5 PrintOut">
 		<div class="col-sm-12 mb-5">
 			<h5>
@@ -353,42 +512,12 @@
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
 			<h6>
-				Issued At
-			</h6>
-			<h6>
-				Issued On
-			</h6>
-		</div>
-		<div class="col-sm-12 col-md-4 e-det">
-			<p>
-				<?php echo $Rcn_At; ?>
-				<br>
-				<?php echo $Rcn_On; ?>
-			</p>
-		</div>
-		<div class="col-sm-12 col-md-2 e-title">
-			<h6>
 				Tax Identification No.
 			</h6>
 		</div>
 		<div class="col-sm-12 col-md-4 e-det">
 			<p>
 				<?php echo $TIN; ?>
-			</p>
-		</div>
-		<div class="col-sm-12 col-md-2 e-title">
-			<h6>
-				Issued At
-			</h6>
-			<h6>
-				Issued On
-			</h6>
-		</div>
-		<div class="col-sm-12 col-md-4 e-det">
-			<p>
-				<?php echo $TIN_At; ?>
-				<br>
-				<?php echo $TIN_On; ?>
 			</p>
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
@@ -403,42 +532,12 @@
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
 			<h6>
-				Issued At
-			</h6>
-			<h6>
-				Issued On
-			</h6>
-		</div>
-		<div class="col-sm-12 col-md-4 e-det">
-			<p>
-				<?php echo $HDMF_At; ?>
-				<br>
-				<?php echo $HDMF_On; ?>
-			</p>
-		</div>
-		<div class="col-sm-12 col-md-2 e-title">
-			<h6>
 				PHILHEALTH
 			</h6>
 		</div>
 		<div class="col-sm-12 col-md-4 e-det">
 			<p>
 				<?php echo $PhilHealth; ?>
-			</p>
-		</div>
-		<div class="col-sm-12 col-md-2 e-title">
-			<h6>
-				Issued At
-			</h6>
-			<h6>
-				Issued On
-			</h6>
-		</div>
-		<div class="col-sm-12 col-md-4 e-det">
-			<p>
-				<?php echo $PhilHealth_At; ?>
-				<br>
-				<?php echo $PhilHealth_On; ?>
 			</p>
 		</div>
 		<div class="col-sm-12 col-md-2 e-title">
@@ -450,6 +549,45 @@
 			<p>
 				<?php echo $ATM_No; ?>
 			</p>
+		</div>
+	</div>
+	<div class="row rcontent p-5 PrintOut">
+		<div class="col-sm-12 mb-5">
+			<h5>
+				<i class="fas fa-stream"></i> Beneficiaries
+			</h5>
+		</div>
+		<div class="col-sm-12">
+			<div class="table-responsive">
+				<table class="table table-condensed">
+					<thead>
+						<th></th>
+						<th>Name</th>
+						<th>Relationship</th>
+					</thead>
+					<tbody>
+						<?php if ($GetBeneficiaries->num_rows() > 0) { ?>
+							<?php foreach ($GetBeneficiaries->result_array() as $row): ?>
+								<?php if ($ApplicantID == $row['ApplicantID']) { ?>
+									<tr>
+										<td><?php echo $row['BenWhat'];?></td>
+										<td><?php echo $row['BenName'];?></td>
+										<td><?php echo $row['BenRelation'];?></td>
+									</tr>
+								<?php } ?>
+							<?php endforeach ?>
+						<?php } else { ?>
+							<tr class="w-100 text-center">
+								<td colspan="6">
+									<h5>
+										No Data
+									</h5>
+								</td>
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	<div class="row rcontent p-5 PrintOut">
@@ -545,22 +683,25 @@
 	<div class="row rcontent p-5">
 		<div class="col-sm-12 mb-5">
 			<h5>
-				<i class="fas fa-stream"></i> Machine Operated
+				<i class="fas fa-stream"></i> Character References
 			</h5>
 		</div>
 		<div class="col-sm-12">
 			<div class="table-responsive">
 				<table class="table table-condensed">
 					<thead>
-						<th>Machine Name</th>
-						
+						<th>Name</th>
+						<th>Position</th>
+						<th>Company / Address</th>
 					</thead>
 					<tbody>
-						<?php if ($Machine_Operatessss->num_rows() > 0) { ?>
-							<?php foreach ($Machine_Operatessss->result_array() as $row): ?>
+						<?php if ($GetCharRef->num_rows() > 0) { ?>
+							<?php foreach ($GetCharRef->result_array() as $row): ?>
 								<?php if ($ApplicantID == $row['ApplicantID']) { ?>
 									<tr>
-										<td><?php echo $row['MachineName'];?></td>
+										<td><?php echo $row['RefName'];?></td>
+										<td><?php echo $row['RefPosition'];?></td>
+										<td><?php echo $row['CompanyAddress'];?></td>
 									</tr>
 								<?php } ?>
 							<?php endforeach ?>

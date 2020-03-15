@@ -53,6 +53,7 @@
 										<li id="TabEmploymentsBtn" class="employee-tabs-select"><a href="#Employments" onclick="">Employments</a></li>
 										<li id="TabReferencesBtn" class="employee-tabs-select"><a href="#References" onclick="">References</a></li>
 										<li id="TabBeneficiariesBtn" class="employee-tabs-select"><a href="#Beneficiaries" onclick="">Beneficiaries</a></li>
+										<li><button onClick="printContent('PrintOut')" type="button"><i class="fas fa-print" style="margin-right: -1px;"></i> </button></li>
 										<li id="TabEditBtn"><a href="<?=base_url()?>ModifyEmployee?id=<?=$ApplicantID?>" onclick="" target="_blank"><i class="fas fa-edit" style="margin-right: -1px;"></i></a></li>
 									</ul>
 								</div>
@@ -85,19 +86,19 @@
 											<i class="fas fa-user"></i> <?php echo $ApplicantID; ?>
 										<?php endif; ?>
 									</div>
-									<!-- <div class="col-sm-12 mt-2">
+									<div class="col-sm-12 mt-2">
 										<?php if ($Status == 'Employed') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #1BDB07;"></i> Employed
-										<?php } elseif ($Status == 'Applicant') { ?>
-											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
 										<?php } elseif ($Status == 'Expired') { ?>
-											<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Applicant (Expired)
+											<i class="fas fa-square PrintExclude" style="color: #0721DB;"></i> Expired
+										<?php } ?> <!-- <?php if ($Status == 'Applicant') { ?>
+											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Applicant
 										<?php } elseif ($Status == 'Blacklisted') { ?>
 											<i class="fas fa-square PrintExclude" style="color: #000000;"></i> Blacklisted
 										<?php } else { ?>
 											<i class="fas fa-square PrintExclude" style="color: #DB3E07;"></i> Unknown
-										<?php } ?>
-									</div> -->
+										<?php } ?> -->
+									</div>
 									<?php if ($Status == 'Blacklisted'): ?>
 									<div class="row ml-auto mr-auto pb-5 pt-5 w-100">
 										<div class="col-sm-12 col-mb-12 w-100 text-center blacklisted-notice">
@@ -417,7 +418,7 @@
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
 													<button class="btn btn-primary btn-sm ml-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
 													<div class="ml-auto">
-														<button class="btn btn-primary btn-sm" onClick="printContent('PrintOut')" type="button"><i class="fas fa-print"></i> Print</button>
+														<button class="btn btn-danger btn-sm" onClick="printContent('PrintOut')" type="button"><i class="fas fa-trash"></i> Terminate Current Contract</button>
 													</div>
 												</div>
 											</div>
@@ -479,7 +480,7 @@
 											<div class="row">
 												<div class="col-sm-4">
 													<div class="card mb-3" style="max-width: 18rem;">
-														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tag"></i> Client</b></div>
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tag"></i> Branch</b></div>
 														<div class="card-body text-dark">
 															<h5 class="card-title text-center silangan-card-title">
 																<?php
@@ -563,9 +564,9 @@
 												</div>
 												<div class="col-sm-4">
 													<div class="card mb-3" style="max-width: 18rem;">
-														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-book"></i> Salary Expected</b></div>
+														<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-book"></i> Rate</b></div>
 														<div class="card-body text-dark">
-															<h5 class="card-title text-center silangan-card-title">₱ <?php echo $SalaryExpected; ?></h5>
+															<h5 class="card-title text-center silangan-card-title">₱ <?php echo $Rate; ?></h5>
 															<p class="card-text">
 																<div class="col-sm-12 employee-static-item text-center mt-3">
 																	<div class="col-sm-12 employee-dynamic-header">

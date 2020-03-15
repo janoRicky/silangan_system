@@ -32,7 +32,8 @@
 										<th> Employee </th>
 										<th> Full Name </th>
 										<th> Position </th>
-										<th> Client </th>
+										<th> Branch </th>
+										<th> Salary Type </th>
 										<th> Contract Lifespan </th>
 										<th class="PrintExclude"> Action </th>
 									</tr>
@@ -65,6 +66,9 @@
 													</td>';
 												} ?>
 											<?php endforeach ?>
+											<td class="text-center align-middle">
+												<?php echo $row['SalaryType']; ?>
+											</td>
 											<?php
 												$currTime = time();
 												$strDateEnds = strtotime($row['DateEnds']);
@@ -102,7 +106,7 @@
 													echo 'Less than 1 day';
 												} ?>
 											 	</div>
-												<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="progress" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract Started<br><?php echo $row['DateStarted']; ?><br><br>Contract Ends<br><?php echo $row['DateEnds']; ?><br><br>Salary Expected<br>₱<?php echo $row['SalaryExpected']; ?><br><br><i>Click to open the Contract tab</i>">
+												<a href="<?=base_url()?>ViewEmployee?id=<?php echo $row['ApplicantID']; ?>#Contract" class="progress" style="position: relative; box-shadow: none; background-color: rgba(0, 0, 0, 0.11);" data-toggle="tooltip" data-placement="top" data-html="true" title="Contract Started<br><?php echo $row['DateStarted']; ?><br><br>Rate<br>₱ <?php echo $row['Rate']; ?><br><br>Contract Ends<br><?php echo $row['DateEnds']; ?><br><br><i>Click to open the Contract tab</i>">
 													<div class="progress-bar silangan-progress-bar" role="progressbar" style="width: <?php echo $rPercentage; ?>%;" aria-valuenow="<?php echo $rPercentage; ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rPercentage; ?>%</div>
 												</a>
 											</td>

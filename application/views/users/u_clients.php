@@ -9,7 +9,7 @@
 					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 						<h4 class="tabs-icon">
-							<i class="fas fa-user-tag fa-fw"></i> Clients x <?php echo $ShowClients->num_rows() ?>
+							<i class="fas fa-building fa-fw"></i> Branches x <?php echo $ShowClients->num_rows() ?>
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right">
@@ -91,7 +91,7 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-5">
-							<label>Employee ID Suffix <span style="color: rgba(0, 0, 0, 0.55);" data-toggle="tooltip" data-placement="top" data-html="true" title="Employees who get hired to this client will be assigned the designated Employee ID with this as the suffix. See the preview for an example.<br><br>By default, all ID follows the format of WC(Suffix)-NUMBER-YEAR. You can manually change the ID of an applicant whenever they are hired."><i>(?)</i></span></label>
+							<label>Employee ID Suffix <span style="color: rgba(0, 0, 0, 0.55);" data-toggle="tooltip" data-placement="top" data-html="true" title="Employees who get hired to this client will be assigned the designated Employee ID with this as the suffix. See the preview for an example.<br><br>By default, all ID follows the format of SL(Suffix)-NUMBER-YEAR. You can manually change the ID of an applicant whenever they are hired."><i>(?)</i></span></label>
 							<input id="EmployeeIDSuffix" class="form-control" type="text" name="EmployeeIDSuffix" autocomplete="off">
 						</div>
 						<div class="form-group col-sm-2 text-center">

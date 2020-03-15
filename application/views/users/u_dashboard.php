@@ -112,7 +112,7 @@
 								<div class="card-headers bcolor199EC4">
 									<div class="row ml-2">
 										<span class="head-text">
-											Clients
+											Branches
 										</span>
 									</div>
 									<div class="row ml-2">
@@ -122,7 +122,7 @@
 												echo $result_cclients->num_rows(); } ?>
 											</b>
 										</span>
-										<i class="fas fa-user-tag fa-fw card-icon ml-auto mr-2"></i>
+										<i class="fas fa-building fa-fw card-icon ml-auto mr-2"></i>
 									</div>
 								</div>
 							</a>

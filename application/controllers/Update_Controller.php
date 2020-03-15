@@ -184,44 +184,44 @@ class Update_Controller extends CI_Controller {
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Contract Extended to ' . $DateEnds . '!</h5></div>');
 						// LOGBOOK
-						date_default_timezone_set('Asia/Manila');
-						$LogbookCurrentTime = date('Y-m-d h:i:s A');
-						$LogbookType = 'Update';
-						$LogbookEvent = 'Applicant ID ' . $ApplicantID .' has their contract extended by ';
-						if($E_Years != 0) {
-							$LogbookEvent = $LogbookEvent . $E_Years;
-							if($E_Years == 1) {
-								$LogbookEvent = $LogbookEvent . ' year, ';
-							} else {
-								$LogbookEvent = $LogbookEvent . ' years, ';
-							}
-						}
-						if($E_Months != 0) {
-							$LogbookEvent = $LogbookEvent . $E_Months;
-							if($E_Months == 1) {
-								$LogbookEvent = $LogbookEvent . ' month, ';
-							} else {
-								$LogbookEvent = $LogbookEvent . ' months, ';
-							}
-						}
-						if($E_Days != 0) {
-							$LogbookEvent = $LogbookEvent . $E_Days;
-							if($E_Days == 1) {
-								$LogbookEvent = $LogbookEvent . ' day, ';
-							} else {
-								$LogbookEvent = $LogbookEvent . ' days, ';
-							}
-						}
-						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract';
-						$data = array(
-							'Time' => $LogbookCurrentTime,
-							'Type' => $LogbookType,
-							'Event' => $LogbookEvent,
-							'Link' => $LogbookLink,
-						);
-						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-						redirect($_SERVER['HTTP_REFERER']);
+						// date_default_timezone_set('Asia/Manila');
+						// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+						// $LogbookType = 'Update';
+						// $LogbookEvent = 'Applicant ID ' . $ApplicantID .' has their contract extended by ';
+						// if($E_Years != 0) {
+						// 	$LogbookEvent = $LogbookEvent . $E_Years;
+						// 	if($E_Years == 1) {
+						// 		$LogbookEvent = $LogbookEvent . ' year, ';
+						// 	} else {
+						// 		$LogbookEvent = $LogbookEvent . ' years, ';
+						// 	}
+						// }
+						// if($E_Months != 0) {
+						// 	$LogbookEvent = $LogbookEvent . $E_Months;
+						// 	if($E_Months == 1) {
+						// 		$LogbookEvent = $LogbookEvent . ' month, ';
+						// 	} else {
+						// 		$LogbookEvent = $LogbookEvent . ' months, ';
+						// 	}
+						// }
+						// if($E_Days != 0) {
+						// 	$LogbookEvent = $LogbookEvent . $E_Days;
+						// 	if($E_Days == 1) {
+						// 		$LogbookEvent = $LogbookEvent . ' day, ';
+						// 	} else {
+						// 		$LogbookEvent = $LogbookEvent . ' days, ';
+						// 	}
+						// }
+						// $LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
+						// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract';
+						// $data = array(
+						// 	'Time' => $LogbookCurrentTime,
+						// 	'Type' => $LogbookType,
+						// 	'Event' => $LogbookEvent,
+						// 	'Link' => $LogbookLink,
+						// );
+						// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						redirect($_SERVER['HTTP_REFERER'] . '#Contract');
 					}
 					else
 					{
@@ -566,18 +566,18 @@ class Update_Controller extends CI_Controller {
 					
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
-					$LogbookCurrentTime = date('Y-m-d h:i:s A');
-					$LogbookType = 'Update';
-					$LogbookEvent = 'Updated details on Person ID ' . $ApplicantID . '.';
-					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-					$data = array(
-						'Time' => $LogbookCurrentTime,
-						'Type' => $LogbookType,
-						'Event' => $LogbookEvent,
-						'Link' => $LogbookLink,
-					);
-					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					// date_default_timezone_set('Asia/Manila');
+					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+					// $LogbookType = 'Update';
+					// $LogbookEvent = 'Updated details on Person ID ' . $ApplicantID . '.';
+					// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+					// $data = array(
+					// 	'Time' => $LogbookCurrentTime,
+					// 	'Type' => $LogbookType,
+					// 	'Event' => $LogbookEvent,
+					// 	'Link' => $LogbookLink,
+					// );
+					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				else
@@ -612,15 +612,15 @@ class Update_Controller extends CI_Controller {
 			$Note = $this->input->post('NoteDocuments',TRUE);
 			$this->Model_Inserts->InsertDocumentsNote($ApplicantID, $Note);
 			// LOGBOOK
-			date_default_timezone_set('Asia/Manila');
-			$LogbookCurrentTime = date('Y-m-d h:i:s A');
-			$LogbookType = 'Note';
-			$data = array(
-				'Time' => $LogbookCurrentTime,
-				'Type' => $LogbookType,
-				'Event' => 'Added new note for ' . $ApplicantID . '.',
-			);
-			$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+			// date_default_timezone_set('Asia/Manila');
+			// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+			// $LogbookType = 'Note';
+			// $data = array(
+			// 	'Time' => $LogbookCurrentTime,
+			// 	'Type' => $LogbookType,
+			// 	'Event' => 'Added new note for ' . $ApplicantID . '.',
+			// );
+			// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 			redirect(base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Documents');
 
 		}
@@ -770,18 +770,18 @@ class Update_Controller extends CI_Controller {
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $ApplicantID . ' has been blacklisted.</h5></div>');
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
-				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Archival';
-				$LogbookEvent = 'Employee ID ' . $ApplicantID .' has been blacklisted.';
-				$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-				$data = array(
-					'Time' => $LogbookCurrentTime,
-					'Type' => $LogbookType,
-					'Event' => $LogbookEvent,
-					'Link' => $LogbookLink,
-				);
-				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				// date_default_timezone_set('Asia/Manila');
+				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+				// $LogbookType = 'Archival';
+				// $LogbookEvent = 'Employee ID ' . $ApplicantID .' has been blacklisted.';
+				// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+				// $data = array(
+				// 	'Time' => $LogbookCurrentTime,
+				// 	'Type' => $LogbookType,
+				// 	'Event' => $LogbookEvent,
+				// 	'Link' => $LogbookLink,
+				// );
+				// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -808,18 +808,18 @@ class Update_Controller extends CI_Controller {
 			if ($Removethis == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $ApplicantID . ' has been restored as an Applicant.</h5></div>');
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
-				$LogbookCurrentTime = date('Y-m-d h:i:s A');
-				$LogbookType = 'Update';
-				$LogbookEvent = 'Employee ID ' . $ApplicantID .' has been restored as an Applicant.';
-				$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-				$data = array(
-					'Time' => $LogbookCurrentTime,
-					'Type' => $LogbookType,
-					'Event' => $LogbookEvent,
-					'Link' => $LogbookLink,
-				);
-				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				// date_default_timezone_set('Asia/Manila');
+				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+				// $LogbookType = 'Update';
+				// $LogbookEvent = 'Employee ID ' . $ApplicantID .' has been restored as an Applicant.';
+				// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+				// $data = array(
+				// 	'Time' => $LogbookCurrentTime,
+				// 	'Type' => $LogbookType,
+				// 	'Event' => $LogbookEvent,
+				// 	'Link' => $LogbookLink,
+				// );
+				// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -893,19 +893,19 @@ class Update_Controller extends CI_Controller {
 						if ($ArrayInt >= $ArrayLength) {
 							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Updated!</h5></div>');
 							// LOGBOOK
-							date_default_timezone_set('Asia/Manila');
-							$LogbookCurrentTime = date('Y-m-d h:i:s A');
-							$LogbookType = 'Update';
-							$LogbookEvent = 'Updated weekly hours for ' . $ApplicantID . '.';
-							$LogbookLink = base_url() . 'ViewClient?id=' . $Temp_ApplicantID;
-							$LogbookLink = base_url() . 'Clients';
-							$data = array(
-								'Time' => $LogbookCurrentTime,
-								'Type' => $LogbookType,
-								'Event' => $LogbookEvent,
-								'Link' => $LogbookLink,
-							);
-							$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+							// date_default_timezone_set('Asia/Manila');
+							// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+							// $LogbookType = 'Update';
+							// $LogbookEvent = 'Updated weekly hours for ' . $ApplicantID . '.';
+							// $LogbookLink = base_url() . 'ViewClient?id=' . $Temp_ApplicantID;
+							// $LogbookLink = base_url() . 'Clients';
+							// $data = array(
+							// 	'Time' => $LogbookCurrentTime,
+							// 	'Type' => $LogbookType,
+							// 	'Event' => $LogbookEvent,
+							// 	'Link' => $LogbookLink,
+							// );
+							// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 							redirect($_SERVER['HTTP_REFERER']);
 						}
 					}
