@@ -61,6 +61,9 @@ class Add_Controller extends CI_Controller {
 		$ConLDOR = $this->input->post('ConLDOR');
 		$ConMTAA = $this->input->post('ConMTAA');
 		$CaseAC = $this->input->post('CaseAC');
+
+		$Overtime = $this->input->post('Overtime');
+		$Reassignment = $this->input->post('Reassignment');
 		
 		$ClientID = $this->input->post('ClientID');
 		$H_Years = $this->input->post('H_Years');
@@ -122,6 +125,8 @@ class Add_Controller extends CI_Controller {
 				'ClientID' => $ClientID,
 				'EmployeeID' => $EmployeeID,
 
+				'Overtime' => $Overtime,
+				'Reassignment' => $Reassignment,
 
 				'Address_Present' => $Address_Present,
 				'Address_Provincial' => $Address_Provincial,
@@ -236,6 +241,9 @@ class Add_Controller extends CI_Controller {
 					'ConLDOR' => $ConLDOR,
 					'ConMTAA' => $ConMTAA,
 					'CaseAC' => $CaseAC,
+
+					'Overtime' => $Overtime,
+					'Reassignment' => $Reassignment,
 
 					'Status' => 'Applicant',
 					'AppliedOn' => $AppliedOn,

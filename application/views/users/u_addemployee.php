@@ -74,6 +74,30 @@
 									</div>
 								</div>
 								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Willing to render overtime work</label>
+										<div class="radio form-control">
+											<label class="radio-inline">
+												<input type="radio" name="Overtime" value="Yes" <?php if ($this->session->flashdata('Overtime') == 'Yes') echo 'checked'; ?>> Yes
+											</label>
+											<label class="radio-inline">
+												<input type="radio" name="Overtime" value="No" <?php if ($this->session->flashdata('Overtime') == 'No') echo 'checked'; ?>> No
+											</label>
+										</div>
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Willing to be assigned to other places</label>
+										<div class="radio form-control">
+											<label class="radio-inline">
+												<input type="radio" name="Reassignment" value="Yes" <?php if ($this->session->flashdata('Reassignment') == 'Yes') echo 'checked'; ?>> Yes
+											</label>
+											<label class="radio-inline">
+												<input type="radio" name="Reassignment" value="No" <?php if ($this->session->flashdata('Reassignment') == 'No') echo 'checked'; ?>> No
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-2">
 										<label>Contract Type</label>
 										<select class="form-control" name="ContractType">

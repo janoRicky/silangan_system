@@ -475,6 +475,8 @@
 
 					'Status' => $ged['Status'],
 
+					'Overtime' => $ged['Overtime'],
+					'Reassignment' => $ged['Reassignment'],
 
 					'ClientEmployed' => $ged['ClientEmployed'],
 					'SpouseName' => $ged['SpouseName'],
@@ -603,6 +605,9 @@
 					'CaseAC' => $ged['CaseAC'],
 
 					'Status' => $ged['Status'],
+
+					'Overtime' => $ged['Overtime'],
+					'Reassignment' => $ged['Reassignment'],
 
 
 					'ClientEmployed' => $ged['ClientEmployed'],

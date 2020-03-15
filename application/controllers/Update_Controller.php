@@ -298,6 +298,9 @@ class Update_Controller extends CI_Controller {
 		$ConMTAA = $this->input->post('ConMTAA');
 		$CaseAC = $this->input->post('CaseAC');
 
+		$Overtime = $this->input->post('Overtime');
+		$Reassignment = $this->input->post('Reassignment');
+
 		$AppliedOn = $this->input->post('AppliedOn');
 
 		# ADDRESSES
@@ -352,9 +355,11 @@ class Update_Controller extends CI_Controller {
 				'ConMTAA' => $ConMTAA,
 				'CaseAC' => $CaseAC,
 
+				'Overtime' => $Overtime,
+				'Reassignment' => $Reassignment,
+
 				'PhilHealth' => $PhilHealth,
 				
-
 
 				'Address_Present' => $Address_Present,
 				'Address_Provincial' => $Address_Provincial,
@@ -445,6 +450,9 @@ class Update_Controller extends CI_Controller {
 					'ConLDOR' => $ConLDOR,
 					'ConMTAA' => $ConMTAA,
 					'CaseAC' => $CaseAC,
+
+					'Overtime' => $Overtime,
+					'Reassignment' => $Reassignment,
 
 					'PhilHealth' => $PhilHealth,
 

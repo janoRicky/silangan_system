@@ -194,7 +194,7 @@
 					<div id="Logbook" class="col-sm-12 col-lg-12 mt-5">
 						<div class="chart-title text-center">
 							<h5>
-								<i class="fas fa-list"></i> Logbook
+								<i class="fas fa-list"></i> Notifications
 							</h5>
 						</div>
 					</div>

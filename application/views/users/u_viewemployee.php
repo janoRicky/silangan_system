@@ -314,6 +314,28 @@
 													<?php echo $PersonRecommending ; ?>
 												</div>
 											</div>
+											<div class="row mt-3">
+												<div class="col-sm-3 employee-dynamic-header">
+													<b>Date Employed</b>
+												</div>
+												<div class="col-sm-3 employee-dynamic-header">
+													<b>Willing to render overtime work</b>
+												</div>
+												<div class="col-sm-3 employee-dynamic-header">
+													<b>Willing to be assigned to other places</b>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-3 employee-dynamic-item">
+													<?php echo $AppliedOn; ?>
+												</div>
+												<div class="col-sm-3 employee-dynamic-item">
+													<?php echo $Overtime; ?>
+												</div>
+												<div class="col-sm-3 employee-dynamic-item">
+													<?php echo $Reassignment; ?>
+												</div>
+											</div>
 											<?php if(!empty($ConLDOR) || !empty($ConMTAA) || !empty($CaseAC)): ?>
 											<hr class="mt-5 mb-3">
 											<?php endif; ?>
