@@ -87,23 +87,23 @@ class Delete_Controller extends CI_Controller {
 			}
 		}
 	}
-	public function RemoveClient()
+	public function RemoveBranch()
 	{
 		$id = $this->input->get('id');
 		if (!isset($_GET['id'])) {
-			redirect('Clients');
+			redirect('Branches');
 		}
 		else
 		{
-			$Removethis = $this->Model_Deletes->RemoveClientM($id);
+			$Removethis = $this->Model_Deletes->RemoveBranchM($id);
 			if ($Removethis == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Client ID ' . $id . ' has been succesfully removed!</h5></div>');
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Branch ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
 				// date_default_timezone_set('Asia/Manila');
 				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 				// $LogbookType = 'Deletion';
-				// $LogbookEvent = 'Client ID ' . $id .' has been removed.';
-				// $LogbookLink = base_url() . 'Clients';
+				// $LogbookEvent = 'Branch ID ' . $id .' has been removed.';
+				// $LogbookLink = base_url() . 'Branches';
 				// $data = array(
 				// 	'Time' => $LogbookCurrentTime,
 				// 	'Type' => $LogbookType,
@@ -116,12 +116,12 @@ class Delete_Controller extends CI_Controller {
 				}
 				else
 				{
-					redirect('Clients');
+					redirect('Branches');
 				}
 			}
 			else
 			{
-				redirect('Clients');
+				redirect('Branches');
 			}
 		}
 	}

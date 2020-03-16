@@ -59,8 +59,8 @@
 											<td class="text-center align-middle">
 												<?php echo $row['PositionDesired']; ?>
 											</td>
-											<?php foreach ($getClientOption->result_array() as $nrow): ?>
-												<?php if ($row['ClientEmployed'] == $nrow['ClientID']) {
+											<?php foreach ($getBranchOption->result_array() as $nrow): ?>
+												<?php if ($row['BranchEmployed'] == $nrow['BranchID']) {
 													echo '<td class="text-center align-middle">
 													'.$nrow['Name'].'
 													</td>';

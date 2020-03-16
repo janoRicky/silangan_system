@@ -109,27 +109,21 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
-	public function Machine_Operatessss($ApplicantID)
+	public function GetBranches()
 	{
-		$SQL = "SELECT * FROM machine_operated WHERE ApplicantID = ?";
-		$result = $this->db->query($SQL,$ApplicantID);
-		return $result;
-	}
-	public function GetClients()
-	{
-		$SQL = "SELECT * FROM clients WHERE Status = 'Active'";
+		$SQL = "SELECT * FROM branches WHERE Status = 'Active'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function CheckClient($ClientName)
+	public function CheckBranch($BranchName)
 	{
-		$SQL = "SELECT * FROM clients WHERE Name = ?";
-		$result = $this->db->query($SQL,$ClientName);
+		$SQL = "SELECT * FROM branches WHERE Name = ?";
+		$result = $this->db->query($SQL,$BranchName);
 		return $result;
 	}
-	public function getClientOption()
+	public function getBranchOption()
 	{
-		$SQL = "SELECT * FROM clients WHERE Status = 'Active'";
+		$SQL = "SELECT * FROM branches WHERE Status = 'Active'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -159,13 +153,13 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetPreviousContractInfo($name)
 	{
-		$SQL = "SELECT * FROM contract_history, clients WHERE contract_history.Client = '$name' AND clients.Name = '$name' ORDER BY ID DESC LIMIT 1";
+		$SQL = "SELECT * FROM contract_history, branches WHERE contract_history.Branch = '$name' AND branches.Name = '$name' ORDER BY ID DESC LIMIT 1";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetClientsEmployed($ClientID)
+	public function GetBranchesEmployed($BranchID)
 	{
-		$SQL = "SELECT * FROM applicants, clients WHERE applicants.ClientEmployed = '$ClientID' AND clients.ClientID = '$ClientID'";
+		$SQL = "SELECT * FROM applicants, branches WHERE applicants.BranchEmployed = '$BranchID' AND branches.BranchID = '$BranchID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -213,21 +207,21 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetWeeklyList($ClientID) // Argument is $id originally from source.
+	public function GetWeeklyList($BranchID) // Argument is $id originally from source.
 	{
-		$SQL = "SELECT * FROM hours_weekly WHERE ClientID = '$ClientID'";
-		$result = $this->db->query($SQL,$ClientID);
+		$SQL = "SELECT * FROM hours_weekly WHERE BranchID = '$BranchID'";
+		$result = $this->db->query($SQL,$BranchID);
 		return $result;
 	}
-	public function GetClientID($ClientID)
+	public function GetBranchID($BranchID)
 	{
-		$SQL = "SELECT * FROM clients WHERE ClientID = '$ClientID'";
-		$result = $this->db->query($SQL,$ClientID);
+		$SQL = "SELECT * FROM branches WHERE BranchID = '$BranchID'";
+		$result = $this->db->query($SQL,$BranchID);
 		return $result;
 	}
-	public function GetWeeklyListEmployee($ClientID)
+	public function GetWeeklyListEmployee($BranchID)
 	{
-		$SQL = "SELECT * FROM applicants WHERE ClientEmployed = '$ClientID'";
+		$SQL = "SELECT * FROM applicants WHERE BranchEmployed = '$BranchID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -243,9 +237,9 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	// public function GetWeeklyListEmployeeActive($ClientID)
+	// public function GetWeeklyListEmployeeActive($BranchID)
 	// {
-	// 	$SQL = "SELECT * FROM hours_weekly WHERE ClientID = '$ClientID' AND ApplicantID IS NOT NULL AND Name IS NOT NULL";
+	// 	$SQL = "SELECT * FROM hours_weekly WHERE BranchID = '$BranchID' AND ApplicantID IS NOT NULL AND Name IS NOT NULL";
 	// 	$result = $this->db->query($SQL);
 	// 	return $result;
 	// }
@@ -285,10 +279,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetWeeklyHours($ClientID, $Time) // Argument is $id originally from source.
+	public function GetWeeklyHours($BranchID, $Time) // Argument is $id originally from source.
 	{
-		$SQL = "SELECT * FROM dummy_hours, hours_weekly WHERE hours_weekly.ClientID = '$ClientID' AND dummy_hours.Time = hours_weekly.Time";
-		$result = $this->db->query($SQL,$ClientID);
+		$SQL = "SELECT * FROM dummy_hours, hours_weekly WHERE hours_weekly.BranchID = '$BranchID' AND dummy_hours.Time = hours_weekly.Time";
+		$result = $this->db->query($SQL,$BranchID);
 		return $result;
 	}
 	public function GetApplicantsByMonth($Year, $Month)

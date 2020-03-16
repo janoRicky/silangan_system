@@ -16,7 +16,7 @@ class Update_Controller extends CI_Controller {
 	{
 		if (isset($_POST['ApplicantID'])) {
 			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
-			$ClientID = $this->input->post('ClientID',TRUE);
+			$BranchID = $this->input->post('BranchID',TRUE);
 			$H_Days = $this->input->post('H_Days',TRUE);
 			$H_Months = $this->input->post('H_Months',TRUE);
 			$H_Years = $this->input->post('H_Years',TRUE);
@@ -34,8 +34,8 @@ class Update_Controller extends CI_Controller {
 			$Temp_ApplicantID = $ApplicantID;
 			$Temp_ApplicantID++;
 
-			if ($ApplicantID == NULL || $ClientID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s) A:' . $ApplicantID . ' C:' . $ClientID .' D:' . $H_Days . ' H:' . $H_Months . ' Y:' . $H_Years . ' </h5></div>');
+			if ($ApplicantID == NULL || $BranchID == NULL) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s) A:' . $ApplicantID . ' C:' . $BranchID .' D:' . $H_Days . ' H:' . $H_Months . ' Y:' . $H_Years . ' </h5></div>');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -66,27 +66,27 @@ class Update_Controller extends CI_Controller {
 
 					$data = array(
 						'EmployeeID' => $EmployeeID,
-						'ClientEmployed' => $ClientID,
+						'BranchEmployed' => $BranchID,
 						'DateStarted' => $DateStarted,
 						'DateEnds' => $DateEnds,
 						'Salary' => $Salary,
 					);
 					$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
 					$data = array(
-						'ClientID' => $ClientID,
+						'BranchID' => $BranchID,
 						'FirstName' => $row['FirstName'],
 						'MiddleInitial' => $row['MiddleInitial'],
 						'LastName' => $row['LastName'],
 						'SalaryExpected' => $row['SalaryExpected'],
 					);
-					$EmployNewApplicant = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
+					$EmployNewApplicant = $this->Model_Inserts->InsertToBranch($BranchID,$Temp_ApplicantID,$data);
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
 						// LOGBOOK
 						// date_default_timezone_set('Asia/Manila');
 						// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 						// $LogbookType = 'Employment';
-						// $LogbookEvent = 'Applicant ID ' . $Temp_ApplicantID .' has been employed to Client ID ' . $ClientID . ' for ';
+						// $LogbookEvent = 'Applicant ID ' . $Temp_ApplicantID .' has been employed to Branch ID ' . $BranchID . ' for ';
 						// if($H_Years != 0) {
 						// 	$LogbookEvent = $LogbookEvent . $H_Years;
 						// 	if($H_Years == 1) {
@@ -477,10 +477,6 @@ class Update_Controller extends CI_Controller {
 					$listCheck = "'" . implode("','", $EmpRecordCheckbox) . "'";
 					$this->Model_Deletes->RemoveEmpRecord($listCheck);
 
-					$MachOpCheckbox = $this->input->post('MachOpCheckbox');
-					$listCheck = "'" . implode("','", $MachOpCheckbox) . "'";
-					$this->Model_Deletes->RemoveMachineOperated($listCheck);
-
 					if (isset($_SESSION["bencart"])) {
 						foreach ($_SESSION["bencart"] as $s_da) {
 							$data = array(
@@ -534,43 +530,11 @@ class Update_Controller extends CI_Controller {
 							$this->Model_Inserts->InsertEmploymentRecord($data);
 						}
 					}
-					if (isset($_SESSION["mach_cart"])) {
-						foreach ($_SESSION["mach_cart"] as $s_da) {
-							$data = array(
-								'ApplicantID' => $ApplicantID,
-								'MachineName' => $s_da['mach_cart']['MachineName'],
-							);
-							$this->Model_Inserts->InsertMachineOperated($data);
-						}
-					}
-					// if (isset($_SESSION["rela_cart"])) {
-					// 	foreach ($_SESSION["rela_cart"] as $s_da) {
-					// 		$data = array(
-					// 			'ApplicantID' => $customid,
-					// 			'Relation' => $s_da['rela_cart']['Relation'],
-					// 			'Name' => $s_da['rela_cart']['rName'],
-					// 			'Occupation' => $s_da['rela_cart']['rOccupation'],
-					// 		);
-					// 		$this->Model_Inserts->InsertRelativesdata($data);
-					// 	}
-					// }
-					// if (isset($_SESSION["beneCart"])) {
-					// 	foreach ($_SESSION["beneCart"] as $s_da) {
-					// 		$data = array(
-					// 			'ApplicantID' => $customid,
-					// 			'Name' => $s_da['beneCart']['BeneName'],
-					// 			'Relationship' => $s_da['beneCart']['BeneRelationship'],
-					// 		);
-					// 		$this->Model_Inserts->InserBeneficia($data);
-					// 	}
-					// }
 					unset($_SESSION["bencart"]);
 					unset($_SESSION["acadcart"]);
 					unset($_SESSION["ref_cart"]);
 					unset($_SESSION["emp_cart"]);
 					unset($_SESSION["mach_cart"]);
-					// unset($_SESSION["rela_cart"]); 
-					// unset($_SESSION["beneCart"]);
 					
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
 					// LOGBOOK
@@ -846,7 +810,7 @@ class Update_Controller extends CI_Controller {
 	{
 		if (isset($_POST['ApplicantID'])) {
 			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
-			$ClientID = $this->input->post('ClientID',TRUE);
+			$BranchID = $this->input->post('BranchID',TRUE);
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 			$ArrayInt = 0;
 			$ArrayLength = $GetWeeklyDates->num_rows();
@@ -885,7 +849,7 @@ class Update_Controller extends CI_Controller {
 					date_default_timezone_set('Asia/Manila');
 
 					$data = array(
-						'ClientID' => $ClientID,
+						'BranchID' => $BranchID,
 						'Date' => $Date,
 						'Hours' => $Hours,
 						'Overtime' => $Overtime,
@@ -905,8 +869,8 @@ class Update_Controller extends CI_Controller {
 							// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 							// $LogbookType = 'Update';
 							// $LogbookEvent = 'Updated weekly hours for ' . $ApplicantID . '.';
-							// $LogbookLink = base_url() . 'ViewClient?id=' . $Temp_ApplicantID;
-							// $LogbookLink = base_url() . 'Clients';
+							// $LogbookLink = base_url() . 'ViewBranch?id=' . $Temp_ApplicantID;
+							// $LogbookLink = base_url() . 'Branches';
 							// $data = array(
 							// 	'Time' => $LogbookCurrentTime,
 							// 	'Type' => $LogbookType,
@@ -932,9 +896,9 @@ class Update_Controller extends CI_Controller {
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
-	public function ViewClientEmployees() // Date Range
+	public function ViewBranchEmployees() // Date Range
 	{
-		$ClientID = $this->input->post('ViewClientID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+		$BranchID = $this->input->post('ViewBranchID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 		$Mode = $this->input->post('Mode',TRUE);
 		$FromDate = $this->input->post('FromDate',TRUE);
 		$ToDate = $this->input->post('ToDate',TRUE);
@@ -948,8 +912,8 @@ class Update_Controller extends CI_Controller {
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
-		if ($ClientID == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Client ID)</h5></div>');
+		if ($BranchID == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Branch ID)</h5></div>');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 		else
@@ -985,16 +949,16 @@ class Update_Controller extends CI_Controller {
 					'Time' => $Date,
 					'Current' => 'Current',
 				);
-				$ClientViewTime = $this->Model_Inserts->InsertDummyHours($data);
-				if ($ClientViewTime && $i == $diff) {
-					redirect('ViewClient?id=' . $ClientID);
+				$BranchViewTime = $this->Model_Inserts->InsertDummyHours($data);
+				if ($BranchViewTime && $i == $diff) {
+					redirect('ViewBranch?id=' . $BranchID);
 				}
 			}
 		}
 	}
 	public function ImportExcel()
 	{
-		$ClientID = $this->input->post('ExcelClientID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
+		$BranchID = $this->input->post('ExcelBranchID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 		$File = $_FILES['file'];
 		date_default_timezone_set('Asia/Manila');
 		$this->load->library('SimpleXLSX');	
@@ -1042,7 +1006,7 @@ class Update_Controller extends CI_Controller {
 									// } else {
 									// 	$data['Special'] = NULL;
 									// }
-									$ClientViewTime = $this->Model_Inserts->InsertDummyHours($data);
+									$BranchViewTime = $this->Model_Inserts->InsertDummyHours($data);
 								}
 
 							}
@@ -1092,7 +1056,7 @@ class Update_Controller extends CI_Controller {
 										$rHours = $Split[0];
 									}
 								$data = array(
-									'ClientID' => $ClientID,
+									'BranchID' => $BranchID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
 									'Type' => $Type,
 									
@@ -1121,7 +1085,7 @@ class Update_Controller extends CI_Controller {
 					$ColCount = 0;
 				endforeach;
 				if ($RowCount <= $xlsx->rows()) {
-					redirect('ViewClient?id=' . $ClientID);
+					redirect('ViewBranch?id=' . $BranchID);
 				}
 				$this->load->view('_template/users/u_redirecting');
 				// echo '</table>';
@@ -1154,10 +1118,10 @@ class Update_Controller extends CI_Controller {
 			// 		'Time' => $Date,
 			// 		'Current' => 'Current',
 			// 	);
-			// 	$ClientViewTime = $this->Model_Inserts->InsertClientViewTime($data);
+			// 	$BranchViewTime = $this->Model_Inserts->InsertBranchViewTime($data);
 			// 	$Day++;
-			// 	if ($ClientViewTime && $i == $diff) {
-			// 		redirect('ViewClient?id=' . $ClientID);
+			// 	if ($BranchViewTime && $i == $diff) {
+			// 		redirect('ViewBranch?id=' . $BranchID);
 			// 	}
 			// }
 	}
@@ -1173,19 +1137,19 @@ class Update_Controller extends CI_Controller {
 			date_default_timezone_set('Asia/Manila');
 			
 			$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
-			$GetClient = $this->Model_Selects->getClientOption();
+			$GetBranch = $this->Model_Selects->getBranchOption();
 
 			if ($CheckEmployee->num_rows() > 0) {
 				foreach ($CheckEmployee->result_array() as $row) {
-					foreach ($GetClient->result_array() as $nrow) {
-						if ($row['ClientEmployed'] == $nrow['ClientID']) {
-							$ClientName = $nrow['Name'];
+					foreach ($GetBranch->result_array() as $nrow) {
+						if ($row['BranchEmployed'] == $nrow['BranchID']) {
+							$BranchName = $nrow['Name'];
 							
 							$data = array(
 								'ApplicantID' => $ApplicantID,
 								'PreviousDateStarted' => $row['DateStarted'],
 								'PreviousDateEnds' => $row['DateEnds'],
-								'Client' => $ClientName,
+								'Branch' => $BranchName,
 								'Notes' => 'Terminated at ' . date('Y-m-d h:i:s A'),
 							);
 							$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);

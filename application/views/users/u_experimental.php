@@ -25,7 +25,7 @@
 					<div class="col-sm-12 col-mb-12">
 						<table id="SalaryTable" class="table table-condensed">
 							<th>Name</th>
-							<th>Client</th>
+							<th>Branch</th>
 							<th>Salary</th>
 							<th>Date???</th>
 							<th>Monday</th>

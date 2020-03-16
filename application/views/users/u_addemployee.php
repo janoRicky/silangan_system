@@ -399,9 +399,9 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-3">
 										<label>Branch</label>
-										<select id="ClientSelect" class="form-control" name="ClientID">
-											<?php foreach ($getClientOption->result_array() as $row): ?>
-												<option value="<?=$row['ClientID'];?>">
+										<select id="Brancheselect" class="form-control" name="BranchID">
+											<?php foreach ($getBranchOption->result_array() as $row): ?>
+												<option value="<?=$row['BranchID'];?>">
 													<?=$row['Name'];?>
 												</option>
 											<?php endforeach ?>
@@ -651,11 +651,11 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$('#ClientSelect').on('change', function() {
-			<?php foreach ($getClientOption->result_array() as $row): ?>
+		$('#Brancheselect').on('change', function() {
+			<?php foreach ($getBranchOption->result_array() as $row): ?>
 			<?php
-			// Count how many employees are on the client
-			$CountEmployees = $this->Model_Selects->GetClientsEmployed($row['ClientID'])->num_rows();
+			// Count how many employees are on the Branch
+			$CountEmployees = $this->Model_Selects->GetBranchesEmployed($row['BranchID'])->num_rows();
 			$CountEmployees++;
 			$CountEmployees = str_pad($CountEmployees,4,0,STR_PAD_LEFT);
 			// Get the current year
@@ -664,7 +664,7 @@
 			// Concatenate them all together
 			$EmployeeID = 'SL' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
 			?>
-			if ($(this).val() == '<?php echo $row['ClientID']; ?>') {
+			if ($(this).val() == '<?php echo $row['BranchID']; ?>') {
 				$(this).closest('form').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');
 			}
 			<?php endforeach; ?>

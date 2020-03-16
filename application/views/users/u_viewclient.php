@@ -10,7 +10,7 @@
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb" style="background-color: transparent;">
 								<li class="breadcrumb-item"><a href="<?=base_url()?>Dashboard">Home</a></li>
-								<li class="breadcrumb-item"><a href="<?=base_url()?>Clients">Clients</a>
+								<li class="breadcrumb-item"><a href="<?=base_url()?>Branches">Branches</a>
 								</li>
 								<li class="breadcrumb-item active" aria-current="page">Details</li>
 							</ol>
@@ -22,7 +22,7 @@
 					<div class="col-sm-12 col-md-12 mb-5">
 						<h4>
 							<i class="fas fa-user-tag"></i> 
-							<?php foreach ($GetClientID->result_array() as $row): 
+							<?php foreach ($GetBranchID->result_array() as $row): 
 								echo $row['Name'];
 							endforeach; ?>'s Employees (<?php echo $GetWeeklyList->num_rows(); ?>)
 						</h4>

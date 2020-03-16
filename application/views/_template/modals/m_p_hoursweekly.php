@@ -15,7 +15,7 @@
 				<div class="modal-body">
 					<form action="<?php echo base_url().'SetWeeklyHours'; ?>" method="post">
 						<input id="ApplicantID" type="hidden" name="ApplicantID" value="<?php echo $erow['ApplicantID']; ?>">
-						<input id="ClientID" type="hidden" name="ClientID" value="<?php echo $erow['ClientEmployed']; ?>">
+						<input id="BranchID" type="hidden" name="BranchID" value="<?php echo $erow['BranchEmployed']; ?>">
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Type</label>

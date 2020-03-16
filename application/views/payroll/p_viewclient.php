@@ -12,7 +12,7 @@
 				<div class="row mt-5">
 					<div class="col-8 mb-2">
 						<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
-							<input id="ExcelClientID" type="hidden" name="ExcelClientID" value="<?php echo $ClientID; ?>">
+							<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $BranchID; ?>">
 							<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
 							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
 							<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Export (WIP)</button>
@@ -38,7 +38,7 @@
 								<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
 									$TotalRegHours = 0;
 									$TotalOTHours = 0;?>
-									<tr id="<?php echo $row['SalaryExpected']; ?>" data-clientid="<?php echo $row['ClientEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
+									<tr id="<?php echo $row['SalaryExpected']; ?>" data-Branchid="<?php echo $row['BranchEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
 										<td><?php echo $row['ApplicantID'];?></td>
 										<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
 										<td><?php echo $row['SalaryExpected'];?></td>

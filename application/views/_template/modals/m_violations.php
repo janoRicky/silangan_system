@@ -19,8 +19,8 @@
 								<table id="ListViolations" class="table table-striped table-bordered PrintOutHistory" style="width: 100%;">
 									<thead>
 										<tr class="text-center align-middle">
-											<th> Client ID </th>
-											<th> Client Name </th>
+											<th> Branch ID </th>
+											<th> Branch Name </th>
 											<th> Violation </th>
 											<th> Time </th>
 										</tr>
@@ -31,10 +31,10 @@
 										foreach ($GetViolations->result_array() as $row): ?>
 											<tr>
 												<td class="text-center align-middle">
-													<?php echo $row['ClientID']; ?>
+													<?php echo $row['BranchID']; ?>
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['ClientName']; ?>
+													<?php echo $row['BranchName']; ?>
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['Violation']; ?>

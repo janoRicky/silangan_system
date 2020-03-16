@@ -65,7 +65,7 @@ class Add_Controller extends CI_Controller {
 		$Overtime = $this->input->post('Overtime');
 		$Reassignment = $this->input->post('Reassignment');
 		
-		$ClientID = $this->input->post('ClientID');
+		$BranchID = $this->input->post('BranchID');
 		$H_Years = $this->input->post('H_Years');
 		$H_Months = $this->input->post('H_Months');
 		$H_Days = $this->input->post('H_Days');
@@ -77,7 +77,7 @@ class Add_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($PositionDesired == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL || $MotherName == NULL || $MotherOccupation == NULL || $FatherName == NULL || $FatherOccupation == NULL || $ClientID == NULL) {
+		if ($PositionDesired == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL || $MotherName == NULL || $MotherOccupation == NULL || $FatherName == NULL || $FatherOccupation == NULL || $BranchID == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
 				'PositionDesired' => $PositionDesired,
@@ -122,7 +122,7 @@ class Add_Controller extends CI_Controller {
 				'ConMTAA' => $ConMTAA,
 				'CaseAC' => $CaseAC,
 
-				'ClientID' => $ClientID,
+				'BranchID' => $BranchID,
 				'EmployeeID' => $EmployeeID,
 				'H_Years' => $H_Years,
 				'H_Months' => $H_Months,
@@ -355,20 +355,20 @@ class Add_Controller extends CI_Controller {
 
 							$data = array(
 								'EmployeeID' => $EmployeeID,
-								'ClientEmployed' => $ClientID,
+								'BranchEmployed' => $BranchID,
 								'DateStarted' => $DateStarted,
 								'DateEnds' => $DateEnds,
 								'Salary' => $Salary,
 							);
 							$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
 							$data = array(
-								'ClientID' => $ClientID,
+								'BranchID' => $BranchID,
 								'FirstName' => $row['FirstName'],
 								'MiddleInitial' => $row['MiddleInitial'],
 								'LastName' => $row['LastName'],
 								'SalaryExpected' => $row['SalaryExpected'],
 							);
-							$EmployNewApplicant = $this->Model_Inserts->InsertToClient($ClientID,$Temp_ApplicantID,$data);
+							$EmployNewApplicant = $this->Model_Inserts->InsertToBranch($BranchID,$Temp_ApplicantID,$data);
 							if ($EmployNewApplicant == TRUE) {
 								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
 							}
@@ -465,42 +465,42 @@ class Add_Controller extends CI_Controller {
 		}
 		
 	}
-	public function Add_newClient()
+	public function Add_newBranch()
 	{
-		$ClientName = $this->input->post('ClientName',TRUE);
-		$ClientAddress = $this->input->post('ClientAddress',TRUE);
-		$ClientContact = $this->input->post('ClientContact',TRUE);
+		$BranchName = $this->input->post('BranchName',TRUE);
+		$BranchAddress = $this->input->post('BranchAddress',TRUE);
+		$BranchContact = $this->input->post('BranchContact',TRUE);
 		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix',TRUE);
 
-		if ( $ClientName == NULL || $ClientAddress == NULL || $ClientContact == NULL || $EmployeeIDSuffix == NULL ) {
+		if ( $BranchName == NULL || $BranchAddress == NULL || $BranchContact == NULL || $EmployeeIDSuffix == NULL ) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
-			redirect('Clients');
+			redirect('Branches');
 		}
 		else
 		{
-			$CheckClient = $this->Model_Selects->CheckClient($ClientName);
-			if ($CheckClient->num_rows() > 0) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Client exist!</h5></div>');
-				redirect('Clients');
+			$CheckBranch = $this->Model_Selects->CheckBranch($BranchName);
+			if ($CheckBranch->num_rows() > 0) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Branch exist!</h5></div>');
+				redirect('Branches');
 			}
 			else
 			{
 				$data = array(
-					'Name' => $ClientName,
-					'Address' => $ClientAddress,
-					'ContactNumber' => $ClientContact,
+					'Name' => $BranchName,
+					'Address' => $BranchAddress,
+					'ContactNumber' => $BranchContact,
 					'EmployeeIDSuffix' => $EmployeeIDSuffix,
 					'Status' => 'Active',
 				);
-				$InsertNewClient = $this->Model_Inserts->InsertNewClient($data);
-				if ($InsertNewClient == TRUE) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Client added!</h5></div>');
+				$InsertNewBranch = $this->Model_Inserts->InsertNewBranch($data);
+				if ($InsertNewBranch == TRUE) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Branch added!</h5></div>');
 					// LOGBOOK
 					// date_default_timezone_set('Asia/Manila');
 					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 					// $LogbookType = 'New';
-					// $LogbookEvent = 'New Client added! (Name: ' . $ClientName . ' | Contact: ' . $ClientContact . ')';
-					// $LogbookLink = base_url() . 'Clients';
+					// $LogbookEvent = 'New Branch added! (Name: ' . $BranchName . ' | Contact: ' . $BranchContact . ')';
+					// $LogbookLink = base_url() . 'Branches';
 					// $data = array(
 					// 	'Time' => $LogbookCurrentTime,
 					// 	'Type' => $LogbookType,
@@ -508,12 +508,12 @@ class Add_Controller extends CI_Controller {
 					// 	'Link' => $LogbookLink,
 					// );
 					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-					redirect('Clients');
+					redirect('Branches');
 				}
 				else
 				{
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
-					redirect('Clients');
+					redirect('Branches');
 				}
 			}
 		}

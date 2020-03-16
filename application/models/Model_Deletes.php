@@ -15,9 +15,9 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}
-	public function RemoveClientM($id)
+	public function RemoveBranchM($id)
 	{
-		$SQL = "UPDATE clients SET Status ='Deleted' WHERE ClientID = ?";
+		$SQL = "UPDATE branches SET Status ='Deleted' WHERE BranchID = ?";
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}
@@ -42,12 +42,6 @@ class Model_Deletes extends CI_Model {
 	public function RemoveEmpRecord($listCheck)
 	{
 		$SQL = "DELETE FROM `employment_record` WHERE `No` IN ($listCheck)";
-		$result = $this->db->query($SQL);
-		return $result;
-	}
-	public function RemoveMachineOperated($listCheck)
-	{
-		$SQL = "DELETE FROM `machine_operated` WHERE `No` IN ($listCheck)";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

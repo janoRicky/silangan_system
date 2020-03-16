@@ -33,27 +33,11 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('employment_record', $data);
 		return $result;
 	}
-	public function InsertMachineOperated($data)
+	public function InsertNewBranch($data)
 	{
-		$result = $this->db->insert('machine_operated', $data);
+		$result = $this->db->insert('branches', $data);
 		return $result;
 	}
-	public function InsertNewClient($data)
-	{
-		$result = $this->db->insert('clients', $data);
-		return $result;
-	}
-	// public function InsertRelativesdata($data)
-	// {
-	// 	$result = $this->db->insert('relatives', $data);
-	// 	return $result;
-	// }
-	// public function InserBeneficia($data)
-	// {
-	// 	$result = $this->db->insert('beneficiaries', $data);
-	// 	return $result;
-	// }
-
 	// RECORDS
 
 	public function InsertContractHistory($data)
@@ -77,12 +61,12 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
-	public function InsertToClient($ClientID, $Temp_ApplicantID, $data)
+	public function InsertToBranch($BranchID, $Temp_ApplicantID, $data)
 	{
 		extract($data);
 		$Name = $LastName . ', ' . $FirstName . ' ' . $MiddleInitial . '.';
 		$data = array(
-			'ClientID' => $ClientID,
+			'BranchID' => $BranchID,
 			'ApplicantID' => $Temp_ApplicantID,
 			'Name' => $Name,
 			'Salary' => $SalaryExpected,

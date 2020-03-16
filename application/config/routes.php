@@ -61,13 +61,13 @@ $route['Applicant'] = 'Main_Controller/V_Applicants';
 $route['ApplicantsExpired'] = 'Main_Controller/V_ApplicantsExpired';
 $route['NewEmployee'] = 'Main_Controller/NewEmployee';
 $route['Admin_List'] = 'Main_Controller/View_Admins';
-$route['Clients'] = 'Main_Controller/Clients';
+$route['Branches'] = 'Main_Controller/Branches';
 $route['Experimental'] = 'Main_Controller/Experimental';
 $route['Archived'] = 'Main_Controller/V_Archived';
 $route['Blacklisted'] = 'Main_Controller/V_Blacklisted';
 
-$route['Payroll'] = 'Main_Controller/PayrollClients';
-$route['ViewClient'] = 'Main_Controller/ViewClient';
+$route['Payroll'] = 'Main_Controller/PayrollBranches';
+$route['ViewBranch'] = 'Main_Controller/ViewBranch';
 
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';
@@ -75,7 +75,7 @@ $route['LoginValidation'] = 'Login_Controller/LoginValidation';
 $route['addem'] = 'Add_Controller/addem';
 $route['addNewEmployee'] = 'Add_Controller/addNewEmployee';
 $route['Add_NewAdmin'] = 'Add_Controller/Add_NewAdmin';
-$route['Add_newClient'] = 'Add_Controller/Add_newClient';
+$route['Add_newBranch'] = 'Add_Controller/Add_newBranch';
 $route['AddSupDoc'] = 'Add_Controller/AddSupDoc';
 
 
@@ -83,7 +83,7 @@ $route['AddSupDoc'] = 'Add_Controller/AddSupDoc';
 // DELETE
 $route['RemoveEmployee'] = 'Delete_Controller/RemoveEmployee';
 $route['RemoveAdmin'] = 'Delete_Controller/RemoveAdmin';
-$route['RemoveClient'] = 'Delete_Controller/RemoveClient';
+$route['RemoveBranch'] = 'Delete_Controller/RemoveBranch';
 
 // UPDATE
 $route['EmployApplicant'] = 'Update_Controller/EmployApplicant';
@@ -95,7 +95,7 @@ $route['SetReminder'] = 'Update_Controller/SetReminder';
 $route['BlacklistEmployee'] = 'Update_Controller/BlacklistEmployee';
 $route['RestoreEmployee'] = 'Update_Controller/RestoreEmployee';
 $route['SetWeeklyHours'] = 'Update_Controller/SetWeeklyHours';
-$route['ViewClientEmployees'] = 'Update_Controller/ViewClientEmployees';
+$route['ViewBranchEmployees'] = 'Update_Controller/ViewBranchEmployees';
 $route['ImportExcel'] = 'Update_Controller/ImportExcel';
 
 

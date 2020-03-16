@@ -85,19 +85,19 @@
 			</div>
 		</div>
 	</div>
-	<!-- CLIENT HIRE MODAL -->
-	<?php $this->load->view('_template/modals/m_clienthire'); ?>
+	<!-- Branch HIRE MODAL -->
+	<?php $this->load->view('_template/modals/m_branchhire'); ?>
 	<!-- EXPORT MODAL -->
 	<?php $this->load->view('_template/modals/m_export'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$('#ClientSelect').on('change', function() {
-			<?php foreach ($getClientOption->result_array() as $row): ?>
+		$('#Brancheselect').on('change', function() {
+			<?php foreach ($getBranchOption->result_array() as $row): ?>
 			<?php
-			// Count how many employees are on the client
-			$CountEmployees = $this->Model_Selects->GetClientsEmployed($row['ClientID'])->num_rows();
+			// Count how many employees are on the Branch
+			$CountEmployees = $this->Model_Selects->GetBranchesEmployed($row['BranchID'])->num_rows();
 			$CountEmployees++;
 			$CountEmployees = str_pad($CountEmployees,4,0,STR_PAD_LEFT);
 			// Get the current year
@@ -106,8 +106,8 @@
 			// Concatenate them all together
 			$EmployeeID = 'SL' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
 			?>
-			if ($(this).val() == '<?php echo $row['ClientID']; ?>') {
-				$(this).closest('#ClientModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');
+			if ($(this).val() == '<?php echo $row['BranchID']; ?>') {
+				$(this).closest('#BranchModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');
 			}
 			<?php endforeach; ?>
 		});

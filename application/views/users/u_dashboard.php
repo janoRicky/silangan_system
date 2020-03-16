@@ -108,7 +108,7 @@
 					</div>
 					<div class="col-md-12 col-lg-4 mb-4">
 						<div class="card-container">
-							<a href="Clients">
+							<a href="Branches">
 								<div class="card-headers bcolor199EC4">
 									<div class="row ml-2">
 										<span class="head-text">
@@ -118,8 +118,8 @@
 									<div class="row ml-2">
 										<span class="head-ico-text">
 											<b>
-												<?php if ($result_cclients->num_rows() > 0) {
-												echo $result_cclients->num_rows(); } ?>
+												<?php if ($result_cBranches->num_rows() > 0) {
+												echo $result_cBranches->num_rows(); } ?>
 											</b>
 										</span>
 										<i class="fas fa-building fa-fw card-icon ml-auto mr-2"></i>
@@ -273,14 +273,14 @@
 <script src="<?php base_url(); ?>assets/js/Chart.bundle.min.js"></script>
 <?php
 	// BAR CHART COUNTER
-	$BarClientsLabel = '';
-	$BarClientsData = '';
-	foreach ($result_cclients->result_array() as $row):
-		$BarClientsLabel = $BarClientsLabel . $row['Name'] . '", "';
-		$BarClientsData = $BarClientsData . $this->Model_Selects->GetClientsEmployed($row['ClientID'])->num_rows() . '", "';
+	$BarBranchesLabel = '';
+	$BarBranchesData = '';
+	foreach ($result_cBranches->result_array() as $row):
+		$BarBranchesLabel = $BarBranchesLabel . $row['Name'] . '", "';
+		$BarBranchesData = $BarBranchesData . $this->Model_Selects->GetBranchesEmployed($row['BranchID'])->num_rows() . '", "';
 	endforeach;
-	$BarClientsLabel = substr($BarClientsLabel, 0, -4);
-	$BarClientsData = str_replace('"', "", $BarClientsData);
+	$BarBranchesLabel = substr($BarBranchesLabel, 0, -4);
+	$BarBranchesData = str_replace('"', "", $BarBranchesData);
 	// GRAPH CHART COUNTER FOR CURRENT YEAR
 	if (isset($_GET['Year'])) {
 		$GraphMonthData = '';
@@ -369,12 +369,12 @@
 		new Chart(document.getElementById("bar-chart-horizontal"), {
 			type: 'horizontalBar',
 			data: {
-				labels: ["<?php echo $BarClientsLabel; ?>"],
+				labels: ["<?php echo $BarBranchesLabel; ?>"],
 				datasets: [
 				{
 					label : "",
 					backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-					data: [<?php echo $BarClientsData; ?>, 0]
+					data: [<?php echo $BarBranchesData; ?>, 0]
 				}
 				]
 			},

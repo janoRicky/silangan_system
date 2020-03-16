@@ -19,7 +19,7 @@
 								<table id="ListContractHistory" class="table table-striped table-bordered PrintOutHistory" style="width: 100%;">
 									<thead>
 										<tr class="text-center align-middle">
-											<th> Client </th>
+											<th> Branch </th>
 											<th> Contract Started </th>
 											<th> Contract Ended </th>
 											<th> Notes </th>
@@ -29,7 +29,7 @@
 										<?php foreach ($GetContractHistory->result_array() as $row): ?>
 											<tr>
 												<td class="text-center align-middle">
-													<?php echo $row['Client'] ; ?>
+													<?php echo $row['Branch'] ; ?>
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PreviousDateStarted'] ; ?>

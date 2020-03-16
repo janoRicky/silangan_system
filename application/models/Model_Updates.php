@@ -9,7 +9,7 @@ class Model_Updates extends CI_Model {
 		$data = array(
 			'EmployeeID' => $EmployeeID,
 			'Temp_ApplicantID' => $Temp_ApplicantID,
-			'ClientEmployed' => $ClientEmployed,
+			'BranchEmployed' => $BranchEmployed,
 			'DateStarted' => $DateStarted,
 			'DateEnds' => $DateEnds,
 			'SalaryExpected' => $Salary,
@@ -22,7 +22,7 @@ class Model_Updates extends CI_Model {
 	public function ApplicantExpired($ApplicantID)
 	{
 		$data = array(
-			'ClientEmployed' => '',
+			'BranchEmployed' => '',
 			'DateStarted' => '',
 			'Status' => 'Expired',
 			'ReminderType' => '',
@@ -84,7 +84,7 @@ class Model_Updates extends CI_Model {
 		extract($data);
 		$data = array(
 			'ApplicantID' => $ApplicantID,
-			'ClientID' => $ClientID,
+			'BranchID' => $BranchID,
 			'Time' => $Date,
 			'Hours' => $Hours,
 			'Overtime' => $Overtime,
@@ -95,7 +95,7 @@ class Model_Updates extends CI_Model {
 		);
 		$SQL = "REPLACE INTO hours_weekly
 		SET ApplicantID = '$ApplicantID',
-		ClientID = '$ClientID',
+		BranchID = '$BranchID',
 		Time = '$Date', Hours = '$Hours',
 		Overtime = '$Overtime',
 		HDMF = '$HDMF',

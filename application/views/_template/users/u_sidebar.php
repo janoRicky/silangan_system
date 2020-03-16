@@ -35,7 +35,7 @@
 		</li> -->
 		<!-- END COMMENT -->
 		<li class="nav-item">
-			<a class="link-s" href="<?=base_url()?>Clients"><span class="fas fa-building fa-fw"></span> Branches </a>
+			<a class="link-s" href="<?=base_url()?>Branches"><span class="fas fa-building fa-fw"></span> Branches </a>
 		</li>
 		<li class="nav-item">
 			<a class="link-s" href="<?=base_url()?>Payroll"><span class="fas fa-dollar-sign fa-fw"></span> Payroll </a>

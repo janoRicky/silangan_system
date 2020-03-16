@@ -11,7 +11,7 @@
 		// echo $_SERVER['REMOTE_ADDR'] . '<br>';
 		// echo $_SERVER['HTTP_USER_AGENT'];
 		$GetEmployee = $this->Model_Selects->GetEmployee();
-		$GetClient = $this->Model_Selects->getClientOption();
+		$GetBranch = $this->Model_Selects->getBranchOption();
 		date_default_timezone_set('Asia/Manila');
 		$currTime = date('Y-m-d h:i:s A');
 		// TODO: Don't call this here. Need a real time checker. Find a better solution than this.
@@ -41,9 +41,9 @@
 			}
 			if (strtotime($row['DateEnds']) < strtotime($currTime)) {
 				foreach ($GetEmployee->result_array() as $row) {
-					foreach ($GetClient->result_array() as $nrow) {
-						if ($row['ClientEmployed'] == $nrow['ClientID']) {
-							$ClientName = $nrow['Name'];
+					foreach ($GetBranch->result_array() as $nrow) {
+						if ($row['BranchEmployed'] == $nrow['BranchID']) {
+							$BranchName = $nrow['Name'];
 						}
 					}
 				}
@@ -59,7 +59,7 @@
 							'ApplicantID' => $ApplicantID,
 							'PreviousDateStarted' => $row['DateStarted'],
 							'PreviousDateEnds' => $row['DateEnds'],
-							'Client' => $ClientName,
+							'Branch' => $BranchName,
 						);
 						$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);
 						$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantID);
@@ -153,8 +153,8 @@
 		$data['result_capp'] =  $this->Model_Selects->GetTotalApplicants();
 		// COUNT EMPLOYEE
 		$data['result_cemployee'] =  $this->Model_Selects->GetEmployee();
-		// COUNT CLIENT
-		$data['result_cclients'] =  $this->Model_Selects->GetClients();
+		// COUNT Branch
+		$data['result_cBranches'] =  $this->Model_Selects->GetBranches();
 		// LOGBOOK
 		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		// COUNT MONTHLY TOTAl
@@ -307,7 +307,7 @@
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 		$this->load->view('users/u_applicant',$data);
 
 	}
@@ -331,7 +331,7 @@
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 		$this->load->view('users/u_applicantexpired',$data);
 	}
 	public function V_Archived()
@@ -354,7 +354,7 @@
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['GetArchived'] = $this->Model_Selects->GetApplicantArchived();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 		$this->load->view('users/u_archived',$data);
 	}
 	public function V_Blacklisted()
@@ -377,7 +377,7 @@
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['GetBlacklisted'] = $this->Model_Selects->GetApplicantBlacklisted();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 		$this->load->view('users/u_blacklisted',$data);
 	}
 	public function Employee()
@@ -399,7 +399,7 @@
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 		$this->load->view('users/u_users',$data);
 	}
 	public function ViewEmployee()
@@ -478,7 +478,7 @@
 					'Overtime' => $ged['Overtime'],
 					'Reassignment' => $ged['Reassignment'],
 
-					'ClientEmployed' => $ged['ClientEmployed'],
+					'BranchEmployed' => $ged['BranchEmployed'],
 					'SpouseName' => $ged['SpouseName'],
 					'DateStarted' => $ged['DateStarted'],
 					'DateEnds' => $ged['DateEnds'],
@@ -493,10 +493,9 @@
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
 				$data['GetCharRef'] = $this->Model_Selects->GetEmployeeCharRef($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
-				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
 				$data['get_employee'] = $this->Model_Selects->GetEmployee();
-				$data['getClientOption'] = $this->Model_Selects->getClientOption();
-				$data['ShowClients'] = $this->Model_Selects->GetClients();
+				$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
+				$data['ShowBranches'] = $this->Model_Selects->GetBranches();
 				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
 				$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
 				$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
@@ -610,7 +609,7 @@
 					'Reassignment' => $ged['Reassignment'],
 
 
-					'ClientEmployed' => $ged['ClientEmployed'],
+					'BranchEmployed' => $ged['BranchEmployed'],
 					'DateStarted' => $ged['DateStarted'],
 					'DateEnds' => $ged['DateEnds'],
 					'AppliedOn' => $ged['AppliedOn'],
@@ -621,10 +620,9 @@
 				$data['GetAcadHistory'] = $this->Model_Selects->GetEmployeeAcadhis($ApplicantID);
 				$data['GetCharRef'] = $this->Model_Selects->GetEmployeeCharRef($ApplicantID);
 				$data['employment_record'] = $this->Model_Selects->GetEmploymentDetails($ApplicantID);
-				$data['Machine_Operatessss'] = $this->Model_Selects->Machine_Operatessss($ApplicantID);
 				$data['get_employee'] = $this->Model_Selects->GetEmployee();
-				$data['getClientOption'] = $this->Model_Selects->getClientOption();
-				$data['ShowClients'] = $this->Model_Selects->GetClients();
+				$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
+				$data['ShowBranches'] = $this->Model_Selects->GetBranches();
 				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
 				if ($data['Status'] == 'Employed') {
 					$data['Breadcrumb'] = '
@@ -665,7 +663,7 @@
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 		
-		$data['getClientOption'] = $this->Model_Selects->getClientOption();
+		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 		$header['title'] = 'New Employee | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -696,7 +694,7 @@
 		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
 		$this->load->view('users/u_admins',$data);
 	}
-	public function Clients()
+	public function Branches()
 	{
 		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
@@ -709,13 +707,13 @@
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Clients">Branches</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Branches">Branches</a></li>
 			</ol>
 		</nav>';
-		$data['ShowClients'] = $this->Model_Selects->GetClients();
-		$this->load->view('users/u_clients',$data);
+		$data['ShowBranches'] = $this->Model_Selects->GetBranches();
+		$this->load->view('users/u_branches',$data);
 	}
-	public function PayrollClients()
+	public function PayrollBranches()
 	{
 		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
@@ -723,7 +721,7 @@
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
-		$header['title'] = 'Clients | Silangan Lumber';
+		$header['title'] = 'Branches | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
@@ -731,11 +729,11 @@
 				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Payroll">Payroll</a></li>
 			</ol>
 		</nav>';
-		$data['ShowClients'] = $this->Model_Selects->GetClients();
+		$data['ShowBranches'] = $this->Model_Selects->GetBranches();
 		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
-		$this->load->view('payroll/p_clients',$data);
+		$this->load->view('payroll/p_branches',$data);
 	}
-	public function ViewClient()
+	public function ViewBranch()
 	{
 		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
@@ -747,14 +745,14 @@
 
 			$id = $_GET['id'];
 
-			$header['title'] = 'Client Information | Silangan Lumber';
+			$header['title'] = 'Branch Information | Silangan Lumber';
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
 			$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id);
 
 			$row = $GetWeeklyList->row_array();
 			$data = array(
-				'ClientID' => $row['ClientID'],
+				'BranchID' => $row['BranchID'],
 				'ApplicantID' => $row['ApplicantID'],
 
 			);
@@ -762,7 +760,7 @@
 			$data['GetWeeklyList'] = $this->Model_Selects->GetWeeklyList($id);
 			$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
 			// $data['GetWeeklyListEmployeeActive'] = $this->Model_Selects->GetWeeklyListEmployeeActive($id);
-			$data['GetClientID'] = $this->Model_Selects->GetClientID($id);
+			$data['GetBranchID'] = $this->Model_Selects->GetBranchID($id);
 			$data['GetWeeklyDates'] = $this->Model_Selects->GetWeeklyDates();
 			// $data['GetWeeklyDatesForEmployee'] = $this->Model_Selects->GetWeeklyDatesForEmployee($row['ApplicantID']);
 			$data['IsFromExcel'] = False;
@@ -770,14 +768,14 @@
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb" style="background-color: transparent;">
 					<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewClient?id=' . $id . '">Details</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewBranch?id=' . $id . '">Details</a></li>
 				</ol>
 			</nav>';
-			$this->load->view('payroll/p_viewclient',$data);
+			$this->load->view('payroll/p_viewBranch',$data);
 		}
 		else
 		{
-			redirect('Clients');
+			redirect('Branches');
 		}
 	}
 	public function Experimental()
@@ -1160,239 +1158,6 @@
 			}
 		}
 	}
-
-
-	// MACHINE OPERATED
-	public function ShowMachineOperated()
-	{
-
-		if (isset($_SESSION['mach_cart'])) {
-			echo '<hr>';
-			echo '<h6 class="ml-2"><i class="fas fa-save"></i> New Record</h6>';
-			echo '<table class="table table-bordered">
-			<thead>
-			<th>Machine Name</th>
-			<th>Action</th>
-			</thead>
-			<tbody>';
-			foreach ($_SESSION['mach_cart'] as $s_da) {
-				echo '
-				<tr>
-				<td>
-				'.$s_da['mach_cart']['MachineName'] .'
-				</td>
-				<td>
-				<button id="'.$s_da['mach_cart']['MachID'].'" class="removemachine btn btn-sm btn-danger" type="button"><i class="fas fa-times"></i> Discard</button>
-				</td>
-				</tr>
-				';
-			}
-			echo '</tbody>
-			</table>
-			<hr>';
-		}
-		echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#Mach_Operated"><i class="fas fa-plus"></i> Add Data</button>';
-	}
-	public function Add_MachineOP()
-	{
-		$min=10000000;
-		$max=99999999;
-		$rint = random_int($min,$max);
-
-		
-		$MachineName = $_POST["MachineName"];
-		if ($MachineName == NULL) {
-			echo "Error";
-		}
-		else
-		{
-			foreach ($_SESSION["mach_cart"] as $s_da => $row) {
-				if ($row['mach_cart']['emp_id'] == $rint) {
-					exit();
-				}
-			}
-			if (!isset($_SESSION ['mach_cart'] )) {
-				$_SESSION ['mach_cart'] = array ();
-			}
-			$data['mach_cart'] = array(
-				'MachID' => $rint,
-				'MachineName' => $MachineName,
-				
-			);
-			$_SESSION['mach_cart'][] = $data;
-		}
-	}
-	public function remomanchine()
-	{
-		foreach ($_SESSION["mach_cart"] as $s_da => $row) {
-			if ($row['mach_cart']['MachID'] == $_POST['row_id']) {
-				unset($_SESSION["mach_cart"][$s_da]);
-				if(empty($_SESSION["mach_cart"]))
-					unset($_SESSION["mach_cart"]);
-			}
-		}
-	}
-	// // Relatives
-	// public function ShowRelatives()
-	// {
-	// 	if (!isset($_SESSION['rela_cart'])) {
-	// 		echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Relatives Empty</h5></div>';
-	// 	}
-
-	// 	if (isset($_SESSION['rela_cart'])) {
-	// 		echo '<div class="p-3"><h5><i class="fas fa-stream"></i> Relatives </h5></div>';
-	// 		echo '<table class="table table-bordered">
-	// 		<thead>
-	// 		<th>Relation</th>
-	// 		<th>Name</th>
-	// 		<th>Occupation</th>
-	// 		<th>Action</th>
-	// 		</thead>
-	// 		<tbody>';
-	// 		foreach ($_SESSION['rela_cart'] as $s_da) {
-	// 			echo '
-	// 			<tr>
-	// 			<td>
-	// 			'.$s_da['rela_cart']['Relation'] .'
-	// 			</td>
-	// 			<td>
-	// 			'.$s_da['rela_cart']['rName'] .'
-	// 			</td>
-	// 			<td>
-	// 			'.$s_da['rela_cart']['rOccupation'] .'
-	// 			</td>
-	// 			<td>
-	// 			<button id="'.$s_da['rela_cart']['relaID'].'" class="removeRela btn-tr" type="button"><i class="fas fa-trash"></i></button>
-	// 			</td>
-	// 			</tr>
-	// 			';
-	// 		}
-	// 		echo '</tbody>
-	// 		</table>';
-	// 	}
-	// 	echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#Relatives_Modal"><i class="fas fa-plus"></i> Add Data</button>';
-	// }
-	// public function Add_Relatives()
-	// {
-	// 	$min=10000000;
-	// 	$max=99999999;
-	// 	$rint = random_int($min,$max);
-
-	// 	$Relation = $_POST["Relation"];
-	// 	$rName = $_POST["rName"];
-	// 	$rOccupation = $_POST["rOccupation"];
-
-	// 	if ($Relation == NULL || $rName == NULL || $rOccupation == NULL) {
-	// 		echo "Error";
-	// 	}
-	// 	else
-	// 	{
-	// 		foreach ($_SESSION["rela_cart"] as $s_da => $row) {
-	// 			if ($row['rela_cart']['emp_id'] == $rint) {
-	// 				exit();
-	// 			}
-	// 		}
-	// 		if (!isset($_SESSION ['rela_cart'] )) {
-	// 			$_SESSION ['rela_cart'] = array ();
-	// 		}
-	// 		$data['rela_cart'] = array(
-	// 			'relaID' => $rint,
-	// 			'Relation' => $Relation,
-	// 			'rName' => $rName,
-	// 			'rOccupation' => $rOccupation,
-
-	// 		);
-	// 		$_SESSION['rela_cart'][] = $data;
-	// 	}
-	// }
-	// public function RemoveRelativs()
-	// {
-	// 	foreach ($_SESSION["rela_cart"] as $s_da => $row) {
-	// 		if ($row['rela_cart']['relaID'] == $_POST['row_id']) {
-	// 			unset($_SESSION["rela_cart"][$s_da]);
-	// 			if(empty($_SESSION["rela_cart"]))
-	// 				unset($_SESSION["rela_cart"]);
-	// 		}
-	// 	}
-	// }
-	// // BENIFICIARIES
-	// public function ShowBene()
-	// {
-	// 	if (!isset($_SESSION['beneCart'])) {
-	// 		echo '<div class="pb-3"><h5><i class="fas fa-stream"></i> Beneficiaries Empty</h5></div>';
-	// 	}
-
-	// 	if (isset($_SESSION['beneCart'])) {
-	// 		echo '<div class="p-3"><h5><i class="fas fa-stream"></i> Beneficiaries </h5></div>';
-	// 		echo '<table class="table table-bordered">
-	// 		<thead>
-	// 		<th>Name</th>
-	// 		<th>Relationship</th>
-	// 		<th>Action</th>
-	// 		</thead>
-	// 		<tbody>';
-	// 		foreach ($_SESSION['beneCart'] as $s_da) {
-	// 			echo '
-	// 			<tr>
-	// 			<td>
-	// 			'.$s_da['beneCart']['BeneName'] .'
-	// 			</td>
-	// 			<td>
-	// 			'.$s_da['beneCart']['BeneRelationship'] .'
-	// 			</td>
-	// 			<td>
-	// 			<button id="'.$s_da['beneCart']['beneID'].'" class="removeBENEEE btn-tr" type="button"><i class="fas fa-trash"></i></button>
-	// 			</td>
-	// 			</tr>
-	// 			';
-	// 		}
-	// 		echo '</tbody>
-	// 		</table>';
-	// 	}
-	// 	echo '<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#Bene_Modal"><i class="fas fa-plus"></i> Add Data</button>';
-	// }
-	// public function Add_Bene()
-	// {
-	// 	$min=10000000;
-	// 	$max=99999999;
-	// 	$rint = random_int($min,$max);
-
-	// 	$bName = $_POST["bName"];
-	// 	$bRelationship = $_POST["bRelationship"];
-
-	// 	if ($bName == NULL || $bRelationship == NULL) {
-	// 		echo "Error";
-	// 	}
-	// 	else
-	// 	{
-	// 		foreach ($_SESSION["beneCart"] as $s_da => $row) {
-	// 			if ($row['beneCart']['beneID'] == $rint) {
-	// 				exit();
-	// 			}
-	// 		}
-	// 		if (!isset($_SESSION ['beneCart'] )) {
-	// 			$_SESSION ['beneCart'] = array ();
-	// 		}
-	// 		$data['beneCart'] = array(
-	// 			'beneID' => $rint,
-	// 			'BeneName' => $bName,
-	// 			'BeneRelationship' => $bRelationship,
-
-	// 		);
-	// 		$_SESSION['beneCart'][] = $data;
-	// 	}
-	// }
-	// public function RemoveBene()
-	// {
-	// 	foreach ($_SESSION["beneCart"] as $s_da => $row) {
-	// 		if ($row['beneCart']['beneID'] == $_POST['row_id']) {
-	// 			unset($_SESSION["beneCart"][$s_da]);
-	// 			if(empty($_SESSION["beneCart"]))
-	// 				unset($_SESSION["beneCart"]);
-	// 		}
-	// 	}
-	// }
-
 	public function Logout()
 	{
 		session_destroy();
