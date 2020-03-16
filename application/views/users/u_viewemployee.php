@@ -121,6 +121,9 @@
 									<div id="TabPersonal">
 										<div class="employee-tabs-group-content">
 											<div class="employee-content-header">
+												<div class="float-right">
+													<button onClick="printContent('PrintOutPersonal')" type="button" class="btn btn-primary"><i class="fas fa-print"></i> Print</button>
+												</div>
 												<?php if ($Status == 'Employed'): ?> 
 													<?php if ($ReminderDate == NULL): ?> 
 														<button id="<?php echo $ApplicantID; ?>" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ReminderModal"><i class="fas fa-exclamation"></i> No reminder set</button>
@@ -439,9 +442,6 @@
 												<div class="row">
 													<button id="<?php echo $ApplicantID; ?>" data-dismiss="modal" type="button" class="btn btn-primary btn-sm ExtendButton" data-toggle="modal" data-target="#ExtendContractModal"><i class="fas fa-plus"></i> Extend Contract</button>
 													<button class="btn btn-primary btn-sm ml-1" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Contract History</button>
-													<div class="ml-auto">
-														<a href="<?=base_url()?>TerminateContract?id=<?=$ApplicantID?>" class="btn btn-danger btn-sm" onclick="return confirm('Terminate current contract?')"><i class="fas fa-times"></i> Terminate</a>
-													</div>
 												</div>
 											</div>
 											<hr>
@@ -627,7 +627,10 @@
 									</div>
 									<div id="TabDocuments">
 										<div class="employee-tabs-group-content">
-											<div class="employee-content-header">
+											<div class="employee-content-header pb-2">
+												<div class="float-right">
+													<button onClick="printContent('PrintOutDocuments')" type="button" class="btn btn-primary"><i class="fas fa-print"></i> Print</button>
+												</div>
 												<button id="<?php echo $ApplicantID; ?>" class="btn btn-primary btn-sm doc_btn" data-toggle="modal" data-target="#AddSuppDoc"><i class="fas fa-file-upload"></i> Upload Documents</button>
 											</div>
 											<hr>
@@ -731,6 +734,9 @@
 									</div>
 									<div id="TabAcademic">
 										<div class="employee-tabs-group-content" id="TabAcademic">
+											<div class="employee-content-header pb-2 text-right">
+												<button onClick="printContent('PrintOutAcademic')" type="button" class="btn btn-primary"><i class="fas fa-print"></i> Print</button>
+											</div>
 											<div class="row">
 												<div class="col-sm-12">
 													<div class="table-responsive">
@@ -775,6 +781,9 @@
 									</div>
 									<div id="TabEmployments">
 										<div class="employee-tabs-group-content" id="TabEmployments">
+											<div class="employee-content-header pb-2 text-right">
+												<button onClick="printContent('PrintOutEmployment')" type="button" class="btn btn-primary"><i class="fas fa-print"></i> Print</button>
+											</div>
 											<div class="row">
 												<div class="col-sm-12">
 													<div class="table-responsive">
@@ -819,6 +828,9 @@
 									</div>
 									<div id="TabReferences">
 										<div class="employee-tabs-group-content" id="TabReferences">
+											<div class="employee-content-header pb-2 text-right">
+												<button onClick="printContent('PrintOutReferences')" type="button" class="btn btn-primary"><i class="fas fa-print"></i> Print</button>
+											</div>
 											<div class="row">
 												<div class="col-sm-12">
 													<div class="table-responsive">
@@ -857,6 +869,9 @@
 									</div>
 									<div id="TabBeneficiaries">
 										<div class="employee-tabs-group-content" id="TabBeneficiaries">
+											<div class="employee-content-header pb-2 text-right">
+												<button onClick="printContent('PrintOutBeneficiaries')" type="button" class="btn btn-primary"><i class="fas fa-print"></i> Print</button>
+											</div>
 											<div class="row">
 												<div class="col-sm-12">
 													<div class="table-responsive">

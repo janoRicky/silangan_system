@@ -31,7 +31,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-
+				<a href="<?=base_url()?>TerminateContract?id=<?=$ApplicantID?>" class="btn btn-danger" onclick="return confirm('Terminate current contract?')"><i class="fas fa-times"></i> Terminate</a>
 				<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i>Extend</button>
 			</div>
 			<?php echo form_close();?>
