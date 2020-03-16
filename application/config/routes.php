@@ -97,3 +97,6 @@ $route['RestoreEmployee'] = 'Update_Controller/RestoreEmployee';
 $route['SetWeeklyHours'] = 'Update_Controller/SetWeeklyHours';
 $route['ViewClientEmployees'] = 'Update_Controller/ViewClientEmployees';
 $route['ImportExcel'] = 'Update_Controller/ImportExcel';
+
+
+$route['TerminateContract'] = 'Update_Controller/TerminateContract';

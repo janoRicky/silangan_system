@@ -20,7 +20,7 @@ class Add_Controller extends CI_Controller {
 		$ContractType = $this->input->post('ContractType');
 		$SalaryType = $this->input->post('SalaryType');
 		$Rate = $this->input->post('Rate');
-		$AppliedOn = $this->input->post('ApplicationDate');
+		$AppliedOn = $this->input->post('AppliedOn');
 		// $SalaryExpected = $this->input->post('SalaryExpected');
 		$LastName = $this->input->post('LastName');
 		$FirstName = $this->input->post('FirstName');
@@ -77,7 +77,7 @@ class Add_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($PositionDesired == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL || $MotherName == NULL || $MotherOccupation == NULL || $FatherName == NULL || $FatherOccupation == NULL) {
+		if ($PositionDesired == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL || $MotherName == NULL || $MotherOccupation == NULL || $FatherName == NULL || $FatherOccupation == NULL || $ClientID == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
 				'PositionDesired' => $PositionDesired,
@@ -124,9 +124,9 @@ class Add_Controller extends CI_Controller {
 
 				'ClientID' => $ClientID,
 				'EmployeeID' => $EmployeeID,
-
-				'Overtime' => $Overtime,
-				'Reassignment' => $Reassignment,
+				'H_Years' => $H_Years,
+				'H_Months' => $H_Months,
+				'H_Days' => $H_Days,
 
 				'Address_Present' => $Address_Present,
 				'Address_Provincial' => $Address_Provincial,
@@ -323,7 +323,7 @@ class Add_Controller extends CI_Controller {
 					$Temp_ApplicantID = $ApplicantID;
 					$Temp_ApplicantID++;
 
-					if ($ApplicantID == NULL || $ClientID == NULL) {
+					if ($ApplicantID == NULL) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
 						redirect('NewEmployee');
 					}

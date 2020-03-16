@@ -22,12 +22,11 @@
 											<th> Client </th>
 											<th> Contract Started </th>
 											<th> Contract Ended </th>
+											<th> Notes </th>
 										</tr>
 									</thead>
 									<tbody>
-										<?php 
-
-										foreach ($GetContractHistory->result_array() as $row): ?>
+										<?php foreach ($GetContractHistory->result_array() as $row): ?>
 											<tr>
 												<td class="text-center align-middle">
 													<?php echo $row['Client'] ; ?>
@@ -37,6 +36,9 @@
 												</td>
 												<td class="text-center align-middle">
 													<?php echo $row['PreviousDateEnds'] ; ?>
+												</td>
+												<td class="text-center align-middle">
+													<?php echo $row['Notes'] ; ?>
 												</td>
 											</tr>
 										<?php endforeach ?>

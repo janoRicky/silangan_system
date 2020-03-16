@@ -16,7 +16,7 @@
 				<?php endif; ?>
 				<div class="form-row">
 					<div class="form-group col-12">
-						<label>Choose Client</label>
+						<label>Choose Branch</label>
 						<select id="ClientSelect" class="form-control" name="ClientID">
 							<?php foreach ($getClientOption->result_array() as $row): ?>
 								<option value="<?=$row['ClientID'];?>">

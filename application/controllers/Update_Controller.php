@@ -1161,4 +1161,63 @@ class Update_Controller extends CI_Controller {
 			// 	}
 			// }
 	}
+
+	public function TerminateContract() {
+
+		$ApplicantID = $this->input->get('id');
+		if (!isset($_GET['id'])) {
+			redirect('Employee');
+		}
+		else
+		{
+			date_default_timezone_set('Asia/Manila');
+			
+			$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+			$GetClient = $this->Model_Selects->getClientOption();
+
+			if ($CheckEmployee->num_rows() > 0) {
+				foreach ($CheckEmployee->result_array() as $row) {
+					foreach ($GetClient->result_array() as $nrow) {
+						if ($row['ClientEmployed'] == $nrow['ClientID']) {
+							$ClientName = $nrow['Name'];
+							
+							$data = array(
+								'ApplicantID' => $ApplicantID,
+								'PreviousDateStarted' => $row['DateStarted'],
+								'PreviousDateEnds' => $row['DateEnds'],
+								'Client' => $ClientName,
+								'Notes' => 'Terminated at ' . date('Y-m-d h:i:s A'),
+							);
+							$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);
+							$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantID);
+							if ($ApplicantExpired == TRUE) {
+								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . "'s contract has been terminated!</h5></div>");
+								// LOGBOOK
+								$LogbookCurrentTime = date('Y-m-d h:i:s A');
+								$LogbookType = 'Update';
+								$LogbookEvent = "Employee " . $ApplicantID . "'s contract has been terminated!";
+								$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+								$data = array(
+									'Time' => $LogbookCurrentTime,
+									'Type' => $LogbookType,
+									'Event' => $LogbookEvent,
+									'Link' => $LogbookLink,
+								);
+								$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+								redirect('ApplicantsExpired');
+							}
+							else
+							{
+								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+			}
+		}
+	}
 }
