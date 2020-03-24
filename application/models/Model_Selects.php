@@ -303,5 +303,165 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function sss_Contri()
+	{
+		$SQL = "SELECT * FROM sss_table ORDER BY contribution ASC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function Checkkkkkk($ApplicantID)
+	{
+		$SQL = "SELECT * FROM hours_weekly WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetempGP($ApplicantID)
+	{
 
+		$this->db->select_sum('day_pay');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->get('hours_weekly')->row();  
+		return $result->day_pay;
+	}
+	public function getsssRa()
+	{
+		$SQL = "SELECT * FROM sss_table";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetTotalH($ApplicantID)
+	{
+		$this->db->select_sum('Hours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->get('hours_weekly')->row();  
+		return $result->Hours;
+	}
+	public function GetTotalOt($ApplicantID)
+	{
+		$this->db->select_sum('Overtime');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->get('hours_weekly')->row();  
+		return $result->Overtime;
+	}
+	public function get_applicantContri($id)
+	{
+		$SQL = "SELECT * FROM tracking_table WHERE BranchID = $id";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	// Search queries, possible duplicates
+	public function SearchApplicantID($query)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchEmployeeID($query)
+	{
+		$SQL = "SELECT * FROM applicants WHERE EmployeeID LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchPeople($query)
+	{
+		$SQL = "SELECT * FROM applicants WHERE LastName LIKE '%$query%' OR FirstName LIKE '%$query%' OR MiddleInitial LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchBranches($query)
+	{
+		$SQL = "SELECT * FROM branches WHERE Name LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchPositionGroups($query)
+	{
+		$SQL = "SELECT * FROM applicants WHERE PositionGroup LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchPositionSpecific($query)
+	{
+		$SQL = "SELECT * FROM applicants WHERE PositionDesired LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function SearchAdmins($query)
+	{
+		$SQL = "SELECT * FROM admin WHERE LastName LIKE '%$query%' OR FirstName LIKE '%$query%' OR MiddleInitial LIKE '%$query%'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetEmployeeMatchingBranch($ApplicantID)
+	{
+		$SQL = "SELECT * FROM applicants, branches WHERE ApplicantID = '$ApplicantID' AND (applicants.BranchEmployed = branches.BranchID)";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function getPayslip($id)
+	{
+		$SQL = "SELECT * FROM tracking_table WHERE id = '$id'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetApplicantDet($ApplicantID)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetBranchDet($BranchID)
+	{
+		$SQL = "SELECT * FROM branches WHERE BranchID = '$BranchID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckSSS($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE SSS_No = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckRCN($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ResidenceCertificateNo = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckTIN($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE TIN = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckHDMF($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE HDMF = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckPhilHealth($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE PhilHealth = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckATM($number)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ATM_No = ?";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckLFName($LastName, $FirstName)
+	{
+		$SQL = "SELECT * FROM applicants WHERE LastName = '$LastName' AND FirstName = '$FirstName'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetAllApplicants()
+	{
+		$SQL = "SELECT * FROM applicants";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

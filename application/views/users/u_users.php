@@ -84,7 +84,7 @@
 												$DaysRemaining = "";
 												if($interval->format('%y years') != '0 years') {
 													$DaysRemaining = $DaysRemaining . $interval->format('%y years');
-													if($interval->format('%m months') != '0 months') {
+													if($interval->format('%m months') != '0 months' || $interval->format('%d days') != '0 days') {
 														$DaysRemaining = $DaysRemaining . ', ';
 													}
 												}

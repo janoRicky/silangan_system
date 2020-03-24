@@ -131,11 +131,6 @@
 											} ?>>
 												Semi-Monthly
 											</option>
-											<option value="Monthly" <?php if ($this->session->flashdata('SalaryType') == 'Monthly') {
-												echo 'selected=""';
-											} ?>>
-												Monthly
-											</option>
 										</select>
 									</div>
 									<div class="form-group col-sm-12 col-md-2">
@@ -399,7 +394,7 @@
 								<div class="form-row">
 									<div class="form-group col-sm-12 col-md-3">
 										<label>Branch</label>
-										<select id="Brancheselect" class="form-control" name="BranchID">
+										<select id="Branchselect" class="form-control" name="BranchID">
 											<?php foreach ($getBranchOption->result_array() as $row): ?>
 												<option value="<?=$row['BranchID'];?>">
 													<?=$row['Name'];?>
@@ -651,7 +646,7 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$('#Brancheselect').on('change', function() {
+		$('#Branchselect').on('change', function() {
 			<?php foreach ($getBranchOption->result_array() as $row): ?>
 			<?php
 			// Count how many employees are on the Branch

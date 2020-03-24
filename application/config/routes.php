@@ -68,6 +68,7 @@ $route['Blacklisted'] = 'Main_Controller/V_Blacklisted';
 
 $route['Payroll'] = 'Main_Controller/PayrollBranches';
 $route['ViewBranch'] = 'Main_Controller/ViewBranch';
+$route['Payrollsss'] = 'Main_Controller/Payrollsss';
 
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';

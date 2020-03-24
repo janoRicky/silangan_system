@@ -1,13 +1,9 @@
 <?php foreach ($GetWeeklyListEmployee->result_array() as $erow): ?>
-<div class="modal fade silangan-modal-background" id="HoursWeeklyModal_<?php echo $erow['ApplicantID']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade wercher-modal-background" id="HoursWeeklyModal_<?php echo $erow['ApplicantID']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xxl" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Work Hours for <?php echo $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleInitial'] ?> | <span class="TotalHoursInAWeek">48</span> Hours Total</h5>
-					<!-- <div class="ml-auto" data-toggle="tooltip" data-placement="bottom" title="Autosaves to the Database with each input">
-						<label>Autosave&nbsp;<span style="color: rgba(125, 125, 125, 0.9)">(?)</span></label>
-						<button type="button" class="btn btn-success"><i class="fas fa-check"></i> On</aybutton>
-					</div> -->
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -24,7 +20,7 @@
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Salary</label>
 								<div class="input-icon-sm">
-									<input id="Salary" class="form-control" type="number" name="" value="<?php echo $erow['SalaryExpected']; ?>" readonly>
+									<input id="Salary" class="form-control" type="number" name="" value="<?php echo $erow['Rate']; ?>" readonly>
 									<i>₱</i>
 								</div>
 							</div>
@@ -32,58 +28,23 @@
 								<label>Per&nbsp;Day</label>
 								<div class="input-icon-sm">
 									<input id="AveragePerHour" class="form-control" type="number" name="" value="<?php
-									$RatePerDay = $erow['SalaryExpected'] / 26;
+									$RatePerDay = $erow['Rate'] / 26;
 									echo round($RatePerDay, 2);
 									 ?>" readonly>
 									<i>₱</i>
 								</div>
 							</div>
-							
-<!-- 							<div id="SalaryOvertimeFade" class="form-group col-sm-12 col-md-2 ml-auto">
-								<label>Overtime Bonus</label>
-								<input id="SalaryOvertime" class="form-control" type="text" name="" readonly>
-							</div> -->
 						</div>
 						<div id="SalaryDays" class="form-row">
 							<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
 								<input id="<?php echo $row['Time']; ?>" type="hidden" name="<?php echo $row['Time']; ?>" value="<?php echo $row['Time']; ?>">
-								<!-- <input type="hidden" name="<?php echo $row['DayType']; ?>" value="<?php echo $row['DayType']; ?>"> -->
-								<div class="day-hover day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-3 text-center rcontent mr-4 <?php 
-										// foreach ($this->Model_Selects->GetMatchingDatesType($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-										// 	if ($nrow['Type'] == 'Normal')
-										// 	{ 
-										// 		$Type = 'Normal';
-										// 		echo 'day-indicator-success'; 
-										// 	}
-										// 	elseif ($nrow['Type'] == 'Rest Day') 
-										// 	{ 
-										// 		$Type = 'Rest Day';
-										// 		echo 'day-indicator-primary'; 
-										// 	}
-										// 	elseif ($nrow['Type'] == 'Holiday')
-										// 	{
-										// 		$Type = 'Holiday';
-										// 		echo 'day-indicator-warning';
-										// 	}
-										// 	elseif ($nrow['Type'] == 'Special')
-										// 	{
-										// 		$Type = 'Special';
-										// 		echo 'day-indicator-danger';
-										// 	}
-										// endforeach;
-										?>">
+								<div class="day-hover day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-3 text-center rcontent mr-4">
 									<div class="row">
-										<div class="col-sm-6 day-container-date">
+										<div class="col-sm-12 day-container-date">
 											<b><?php echo $row['Time']; ?></b>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group col-4">
-												<input class="NCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Night" data-off="Night" data-onstyle="primary" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
-											</div>
 										</div>
 									</div>
 									<div class="form-row mt-2">
-										<!-- data-toggle="tooltip" data-placement="bottom" title="Regular Hours" -->
 										<div class="form-group col-8">
 											<div>Hours</div>
 											<input id="" class="form-control Hours_<?php echo $row['Time']; ?>" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
@@ -108,34 +69,42 @@
 													endforeach;
 											?>">
 										</div>
-										<!-- <div data-toggle="tooltip" data-placement="bottom" title="????? Hours" class="form-group col-4">
-											<div class="">SH?</div>
-											<input id="Hours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
+										<div class="col-sm-12 text-center NightPremium">
+											<h6 class="line-through-text-lite">
+												<span>
+													Night Premium
+												</span>
+											</h6>
+										</div>
+										<div class="form-group col-8 NightPremium">
+											<div>Hours</div>
+											<input id="" class="form-control NightHours_<?php echo $row['Time']; ?>" type="number" name="NightHours_<?php echo $row['Time']; ?>" value="<?php
 													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														echo $nrow['Hours'];
+														if($nrow['NightHours'] != NULL) {
+															echo $nrow['NightHours'];
+														} else {
+															echo '0';
+														}
 													endforeach;
 											?>">
 										</div>
-										<div data-toggle="tooltip" data-placement="bottom" title="????? Hours" class="form-group col-4">
-											<div class="">NH?</div>
-											<input id="Hours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
+										<div class="form-group col-4 NightPremium">
+											<div class="">Overtime</div>
+											<input class="form-control NightOTHours_<?php echo $row['Time']; ?>" type="number" name="NightOTHours_<?php echo $row['Time']; ?>" value="<?php
 													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														echo $nrow['Hours'];
+														if($nrow['NightOvertime'] != NULL) {
+															echo $nrow['NightOvertime'];
+														} else {
+															echo '0';
+														}
 													endforeach;
 											?>">
 										</div>
-										<div data-toggle="tooltip" data-placement="bottom" title="????? Hours" class="form-group col-4">
-											<div class="">SPHRD?</div>
-											<input id="Hours_<?php echo $row['Time']; ?>" class="form-control" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
-													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														echo $nrow['Hours'];
-													endforeach;
-											?>">
-										</div> -->
+										<hr class="NightPremium">
 									</div>
 									<div class="form-row">
 										<div class="form-group col-6">
-											<input class="REGCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Regular" data-off="Regular" data-onstyle="success" data-offstyle="secondary" data-width="85" <?php if (isset($Regular)) { echo 'checked'; } ?> checked>
+											<input class="REGCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Regular" data-off="Regular" data-onstyle="success" data-offstyle="secondary" data-width="85" <?php if (isset($Regular)) { echo 'checked'; } ?> checked disabled>
 										</div>
 										<div class="form-group col-6">
 											<input class="RESTCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="Rest" data-off="Rest" data-onstyle="info" data-offstyle="secondary" data-width="85" <?php if (isset($RestDay)) { echo 'checked'; } ?>>
@@ -147,46 +116,13 @@
 										<div class="form-group col-6">
 											<input class="NHCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="NH" data-off="NH" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
 										</div>
+										<!-- <div class="form-group col-6">
+											<input class="SLCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="SL" data-off="SL" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
+										</div>
+										<div class="form-group col-6">
+											<input class="VLCheck_<?php echo $row['Time']; ?> SalaryButtons" type="checkbox" data-toggle="toggle" data-on="VL" data-off="VL" data-onstyle="danger" data-offstyle="secondary" data-width="85" <?php if (isset($Holiday)) { echo 'checked'; } ?>>
+										</div> -->
 									</div>
-									<!-- <p class="mr-auto ml-auto">Hours</p> -->
-									<!-- <div class="form-row">
-										<div class="form-group col-6 input-icon">
-											<label>HDMF</label>
-											<input id="PerDay" class="form-control" type="text" name="HDMF_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														if($nrow['HDMF'] != NULL) {
-															echo $nrow['HDMF'];
-														}
-													endforeach;
-													?>">
-										</div>
-										<div class="form-group col-6 input-icon">
-											<label>Philhealth</label>
-											<input id="PerHour" class="form-control" type="text" name="Philhealth_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														if($nrow['Philhealth'] != NULL) {
-															echo $nrow['Philhealth'];
-														}
-													endforeach;
-													?>">
-										</div>
-										<div class="form-group col-6 input-icon">
-											<label>SSS</label>
-											<input id="PerHour" class="form-control" type="text" name="SSS_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														if($nrow['SSS'] != NULL) {
-															echo $nrow['SSS'];
-														}
-													endforeach;
-													?>">
-										</div>
-										<div class="form-group col-6 input-icon">
-											<label>Tax</label>
-											<input id="PerHour" class="form-control" type="text" name="Tax_<?php echo $row['Time']; ?>" value="<?php foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														if($nrow['Tax'] != NULL) {
-															echo $nrow['Tax'];
-														}
-													endforeach;
-													?>">
-										</div>
-									</div> -->
 									<div class="form-row hhhh">
 										<div class="form-group col-6 input-icon">
 											<label>Per Hour</label>
@@ -218,84 +154,20 @@
 												<i>₱</i>
 											</div>
 										</div>
+										<div class="form-group col-12">
+											<label>Remarks</label>
+											<div class="input-icon-sm">
+												<input class="form-control" type="text" name="Remarks_<?php echo $row['Time']; ?>" value="<?php
+													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
+														if($nrow['Remarks'] != NULL) {
+															echo $nrow['Remarks'];
+														}
+													endforeach; ?>">
+											</div>
+										</div>
 									</div>
 								</div>
 							<?php endforeach; ?>
-								<!-- <table id="SalaryTable" class="table table-condensed">
-									<th>Monday</th>
-									<th>Tuesday</th>
-									<th>Wednesday</th>
-									<th>Thursday</th>
-									<th>Friday</th>
-									<th>Saturday</th>
-									<th>Monday</th>
-									<th>Tuesday</th>
-									<th>Wednesday</th>
-									<th>Thursday</th>
-									<th>Friday</th>
-									<th>Saturday</th>
-									<tr>
-										<td>
-											<div class="input-icon">
-												<input id="HoursDayOne" class="form-control" type="number" name="HoursDayOne" value="8">
-												<i>₱</i>
-											</div>
-										</td>
-										<td><input id="HoursDayTwo" class="form-control" type="number" name="HoursDayTwo" value="8"></td>
-										<td><input id="HoursDayThree" class="form-control" type="number" name="HoursDayThree" value="8"></td>
-										<td><input id="HoursDayFour" class="form-control" type="number" name="HoursDayFour" value="8"></td>
-										<td><input id="HoursDayFive" class="form-control" type="number" name="HoursDayFive" value="8"></td>
-										<td><input id="HoursDaySix" class="form-control" type="number" name="HoursDaySix" value="8"></td>
-										<td><input id="HoursDayTwo" class="form-control" type="number" name="HoursDayTwo" value="8"></td>
-										<td><input id="HoursDayThree" class="form-control" type="number" name="HoursDayThree" value="8"></td>
-										<td><input id="HoursDayFour" class="form-control" type="number" name="HoursDayFour" value="8"></td>
-										<td><input id="HoursDayFive" class="form-control" type="number" name="HoursDayFive" value="8"></td>
-										<td><input id="HoursDaySix" class="form-control" type="number" name="HoursDaySix" value="8"></td>
-										<td><input id="HoursDaySix" class="form-control" type="number" name="HoursDaySix" value="8"></td>
-									</tr>
-									<tr>
-										<td>Hours</td>
-										<td>Hours</td>
-										<td>Hours</td>
-										<td>Hours</td>
-										<td>Hours</td>
-										<td>Hours</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="input-icon">
-												<input id="SalaryDayOne" class="form-control" type="text" name="" readonly>
-												<i>₱</i>
-											</div>
-										</td>
-										<td>
-											<div class="input-icon">
-												<input id="SalaryDayTwo" class="form-control" type="text" name="" readonly>
-												<i>₱</i>
-											</div>
-										</td>
-										<td>
-											<div class="input-icon">
-												<input id="SalaryDayThree" class="form-control" type="text" name="" readonly>
-												<i>₱</i>
-											</div>
-										</td>
-										<td>
-											<div class="input-icon">
-												<input id="SalaryDayFour" class="form-control" type="text" name="" readonly>
-												<i>₱</i>
-											</div>
-										</td>
-										<td><input id="SalaryDayFive" class="form-control" type="text" name="" readonly></td>
-										<td><input id="SalaryDaySix" class="form-control" type="text" name="" readonly></td>
-									</tr>
-									<tr>
-										<td colspan="2">Estimated Per Hour</td>
-									</tr>
-									<tr>
-										<td colspan="2"><input id="SalaryPerHour" class="form-control" type="text" name="" readonly></td>	
-									</tr>
-								</table> -->
 							</div>
 					<div class="modal-fade text-center" style="display: none;">
 						<hr>

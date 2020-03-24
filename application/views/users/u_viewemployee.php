@@ -1018,7 +1018,7 @@
 	<?php $this->load->view('_template/users/u_scripts');?>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('#Brancheselect').on('change', function() {
+			$('#Branchselect').on('change', function() {
 				<?php foreach ($getBranchOption->result_array() as $row): ?>
 				<?php
 				// Count how many employees are on the Branch

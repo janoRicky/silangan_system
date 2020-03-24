@@ -1157,17 +1157,17 @@ class Update_Controller extends CI_Controller {
 							if ($ApplicantExpired == TRUE) {
 								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . "'s contract has been terminated!</h5></div>");
 								// LOGBOOK
-								$LogbookCurrentTime = date('Y-m-d h:i:s A');
-								$LogbookType = 'Update';
-								$LogbookEvent = "Employee " . $ApplicantID . "'s contract has been terminated!";
-								$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-								$data = array(
-									'Time' => $LogbookCurrentTime,
-									'Type' => $LogbookType,
-									'Event' => $LogbookEvent,
-									'Link' => $LogbookLink,
-								);
-								$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+								// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+								// $LogbookType = 'Update';
+								// $LogbookEvent = "Employee " . $ApplicantID . "'s contract has been terminated!";
+								// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+								// $data = array(
+								// 	'Time' => $LogbookCurrentTime,
+								// 	'Type' => $LogbookType,
+								// 	'Event' => $LogbookEvent,
+								// 	'Link' => $LogbookLink,
+								// );
+								// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 								redirect('ApplicantsExpired');
 							}
 							else

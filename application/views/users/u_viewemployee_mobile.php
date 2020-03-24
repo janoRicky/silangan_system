@@ -29,36 +29,6 @@
 			<a href="<?=base_url()?>BlacklistEmployee?id=<?=$ApplicantID?>" class="dropdown-item"><i class="fas fa-times"></i> Blacklist</a>
 		</div>
 	</div>
-	<?php if ($Status == 'Blacklisted'): ?>
-	<div class="row ml-auto mr-auto pb-5 w-100">
-		<div class="col-sm-12 col-mb-12 w-100 text-center blacklisted-notice">
-			<div class="col-sm-12 pb-2 pt-4">
-				<h2>
-					<i class="fas fa-exclamation-triangle"></i><b> Notice </b><i class="fas fa-exclamation-triangle"></i>
-				</h2>
-			</div>
-			<div class="col-sm-12 pb-2">
-				This individual has been marked as <b>Blacklisted</b>
-			</div>
-			<div class="col-sm-12 col-mb-12 pb-2">
-				<button id="ViolationsButton" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#ViolationsModal"><i class="far fa-eye"></i> View Violations</button>
-				<button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#EmpContractHistory"><i class="fas fa-book"></i> Relevant Document</button>
-			</div>
-		</div>
-	</div>
-	<?php endif; ?>
-
-
-
-
-	<!-- PrintOutPersonal -->
-	
-
-
-
-
-
-
 	<div class="col-sm-12 mb-5">
 		<h5>
 			<i class="fas fa-user-alt"></i> Personal Information
