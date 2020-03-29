@@ -88,20 +88,28 @@ class Model_Updates extends CI_Model {
 			'Time' => $Date,
 			'Hours' => $Hours,
 			'Overtime' => $Overtime,
+			'NightHours' => $NightHours,
+			'NightOvertime' => $NightOvertime,
+			'Remarks' => $Remarks,
 			'HDMF' => $HDMF,
 			'Philhealth' => $Philhealth,
 			'SSS' => $SSS,
 			'Tax' => $Tax,
+			'day_pay' => $day_pay,
 		);
 		$SQL = "REPLACE INTO hours_weekly
 		SET ApplicantID = '$ApplicantID',
 		BranchID = '$BranchID',
 		Time = '$Date', Hours = '$Hours',
 		Overtime = '$Overtime',
+		NightHours = '$NightHours',
+		NightOvertime = '$NightOvertime',
+		Remarks = '$Remarks',
 		HDMF = '$HDMF',
 		Philhealth = '$Philhealth',
 		SSS = '$SSS',
-		Tax = '$Tax'";
+		Tax = '$Tax',
+		day_pay = '$day_pay'";
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
@@ -112,6 +120,18 @@ class Model_Updates extends CI_Model {
 		);
 		$this->db->where('Current', 'Current');
 		$result = $this->db->update('dummy_hours', $data);
+		return $result;
+	}
+	public function UpdateSSSField($id, $data)
+	{
+		extract($data);
+		$data = array(
+			'f_range' => $f_range,
+			't_range' => $t_range,
+			'contribution' => $contribution,
+		);
+		$this->db->where('id', $id);
+		$result = $this->db->update('sss_table', $data);
 		return $result;
 	}
 }

@@ -814,11 +814,15 @@ class Update_Controller extends CI_Controller {
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 			$ArrayInt = 0;
 			$ArrayLength = $GetWeeklyDates->num_rows();
+			
 			foreach ($GetWeeklyDates->result_array() as $nrow):
 				$ArrayInt++;
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
 				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
 				$Overtime = $this->input->post('OTHours_' . $nrow['Time'],TRUE);
+				$NightHours = $this->input->post('NightHours_' . $nrow['Time'],TRUE);
+				$NightOvertime = $this->input->post('NightOTHours_' . $nrow['Time'],TRUE);
+				$Remarks = $this->input->post('Remarks_' . $nrow['Time'],TRUE);
 				// BENEFITS
 				$HDMF = $this->input->post('HDMF_' . $nrow['Time'],TRUE);
 				$Philhealth = $this->input->post('Philhealth_' . $nrow['Time'],TRUE);
@@ -853,11 +857,15 @@ class Update_Controller extends CI_Controller {
 						'Date' => $Date,
 						'Hours' => $Hours,
 						'Overtime' => $Overtime,
+						'NightHours' => $NightHours,
+						'NightOvertime' => $NightOvertime,
+						'Remarks' => $Remarks,
 						'Type' => $Type,
 						'HDMF' => $HDMF,
 						'Philhealth' => $Philhealth,
 						'SSS' => $SSS,
 						'Tax' => $Tax,
+						'day_pay' => $TdRate,
 
 					);
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
@@ -878,17 +886,52 @@ class Update_Controller extends CI_Controller {
 							// 	'Link' => $LogbookLink,
 							// );
 							// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-							redirect($_SERVER['HTTP_REFERER']);
+
 						}
 					}
 					else
 					{
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
-						redirect($_SERVER['HTTP_REFERER']);
+
 					}
 				}
 			endforeach;
 
+			$Checkkkkkk = $this->Model_Selects->Checkkkkkk($ApplicantID);
+
+			if ($Checkkkkkk->num_rows() > 0) {
+				$gross_pay = $this->Model_Selects->GetempGP($ApplicantID);
+				
+				$getsssRa = $this->Model_Selects->getsssRa();
+				$GetTotalH = $this->Model_Selects->GetTotalH($ApplicantID);
+				$GetTotalOt = $this->Model_Selects->GetTotalOt($ApplicantID);
+
+				foreach ($getsssRa->result_array() as $row) {
+					if ($gross_pay >= $row['f_range'] && $gross_pay <= $row['t_range']) {
+						$sss_contri = $row['contribution'];
+					}
+					else
+					{
+						$sss_contri = 0;
+					}
+				}
+				$net_pay = $gross_pay - $sss_contri;
+				date_timezone_set('Asia/Manila');
+				$c_month = date('Y/m/d');
+				$data = array(
+					'BranchID' => $BranchID,
+					'ApplicantID' => $ApplicantID,
+					'gross_pay' => round($gross_pay,2),
+					'sss_contri' => $sss_contri,
+					'TotalHours' => $GetTotalH,
+					'TotaOT' => $GetTotalOt,
+					'net_pay' => round($net_pay,2),
+					'c_week' => $_SESSION['Modeeee'],
+					'c_month' => $c_month,
+				);
+				$this->Model_Inserts->Insertttttt($data);
+			}
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 		else
 		{

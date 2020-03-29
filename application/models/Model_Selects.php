@@ -317,7 +317,6 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetempGP($ApplicantID)
 	{
-
 		$this->db->select_sum('day_pay');
 		$this->db->where('ApplicantID', $ApplicantID);
 		$result = $this->db->get('hours_weekly')->row();  

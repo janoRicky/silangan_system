@@ -106,4 +106,14 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('tab_documents_notes', $data);
 		return $result;
 	}
+	public function AddtoSSS($data)
+	{
+		$result = $this->db->insert('sss_table', $data);
+		return $result;
+	}
+	public function Insertttttt($data)
+	{
+		$result = $this->db->insert('tracking_table', $data);
+		return $result;
+	}
 }
