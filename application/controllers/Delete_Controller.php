@@ -87,6 +87,31 @@ class Delete_Controller extends CI_Controller {
 			}
 		}
 	}
+	public function RemoveEmployer()
+	{
+		$id = $this->input->get('id');
+		if (!isset($_GET['id'])) {
+			redirect('Employers');
+		}
+		else
+		{
+			$Removethis = $this->Model_Deletes->RemoveEmployerM($id);
+			if ($Removethis == TRUE) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employer ID ' . $id . ' has been succesfully removed!</h5></div>');
+				if (isset($_SERVER['HTTP_REFERER'])) {
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+				else
+				{
+					redirect('Employers');
+				}
+			}
+			else
+			{
+				redirect('Employers');
+			}
+		}
+	}
 	public function RemoveBranch()
 	{
 		$id = $this->input->get('id');

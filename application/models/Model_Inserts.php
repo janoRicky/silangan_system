@@ -33,6 +33,11 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('employment_record', $data);
 		return $result;
 	}
+	public function InsertNewEmployer($data)
+	{
+		$result = $this->db->insert('employers', $data);
+		return $result;
+	}
 	public function InsertNewBranch($data)
 	{
 		$result = $this->db->insert('branches', $data);

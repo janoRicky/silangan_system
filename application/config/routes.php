@@ -61,7 +61,8 @@ $route['Applicant'] = 'Main_Controller/V_Applicants';
 $route['ApplicantsExpired'] = 'Main_Controller/V_ApplicantsExpired';
 $route['NewEmployee'] = 'Main_Controller/NewEmployee';
 $route['Admin_List'] = 'Main_Controller/View_Admins';
-$route['Branches'] = 'Main_Controller/Branches';
+// $route['Branches'] = 'Main_Controller/Branches';
+$route['Employers'] = 'Main_Controller/Employers';
 $route['Experimental'] = 'Main_Controller/Experimental';
 $route['Archived'] = 'Main_Controller/V_Archived';
 $route['Blacklisted'] = 'Main_Controller/V_Blacklisted';
@@ -76,7 +77,8 @@ $route['LoginValidation'] = 'Login_Controller/LoginValidation';
 $route['addem'] = 'Add_Controller/addem';
 $route['addNewEmployee'] = 'Add_Controller/addNewEmployee';
 $route['Add_NewAdmin'] = 'Add_Controller/Add_NewAdmin';
-$route['Add_newBranch'] = 'Add_Controller/Add_newBranch';
+$route['Add_NewEmployer'] = 'Add_Controller/Add_NewEmployer';
+$route['Add_NewBranch'] = 'Add_Controller/Add_NewBranch';
 $route['AddSupDoc'] = 'Add_Controller/AddSupDoc';
 
 
@@ -84,6 +86,7 @@ $route['AddSupDoc'] = 'Add_Controller/AddSupDoc';
 // DELETE
 $route['RemoveEmployee'] = 'Delete_Controller/RemoveEmployee';
 $route['RemoveAdmin'] = 'Delete_Controller/RemoveAdmin';
+$route['RemoveEmployer'] = 'Delete_Controller/RemoveEmployer';
 $route['RemoveBranch'] = 'Delete_Controller/RemoveBranch';
 
 // UPDATE

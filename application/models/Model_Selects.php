@@ -109,6 +109,26 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
+
+	public function GetEmployers()
+	{
+		$SQL = "SELECT * FROM employers WHERE Status = 'Active'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetEmployerByID($EmployerID)
+	{
+		$SQL = "SELECT * FROM employers WHERE EmployerID = ?";
+		$result = $this->db->query($SQL,$EmployerID);
+		return $result;
+	}
+	public function GetEmployerBranches($EmployerID)
+	{
+		$SQL = "SELECT * FROM branches WHERE EmployerID = '$EmployerID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+
 	public function GetBranches()
 	{
 		$SQL = "SELECT * FROM branches WHERE Status = 'Active'";

@@ -465,27 +465,69 @@ class Add_Controller extends CI_Controller {
 		}
 		
 	}
-	public function Add_newBranch()
+	public function Add_NewEmployer()
 	{
+		$EmployerLastName = $this->input->post('EmployerLastName',TRUE);
+		$EmployerFirstName = $this->input->post('EmployerFirstName',TRUE);
+		$EmployerMI = $this->input->post('EmployerMI',TRUE);
+		$EmployerAddress = $this->input->post('EmployerAddress',TRUE);
+		$EmployerContact = $this->input->post('EmployerContact',TRUE);
+
+		if ( $EmployerLastName == NULL || $EmployerFirstName == NULL || $EmployerMI == NULL || $EmployerAddress == NULL || $EmployerContact == NULL ) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!' . $EmployerLastName . $EmployerFirstName . $EmployerMI . $EmployerAddress . $EmployerContact . '</h5></div>');
+			redirect('Employers');
+		}
+		else
+		{
+			$data = array(
+				'LastName' => $EmployerLastName,
+				'FirstName' => $EmployerFirstName,
+				'MiddleInitial' => $EmployerMI,
+				'Address' => $EmployerAddress,
+				'ContactNumber' => $EmployerContact,
+				'Status' => 'Active',
+			);
+			$InsertNewEmployer = $this->Model_Inserts->InsertNewEmployer($data);
+			if ($InsertNewEmployer == TRUE) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Branch added!</h5></div>');
+				redirect('Employers');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				redirect('Employers');
+			}
+			
+		}
+	}
+	public function Add_NewBranch()
+	{
+		$EmployerID = $this->input->post('EmployerID',TRUE);
 		$BranchName = $this->input->post('BranchName',TRUE);
 		$BranchAddress = $this->input->post('BranchAddress',TRUE);
 		$BranchContact = $this->input->post('BranchContact',TRUE);
 		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix',TRUE);
 
-		if ( $BranchName == NULL || $BranchAddress == NULL || $BranchContact == NULL || $EmployeeIDSuffix == NULL ) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
-			redirect('Branches');
+		if ( $EmployerID == NULL || $BranchName == NULL || $BranchAddress == NULL || $BranchContact == NULL || $EmployeeIDSuffix == NULL ) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required! ' . "1:" . $EmployerID . "2:" . $BranchName . "3:" . $BranchAddress . "4:" . $BranchContact . "5:" . $EmployeeIDSuffix . '</h5></div>');
+			redirect('Employers');
 		}
 		else
 		{
 			$CheckBranch = $this->Model_Selects->CheckBranch($BranchName);
+			$GetEmployerByID = $this->Model_Selects->GetEmployerByID($EmployerID);
 			if ($CheckBranch->num_rows() > 0) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Branch exist!</h5></div>');
-				redirect('Branches');
+				redirect('Employers?employerID=' . $EmployerID);
+			}
+			elseif ($GetEmployerByID->num_rows() < 1) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Employer does not exist!'. $EmployerID .'</h5></div>');
+				redirect('Employers');
 			}
 			else
 			{
 				$data = array(
+					'EmployerID' => $EmployerID,
 					'Name' => $BranchName,
 					'Address' => $BranchAddress,
 					'ContactNumber' => $BranchContact,
@@ -508,12 +550,12 @@ class Add_Controller extends CI_Controller {
 					// 	'Link' => $LogbookLink,
 					// );
 					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-					redirect('Branches');
+					redirect('Employers?employerID=' . $EmployerID);
 				}
 				else
 				{
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
-					redirect('Branches');
+					redirect('Employers?employerID=' . $EmployerID);
 				}
 			}
 		}

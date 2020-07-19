@@ -15,6 +15,12 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL,$id);
 		return $result;
 	}
+	public function RemoveEmployerM($id)
+	{
+		$SQL = "UPDATE employers SET Status ='Deleted' WHERE EmployerID = ?";
+		$result = $this->db->query($SQL,$id);
+		return $result;
+	}
 	public function RemoveBranchM($id)
 	{
 		$SQL = "UPDATE branches SET Status ='Deleted' WHERE BranchID = ?";

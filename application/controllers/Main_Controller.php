@@ -694,7 +694,26 @@
 		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
 		$this->load->view('users/u_admins',$data);
 	}
-	public function Branches()
+	// public function Branches()
+	// {
+	// 	unset($_SESSION["bencart"]);
+	// 	unset($_SESSION["acadcart"]);
+	// 	unset($_SESSION["ref_cart"]);
+	// 	unset($_SESSION["emp_cart"]);
+	// 	unset($_SESSION["mach_cart"]);
+
+	// 	$header['title'] = 'Branches | Silangan Lumber';
+	// 	$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+	// 	$data['Breadcrumb'] = '
+	// 	<nav aria-label="breadcrumb">
+	// 		<ol class="breadcrumb" style="background-color: transparent;">
+	// 			<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Branches">Branches</a></li>
+	// 		</ol>
+	// 	</nav>';
+	// 	$data['ShowBranches'] = $this->Model_Selects->GetBranches();
+	// 	$this->load->view('users/u_branches',$data);
+	// }
+	public function Employers()
 	{
 		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
@@ -702,16 +721,16 @@
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
-		$header['title'] = 'Branches | Silangan Lumber';
+		$header['title'] = 'Employers | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Branches">Branches</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Employers">Employers</a></li>
 			</ol>
 		</nav>';
-		$data['ShowBranches'] = $this->Model_Selects->GetBranches();
-		$this->load->view('users/u_branches',$data);
+		$data['ShowEmployers'] = $this->Model_Selects->GetEmployers();
+		$this->load->view('users/u_employers',$data);
 	}
 	public function PayrollBranches()
 	{
