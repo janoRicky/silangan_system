@@ -68,8 +68,8 @@
 				<div class="modal-header">
 					<h4 class="modal-title">Branches of <?php
 					$EmployerID = $_GET['employerID'];
-					$GetClient = $this->Model_Selects->GetEmployerByID($EmployerID);
-					foreach($GetClient->result_array() as $row):
+					$GetEmployer = $this->Model_Selects->GetEmployerByID($EmployerID);
+					foreach($GetEmployer->result_array() as $row):
 						echo $row['LastName'] . ", " . $row['FirstName'] . " " . $row['MiddleInitial'] . ".";
 					endforeach;
 					?> (<?php echo $this->Model_Selects->GetEmployerBranches($EmployerID)->num_rows(); ?>)</h4>
@@ -171,8 +171,8 @@
 						<?php endif; ?>
 						Employees of <?php
 						$BranchID = $_GET['branchID'];
-						$GetClient = $this->Model_Selects->GetBranchID($BranchID);
-						foreach($GetClient->result_array() as $row):
+						$GetBranch = $this->Model_Selects->GetBranchID($BranchID);
+						foreach($GetBranch->result_array() as $row):
 							echo $row['Name'];
 						endforeach;
 						?> (<?php echo $this->Model_Selects->GetWeeklyListEmployee($BranchID)->num_rows(); ?>)
