@@ -732,6 +732,54 @@
 		$data['ShowEmployers'] = $this->Model_Selects->GetEmployers();
 		$this->load->view('users/u_employers',$data);
 	}
+	public function ModifyEmployer()
+	{
+		unset($_SESSION["bencart"]);
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		if (isset($_GET['id'])) {
+
+			$id = $_GET['id'];
+
+			$header['title'] = 'Modify | Silangan Lumber';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+
+			$GetEmployerDetails = $this->Model_Selects->GetEmployerByID($id);
+
+			if ($GetEmployerDetails->num_rows() > 0) {
+				$ged = $GetEmployerDetails->row_array();
+				$data = array(
+					'EmployerID' => $ged['EmployerID'],
+					'LastName' => $ged['LastName'],
+					'FirstName' => $ged['FirstName'],
+					'MiddleInitial' => $ged['MiddleInitial'],
+					'ContactNumber' => $ged['ContactNumber'],
+					'Address' => $ged['Address'],
+				);
+
+				$data['Breadcrumb'] = '
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Employers">Employers</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
+					</ol>
+				</nav>';
+
+				$this->load->view('users/u_modifyemployer',$data);
+			}
+			else
+			{
+				redirect('Employers');
+			}
+		}
+		else
+		{
+			redirect('Employers');
+		}
+	}
 	public function PayrollBranches()
 	{
 		unset($_SESSION["bencart"]);

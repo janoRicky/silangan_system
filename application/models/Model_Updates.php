@@ -134,4 +134,10 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('sss_table', $data);
 		return $result;
 	}
+	public function UpdateEmployer($EmployerID,$data)
+	{
+		$this->db->where('EmployerID', $EmployerID);
+		$result = $this->db->update('employers', $data);
+		return $result;
+	}
 }

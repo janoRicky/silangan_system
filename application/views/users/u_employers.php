@@ -45,7 +45,7 @@
 											</td>
 											<td class="text-center align-middle PrintExclude">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Employers?employerID=<?php echo $row['EmployerID']; ?>"><i class="fas fa-building"></i> Branches</a>
-												<!-- <button class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#addEmployer"><i class="fas fa-edit"></i> Edit</button> -->
+												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ModifyEmployer?id=<?php echo $row['EmployerID']; ?>"><i class="fas fa-edit"></i> Edit</a>
 												<a href="<?=base_url()?>RemoveEmployer?id=<?=$row['EmployerID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Employer?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>

@@ -1227,4 +1227,47 @@ class Update_Controller extends CI_Controller {
 			}
 		}
 	}
+	public function UpdateEmployer()
+	{
+		$EmployerID = $this->input->post('M_EmployerID');
+		$LastName = $this->input->post('LastName');
+		$FirstName = $this->input->post('FirstName');
+		$MiddleInitial = $this->input->post('MiddleInitial');
+		$ContactNumber = $this->input->post('ContactNumber');
+		$Address = $this->input->post('Address');
+
+		if ($LastName == NULL || $FirstName == NULL || $MiddleInitial == NULL || $ContactNumber == NULL || $Address == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$data = array(
+				'EmployerID' => $EmployerID,
+				'LastName' => $LastName,
+				'FirstName' => $FirstName,
+				'MiddleInitial' => $MiddleInitial,
+				'ContactNumber' => $ContactNumber,
+				'Address' => $Address,
+			);
+			$this->session->set_flashdata($data);
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			$data = array(
+				'LastName' => $LastName,
+				'FirstName' => $FirstName,
+				'MiddleInitial' => $MiddleInitial,
+				'ContactNumber' => $ContactNumber,
+				'Address' => $Address,
+			);
+			$updatedEmployer = $this->Model_Updates->UpdateEmployer($EmployerID, $data);
+			if ($updatedEmployer == TRUE) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+		}
+	}
 }
