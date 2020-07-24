@@ -140,4 +140,10 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('employers', $data);
 		return $result;
 	}
+	public function UpdateBranch($BranchID,$data)
+	{
+		$this->db->where('BranchID', $BranchID);
+		$result = $this->db->update('branches', $data);
+		return $result;
+	}
 }

@@ -1259,14 +1259,57 @@ class Update_Controller extends CI_Controller {
 				'Address' => $Address,
 			);
 			$updatedEmployer = $this->Model_Updates->UpdateEmployer($EmployerID, $data);
-			if ($updatedEmployer == TRUE) {
+			if ($updatedEmployer) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
-				redirect($_SERVER['HTTP_REFERER']);
+				redirect("Employers");
 			}
 			else
 			{
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
-				redirect($_SERVER['HTTP_REFERER']);
+				redirect("Employers");
+			}
+		}
+	}
+	public function UpdateBranch()
+	{
+		$BranchID = $this->input->post('M_BranchID');
+		$EmployerID = $this->input->post('EmployerID');
+		$Name = $this->input->post('Name');
+		$Address = $this->input->post('Address');
+		$ContactNumber = $this->input->post('ContactNumber');
+		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix');
+
+		if ($EmployerID == NULL || $Name == NULL || $Address == NULL || $ContactNumber == NULL || $EmployeeIDSuffix == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$data = array(
+				'BranchID' => $BranchID,
+				'EmployerID' => $EmployerID,
+				'Name' => $Name,
+				'Address' => $Address,
+				'ContactNumber' => $ContactNumber,
+				'EmployeeIDSuffix' => $EmployeeIDSuffix,
+			);
+			$this->session->set_flashdata($data);
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			$data = array(
+				'EmployerID' => $EmployerID,
+				'Name' => $Name,
+				'Address' => $Address,
+				'ContactNumber' => $ContactNumber,
+				'EmployeeIDSuffix' => $EmployeeIDSuffix,
+			);
+			$updatedBranch = $this->Model_Updates->UpdateBranch($BranchID, $data);
+			if ($updatedBranch) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+				redirect("Employers");
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+				redirect("Employers");
 			}
 		}
 	}

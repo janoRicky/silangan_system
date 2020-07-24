@@ -20,7 +20,7 @@ class Delete_Controller extends CI_Controller {
 		else
 		{
 			$Removethis = $this->Model_Deletes->RemoveEmpl($id);
-			if ($Removethis == TRUE) {
+			if ($Removethis) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
 				// date_default_timezone_set('Asia/Manila');
@@ -58,7 +58,7 @@ class Delete_Controller extends CI_Controller {
 		else
 		{
 			$Removethis = $this->Model_Deletes->RemoveAdminM($id);
-			if ($Removethis == TRUE) {
+			if ($Removethis) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Admin ID ' . $id . ' has been succesfully removed!</h5></div>');
 				// LOGBOOK
 				// date_default_timezone_set('Asia/Manila');
@@ -95,20 +95,27 @@ class Delete_Controller extends CI_Controller {
 		}
 		else
 		{
-			$Removethis = $this->Model_Deletes->RemoveEmployerM($id);
-			if ($Removethis == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employer ID ' . $id . ' has been succesfully removed!</h5></div>');
-				if (isset($_SERVER['HTTP_REFERER'])) {
-					redirect($_SERVER['HTTP_REFERER']);
+			if ($this->Model_Selects->GetEmployerBranches($id)->num_rows() > 0) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Please reassign the branches first.</h5></div>');\
+				redirect('Employers');
+			}
+			else
+			{
+				$Removethis = $this->Model_Deletes->RemoveEmployerM($id);
+				if ($Removethis) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employer ID ' . $id . ' has been succesfully removed!</h5></div>');
+					if (isset($_SERVER['HTTP_REFERER'])) {
+						redirect($_SERVER['HTTP_REFERER']);
+					}
+					else
+					{
+						redirect('Employers');
+					}
 				}
 				else
 				{
 					redirect('Employers');
 				}
-			}
-			else
-			{
-				redirect('Employers');
 			}
 		}
 	}
@@ -116,38 +123,46 @@ class Delete_Controller extends CI_Controller {
 	{
 		$id = $this->input->get('id');
 		if (!isset($_GET['id'])) {
-			redirect('Branches');
+			redirect('Employers');
 		}
 		else
 		{
-			$Removethis = $this->Model_Deletes->RemoveBranchM($id);
-			if ($Removethis == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Branch ID ' . $id . ' has been succesfully removed!</h5></div>');
-				// LOGBOOK
-				// date_default_timezone_set('Asia/Manila');
-				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-				// $LogbookType = 'Deletion';
-				// $LogbookEvent = 'Branch ID ' . $id .' has been removed.';
-				// $LogbookLink = base_url() . 'Branches';
-				// $data = array(
-				// 	'Time' => $LogbookCurrentTime,
-				// 	'Type' => $LogbookType,
-				// 	'Event' => $LogbookEvent,
-				// 	'Link' => $LogbookLink,
-				// );
-				// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-				if (isset($_SERVER['HTTP_REFERER'])) {
-					redirect($_SERVER['HTTP_REFERER']);
-				}
-				else
-				{
-					redirect('Branches');
-				}
+			if ($this->Model_Selects->GetBranchesEmployed($id)->num_rows() > 0) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Please terminate the branch&#39s employees first.</h5></div>');\
+				redirect('Employers');
 			}
 			else
 			{
-				redirect('Branches');
+				$Removethis = $this->Model_Deletes->RemoveBranchM($id);
+				if ($Removethis) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Branch ID ' . $id . ' has been succesfully removed!</h5></div>');
+					// LOGBOOK
+					// date_default_timezone_set('Asia/Manila');
+					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+					// $LogbookType = 'Deletion';
+					// $LogbookEvent = 'Branch ID ' . $id .' has been removed.';
+					// $LogbookLink = base_url() . 'Branches';
+					// $data = array(
+					// 	'Time' => $LogbookCurrentTime,
+					// 	'Type' => $LogbookType,
+					// 	'Event' => $LogbookEvent,
+					// 	'Link' => $LogbookLink,
+					// );
+					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					if (isset($_SERVER['HTTP_REFERER'])) {
+						redirect($_SERVER['HTTP_REFERER']);
+					}
+					else
+					{
+						redirect('Employers');
+					}
+				}
+				else
+				{
+					redirect('Employers');
+				}
 			}
+			
 		}
 	}
 }

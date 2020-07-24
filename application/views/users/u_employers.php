@@ -132,10 +132,9 @@
 																<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['BranchID'])->num_rows(); ?>
 															</td>
 															<td class="text-center align-middle PrintExclude" width="100">
-																<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Employers?employerID=<?php echo $row['EmployerID']; ?>&branchID=<?php echo $row['BranchID']; ?>">
-																	<i class="fas fa-users">
-																		
-																	</i> Employees</a>
+																<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Employers?employerID=<?php echo $row['EmployerID']; ?>&branchID=<?php echo $row['BranchID']; ?>"><i class="fas fa-users"></i> Employees</a>
+																<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ModifyBranch?id=<?php echo $row['BranchID']; ?>"><i class="fas fa-edit"></i> Edit</a>
+																<a href="<?=base_url()?>RemoveBranch?id=<?=$row['BranchID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Branch?')"><i class="fas fa-trash"></i> Delete</a>
 															</td>
 														</tr>
 													<?php endforeach ?>

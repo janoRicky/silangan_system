@@ -780,6 +780,54 @@
 			redirect('Employers');
 		}
 	}
+	public function ModifyBranch()
+	{
+		unset($_SESSION["bencart"]);
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		if (isset($_GET['id'])) {
+
+			$id = $_GET['id'];
+
+			$header['title'] = 'Modify | Silangan Lumber';
+			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+
+			$GetBranchDetails = $this->Model_Selects->GetBranchID($id);
+			
+			if ($GetBranchDetails->num_rows() > 0) {
+				$ged = $GetBranchDetails->row_array();
+				$data = array(
+					'BranchID' => $ged['BranchID'],
+					'EmployerID' => $ged['EmployerID'],
+					'Name' => $ged['Name'],
+					'Address' => $ged['Address'],
+					'ContactNumber' => $ged['ContactNumber'],
+					'EmployeeIDSuffix' => $ged['EmployeeIDSuffix'],
+				);
+
+				$data['Breadcrumb'] = '
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb" style="background-color: transparent;">
+						<li class="breadcrumb-item" aria-current="page"><a href="Employers">Employers</a></li>
+						<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
+					</ol>
+				</nav>';
+
+				$this->load->view('users/u_modifybranch',$data);
+			}
+			else
+			{
+				redirect('Employers');
+			}
+		}
+		else
+		{
+			redirect('Employers');
+		}
+	}
 	public function PayrollBranches()
 	{
 		unset($_SESSION["bencart"]);
