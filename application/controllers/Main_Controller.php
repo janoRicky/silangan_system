@@ -757,6 +757,7 @@
 					'FirstName' => $ged['FirstName'],
 					'MiddleInitial' => $ged['MiddleInitial'],
 					'ContactNumber' => $ged['ContactNumber'],
+					'Area' => $ged['Area'],
 					'Address' => $ged['Address'],
 				);
 

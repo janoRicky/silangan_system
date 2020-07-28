@@ -34,7 +34,13 @@
 										<label>Contact Number</label>
 										<input class="form-control" type="text" name="ContactNumber" autocomplete="off" value="<?php echo $ContactNumber; ?>">
 									</div>
-									<div class="form-group col-sm-12 col-md-2">
+								</div>
+								<div class="form-row">
+									<div class="form-group col-sm-12 col-md-4">
+										<label>Area</label>
+										<input class="form-control" type="text" name="Area" autocomplete="off" value="<?php echo $Area; ?>">
+									</div>
+									<div class="form-group col-sm-12 col-md-4">
 										<label>Address</label>
 										<input class="form-control" type="text" name="Address" autocomplete="off" value="<?php echo $Address; ?>">
 									</div>

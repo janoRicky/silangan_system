@@ -470,11 +470,12 @@ class Add_Controller extends CI_Controller {
 		$EmployerLastName = $this->input->post('EmployerLastName',TRUE);
 		$EmployerFirstName = $this->input->post('EmployerFirstName',TRUE);
 		$EmployerMI = $this->input->post('EmployerMI',TRUE);
-		$EmployerAddress = $this->input->post('EmployerAddress',TRUE);
 		$EmployerContact = $this->input->post('EmployerContact',TRUE);
+		$EmployerArea = $this->input->post('EmployerArea',TRUE);
+		$EmployerAddress = $this->input->post('EmployerAddress',TRUE);
 
-		if ( $EmployerLastName == NULL || $EmployerFirstName == NULL || $EmployerMI == NULL || $EmployerAddress == NULL || $EmployerContact == NULL ) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!' . $EmployerLastName . $EmployerFirstName . $EmployerMI . $EmployerAddress . $EmployerContact . '</h5></div>');
+		if ( $EmployerLastName == NULL || $EmployerFirstName == NULL || $EmployerMI == NULL || $EmployerArea == NULL || $EmployerAddress == NULL || $EmployerContact == NULL ) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			redirect('Employers');
 		}
 		else
@@ -483,8 +484,9 @@ class Add_Controller extends CI_Controller {
 				'LastName' => $EmployerLastName,
 				'FirstName' => $EmployerFirstName,
 				'MiddleInitial' => $EmployerMI,
-				'Address' => $EmployerAddress,
 				'ContactNumber' => $EmployerContact,
+				'Area' => $EmployerArea,
+				'Address' => $EmployerAddress,
 				'Status' => 'Active',
 			);
 			$InsertNewEmployer = $this->Model_Inserts->InsertNewEmployer($data);
