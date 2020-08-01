@@ -1006,7 +1006,7 @@ class Update_Controller extends CI_Controller {
 		date_default_timezone_set('Asia/Manila');
 		$this->load->library('SimpleXLSX');	
 			if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
-
+				
 				$dim = $xlsx->dimension();
 				$cols = $dim[0];
 				$RowCount = 0;

@@ -483,4 +483,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function getApplicantDetID($branch_id)
+	{
+		$SQL = "SELECT * FROM applicants WHERE BranchEmployed = '$branch_id'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

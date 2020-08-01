@@ -50,6 +50,7 @@
 													<button type="button" class="ImportButton btn btn-sm btn-success w-100"><i class="fas fa-file-excel"></i> Excel</button>
 												</form>
 												<!-- <a class="btn btn-success btn-sm w-100 mb-1" href="<?=base_url()?>ViewBranch?id=<?php echo $row['BranchID']; ?>"><i class="fas fa-file-excel"></i> Excel</a> -->
+												<button id="<?php echo $row['BranchID']; ?>" type="button" class="excel_formatbtn btn btn-secondary btn-sm w-100 mb-1 mt-1"  data-toggle="modal" data-target="#DateFroto_modal"><i class="fas fa-file-download"></i> Excel Format</button>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -116,7 +117,7 @@
 </body>
 <!-- EXPORT MODAL -->
 <?php $this->load->view('_template/modals/m_export'); ?>
-
+<?php $this->load->view('_template/modals/m_export_fromat'); ?>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
@@ -216,6 +217,9 @@
 		$('#LoadButton').on('click', function () {
 			$('.load-container').children().hide();
 			$('.load-div').show();
+		});
+		$('.excel_formatbtn').on('click', function () {
+			$('#idforFormatex').val($(this).attr('id'));
 		});
 	});
 </script>
