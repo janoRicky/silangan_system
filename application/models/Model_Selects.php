@@ -124,7 +124,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetEmployerBranches($EmployerID)
 	{
-		$SQL = "SELECT * FROM branches WHERE EmployerID = '$EmployerID'";
+		$SQL = "SELECT * FROM branches WHERE EmployerID = '$EmployerID' AND Status <> 'Deleted'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

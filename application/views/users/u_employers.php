@@ -22,8 +22,9 @@
 								<thead>
 									<tr class="text-center align-middle">
 										<th> Name </th>
-										<th> Address </th>
 										<th> Contact </th>
+										<th> Area </th>
+										<th> Address </th>
 										<th> Branches </th>
 										<th class="text-center PrintExclude" style="width: 5%;"> Action </th>
 									</tr>
@@ -35,17 +36,20 @@
 												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
 											</td>
 											<td>
-												<?php echo $row['Address']; ?>
+												<?php echo $row['ContactNumber']; ?>
 											</td>
 											<td>
-												<?php echo $row['ContactNumber']; ?>
+												<?php echo $row['Area']; ?>
+											</td>
+											<td>
+												<?php echo $row['Address']; ?>
 											</td>
 											<td>
 												<?php echo $this->Model_Selects->GetEmployerBranches($row['EmployerID'])->num_rows(); ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
 												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Employers?employerID=<?php echo $row['EmployerID']; ?>"><i class="fas fa-building"></i> Branches</a>
-												<!-- <button class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#addEmployer"><i class="fas fa-edit"></i> Edit</button> -->
+												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ModifyEmployer?id=<?php echo $row['EmployerID']; ?>"><i class="fas fa-edit"></i> Edit</a>
 												<a href="<?=base_url()?>RemoveEmployer?id=<?=$row['EmployerID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Employer?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
@@ -132,10 +136,9 @@
 																<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['BranchID'])->num_rows(); ?>
 															</td>
 															<td class="text-center align-middle PrintExclude" width="100">
-																<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Employers?employerID=<?php echo $row['EmployerID']; ?>&branchID=<?php echo $row['BranchID']; ?>">
-																	<i class="fas fa-users">
-																		
-																	</i> Employees</a>
+																<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Employers?employerID=<?php echo $row['EmployerID']; ?>&branchID=<?php echo $row['BranchID']; ?>"><i class="fas fa-users"></i> Employees</a>
+																<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ModifyBranch?id=<?php echo $row['BranchID']; ?>"><i class="fas fa-edit"></i> Edit</a>
+																<a href="<?=base_url()?>RemoveBranch?id=<?=$row['BranchID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Branch?')"><i class="fas fa-trash"></i> Delete</a>
 															</td>
 														</tr>
 													<?php endforeach ?>
@@ -289,14 +292,20 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-12">
-							<label>Address</label>
-							<input class="form-control" type="text" name="EmployerAddress" autocomplete="off">
+							<label>Contact Number</label>
+							<input class="form-control" type="text" name="EmployerContact" autocomplete="off">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-12">
-							<label>Contact Number</label>
-							<input class="form-control" type="text" name="EmployerContact" autocomplete="off">
+							<label>Area</label>
+							<input class="form-control" type="text" name="EmployerArea" autocomplete="off">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-12">
+							<label>Address</label>
+							<input class="form-control" type="text" name="EmployerAddress" autocomplete="off">
 						</div>
 					</div>
 				</div>
@@ -389,7 +398,7 @@
 			}
 		});
 		var employersTable = $('#EmployersTable').DataTable( {
-			"order": [[ 3, "desc" ]],
+			"order": [[ 4, "desc" ]],
 			buttons: [
             {
 	            extend: 'print',
