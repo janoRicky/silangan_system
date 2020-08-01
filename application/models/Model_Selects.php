@@ -489,4 +489,11 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function GetDetails_Branch($branch_id)
+	{
+		$SQL = "SELECT * FROM branches WHERE BranchID = '$branch_id'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	
 }
