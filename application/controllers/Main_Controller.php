@@ -925,7 +925,10 @@
 					<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewBranch?id=' . $id . '">Details</a></li>
 				</ol>
 			</nav>';
-			$this->load->view('payroll/p_viewBranch',$data);
+			
+			##### $this->load->view('payroll/p_viewBranch',$data);
+			$this->load->view('payroll/p_viewbranch',$data);
+			
 		}
 		else
 		{
