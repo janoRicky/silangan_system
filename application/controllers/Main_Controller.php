@@ -962,7 +962,7 @@
 					<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Experimental">Experimental</a></li>
 				</ol>
 			</nav>';
-		$this->load->library('SimpleXLSX');
+		$this->load->library('simplexlsx');
 		$this->load->view('users/u_experimental',$data);
 	}
 

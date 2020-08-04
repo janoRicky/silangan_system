@@ -2,14 +2,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
- *    SimpleXLSX php class v0.8.9
+ *    simplexlsx php class v0.8.9
  *    MS Excel 2007 workbooks reader
  *
- * Copyright (c) 2012 - 2019 SimpleXLSX
+ * Copyright (c) 2012 - 2019 simplexlsx
  *
- * @category   SimpleXLSX
- * @package    SimpleXLSX
- * @copyright  Copyright (c) 2012 - 2019 SimpleXLSX (https://github.com/shuchkin/simplexlsx/)
+ * @category   simplexlsx
+ * @package    simplexlsx
+ * @copyright  Copyright (c) 2012 - 2019 simplexlsx (https://github.com/shuchkin/simplexlsx/)
  * @license    MIT
  * @version    0.8.9
  */
@@ -17,50 +17,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /** Examples
  *
  * Example 1:
- * if ( $xlsx = SimpleXLSX::parse('book.xlsx') ) {
+ * if ( $xlsx = simplexlsx::parse('book.xlsx') ) {
  *   print_r( $xlsx->rows() );
  * } else {
- *   echo SimpleXLSX::parseError();
+ *   echo simplexlsx::parseError();
  * }
  *
  * Example 2: html table
- * if ( $xlsx = SimpleXLSX::parse('book.xlsx') ) {
+ * if ( $xlsx = simplexlsx::parse('book.xlsx') ) {
  *   echo $xlsx->toHTML();
  * } else {
- *   echo SimpleXLSX::parseError();
+ *   echo simplexlsx::parseError();
  * }
  *
  * Example 3: rowsEx
- * $xlsx = SimpleXLSX::parse('book.xlsx');
+ * $xlsx = simplexlsx::parse('book.xlsx');
  * print_r( $xlsx->rowsEx() );
  *
  * Example 4: select worksheet
- * $xlsx = SimpleXLSX::parse('book.xlsx');
+ * $xlsx = simplexlsx::parse('book.xlsx');
  * print_r( $xlsx->rows(1) ); // second worksheet
  *
  * Example 5: IDs and worksheet names
- * $xlsx = SimpleXLSX::parse('book.xlsx');
+ * $xlsx = simplexlsx::parse('book.xlsx');
  * print_r( $xlsx->sheetNames() ); // array( 0 => 'Sheet 1', 1 => 'Catalog' );
  *
  * Example 6: get sheet name by index
- * $xlsx = SimpleXLSX::parse('book.xlsx');
+ * $xlsx = simplexlsx::parse('book.xlsx');
  * echo 'Sheet Name 2 = '.$xlsx->sheetName(1);
  *
  * Example 7: getCell (very slow)
  * echo $xlsx->getCell(1,'D12'); // reads D12 cell from second sheet
  *
  * Example 8: read data
- * if ( $xlsx = SimpleXLSX::parse( file_get_contents('http://www.example.com/example.xlsx'), true) ) {
+ * if ( $xlsx = simplexlsx::parse( file_get_contents('http://www.example.com/example.xlsx'), true) ) {
  *   $dim = $xlsx->dimension(1);
  *   $num_cols = $dim[0];
  *   $num_rows = $dim[1];
  *   echo $xlsx->sheetName(1).':'.$num_cols.'x'.$num_rows;
  * } else {
- *   echo SimpleXLSX::parseError();
+ *   echo simplexlsx::parseError();
  * }
  *
  * Example 9: old style
- * $xlsx = new SimpleXLSX('book.xlsx');
+ * $xlsx = new simplexlsx('book.xlsx');
  * if ( $xlsx->success() ) {
  *   print_r( $xlsx->rows() );
  * } else {
@@ -73,11 +73,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * v0.8.8 (2019-06-19) removed list( $x, $y ), added bool $xlsx->skipEmptyRows, $xlsx->parseFile( $filename ), $xlsx->parseData( $data ), release 0.8.8
  * v0.8.7 (2019-04-18) empty rows fixed
  * v0.8.6 (2019-04-16) 1900/1904 bug fixed
- * v0.8.5 (2019-03-07) SimpleXLSX::ParseErrno(), $xlsx->errno() returns error code
+ * v0.8.5 (2019-03-07) simplexlsx::ParseErrno(), $xlsx->errno() returns error code
  * v0.8.4 (2019-02-14) detect datetime values, mb_string.func_overload=2 support .!. Bitrix
  * v0.8.3 (2018-11-14) getCell - fixed empty cells and rows, safe now, but very slow
  * v0.8.2 (2018-11-09) fix empty cells and rows in rows() and rowsEx(), added setDateTimeFormat( $see_php_date_func )
- * v0.8.1 (2018-11-07) rename simplexlsx.php to SimpleXLSX.php, rename parse_error to parseError fix _columnIndex, add ->toHTML(), GNU to MIT license
+ * v0.8.1 (2018-11-07) rename simplexlsx.php to simplexlsx.php, rename parse_error to parseError fix _columnIndex, add ->toHTML(), GNU to MIT license
  * v0.7.13 (2018-06-18) get sheet indexes bug fix
  * v0.7.12 (2018-06-17) $worksheet_id to $worksheetIndex, sheet numeration started 0
  * v0.7.11 (2018-04-25) rowsEx(), added row index "r" to cell info
@@ -114,7 +114,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /** @noinspection PhpComposerExtensionStubsInspection */
 /** @noinspection MultiAssignmentUsageInspection */
 
-class SimpleXLSX {
+class simplexlsx {
 	// Don't remove this string! Created by Sergey Shuchkin sergey.shuchkin@gmail.com
 	const SCHEMA_REL_OFFICEDOCUMENT = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument';
 	const SCHEMA_REL_SHAREDSTRINGS = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings';

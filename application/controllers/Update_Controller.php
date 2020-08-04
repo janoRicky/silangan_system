@@ -1004,7 +1004,7 @@ class Update_Controller extends CI_Controller {
 		$BranchID = $this->input->post('ExcelBranchID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 		$File = $_FILES['file'];
 		date_default_timezone_set('Asia/Manila');
-		$this->load->library('SimpleXLSX');	
+		// $this->load->library('SimpleXLSX');
 			if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
 				
 				$dim = $xlsx->dimension();
