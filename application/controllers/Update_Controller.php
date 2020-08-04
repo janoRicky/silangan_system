@@ -1011,6 +1011,7 @@ class Update_Controller extends CI_Controller {
 				$cols = $dim[0];
 				$RowCount = 0;
 				$ColCount = 0;
+				$ApplicantsArray = array();
 
 				foreach ( $xlsx->rows() as $k => $r ):
 					if ($k == 0) continue; // skip first row
@@ -1058,6 +1059,7 @@ class Update_Controller extends CI_Controller {
 						if ($RowCount >= 1) {
 							if ($ColCount == 0) {
 								$ApplicantID = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+								array_push($ApplicantsArray, $ApplicantID);
 							}
 							if ($ColCount == 1) {
 								$Name = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
@@ -1071,46 +1073,42 @@ class Update_Controller extends CI_Controller {
 								// 	echo $nrow['Time'];
 								// endforeach;
 
+								// Attempt at an Excel format. TODO: Fix later.
 								$Split = explode('/', ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ));
-								if ($Split[0] == 'N') {
-									$Type = 'Normal';
-								} elseif ($Split[0] == 'R') {
-									$Type = 'Rest Day';
-								} elseif ($Split[0] == 'H') {
-									$Type = 'Holiday';
-								} elseif ($Split[0] == 'S') {
-									$Type = 'Special';
-								} else {
-									$Type = 'Unknown';
-								}
+								// if ($Split[0] == 'N') {
+								// 	$Type = 'Normal';
+								// } elseif ($Split[0] == 'R') {
+								// 	$Type = 'Rest Day';
+								// } elseif ($Split[0] == 'H') {
+								// 	$Type = 'Holiday';
+								// } elseif ($Split[0] == 'S') {
+								// 	$Type = 'Special';
+								// } else {
+								// 	$Type = 'Unknown';
+								// }
 
-								if ( $Split[0] > 8) {
-										$otValue = $Split[0] - 8;
-									}
-									else
-									{
-										$otValue = 0;
-									}
-									if ( $Split[0] > 8) {
-										$rHours = 8;
-									}
-									else
-									{
-										$rHours = $Split[0];
-									}
+								// if ( $Split[0] > 8) {
+								// 		$otValue = $Split[0] - 8;
+								// 	}
+								// 	else
+								// 	{
+								// 		$otValue = 0;
+								// 	}
+								// 	if ( $Split[0] > 8) {
+								// 		$rHours = 8;
+								// 	}
+								// 	else
+								// 	{
+								// 		$rHours = $Split[0];
+								// 	}
+								$rHours = $Split[0];
 								$data = array(
 									'BranchID' => $BranchID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
-									'Type' => $Type,
 									
-									'Hours' => $rHours,
-									'Overtime' => $otValue,
-									'HDMF' => null,
-									'Philhealth' => null,
-									'SSS' => null,
-									'Tax' => null
+									'Hours' => $rHours
 								);
-								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
+								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHoursFromImport($ApplicantID,$data);
 								// echo '------------- <br>';
 								// echo 'Applicant ID: ' . $ApplicantID . '<br>';
 								// echo 'Name: ' . $Name . '<br>';
@@ -1128,7 +1126,9 @@ class Update_Controller extends CI_Controller {
 					$ColCount = 0;
 				endforeach;
 				if ($RowCount <= $xlsx->rows()) {
-					redirect('ViewBranch?id=' . $BranchID);
+					$ApplicantsArray = serialize($ApplicantsArray);
+					$this->session->set_flashdata('ApplicantsArray', $ApplicantsArray);
+					redirect('ViewBranch?id=excel');
 				}
 				$this->load->view('_template/users/u_redirecting');
 				// echo '</table>';

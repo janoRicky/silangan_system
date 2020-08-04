@@ -88,28 +88,37 @@ class Model_Updates extends CI_Model {
 			'Time' => $Date,
 			'Hours' => $Hours,
 			'Overtime' => $Overtime,
-			'NightHours' => $NightHours,
-			'NightOvertime' => $NightOvertime,
-			'Remarks' => $Remarks,
 			'HDMF' => $HDMF,
 			'Philhealth' => $Philhealth,
 			'SSS' => $SSS,
 			'Tax' => $Tax,
-			'day_pay' => $day_pay,
 		);
 		$SQL = "REPLACE INTO hours_weekly
 		SET ApplicantID = '$ApplicantID',
 		BranchID = '$BranchID',
 		Time = '$Date', Hours = '$Hours',
 		Overtime = '$Overtime',
-		NightHours = '$NightHours',
-		NightOvertime = '$NightOvertime',
-		Remarks = '$Remarks',
 		HDMF = '$HDMF',
 		Philhealth = '$Philhealth',
 		SSS = '$SSS',
-		Tax = '$Tax',
-		day_pay = '$day_pay'";
+		Tax = '$Tax'";
+		$result = $this->db->query($SQL,$ApplicantID);
+		return $result;
+	}
+	public function UpdateWeeklyHoursFromImport($ApplicantID,$data)
+	{
+		extract($data);
+		$data = array(
+			'ApplicantID' => $ApplicantID,
+			'BranchID' => $BranchID,
+			'Time' => $Date,
+			'Hours' => $Hours,
+		);
+		$SQL = "REPLACE INTO hours_weekly
+		SET ApplicantID = '$ApplicantID',
+		BranchID = '$BranchID',
+		Time = '$Date',
+		Hours = '$Hours'";
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
 	}
