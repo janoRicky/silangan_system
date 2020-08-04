@@ -3,6 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 
 class PhpOffice_Controller extends CI_Controller {
 	public function __construct() {
@@ -28,20 +33,37 @@ class PhpOffice_Controller extends CI_Controller {
         $sheet = $spreadsheet->getActiveSheet();
 
         ####### Header
-        $sheet->mergeCells('A3:A4');
-        $sheet->setCellValue('A3', 'ApplicantID');
-        $sheet->setCellValue('C3', 'Date');
-        $sheet->mergeCells('B3:B4');
-        $sheet->setCellValue('B3', 'Name');
+        $sheet->mergeCells('A1:J1');
+        $styleArrayTitle = array(
+            'font' => array(
+            'bold' => true,
+            'color' => array('rgb' => '161617'),
+            'size' => 12,
+            'name' => 'Verdana'
+        ));
+        $sheet->getStyle('A1')->applyFromArray($styleArrayTitle);
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+
+        ##### CELL VALUES
+        $sheet->setCellValue('A1', 'Branch Information | Silangan System');
+        $sheet->setCellValue('A2', 'ApplicantID');
+        $sheet->setCellValue('B2', 'Name');
+        $sheet->setCellValue('C2', 'Salary ( ₱ )');
+        $sheet->setCellValue('D2', 'Date');
 
         ####### Fill excel with data
-        $i=5;
+        $i=3;
         foreach ($getApplicantDetID->result_array() as $row) {
 
         	$sheet->getColumnDimension('A')->setAutoSize(true);
             $sheet->setCellValue('A'.$i, $row['ApplicantID']);
             $sheet->getColumnDimension('B')->setAutoSize(true);
             $sheet->setCellValue('B'.$i, $row['LastName'].' '.$row['FirstName'].', '.$row['MiddleInitial']);
+            $sheet->getColumnDimension('B')->setAutoSize(true);
+            $sheet->setCellValue('C'.$i, 'SAMPLE');
 
         	$i++;
 
@@ -53,13 +75,16 @@ class PhpOffice_Controller extends CI_Controller {
 
         	$sheet->getColumnDimension('A')->setAutoSize(true);
 
-        	$a = 'C';
+        	$a = 'D';
         	foreach ($period as $dt) {
         		$sheet->getColumnDimension($a)->setAutoSize(true);
-        		$sheet->setCellValue($a.'4', $dt->format("m-d-Y"));
+        		$sheet->setCellValue($a.'2', $dt->format("m-d-Y"));
         		$a++;
         	}        
         }
+        $totaCol =  $sheet->getHighestColumn().'2';
+       
+        $sheet->setCellValue($totaCol , 'Total');
         ####### Instantiate Xlsx
         $writer = new Xlsx($spreadsheet);
 
