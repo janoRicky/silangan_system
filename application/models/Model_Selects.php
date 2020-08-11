@@ -497,23 +497,27 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetWeeklyImports($ApplicantsArray)
 	{
-		$SQL = "SELECT * FROM hours_weekly WHERE";
-		foreach($ApplicantsArray as $item) {
-			$SQL = $SQL . " ApplicantID = '" . $item . "'" . " OR "; 
-		}
-		$SQL = substr($SQL, 0, -4);
-		$result = $this->db->query($SQL);
-		return $result;
+	    if (!empty($ApplicantsArray)) {
+    		$SQL = "SELECT * FROM hours_weekly WHERE";
+    		foreach($ApplicantsArray as $item) {
+    			$SQL = $SQL . " ApplicantID = '" . $item . "'" . " OR "; 
+    		}
+    		$SQL = substr($SQL, 0, -4);
+    		$result = $this->db->query($SQL);
+    		return $result;
+	    }
 	}
 	public function GetWeeklyListEmployeeFromImports($ApplicantsArray)
 	{
-		$SQL = "SELECT * FROM applicants WHERE";
-		foreach($ApplicantsArray as $item) {
-			$SQL = $SQL . " ApplicantID = '" . $item . "'" . " OR "; 
-		}
-		$SQL = substr($SQL, 0, -4);
-		$result = $this->db->query($SQL);
-		return $result;;
+	    if (!empty($ApplicantsArray)) {
+    		$SQL = "SELECT * FROM applicants WHERE";
+    		foreach($ApplicantsArray as $item) {
+    			$SQL = $SQL . " ApplicantID = '" . $item . "'" . " OR "; 
+    		}
+    		$SQL = substr($SQL, 0, -4);
+    		$result = $this->db->query($SQL);
+    		return $result;
+	    }
 	}
 	
 }

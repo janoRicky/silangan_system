@@ -916,7 +916,7 @@ class Update_Controller extends CI_Controller {
 					}
 				}
 				$net_pay = $gross_pay - $sss_contri;
-				date_timezone_set('Asia/Manila');
+				// date_timezone_set('Asia/Manila');
 				$c_month = date('Y/m/d');
 				$data = array(
 					'BranchID' => $BranchID,
@@ -926,7 +926,7 @@ class Update_Controller extends CI_Controller {
 					'TotalHours' => $GetTotalH,
 					'TotaOT' => $GetTotalOt,
 					'net_pay' => round($net_pay,2),
-					'c_week' => $_SESSION['Modeeee'],
+					'c_week' => NULL,
 					'c_month' => $c_month,
 				);
 				$this->Model_Inserts->Insertttttt($data);
@@ -1127,7 +1127,7 @@ class Update_Controller extends CI_Controller {
 				endforeach;
 				if ($RowCount <= $xlsx->rows()) {
 					$ApplicantsArray = serialize($ApplicantsArray);
-					$this->session->set_flashdata('ApplicantsArray', $ApplicantsArray);
+					$this->session->set_userdata('ApplicantsArray', $ApplicantsArray);
 					redirect('ViewBranch?id=excel');
 				}
 				$this->load->view('_template/users/u_redirecting');

@@ -114,6 +114,9 @@ class Model_Updates extends CI_Model {
 			'Time' => $Date,
 			'Hours' => $Hours,
 		);
+		if ($Hours == NULL) {
+		    $Hours = 0;
+		}
 		$SQL = "REPLACE INTO hours_weekly
 		SET ApplicantID = '$ApplicantID',
 		BranchID = '$BranchID',

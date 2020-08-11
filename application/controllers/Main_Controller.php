@@ -904,7 +904,7 @@
 
 			if ($id == 'excel') {
 				// print_r($ApplicantsArray);
-				$ApplicantsArray = $this->session->flashdata('ApplicantsArray');
+				$ApplicantsArray = $this->session->userdata('ApplicantsArray');
 				$ApplicantsArray = unserialize($ApplicantsArray);
 				$GetWeeklyList = $this->Model_Selects->GetWeeklyImports($ApplicantsArray);
 			} else {
