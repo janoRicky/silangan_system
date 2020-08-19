@@ -63,4 +63,10 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function remove_contribution($id)
+	{
+		$SQL = "DELETE FROM sss_table WHERE id = '$id'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

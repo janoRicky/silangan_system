@@ -121,4 +121,9 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('tracking_table', $data);
 		return $result;
 	}
+	public function conti_add($data)
+	{
+		$result = $this->db->insert('sss_table', $data);
+		return $result;
+	}
 }

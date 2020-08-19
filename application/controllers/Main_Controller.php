@@ -401,6 +401,27 @@
 		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 		$this->load->view('users/u_users',$data);
 	}
+
+	public function sss_table()
+	{
+		unset($_SESSION["bencart"]);
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$header['title'] = 'SSS Table | Silangan Lumber';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'">SSS Table</a></li>
+			</ol>
+		</nav>';
+		$data['get_ssstable'] = $this->Model_Selects->sss_Contri();
+		$this->load->view('users/u_ssstable',$data);
+	}
+	
 	public function ViewEmployee()
 	{
 		unset($_SESSION["bencart"]);

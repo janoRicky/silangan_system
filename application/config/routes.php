@@ -72,6 +72,8 @@ $route['Payroll'] = 'Main_Controller/PayrollBranches';
 $route['ViewBranch'] = 'Main_Controller/ViewBranch';
 $route['Payrollsss'] = 'Main_Controller/Payrollsss';
 
+$route['sss_table'] = 'Main_Controller/sss_table';
+
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';
 // CREATE
@@ -81,6 +83,8 @@ $route['Add_NewAdmin'] = 'Add_Controller/Add_NewAdmin';
 $route['Add_NewEmployer'] = 'Add_Controller/Add_NewEmployer';
 $route['Add_NewBranch'] = 'Add_Controller/Add_NewBranch';
 $route['AddSupDoc'] = 'Add_Controller/AddSupDoc';
+$route['add_newcontri'] = 'Add_Controller/add_newcontri';
+
 
 
 
@@ -89,6 +93,8 @@ $route['RemoveEmployee'] = 'Delete_Controller/RemoveEmployee';
 $route['RemoveAdmin'] = 'Delete_Controller/RemoveAdmin';
 $route['RemoveEmployer'] = 'Delete_Controller/RemoveEmployer';
 $route['RemoveBranch'] = 'Delete_Controller/RemoveBranch';
+$route['remove_contri'] = 'Delete_Controller/remove_contri';
+
 
 // UPDATE
 $route['EmployApplicant'] = 'Update_Controller/EmployApplicant';

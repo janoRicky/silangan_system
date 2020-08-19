@@ -40,22 +40,16 @@
 		<li class="nav-item">
 			<a class="link-s" href="<?=base_url()?>Payroll"><span class="fas fa-dollar-sign fa-fw"></span> Payroll </a>
 		</li>
-
-
-
-		<!-- <li>
-			<a class="link-s" href="#siteSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cogs fa-fw"></i> Preferences </a>
+		<li>
+			<a class="link-s" href="#siteSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cogs fa-fw"></i> Settings </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteSettings">
 				<li>
-					<a class="link-s" class="sublink" href="#"><i class="fas fa-dot-circle fa-fw"></i> Sample Text </a>
+					<a class="link-s" class="sublink" href="<?=base_url()?>sss_table"><i class="fas fa-table fa-fw"></i> SSS Table </a>
 				</li>
 				<li>
-					<a class="link-s" class="sublink" href="#"><i class="fas fa-dot-circle fa-fw"></i> Sample Text </a>
-				</li>
-				<li>
-					<a class="link-s" class="sublink" href="#"><i class="fas fa-dot-circle fa-fw"></i> Sample Text </a>
+					<a class="link-s" class="sublink" href="#"><i class="fas fa-sign-out-alt fa-fw"></i> Log-out </a>
 				</li>
 			</ul>
-		</li> -->
+		</li>
 	</ul>
 </nav>

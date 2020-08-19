@@ -165,4 +165,21 @@ class Delete_Controller extends CI_Controller {
 			
 		}
 	}
+	public function remove_contri()
+	{
+		##### SET GET VALUE TO VARIABLE
+		$id = $this->input->get('id');
+		##### QUERY
+		$remove_contribution = $this->Model_Deletes->remove_contribution($id);
+		##### PROMPTS
+		if ($remove_contribution == TRUE) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row Deleted!</h5></div>');
+			redirect('sss_table');
+		}
+		else
+		{
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+			redirect('sss_table');
+		}
+	}
 }

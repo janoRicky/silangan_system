@@ -638,4 +638,44 @@ class Add_Controller extends CI_Controller {
 			}
 		}
 	}
+	public function add_newcontri()
+	{
+		##### SET POST DATA TO VARIABLES
+		$f_range = $this->input->post('f_range',TRUE);
+		$t_range = $this->input->post('t_range',TRUE);
+		$contribution = $this->input->post('contribution',TRUE);
+
+		##### CONDITIONS
+		if ($f_range == null) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Input range, Please try again!</h5></div>');
+			redirect('sss_table');
+			exit();
+		}
+		if ($t_range == null) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Input range, Please try again!</h5></div>');
+			redirect('sss_table');
+			exit();
+		}
+		if ($contribution == null) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Input Contribution, Please try again!</h5></div>');
+			redirect('sss_table');
+			exit();
+		}
+		##### ADD NEW DATA ROW
+		$data = array(
+			'f_range' => $f_range,
+			't_range' => $t_range,
+			'contribution' => $contribution,
+		);
+		$conti_add = $this->Model_Inserts->conti_add($data);
+		if ($conti_add == TRUE) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
+			redirect('sss_table');
+		}
+		else
+		{
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+			redirect('sss_table');
+		}
+	}
 }
