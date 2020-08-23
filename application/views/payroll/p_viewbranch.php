@@ -11,15 +11,15 @@
 				<?php echo $this->session->flashdata('prompts'); ?>
 				<div class="col-12 col-sm-12 payroll-tabs">
 					<ul>
-						<li class="payroll-tabs-active"><a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $BranchID; ?>">Attendance</a></li>
-						<li><a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $BranchID; ?>">Payroll</a></li>
+						<li class="payroll-tabs-active"><a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $ClientID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a></li>
+						<li><a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $ClientID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a></li>
 					</ul>
 				</div>
 				<div class="rcontent">
 				<div class="row">
 					<div class="col-8 mb-2">
 						<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
-							<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $BranchID; ?>">
+							<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $ClientID; ?>">
 							<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
 							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
 							<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Export (WIP)</button>
@@ -67,11 +67,7 @@
 											<?php endforeach; ?>
 											<td><?php echo $TotalRegHours; ?></td>
 											<td><?php echo $TotalOTHours; ?></td>
-	<!-- 										<td class="text-center">
-												<button id="<?php echo $row['Salary']; ?>" data="<?php echo $row['ApplicantID']; ?>" type="button" class="btn btn-primary btn-sm HoursButton" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-clock"></i> Set</button>
-												<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-list"></i> Contract</button>
-												<button type="button" class="btn btn-primary btn-sm w-100 mb-1" data-toggle="modal" data-target="#HoursWeeklyModal"><i  class="fas fa-book"></i> History</button>
-											</td> -->
+	
 											</tr>
 									<?php endforeach; ?>
 								</tbody>

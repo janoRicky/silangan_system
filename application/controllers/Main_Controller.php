@@ -1,10 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
- class Main_Controller extends CI_Controller {
+class Main_Controller extends CI_Controller {
 
- 	public function __construct() {
- 		parent::__construct();
- 		$this->load->model('Model_Selects');
+	public function __construct() {
+		parent::__construct();
+		$this->load->model('Model_Selects');
 		$this->load->model('Model_Updates'); // TODO: Remove after fixing the call belooooow.
 		$this->load->model('Model_Inserts'); // TODO: Remove after fixing the call belooooow.
 		// echo $_SERVER['REMOTE_ADDR'] . '<br>';
@@ -142,9 +142,9 @@
 		// $data['chart_data_expired'] = json_encode($edata);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Dashboard">Dashboard</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Dashboard">Dashboard</a></li>
+		</ol>
 		</nav>';
 		// COUNT ADMIN
 		$data['result_cadmin'] =  $this->Model_Selects->GetAdmin();
@@ -167,31 +167,31 @@
 			if ($CountMonthlyTotal->num_rows() > 144) { // Truncates cache (Database) after 12 years of history
 				$this->Model_Deletes->CleanDashboardMonths($CurrentYear);
 				for ($i = 0; $i < 12; $i++) {
-						$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
-						$sql = array(
-							'Year' => $Year,
-							'Month' => $MonthAdd,
-							'Total' => '0'
-						);
-						$this->Model_Inserts->InsertDashboardMonths($sql);
-						$this->Model_Inserts->InsertToGraph();
-						if ($i == 11) {
-							$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
-							$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
-							$data['SelectedYear'] = $Year;
-							$CountTotal = 0;
-							foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
-								$CountTotal = $CountTotal + $row['Total'];
-							}
-							$data['CurrentYearTotal'] = $CountTotal;
-							$CountTotal = 0;
-							foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
-								$CountTotal = $CountTotal + $row['Total'];
-							}
-							$data['SelectedYearTotal'] = $CountTotal;
-							$this->load->view('users/u_dashboard',$data);
+					$MonthAdd = date('m', strtotime('+' . $i . ' month', strtotime($Month)));
+					$sql = array(
+						'Year' => $Year,
+						'Month' => $MonthAdd,
+						'Total' => '0'
+					);
+					$this->Model_Inserts->InsertDashboardMonths($sql);
+					$this->Model_Inserts->InsertToGraph();
+					if ($i == 11) {
+						$data['result_monthly'] = $this->Model_Selects->GetMonthlyTotal($Year);
+						$data['result_monthly_current_year'] =  $this->Model_Selects->GetMonthlyTotal($CurrentYear);
+						$data['SelectedYear'] = $Year;
+						$CountTotal = 0;
+						foreach ($this->Model_Selects->GetMonthlyTotal($CurrentYear)->result_array() as $row) {
+							$CountTotal = $CountTotal + $row['Total'];
 						}
+						$data['CurrentYearTotal'] = $CountTotal;
+						$CountTotal = 0;
+						foreach ($this->Model_Selects->GetMonthlyTotal($Year)->result_array() as $row) {
+							$CountTotal = $CountTotal + $row['Total'];
+						}
+						$data['SelectedYearTotal'] = $CountTotal;
+						$this->load->view('users/u_dashboard',$data);
 					}
+				}
 			} else {
 				$YearChecker =  $this->Model_Selects->GetMonthlyTotal($Year);
 				if ($YearChecker->num_rows() < 12) { // Loads faster if already on cache (Database)
@@ -298,10 +298,10 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Applicant">Applicants</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Applicant">Applicants</a></li>
+		</ol>
 		</nav>';
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
@@ -322,10 +322,10 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ApplicantsExpired">Expired</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ApplicantsExpired">Expired</a></li>
+		</ol>
 		</nav>';
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
@@ -345,10 +345,10 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Blacklisted">Blacklisted</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Blacklisted">Blacklisted</a></li>
+		</ol>
 		</nav>';
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
@@ -368,10 +368,10 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Archived">Archived</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Archived">Archived</a></li>
+		</ol>
 		</nav>';
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
@@ -391,9 +391,9 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Employee">Employees</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Employee">Employees</a></li>
+		</ol>
 		</nav>';
 		$data['get_employee'] = $this->Model_Selects->GetEmployee();
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
@@ -414,9 +414,9 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'">SSS Table</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'">SSS Table</a></li>
+		</ol>
 		</nav>';
 		$data['get_ssstable'] = $this->Model_Selects->sss_Contri();
 		$this->load->view('users/u_ssstable',$data);
@@ -531,13 +531,13 @@
 				// 		</ol>
 				// 	</nav>';
 				// } else {
-					$data['Breadcrumb'] = '
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb" style="background-color: transparent;">
-							<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
-						</ol>
-					</nav>';
+				$data['Breadcrumb'] = '
+				<nav aria-label="breadcrumb">
+				<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+				</ol>
+				</nav>';
 				// }
 				$this->load->view('users/u_viewemployee',$data);
 			}
@@ -647,20 +647,20 @@
 				if ($data['Status'] == 'Employed') {
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb" style="background-color: transparent;">
-							<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
-						</ol>
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employee</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
+					</ol>
 					</nav>';
 				} else {
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb" style="background-color: transparent;">
-							<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
-						</ol>
+					<ol class="breadcrumb" style="background-color: transparent;">
+					<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a href="ViewEmployee?id=' . $ApplicantID .'">Details</a></li>
+					<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
+					</ol>
 					</nav>';
 				}
 				$this->load->view('users/u_modifyemployee',$data);
@@ -688,10 +688,10 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="NewEmployee">New</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a href="Employee">Employees</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="NewEmployee">New</a></li>
+		</ol>
 		</nav>';
 		$this->load->view('users/u_addemployee',$data);
 	}
@@ -707,9 +707,9 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Admin_List">Admins</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Admin_List">Admins</a></li>
+		</ol>
 		</nav>';
 		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
 		$this->load->view('users/u_admins',$data);
@@ -745,9 +745,9 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Employers">Employers</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Employers">Employers</a></li>
+		</ol>
 		</nav>';
 		$data['ShowEmployers'] = $this->Model_Selects->GetEmployers();
 		$this->load->view('users/u_employers',$data);
@@ -783,10 +783,10 @@
 
 				$data['Breadcrumb'] = '
 				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb" style="background-color: transparent;">
-						<li class="breadcrumb-item" aria-current="page"><a href="Employers">Employers</a></li>
-						<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
-					</ol>
+				<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a href="Employers">Employers</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
+				</ol>
 				</nav>';
 
 				$this->load->view('users/u_modifyemployer',$data);
@@ -831,10 +831,10 @@
 
 				$data['Breadcrumb'] = '
 				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb" style="background-color: transparent;">
-						<li class="breadcrumb-item" aria-current="page"><a href="Employers">Employers</a></li>
-						<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
-					</ol>
+				<ol class="breadcrumb" style="background-color: transparent;">
+				<li class="breadcrumb-item" aria-current="page"><a href="Employers">Employers</a></li>
+				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
+				</ol>
 				</nav>';
 
 				$this->load->view('users/u_modifybranch',$data);
@@ -861,9 +861,9 @@
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb" style="background-color: transparent;">
-				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Payroll">Payroll</a></li>
-			</ol>
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Payroll">Payroll</a></li>
+		</ol>
 		</nav>';
 		$data['ShowBranches'] = $this->Model_Selects->GetBranches();
 		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
@@ -876,15 +876,16 @@
 		unset($_SESSION["mach_cart"]);
 
 		$id = $_GET['id'];
+		$ClientID = $_GET['id'];
 
 		$header['title'] = 'Branch Information | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
-		$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id);
+		$GetWeeklyList = $this->Model_Selects->GetWeeklyList($ClientID);
 
 		$row = $GetWeeklyList->row_array();
 		$data = array(
-			'BranchID' => $row['BranchID'],
+			'ClientID' => $row['ClientID'],
 			'ApplicantID' => $row['ApplicantID'],
 
 		);
@@ -906,6 +907,7 @@
 
 		// $data['ShowBranchs'] = $this->Model_Selects->GetBranchs();
 		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
+		$data["Mode"]=$_GET['Mode'];
 		$this->load->view('payroll/p_payrolls',$data);
 	}
 	public function ViewBranch()
@@ -919,32 +921,39 @@
 		if (isset($_GET['id'])) {
 
 			$id = $_GET['id'];
+			$ClientID = $_GET['id'];
 
 			$header['title'] = 'Branch Information | Silangan Lumber';
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
+			####### ERROR IF DATA IS NULL
 			if ($id == 'excel') {
 				// print_r($ApplicantsArray);
 				$ApplicantsArray = $this->session->userdata('ApplicantsArray');
 				$ApplicantsArray = unserialize($ApplicantsArray);
 				$GetWeeklyList = $this->Model_Selects->GetWeeklyImports($ApplicantsArray);
 			} else {
-				$GetWeeklyList = $this->Model_Selects->GetWeeklyList($id);
+				$GetWeeklyList = $this->Model_Selects->GetWeeklyList($ClientID);
 			}
 
-			$row = $GetWeeklyList->row_array();
-			$data = array(
-				'BranchID' => $row['BranchID'],
-				'ApplicantID' => $row['ApplicantID'],
-
-			);
-			$ApplicantID = $row['ApplicantID'];
+			if (isset($GetWeeklyList)) {
+				$row = $GetWeeklyList->row_array();
+				$data = array(
+					'ClientID' => $row['ClientID'],
+					'ApplicantID' => $row['ApplicantID'],
+				);
+				$ApplicantID = $row['ApplicantID'];
+			}
+			
+			
+			
 			$data['GetWeeklyList'] = $GetWeeklyList;
 			if ($id == 'excel') {
 				$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployeeFromImports($ApplicantsArray);
 			} else {
 				$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
 			}
+
 			// $data['GetWeeklyListEmployeeActive'] = $this->Model_Selects->GetWeeklyListEmployeeActive($id);
 			$data['GetBranchID'] = $this->Model_Selects->GetBranchID($id);
 			$data['GetWeeklyDates'] = $this->Model_Selects->GetWeeklyDates();
@@ -952,12 +961,11 @@
 			$data['IsFromExcel'] = False;
 			$data['Breadcrumb'] = '
 			<nav aria-label="breadcrumb">
-				<ol class="breadcrumb" style="background-color: transparent;">
-					<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
-					<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewBranch?id=' . $id . '">Details</a></li>
-				</ol>
+			<ol class="breadcrumb" style="background-color: transparent;">
+			<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewBranch?id=' . $id . '">Details</a></li>
+			</ol>
 			</nav>';
-			
 			##### $this->load->view('payroll/p_viewBranch',$data);
 			$this->load->view('payroll/p_viewbranch',$data);
 			
@@ -978,11 +986,11 @@
 		$header['title'] = 'Experimental | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
-			<nav aria-label="breadcrumb">
-				<ol class="breadcrumb" style="background-color: transparent;">
-					<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Experimental">Experimental</a></li>
-				</ol>
-			</nav>';
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="Experimental">Experimental</a></li>
+		</ol>
+		</nav>';
 		$this->load->library('simplexlsx');
 		$this->load->view('users/u_experimental',$data);
 	}
@@ -996,10 +1004,10 @@
 			echo '<h6 class="ml-2"><i class="fas fa-save"></i> New Record</h6>';
 			echo '<table class="table table-bordered">
 			<thead>
-				<th></th>
-				<th>Name</th>
-				<th>Relationship</th>
-				<th>Action</th>
+			<th></th>
+			<th>Name</th>
+			<th>Relationship</th>
+			<th>Action</th>
 			</thead>
 			<tbody>';
 			foreach ($_SESSION['bencart'] as $s_da) {
@@ -1015,7 +1023,7 @@
 				'.$s_da['bencart']['BenRelation'] .'
 				</td>
 				<td>
-					<button id="'.$s_da['bencart']['c_id'].'" class="remoach btn btn-sm btn-danger" type="button"><i class="fas fa-times"></i> Discard</button>
+				<button id="'.$s_da['bencart']['c_id'].'" class="remoach btn btn-sm btn-danger" type="button"><i class="fas fa-times"></i> Discard</button>
 				</td>
 				</tr>
 				';
@@ -1276,27 +1284,27 @@
 			echo '<h6 class="ml-2"><i class="fas fa-save"></i> New Record</h6>';
 			echo '<table class="table table-bordered">
 			<thead>
-				<th>Name</th>
-				<th>Position</th>
-				<th>Company / Address</th>
-				<th>Action</th>
+			<th>Name</th>
+			<th>Position</th>
+			<th>Company / Address</th>
+			<th>Action</th>
 			</thead>
 			<tbody>';
 			foreach ($_SESSION['ref_cart'] as $s_da) {
 				echo '
 				<tr>
-					<td>
-					'.$s_da['ref_cart']['RefName'] .'
-					</td>
-					<td>
-					'.$s_da['ref_cart']['RefPosition'] .'
-					</td>
-					<td>
-					'.$s_da['ref_cart']['CompanyAddress'] .'
-					</td>
-					<td>
-					<button id="'.$s_da['ref_cart']['c_id'].'" class="remoach btn btn-sm btn-danger" type="button"><i class="fas fa-times"></i> Discard</button>
-					</td>
+				<td>
+				'.$s_da['ref_cart']['RefName'] .'
+				</td>
+				<td>
+				'.$s_da['ref_cart']['RefPosition'] .'
+				</td>
+				<td>
+				'.$s_da['ref_cart']['CompanyAddress'] .'
+				</td>
+				<td>
+				<button id="'.$s_da['ref_cart']['c_id'].'" class="remoach btn btn-sm btn-danger" type="button"><i class="fas fa-times"></i> Discard</button>
+				</td>
 				</tr>
 				';
 			}

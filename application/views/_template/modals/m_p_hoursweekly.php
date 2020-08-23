@@ -11,7 +11,7 @@
 				<div class="modal-body">
 					<form action="<?php echo base_url().'SetWeeklyHours'; ?>" method="post">
 						<input id="ApplicantID" type="hidden" name="ApplicantID" value="<?php echo $erow['ApplicantID']; ?>">
-						<input id="BranchID" type="hidden" name="BranchID" value="<?php echo $erow['BranchEmployed']; ?>">
+						<input id="BranchID" type="hidden" name="ClientID" value="<?php echo $erow['BranchEmployed']; ?>">
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Type</label>
@@ -188,10 +188,23 @@
 								<button id="add_machop" type="submit" class="btn btn-info mt-2" data-dismiss="modal" aria-label="Close"><i class="fas fa-angle-double-right"></i></button>
 							</div>
 						</div>
-					</div>											
+					</div>
+
 				</div>
 				<div class="modal-footer">
+
 					<button id="MoreOptions" type="button" class="btn btn-primary mr-auto"><i class="fas fa-cog"></i> More Options</button>
+
+					<input type="hidden" name="CutoffMode" value="<?php if (isset($_GET['Mode'])) {
+	echo $_GET['Mode'];
+} ?>">
+					<input type="radio" id="" name="DeductionOption" value="0">
+					<label for="rdNoDeductions">No Deductions</label><br>
+					<input type="radio" id="rdWithDeductions" name="DeductionOption" value="1" checked>
+					<label for="rdWithDeductions">With Deductions</label><br>
+					<input type="radio" id="rdDeferredDeductions" name="DeductionOption" value="2">
+					<label for="rdDeferredDeductions">Defer Deductions</label>
+
 					<button type="submit" class="btn btn-primary"><i class="fas fa-clock"></i> Set</button>
 				</div>
 				</form>

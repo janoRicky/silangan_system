@@ -370,173 +370,173 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
-				$config['upload_path']          = './uploads/'.$ApplicantID;
-				$config['allowed_types']        = 'gif|jpg|png';
-				$config['max_size']             = 2000;
-				$config['max_width']            = 2000;
-				$config['max_height']           = 2000;
+			$config['upload_path']          = './uploads/'.$ApplicantID;
+			$config['allowed_types']        = 'gif|jpg|png';
+			$config['max_size']             = 2000;
+			$config['max_width']            = 2000;
+			$config['max_height']           = 2000;
 
-				$this->load->library('upload', $config);
-				if (!is_dir('uploads'))
-				{
-					mkdir('./uploads', 0777, true);
-				}
-				if (!is_dir('uploads/' . $ApplicantID))
-				{
-					mkdir('./uploads/' . $ApplicantID, 0777, true);
-					$dir_exist = false;
-				}
+			$this->load->library('upload', $config);
+			if (!is_dir('uploads'))
+			{
+				mkdir('./uploads', 0777, true);
+			}
+			if (!is_dir('uploads/' . $ApplicantID))
+			{
+				mkdir('./uploads/' . $ApplicantID, 0777, true);
+				$dir_exist = false;
+			}
 
-				if (!$_FILES['pImage']['name'] == '') {
-					if (! $this->upload->do_upload('pImage'))
-					{
-						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
-						redirect($_SERVER['HTTP_REFERER']);
-					}
-					else
-					{
-						$pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
-					}
+			if (!$_FILES['pImage']['name'] == '') {
+				if (! $this->upload->do_upload('pImage'))
+				{
+					$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
 				}
+				else
+				{
+					$pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
+				}
+			}
 				// INSERT EMPLOYEE
-				$data = array(
-					'ApplicantImage' => $pImage,
-					'ApplicantID' => $ApplicantID,
-					'EmployeeID' => $EmployeeID,
-					'PositionDesired' => $PositionDesired,
-					'ContractType' => $ContractType,
-					'PersonRecommending' => $PersonRecommending,
-					'SalaryType' => $SalaryType,
-					'Rate' => $Rate,
-					'SalaryExpected' => $SalaryExpected,
-					'LastName' => ucfirst($LastName),
-					'FirstName' => ucfirst($FirstName),
-					'MiddleInitial' => ucfirst($MI),
-					'Nickname' => ucfirst($Nickname),
-					'Gender' => $Gender,
-					'Age' => $Age,
-					'Height' => $Height,
-					'Weight' => $Weight,
-					'Religion' => $Religion,
-					'BirthDate' => $bDate,
-					'BirthPlace' => $bPlace,
-					'Citizenship' => $Citizenship,
-					'CivilStatus' => $CivilStatus,
-					'SpouseName' => $SpouseName,
-					'No_OfChildren' => $No_Children,
+			$data = array(
+				'ApplicantImage' => $pImage,
+				'ApplicantID' => $ApplicantID,
+				'EmployeeID' => $EmployeeID,
+				'PositionDesired' => $PositionDesired,
+				'ContractType' => $ContractType,
+				'PersonRecommending' => $PersonRecommending,
+				'SalaryType' => $SalaryType,
+				'Rate' => $Rate,
+				'SalaryExpected' => $SalaryExpected,
+				'LastName' => ucfirst($LastName),
+				'FirstName' => ucfirst($FirstName),
+				'MiddleInitial' => ucfirst($MI),
+				'Nickname' => ucfirst($Nickname),
+				'Gender' => $Gender,
+				'Age' => $Age,
+				'Height' => $Height,
+				'Weight' => $Weight,
+				'Religion' => $Religion,
+				'BirthDate' => $bDate,
+				'BirthPlace' => $bPlace,
+				'Citizenship' => $Citizenship,
+				'CivilStatus' => $CivilStatus,
+				'SpouseName' => $SpouseName,
+				'No_OfChildren' => $No_Children,
 
-					'MotherName' => $MotherName,
-					'MotherOccupation' => $MotherOccupation,
-					'FatherName' => $FatherName,
-					'FatherOccupation' => $FatherOccupation,
-					'RelName' => $RelName,
-					'RelAddress' => $RelAddress,
-					'RelRelation' => $RelRelation,
-					
-					'Address_Present' => $Address_Present,
-					'Address_Provincial' => $Address_Provincial,
-					'Address_Manila' => $Address_Manila,
+				'MotherName' => $MotherName,
+				'MotherOccupation' => $MotherOccupation,
+				'FatherName' => $FatherName,
+				'FatherOccupation' => $FatherOccupation,
+				'RelName' => $RelName,
+				'RelAddress' => $RelAddress,
+				'RelRelation' => $RelRelation,
 
-					'Phone_No' => $PhoneNumber,
+				'Address_Present' => $Address_Present,
+				'Address_Provincial' => $Address_Provincial,
+				'Address_Manila' => $Address_Manila,
 
-					'SSS_No' => $SSS,
-					'EffectiveDateCoverage' => $SSS_Effective,
-					'ResidenceCertificateNo' => $RCN,
-					'TIN' => $TIN,
-					
-					'HDMF' => $HDMF,
-					'ATM_No' => $ATM_No,
+				'Phone_No' => $PhoneNumber,
 
-					'ConLDOR' => $ConLDOR,
-					'ConMTAA' => $ConMTAA,
-					'CaseAC' => $CaseAC,
+				'SSS_No' => $SSS,
+				'EffectiveDateCoverage' => $SSS_Effective,
+				'ResidenceCertificateNo' => $RCN,
+				'TIN' => $TIN,
 
-					'Overtime' => $Overtime,
-					'Reassignment' => $Reassignment,
+				'HDMF' => $HDMF,
+				'ATM_No' => $ATM_No,
 
-					'PhilHealth' => $PhilHealth,
+				'ConLDOR' => $ConLDOR,
+				'ConMTAA' => $ConMTAA,
+				'CaseAC' => $CaseAC,
 
-					'AppliedOn' => $AppliedOn,
-				);
-				$addedEmployee = $this->Model_Updates->UpdateEmployee($ApplicantID, $data);
-				if ($addedEmployee == TRUE) {
+				'Overtime' => $Overtime,
+				'Reassignment' => $Reassignment,
 
-					$BenCheckbox = $this->input->post('BenCheckbox');
-					$listCheck = "'" . implode("','", $BenCheckbox) . "'";
-					$this->Model_Deletes->RemoveBeneficiary($listCheck);
+				'PhilHealth' => $PhilHealth,
 
-					$AcadHCheckbox = $this->input->post('AcadHCheckbox');
-					$listCheck = "'" . implode("','", $AcadHCheckbox) . "'";
-					$this->Model_Deletes->RemoveAcadHistory($listCheck);
+				'AppliedOn' => $AppliedOn,
+			);
+			$addedEmployee = $this->Model_Updates->UpdateEmployee($ApplicantID, $data);
+			if ($addedEmployee == TRUE) {
 
-					$CharRefCheckbox = $this->input->post('CharRefCheckbox');
-					$listCheck = "'" . implode("','", $CharRefCheckbox) . "'";
-					$this->Model_Deletes->RemoveCharRef($listCheck);
+				$BenCheckbox = $this->input->post('BenCheckbox');
+				$listCheck = "'" . implode("','", $BenCheckbox) . "'";
+				$this->Model_Deletes->RemoveBeneficiary($listCheck);
 
-					$EmpRecordCheckbox = $this->input->post('EmpRecordCheckbox');
-					$listCheck = "'" . implode("','", $EmpRecordCheckbox) . "'";
-					$this->Model_Deletes->RemoveEmpRecord($listCheck);
+				$AcadHCheckbox = $this->input->post('AcadHCheckbox');
+				$listCheck = "'" . implode("','", $AcadHCheckbox) . "'";
+				$this->Model_Deletes->RemoveAcadHistory($listCheck);
 
-					if (isset($_SESSION["bencart"])) {
-						foreach ($_SESSION["bencart"] as $s_da) {
-							$data = array(
-								'ApplicantID' => $ApplicantID,
-								'BenWhat' => $s_da['bencart']['BenWhat'],
-								'BenName' => $s_da['bencart']['BenName'],
-								'BenRelation' => $s_da['bencart']['BenRelation'],
+				$CharRefCheckbox = $this->input->post('CharRefCheckbox');
+				$listCheck = "'" . implode("','", $CharRefCheckbox) . "'";
+				$this->Model_Deletes->RemoveCharRef($listCheck);
 
-							);
-							$this->Model_Inserts->InsertBen($data);
-						}
+				$EmpRecordCheckbox = $this->input->post('EmpRecordCheckbox');
+				$listCheck = "'" . implode("','", $EmpRecordCheckbox) . "'";
+				$this->Model_Deletes->RemoveEmpRecord($listCheck);
+
+				if (isset($_SESSION["bencart"])) {
+					foreach ($_SESSION["bencart"] as $s_da) {
+						$data = array(
+							'ApplicantID' => $ApplicantID,
+							'BenWhat' => $s_da['bencart']['BenWhat'],
+							'BenName' => $s_da['bencart']['BenName'],
+							'BenRelation' => $s_da['bencart']['BenRelation'],
+
+						);
+						$this->Model_Inserts->InsertBen($data);
 					}
-					if (isset($_SESSION["acadcart"])) {
-						foreach ($_SESSION["acadcart"] as $s_da) {
-							$data = array(
-								'ApplicantID' => $ApplicantID,
-								'Level' => $s_da['acadcart']['SchoolLevel'],
-								'SchoolName' => $s_da['acadcart']['SchoolName'],
-								'SchoolAddress' => $s_da['acadcart']['SchoolAddress'],
-								'DateStarted' => $s_da['acadcart']['FromYearSchool'],
-								'DateEnds' => $s_da['acadcart']['ToYearSchool'],
-								'HighDegree' => $s_da['acadcart']['H_Attained'],
+				}
+				if (isset($_SESSION["acadcart"])) {
+					foreach ($_SESSION["acadcart"] as $s_da) {
+						$data = array(
+							'ApplicantID' => $ApplicantID,
+							'Level' => $s_da['acadcart']['SchoolLevel'],
+							'SchoolName' => $s_da['acadcart']['SchoolName'],
+							'SchoolAddress' => $s_da['acadcart']['SchoolAddress'],
+							'DateStarted' => $s_da['acadcart']['FromYearSchool'],
+							'DateEnds' => $s_da['acadcart']['ToYearSchool'],
+							'HighDegree' => $s_da['acadcart']['H_Attained'],
 
-							);
-							$this->Model_Inserts->InsertAcadH($data);
-						}
+						);
+						$this->Model_Inserts->InsertAcadH($data);
 					}
-					if (isset($_SESSION["ref_cart"])) {
-						foreach ($_SESSION["ref_cart"] as $s_da) {
-							$data = array(
-								'ApplicantID' => $ApplicantID,
-								'RefName' => $s_da['ref_cart']['RefName'],
-								'RefPosition' => $s_da['ref_cart']['RefPosition'],
-								'CompanyAddress' => $s_da['ref_cart']['CompanyAddress'],
-							);
-							$this->Model_Inserts->InsertCharRef($data);
-						}
+				}
+				if (isset($_SESSION["ref_cart"])) {
+					foreach ($_SESSION["ref_cart"] as $s_da) {
+						$data = array(
+							'ApplicantID' => $ApplicantID,
+							'RefName' => $s_da['ref_cart']['RefName'],
+							'RefPosition' => $s_da['ref_cart']['RefPosition'],
+							'CompanyAddress' => $s_da['ref_cart']['CompanyAddress'],
+						);
+						$this->Model_Inserts->InsertCharRef($data);
 					}
-					if (isset($_SESSION["emp_cart"])) {
-						foreach ($_SESSION["emp_cart"] as $s_da) {
-							$data = array(
-								'ApplicantID' => $ApplicantID,
-								'Name' => $s_da['emp_cart']['EmployeerName'],
-								'Address' => $s_da['emp_cart']['emAddress'],
-								'PeriodCovered' => $s_da['emp_cart']['PeriodCovered'],
-								'Position' => $s_da['emp_cart']['Position'],
-								'Salary' => $s_da['emp_cart']['Salary'],
-								'CauseOfSeparation' => $s_da['emp_cart']['cos'],
+				}
+				if (isset($_SESSION["emp_cart"])) {
+					foreach ($_SESSION["emp_cart"] as $s_da) {
+						$data = array(
+							'ApplicantID' => $ApplicantID,
+							'Name' => $s_da['emp_cart']['EmployeerName'],
+							'Address' => $s_da['emp_cart']['emAddress'],
+							'PeriodCovered' => $s_da['emp_cart']['PeriodCovered'],
+							'Position' => $s_da['emp_cart']['Position'],
+							'Salary' => $s_da['emp_cart']['Salary'],
+							'CauseOfSeparation' => $s_da['emp_cart']['cos'],
 
-							);
-							$this->Model_Inserts->InsertEmploymentRecord($data);
-						}
+						);
+						$this->Model_Inserts->InsertEmploymentRecord($data);
 					}
-					unset($_SESSION["bencart"]);
-					unset($_SESSION["acadcart"]);
-					unset($_SESSION["ref_cart"]);
-					unset($_SESSION["emp_cart"]);
-					unset($_SESSION["mach_cart"]);
-					
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+				}
+				unset($_SESSION["bencart"]);
+				unset($_SESSION["acadcart"]);
+				unset($_SESSION["ref_cart"]);
+				unset($_SESSION["emp_cart"]);
+				unset($_SESSION["mach_cart"]);
+
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
 					// LOGBOOK
 					// date_default_timezone_set('Asia/Manila');
 					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
@@ -550,15 +550,15 @@ class Update_Controller extends CI_Controller {
 					// 	'Link' => $LogbookLink,
 					// );
 					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-					redirect($_SERVER['HTTP_REFERER']);
-				}
-				else
-				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
-					redirect($_SERVER['HTTP_REFERER']);
-				}
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
 			}
 		}
+	}
 	public function AddNote()
 	{
 		if (isset($_POST['Note'])) {
@@ -809,16 +809,23 @@ class Update_Controller extends CI_Controller {
 	public function SetWeeklyHours()
 	{
 		if (isset($_POST['ApplicantID'])) {
+
 			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
-			$BranchID = $this->input->post('BranchID',TRUE);
+			$ClientID = $this->input->post('ClientID',TRUE);
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 			$ArrayInt = 0;
 			$ArrayLength = $GetWeeklyDates->num_rows();
-			
+			$DeductionOption=$this->input->post('DeductionOption',TRUE); //0 no deduction, 1 with deduction, 2 deferred deductions 
+			$cutoffMode=$this->input->post('CutoffMode',TRUE);
+			$HoursTotal=0;
+			$gross_pay=0;
+
+
 			foreach ($GetWeeklyDates->result_array() as $nrow):
 				$ArrayInt++;
 				$Type = $this->input->post('Type_' . $nrow['Time'],TRUE);
 				$Hours = $this->input->post('Hours_' . $nrow['Time'],TRUE);
+				$HoursTotal+=$Hours;
 				$Overtime = $this->input->post('OTHours_' . $nrow['Time'],TRUE);
 				$NightHours = $this->input->post('NightHours_' . $nrow['Time'],TRUE);
 				$NightOvertime = $this->input->post('NightOTHours_' . $nrow['Time'],TRUE);
@@ -835,6 +842,8 @@ class Update_Controller extends CI_Controller {
 				$dayRate = $this->input->post('dayRate_' . $nrow['Time'],TRUE);
 				$TdRate = $this->input->post('TdRate_' . $nrow['Time'],TRUE);
 
+
+
 				if($Hours == NULL) {
 					$Hours = 0;
 				}
@@ -848,12 +857,11 @@ class Update_Controller extends CI_Controller {
 				}
 				else
 				{
-					$GrossPay = $total_hoursperday * $dayRate;
 
 					date_default_timezone_set('Asia/Manila');
 
 					$data = array(
-						'BranchID' => $BranchID,
+						'ClientID' => $ClientID,
 						'Date' => $Date,
 						'Hours' => $Hours,
 						'Overtime' => $Overtime,
@@ -868,6 +876,7 @@ class Update_Controller extends CI_Controller {
 						'day_pay' => $TdRate,
 
 					);
+
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 					if ($UpdateWeeklyHours == TRUE) {
 						if ($ArrayInt >= $ArrayLength) {
@@ -897,48 +906,246 @@ class Update_Controller extends CI_Controller {
 				}
 			endforeach;
 
-			$Checkkkkkk = $this->Model_Selects->Checkkkkkk($ApplicantID);
+			
+			//cutoffMode
+			//get employee hours
+			$EmployeeHoursList = $this->Model_Selects->GetEmployeeHours($ApplicantID);
 
-			if ($Checkkkkkk->num_rows() > 0) {
-				$gross_pay = $this->Model_Selects->GetempGP($ApplicantID);
+			if ($EmployeeHoursList->num_rows() > 0) {
+				$sss_contri = 0;
+				$hdmf_contri = 0;
+				$hdmf_rate=0.0;
+				$philhealth_contri = 0;
+				$philhealth_percentage = 0;
+				$tax = 0;
+				$totalDeduction=0;
+				$net_pay=0;
+				$cutoffTaxDivider=0;
+
+				$employees = $this->Model_Selects->CheckEmployee($ApplicantID);
+				$employee=$employees->result_array()[0];
+				$employeeSalary = $employee["SalaryExpected"];
+
 				
-				$getsssRa = $this->Model_Selects->getsssRa();
+				# if(cutoffMode==0)//weekly
+				if($cutoffMode=='Weekly')//weekly
+				{
+					$gross_pay = $this->Model_Selects->GetempGP($ApplicantID);
+				}
+				# else if(cutoffMode==1)//semi monthly
+				else if($cutoffMode=='Semi-Monthly')//semi monthly
+				{
+					$semiMonthlyTotalSalary=$employeeSalary/2;		   //total salary per half of month
+					$semiMonthlyHourRate= $semiMonthlyTotalSalary/96;  //including saturdays. otherwise it would just be 80
+					$semiMonthlyDeductedHours=96-$HoursTotal;		   //difference of supposed total hours of half a month (96) and total hours worked
+					$semiMonthlyDeductedHoursTotalRate=$semiMonthlyDeductedHours * $semiMonthlyHourRate; //rate to be deducted from total amount
+
+					if($semiMonthlyDeductedHoursTotalRate<=0) //no absences or cases where it has 31st day in month
+					{
+						$gross_pay=$semiMonthlyTotalSalary;
+
+					}
+					else //normal. subtract absents and leaves
+					{
+						$gross_pay=$semiMonthlyTotalSalary-$semiMonthlyDeductedHoursTotalRate;
+
+					}
+				}
+				#else if(cutoffMode==2)
+				else if ($cutoffMode=='Monthly')
+				{
+					$monthlyHourRate= $employeeSalary/192;
+					$monthlyDeductedHours = 192-$HoursTotal;
+					$monthlyDeductedHoursTotalRate = $monthlyDeductedHours * $monthlyHourRate;
+
+					if($monthlyDeductedHoursTotalRate<=0) //no absences or cases where it has 31st day in month
+					{
+						$gross_pay=$employeeSalary;
+
+					}
+					else //normal. subtract absents and leaves
+					{
+						$gross_pay=$employeeSalary-$monthlyDeductedHoursTotalRate;
+
+					}
+				}
+
 				$GetTotalH = $this->Model_Selects->GetTotalH($ApplicantID);
 				$GetTotalOt = $this->Model_Selects->GetTotalOt($ApplicantID);
 
-				foreach ($getsssRa->result_array() as $row) {
-					if ($gross_pay >= $row['f_range'] && $gross_pay <= $row['t_range']) {
-						$sss_contri = $row['contribution'];
-					}
-					else
-					{
-						$sss_contri = 0;
+				
+
+
+				$sssTable = $this->Model_Selects->GetAllSSSTable();
+				$hdmfTable = $this->Model_Selects->GetAllHDMFTable();
+				$philhealthTable = $this->Model_Selects->GetAllPhilHealthTable();
+				//$philhealthTable = $this->Model_Selects->GetAllTaxTable();
+
+
+			if($DeductionOption==1 || $DeductionOption==2)//if with deductions or deferred 
+			{
+
+				foreach ($sssTable->result_array() as $row) {
+					if ($employeeSalary >= $row['f_range'] && $employeeSalary <= $row['t_range']) {
+						$sss_contri = $row['contribution_ee'];
 					}
 				}
-				$net_pay = $gross_pay - $sss_contri;
-				// date_timezone_set('Asia/Manila');
-				$c_month = date('Y/m/d');
-				$data = array(
-					'BranchID' => $BranchID,
-					'ApplicantID' => $ApplicantID,
-					'gross_pay' => round($gross_pay,2),
-					'sss_contri' => $sss_contri,
-					'TotalHours' => $GetTotalH,
-					'TotaOT' => $GetTotalOt,
-					'net_pay' => round($net_pay,2),
-					'c_week' => NULL,
-					'c_month' => $c_month,
-				);
-				$this->Model_Inserts->Insertttttt($data);
+
+				foreach ($hdmfTable->result_array() as $row) {
+					if ($employeeSalary >= $row['f_range'] && $employeeSalary <= $row['t_range']) {
+						$hdmf_rate= $row['contribution_ee'];
+					}
+				}
+				
+
+				$philhealthArray=$philhealthTable->result_array();
+
+				if ($employeeSalary >= $philhealthArray[0]['f_range'] && $employeeSalary <= $philhealthArray[0]['t_range'])
+				{
+					$philhealth_percentage=300;
+				}
+				else if($employeeSalary >= $philhealthArray[1]['f_range'] && $employeeSalary <= $philhealthArray[1]['t_range'])
+				{
+					$philhealth_percentage=($employeeSalary * 0.03);
+
+				}
+				else
+				{
+					$philhealth_percentage=1800;
+				}
+
+
+				
+				#if($cutoffMode==0)//weekly
+				if($cutoffMode=='Weekly')
+				{
+					$cutoffTaxDivider=4;
+				}
+				#else if($cutoffMode==1)//semi monthly
+				else if($cutoffMode=='Semi-Monthly')
+				{
+					$cutoffTaxDivider=2;
+				}
+				#else if($cutoffMode==2) //monthly
+				else if($cutoffMode=='Monthly')
+				{
+					$cutoffTaxDivider=1;
+				}
+
+				$sss_contri = $sss_contri/$cutoffTaxDivider;
+				$hdmf_contri =($employeeSalary*$hdmf_rate)/$cutoffTaxDivider;
+				$philhealth_contri=$philhealth_percentage/$cutoffTaxDivider;
+				
+
+
+				
+
+
+				//tax
+				$year=date("Y");
+				$annualSalary=$employeeSalary*12;
+				if($year<=2022)
+				{
+					if($annualSalary<=250000) //Not over P250,000 -- 0%
+					{
+						$tax=0; 
+					}
+					else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 20% of the excess over P250,000
+					{
+						$tax=((($annualSalary-250000)*0.2)/12)/$cutoffTaxDivider;
+					} 
+					else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P30,000 + 25% of the excess over P400,000
+					{
+						$tax=((30000+(($annualSalary-400000)*0.25))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+					}
+					else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P130,000 + 30% of the excess over P800,000
+					{
+						$tax=((130000+(($annualSalary-800000)*0.3))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+					}
+					else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P490,000 + 32% of the excess over P2,000,000
+					{
+						$tax=((490000+(($annualSalary-2000000)*0.32))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+					}
+					else 															//Over P8,000,000 -- P2,410,000 + 35% of the excess over P8,000,000
+					{
+						$tax=((2410000+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+					}
+
+				}
+				else
+				{
+					if($annualSalary<=250000) //Not over P250,000 -- 0%
+					{
+						$tax=0; 
+					}
+					else if($annualSalary>=250000.01 && $annualSalary <= 400000) 	//Over P250,000 but not over P400,000 -- 15% of the excess over P250,000
+					{
+						$tax=((($annualSalary-250000)*0.15)/12)/$cutoffTaxDivider;
+					} 
+					else if($annualSalary>=400000.01 && $annualSalary <= 800000) 	//Over P400,000 but not over P800,000 -- P22,500 + 20% of the excess over P400,000
+					{
+						$tax=((22500+(($annualSalary-400000)*0.20))/12)/$cutoffTaxDivider; 		 	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+					}
+					else if($annualSalary>=800000.01 && $annualSalary <= 2000000) 	//Over P800,000 but not over P2,000,000 -- P102,500 + 25% of the excess over P800,000
+					{
+						$tax=((102500+(($annualSalary-800000)*0.25))/12)/$cutoffTaxDivider; 		  	//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+					}
+					else if($annualSalary>=2000000.01 && $annualSalary <= 8000000) 	//Over P2,000,000 but not over P8,000,000 -- P402,500 + 30% of the excess over P2,000,000
+					{
+						$tax=((402500+(($annualSalary-2000000)*0.30))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, tthen divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+					}
+					else 															//Over P8,000,000 -- P2,202,500 + 35% of the excess over P8,000,000
+					{
+						$tax=((202500+(($annualSalary-8000000)*0.35))/12)/$cutoffTaxDivider; 		//divided into 12 for monthly, then divided by 4 for weekly, 2 for semi monthly, 1 for monthly
+					}
+				}
+
+				$totalDeduction=$sss_contri + $hdmf_contri + $philhealth_contri + $tax;
+				if($DeductionOption==1)
+				{
+					$net_pay = $gross_pay - $totalDeduction;
+				}
+				else if ($DeductionOption==2)
+				{
+
+					$deferedid= "DEF_". com_create_guid();
+					$this->Model_Inserts->AddEmployeeDeferredDeductions($deferedid,$ApplicantID,$totalDeduction,date());
+				}
+
+				
+
 			}
-			redirect($_SERVER['HTTP_REFERER']);
+			else
+			{
+				$net_pay = $gross_pay;
+			}
+
+			$data = array(
+				'ClientID' => $ClientID,
+				'ApplicantID' => $ApplicantID,
+				'gross_pay' => round($gross_pay,2),
+				'sss_contri' => $sss_contri,
+				'hdmf_contri' => $hdmf_contri,
+				'philhealth_contri' => $philhealth_contri,
+				'tax' => $tax,
+				'TotalHours' => $GetTotalH,
+				'TotaOT' => $GetTotalOt,
+				'net_pay' => $net_pay,
+				'tota_deduc' => $totalDeduction,
+				'Mode' => $cutoffMode
+			);
+
+			$this->Model_Inserts->InsertTrackingTable($data);
 		}
-		else
-		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
-			redirect($_SERVER['HTTP_REFERER']);
-		}
+
+		redirect($_SERVER['HTTP_REFERER']);
 	}
+	else
+	{
+		$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+}
 	public function ViewBranchEmployees() // Date Range
 	{
 		$BranchID = $this->input->post('ViewBranchID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
@@ -966,10 +1173,11 @@ class Update_Controller extends CI_Controller {
 			$date2 = new DateTime($ToDate);
 
 			$diff = $date2->diff($date1)->format("%a");
-			if ($diff > 7) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 1 week</h5></div>');
-				redirect($_SERVER['HTTP_REFERER']);
-			} //velseif ($diff > 180 && $diff < 730) {
+			// if ($diff <= 7) {
+			// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 1 week</h5></div>');
+			// 	redirect($_SERVER['HTTP_REFERER']);
+			// }
+			 //velseif ($diff > 180 && $diff < 730) {
 			// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #FFA500;"><h5><i class="fas fa-exclamation-triangle"></i> Note: You are viewing at a huge date range, performance may get slower than usual</h5></div>');
 			// }
 			// TODO: Clean & optimize this. May cause lag on huge database.
@@ -994,7 +1202,7 @@ class Update_Controller extends CI_Controller {
 				);
 				$BranchViewTime = $this->Model_Inserts->InsertDummyHours($data);
 				if ($BranchViewTime && $i == $diff) {
-					redirect('ViewBranch?id=' . $BranchID);
+					redirect('ViewBranch?id=' . $BranchID . "&Mode=" . $Mode );
 				}
 			}
 		}
@@ -1005,15 +1213,15 @@ class Update_Controller extends CI_Controller {
 		$File = $_FILES['file'];
 		date_default_timezone_set('Asia/Manila');
 		// $this->load->library('SimpleXLSX');
-			if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
-				
-				$dim = $xlsx->dimension();
-				$cols = $dim[0];
-				$RowCount = 0;
-				$ColCount = 0;
-				$ApplicantsArray = array();
+		if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
 
-				foreach ( $xlsx->rows() as $k => $r ):
+			$dim = $xlsx->dimension();
+			$cols = $dim[0];
+			$RowCount = 0;
+			$ColCount = 0;
+			$ApplicantsArray = array();
+
+			foreach ( $xlsx->rows() as $k => $r ):
 					if ($k == 0) continue; // skip first row
 					// echo '<tr class="clickable-row" data-toggle="modal" data-target="#HoursWeeklyModal">';
 					for ( $i = 0; $i < $cols; $i ++ ) {
@@ -1103,7 +1311,7 @@ class Update_Controller extends CI_Controller {
 								// 	}
 								$rHours = $Split[0];
 								$data = array(
-									'BranchID' => $BranchID,
+									'ClientID' => $BranchID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
 									
 									'Hours' => $rHours
@@ -1167,38 +1375,38 @@ class Update_Controller extends CI_Controller {
 			// 		redirect('ViewBranch?id=' . $BranchID);
 			// 	}
 			// }
-	}
-
-	public function TerminateContract() {
-
-		$ApplicantID = $this->input->get('id');
-		if (!isset($_GET['id'])) {
-			redirect('Employee');
 		}
-		else
-		{
-			date_default_timezone_set('Asia/Manila');
-			
-			$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
-			$GetBranch = $this->Model_Selects->getBranchOption();
 
-			if ($CheckEmployee->num_rows() > 0) {
-				foreach ($CheckEmployee->result_array() as $row) {
-					foreach ($GetBranch->result_array() as $nrow) {
-						if ($row['BranchEmployed'] == $nrow['BranchID']) {
-							$BranchName = $nrow['Name'];
-							
-							$data = array(
-								'ApplicantID' => $ApplicantID,
-								'PreviousDateStarted' => $row['DateStarted'],
-								'PreviousDateEnds' => $row['DateEnds'],
-								'Branch' => $BranchName,
-								'Notes' => 'Terminated at ' . date('Y-m-d h:i:s A'),
-							);
-							$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);
-							$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantID);
-							if ($ApplicantExpired == TRUE) {
-								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . "'s contract has been terminated!</h5></div>");
+		public function TerminateContract() {
+
+			$ApplicantID = $this->input->get('id');
+			if (!isset($_GET['id'])) {
+				redirect('Employee');
+			}
+			else
+			{
+				date_default_timezone_set('Asia/Manila');
+
+				$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+				$GetBranch = $this->Model_Selects->getBranchOption();
+
+				if ($CheckEmployee->num_rows() > 0) {
+					foreach ($CheckEmployee->result_array() as $row) {
+						foreach ($GetBranch->result_array() as $nrow) {
+							if ($row['BranchEmployed'] == $nrow['BranchID']) {
+								$BranchName = $nrow['Name'];
+
+								$data = array(
+									'ApplicantID' => $ApplicantID,
+									'PreviousDateStarted' => $row['DateStarted'],
+									'PreviousDateEnds' => $row['DateEnds'],
+									'Branch' => $BranchName,
+									'Notes' => 'Terminated at ' . date('Y-m-d h:i:s A'),
+								);
+								$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);
+								$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantID);
+								if ($ApplicantExpired == TRUE) {
+									$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . "'s contract has been terminated!</h5></div>");
 								// LOGBOOK
 								// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 								// $LogbookType = 'Update';
@@ -1211,109 +1419,109 @@ class Update_Controller extends CI_Controller {
 								// 	'Link' => $LogbookLink,
 								// );
 								// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-								redirect('ApplicantsExpired');
-							}
-							else
-							{
-								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+									redirect('ApplicantsExpired');
+								}
+								else
+								{
+									$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+								}
 							}
 						}
 					}
 				}
-			}
-			else
-			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+				}
 			}
 		}
-	}
-	public function UpdateEmployer()
-	{
-		$EmployerID = $this->input->post('M_EmployerID');
-		$LastName = $this->input->post('LastName');
-		$FirstName = $this->input->post('FirstName');
-		$MiddleInitial = $this->input->post('MiddleInitial');
-		$ContactNumber = $this->input->post('ContactNumber');
-		$Area = $this->input->post('Area');
-		$Address = $this->input->post('Address');
-
-		if ($LastName == NULL || $FirstName == NULL || $MiddleInitial == NULL || $ContactNumber == NULL || $Area == NULL || $Address == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
-			$data = array(
-				'EmployerID' => $EmployerID,
-				'LastName' => $LastName,
-				'FirstName' => $FirstName,
-				'MiddleInitial' => $MiddleInitial,
-				'ContactNumber' => $ContactNumber,
-				'Area' => $Area,
-				'Address' => $Address,
-			);
-			$this->session->set_flashdata($data);
-			redirect($_SERVER['HTTP_REFERER']);
-		}
-		else
+		public function UpdateEmployer()
 		{
-			$data = array(
-				'LastName' => $LastName,
-				'FirstName' => $FirstName,
-				'MiddleInitial' => $MiddleInitial,
-				'ContactNumber' => $ContactNumber,
-				'Area' => $Area,
-				'Address' => $Address,
-			);
-			$updatedEmployer = $this->Model_Updates->UpdateEmployer($EmployerID, $data);
-			if ($updatedEmployer) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
-				redirect("Employers");
-			}
-			else
-			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
-				redirect("Employers");
-			}
-		}
-	}
-	public function UpdateBranch()
-	{
-		$BranchID = $this->input->post('M_BranchID');
-		$EmployerID = $this->input->post('EmployerID');
-		$Name = $this->input->post('Name');
-		$Address = $this->input->post('Address');
-		$ContactNumber = $this->input->post('ContactNumber');
-		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix');
+			$EmployerID = $this->input->post('M_EmployerID');
+			$LastName = $this->input->post('LastName');
+			$FirstName = $this->input->post('FirstName');
+			$MiddleInitial = $this->input->post('MiddleInitial');
+			$ContactNumber = $this->input->post('ContactNumber');
+			$Area = $this->input->post('Area');
+			$Address = $this->input->post('Address');
 
-		if ($EmployerID == NULL || $Name == NULL || $Address == NULL || $ContactNumber == NULL || $EmployeeIDSuffix == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
-			$data = array(
-				'BranchID' => $BranchID,
-				'EmployerID' => $EmployerID,
-				'Name' => $Name,
-				'Address' => $Address,
-				'ContactNumber' => $ContactNumber,
-				'EmployeeIDSuffix' => $EmployeeIDSuffix,
-			);
-			$this->session->set_flashdata($data);
-			redirect($_SERVER['HTTP_REFERER']);
-		}
-		else
-		{
-			$data = array(
-				'EmployerID' => $EmployerID,
-				'Name' => $Name,
-				'Address' => $Address,
-				'ContactNumber' => $ContactNumber,
-				'EmployeeIDSuffix' => $EmployeeIDSuffix,
-			);
-			$updatedBranch = $this->Model_Updates->UpdateBranch($BranchID, $data);
-			if ($updatedBranch) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
-				redirect("Employers");
+			if ($LastName == NULL || $FirstName == NULL || $MiddleInitial == NULL || $ContactNumber == NULL || $Area == NULL || $Address == NULL) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+				$data = array(
+					'EmployerID' => $EmployerID,
+					'LastName' => $LastName,
+					'FirstName' => $FirstName,
+					'MiddleInitial' => $MiddleInitial,
+					'ContactNumber' => $ContactNumber,
+					'Area' => $Area,
+					'Address' => $Address,
+				);
+				$this->session->set_flashdata($data);
+				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
-				redirect("Employers");
+				$data = array(
+					'LastName' => $LastName,
+					'FirstName' => $FirstName,
+					'MiddleInitial' => $MiddleInitial,
+					'ContactNumber' => $ContactNumber,
+					'Area' => $Area,
+					'Address' => $Address,
+				);
+				$updatedEmployer = $this->Model_Updates->UpdateEmployer($EmployerID, $data);
+				if ($updatedEmployer) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+					redirect("Employers");
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+					redirect("Employers");
+				}
+			}
+		}
+		public function UpdateBranch()
+		{
+			$BranchID = $this->input->post('M_BranchID');
+			$EmployerID = $this->input->post('EmployerID');
+			$Name = $this->input->post('Name');
+			$Address = $this->input->post('Address');
+			$ContactNumber = $this->input->post('ContactNumber');
+			$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix');
+
+			if ($EmployerID == NULL || $Name == NULL || $Address == NULL || $ContactNumber == NULL || $EmployeeIDSuffix == NULL) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+				$data = array(
+					'BranchID' => $BranchID,
+					'EmployerID' => $EmployerID,
+					'Name' => $Name,
+					'Address' => $Address,
+					'ContactNumber' => $ContactNumber,
+					'EmployeeIDSuffix' => $EmployeeIDSuffix,
+				);
+				$this->session->set_flashdata($data);
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				$data = array(
+					'EmployerID' => $EmployerID,
+					'Name' => $Name,
+					'Address' => $Address,
+					'ContactNumber' => $ContactNumber,
+					'EmployeeIDSuffix' => $EmployeeIDSuffix,
+				);
+				$updatedBranch = $this->Model_Updates->UpdateBranch($BranchID, $data);
+				if ($updatedBranch) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+					redirect("Employers");
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+					redirect("Employers");
+				}
 			}
 		}
 	}
-}

@@ -29,7 +29,7 @@
 								</thead>
 								<tbody>
 									<?php foreach ($ShowBranches->result_array() as $row): ?>
-										<tr class="text-center align-middle">
+										<tr class="text-center align-middle f-opensans">
 											<td>
 												<?php echo $row['Name']; ?>
 											</td>

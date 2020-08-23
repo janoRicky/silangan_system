@@ -126,4 +126,21 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('sss_table', $data);
 		return $result;
 	}
+
+
+
+
+
+	public function InsertTrackingTable($data)
+	{
+		$result = $this->db->insert('tracking_table',$data);
+		return $result;
+		
+	}
+
+	public function InsertDeferred($id,$empid,$amount,$period)
+	{
+		$SQL = "insert into deferred_deduction (id,employee_id,amount,period) values ($id,$empid,$amount,$period)";
+        $result = $this->db->query($SQL,$id,$empid,$amount,$period);
+	}
 }

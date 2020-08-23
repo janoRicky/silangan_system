@@ -13,10 +13,10 @@
 				<div class="col-12 col-sm-12 payroll-tabs">
 					<ul>
 						<li>
-							<a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $BranchID; ?>">Attendance</a>
+							<a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $ClientID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a>
 						</li>
 						<li class="payroll-tabs-active">
-							<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $BranchID; ?>">Payroll</a>
+							<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $ClientID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a>
 						</li>
 					</ul>
 				</div>
@@ -24,7 +24,7 @@
 					<div class="row">
 						<div class="col-8 mb-2">
 							<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
-								<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $BranchID; ?>">
+								<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $ClientID; ?>">
 								<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
 								<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
 								<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Export (WIP)</button>
@@ -38,25 +38,21 @@
 							<div class="table-responsive w-100">
 								<table id="WeeklyTable" class="table table-condensed">
 									<thead>
-										<th>Applicant ID</th>
-										<th>Gross Pay</th>
-										<th>Reg. Hrs.</th>
-										<th>OT. Hrs.</th>
-										<th>SSS Contribution</th>
+										<th>APPLICANT ID</th>
+										<th>GROSS PAY</th>
+										<th>REG. HRS.</th>
+										<th>OVERTIME</th>
+										<th>SSS CONTRIBUTION</th>
+										<th>HDMF CONTRIBUTION</th>
+										<th>Philhealth CONTRIBUTION</th>
 										<th>TAX</th>
-										<th>Net Pay</th>
-										<th>Mode</th>
-										<th>Date</th>
+										<th>NET PAY</th>
+										<th>TOTAL DEDUC.</th>
+										<th>PAYMENT</th>
 										<th>PDF</th>
 									</thead>
 									<tbody>
-										<!-- <?php foreach ($GetWeeklyListEmployee->result_array() as $row): ?>
-											<tr id="<?php echo $row['SalaryExpected']; ?>" data-branchid="<?php echo $row['BranchEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#applicantPay_<?php echo $row['ApplicantID']; ?>">
-												<td><?php echo $row['ApplicantID'];?></td>
-												<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
-												<td><?php echo $row['SalaryExpected'];?></td>
-											</tr>
-										<?php endforeach; ?> -->
+										
 										<?php foreach ($get_applicantContri->result_array() as $row): ?>
 											<tr>
 												<td>
@@ -75,29 +71,38 @@
 													<?php echo $row['sss_contri'];?>
 												</td>
 												<td>
-													SAMPLE
+													<?php echo $row['hdmf_contri'];?>
+												</td>
+												<td>
+													<?php echo $row['philhealth_contri'];?>
+												</td>
+												<td>
+													<?php echo $row['tax'];?>
 												</td>
 												<td>
 													<?php echo $row['net_pay'];?>
 												</td>
 												<td>
-													<?php switch ($row['c_week']) {
-														case '1':
-															echo "Weekly";
-															break;
-														case '2':
-															echo "Semi-Weekly";
-															break;
-														case '4':
-															echo "Monthly";
-															break;
-														default:
-															echo "NULL";
-															break;
-													} ?>
+													<?php echo $row['tota_deduc'];?>
 												</td>
 												<td>
-													<?php echo $row['c_month'];?>
+													<?php if (isset($row['Mode'])) {
+														switch ($row['Mode']) {
+															case 'Weekly':
+																echo '<strong style="color:#2F890B;"> '.$row['Mode'].' </strong>';
+																break;
+															case 'Semi-Monthly':
+																echo '<strong style="color:#AEA40A;"> '.$row['Mode'].' </strong>';
+																break;
+															case 'Monthly':
+																echo '<strong style="color:#A3510F;"> '.$row['Mode'].' </strong>';
+																break;
+															default:
+																echo 'Null';
+																break;
+														}
+													}
+													?>
 												</td>
 												<td>
 													<a class="btn btn-primary btn-sm" href="<?=base_url()?>CreatePDF/GeneratePaySlip?id=<?php echo $row['id'];?>"><i class="fas fa-file fa-fw"></i> Print </a>

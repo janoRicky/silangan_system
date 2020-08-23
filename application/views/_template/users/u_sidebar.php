@@ -44,6 +44,9 @@
 			<a class="link-s" href="#siteSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cogs fa-fw"></i> Settings </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteSettings">
 				<li>
+					<a class="link-s" class="sublink" href="#"><i class="fas fa-table fa-fw"></i> USERS </a>
+				</li>
+				<li>
 					<a class="link-s" class="sublink" href="<?=base_url()?>sss_table"><i class="fas fa-table fa-fw"></i> SSS Table </a>
 				</li>
 				<li>

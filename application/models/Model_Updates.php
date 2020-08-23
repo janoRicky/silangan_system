@@ -81,36 +81,69 @@ class Model_Updates extends CI_Model {
 	}
 	public function UpdateWeeklyHours($ApplicantID,$data)
 	{
+		// extract($data);
+		// $data = array(
+		// 	'ApplicantID' => $ApplicantID,
+		// 	'ClientID' => $ClientID,
+		// 	'Time' => $Date,
+		// 	'Hours' => $Hours,
+		// 	'Overtime' => $Overtime,
+		// 	'HDMF' => $HDMF,
+		// 	'Philhealth' => $Philhealth,
+		// 	'SSS' => $SSS,
+		// 	'Tax' => $Tax,
+		// );
+		// $SQL = "REPLACE INTO hours_weekly
+		// SET ApplicantID = '$ApplicantID',
+		// ClientID = '$ClientID',
+		// Time = '$Date', Hours = '$Hours',
+		// Overtime = '$Overtime',
+		// HDMF = '$HDMF',
+		// Philhealth = '$Philhealth',
+		// SSS = '$SSS',
+		// Tax = '$Tax'";
+		// $result = $this->db->query($SQL,$ApplicantID);
+		// return $result;
+
 		extract($data);
 		$data = array(
 			'ApplicantID' => $ApplicantID,
-			'BranchID' => $BranchID,
+			'ClientID' => $ClientID,
 			'Time' => $Date,
 			'Hours' => $Hours,
 			'Overtime' => $Overtime,
+			'NightHours' => $NightHours,
+			'NightOvertime' => $NightOvertime,
+			'Remarks' => $Remarks,
 			'HDMF' => $HDMF,
 			'Philhealth' => $Philhealth,
 			'SSS' => $SSS,
 			'Tax' => $Tax,
+			'day_pay' => $day_pay,
 		);
 		$SQL = "REPLACE INTO hours_weekly
 		SET ApplicantID = '$ApplicantID',
-		BranchID = '$BranchID',
+		ClientID = '$ClientID',
 		Time = '$Date', Hours = '$Hours',
 		Overtime = '$Overtime',
+		NightHours = '$NightHours',
+		NightOvertime = '$NightOvertime',
+		Remarks = '$Remarks',
 		HDMF = '$HDMF',
 		Philhealth = '$Philhealth',
 		SSS = '$SSS',
-		Tax = '$Tax'";
+		Tax = '$Tax',
+		day_pay = '$day_pay'";
 		$result = $this->db->query($SQL,$ApplicantID);
 		return $result;
+		
 	}
 	public function UpdateWeeklyHoursFromImport($ApplicantID,$data)
 	{
 		extract($data);
 		$data = array(
 			'ApplicantID' => $ApplicantID,
-			'BranchID' => $BranchID,
+			'ClientID' => $ClientID,
 			'Time' => $Date,
 			'Hours' => $Hours,
 		);
@@ -119,7 +152,7 @@ class Model_Updates extends CI_Model {
 		}
 		$SQL = "REPLACE INTO hours_weekly
 		SET ApplicantID = '$ApplicantID',
-		BranchID = '$BranchID',
+		ClientID = '$ClientID',
 		Time = '$Date',
 		Hours = '$Hours'";
 		$result = $this->db->query($SQL,$ApplicantID);
