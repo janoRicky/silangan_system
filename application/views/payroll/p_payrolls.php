@@ -32,7 +32,8 @@
 							<!-- <div id="datatables-export"></div> -->
 						</div>
 						<div class="col-4 mb-2 text-right">
-							<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
+							<!-- <a href="<?=base_url()?>export_payslip?id=<?php echo $ClientID; ?>" class="btn btn-secondary"><i class="fas fa-lock"></i> Generate Payslip (WIP)</a> -->
+							<button type="button" id="<?php echo $ClientID; ?>" class="btn btn-secondary gen_paysli" data-toggle="modal" data-target="#Gen_paydate"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
 						</div>
 						<div class="col-sm-12 col-mb-12">
 							<div class="table-responsive w-100">
@@ -89,17 +90,17 @@
 													<?php if (isset($row['Mode'])) {
 														switch ($row['Mode']) {
 															case 'Weekly':
-																echo '<strong style="color:#2F890B;"> '.$row['Mode'].' </strong>';
-																break;
+															echo '<strong style="color:#2F890B;"> '.$row['Mode'].' </strong>';
+															break;
 															case 'Semi-Monthly':
-																echo '<strong style="color:#AEA40A;"> '.$row['Mode'].' </strong>';
-																break;
+															echo '<strong style="color:#AEA40A;"> '.$row['Mode'].' </strong>';
+															break;
 															case 'Monthly':
-																echo '<strong style="color:#A3510F;"> '.$row['Mode'].' </strong>';
-																break;
+															echo '<strong style="color:#A3510F;"> '.$row['Mode'].' </strong>';
+															break;
 															default:
-																echo 'Null';
-																break;
+															echo 'Null';
+															break;
 														}
 													}
 													?>
@@ -116,53 +117,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- Modal -->
-			<!-- <?php foreach ($GetWeeklyListEmployee->result_array() as $row): ?>
-				<div class="modal fade" id="applicantPay_<?php echo $row['ApplicantID']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel"><?php echo $row['ApplicantID'];?> Contributions</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<table class="table table-condensed table-bordered">
-									<thead>
-										<th>
-											Gross Pay
-										</th>
-										<th>
-											SSS Contribution
-										</th>
-									</thead>
-									<tbody>
-										<?php foreach ($get_applicantContri->result_array() as $nrow): ?>
-									<?php if ($row['ApplicantID'] == $nrow['ApplicantID']): ?>
-										<tr>
-											<td>
-												<?php echo $nrow['gross_pay']; ?>
-											</td>
-											<td>
-												<?php echo $nrow['sss_contri']; ?>
-											</td>
-										</tr>
-									<?php endif ?>
-								<?php endforeach ?>
-									</tbody>
-								</table>
-								
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save changes</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			<?php endforeach ?> -->
-			
 			<!-- LOAD MODAL -->
 			<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
 				<div class="modal-dialog" role="document">
@@ -178,6 +132,50 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="Gen_paydate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<?php echo form_open(base_url().'export_payslip','method="post"'); ?>
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Generate Payslip</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-row">
+						<div class="col">
+							<div class="text-center">
+								<h5>
+									Choose date to generate
+								</h5>
+							</div>
+						</div>
+					</div>
+					<input id="h_id" type="hidden" name="h_id" value="">
+					<div class="form-row">
+						<div class="col">
+							<div class="form-group">
+								<label>From</label>
+								<input class="form-control" type="date" name="fdate">
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								<label>To</label>
+								<input class="form-control" type="date" name="tdate">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+			<?php echo form_close(); ?>
 		</div>
 	</div>
 </body>
@@ -227,6 +225,10 @@
 			}
 		});
 
+		$('.gen_paysli').on('click', function () {
+			$('#h_id').val($(this).attr('id'));
+		});
+		
 		var dd_buttons = new $.fn.dataTable.Buttons(table, {
 			buttons: [
 			{

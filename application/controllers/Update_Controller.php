@@ -1132,7 +1132,8 @@ class Update_Controller extends CI_Controller {
 				'TotaOT' => $GetTotalOt,
 				'net_pay' => $net_pay,
 				'tota_deduc' => $totalDeduction,
-				'Mode' => $cutoffMode
+				'Mode' => $cutoffMode,
+				'Date_Generated' => date('d-m-yy')
 			);
 
 			$this->Model_Inserts->InsertTrackingTable($data);

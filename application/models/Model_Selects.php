@@ -576,4 +576,18 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$eid);
 		return $result;
 	}
+
+	public function getPayslipFromto($branch_id,$nf_date,$nt_date)
+	{
+		// $SQL = "SELECT * FROM tracking_table WHERE ClientID = '$branch_id' AND Date_Generated >= '$nf_date' AND Date_Generated <= '$nt_date'";
+		$SQL = "SELECT * FROM tracking_table WHERE ClientID = '$branch_id' AND Date_Generated BETWEEN '$nf_date' AND '$nt_date'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function getAllApplicantName()
+	{
+		$SQL = "SELECT * FROM applicants";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

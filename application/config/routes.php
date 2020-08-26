@@ -113,3 +113,6 @@ $route['ImportExcel'] = 'Update_Controller/ImportExcel';
 
 
 $route['TerminateContract'] = 'Update_Controller/TerminateContract';
+
+// EXPORT
+$route['export_payslip'] = 'PhpOffice_Controller/export_payslip';
