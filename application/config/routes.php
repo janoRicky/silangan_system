@@ -116,3 +116,7 @@ $route['TerminateContract'] = 'Update_Controller/TerminateContract';
 
 // EXPORT
 $route['export_payslip'] = 'PhpOffice_Controller/export_payslip';
+
+
+// TCPDF
+$route['GeneratePaySlip'] = 'Tcpdf_Controller/GeneratePaySlip';

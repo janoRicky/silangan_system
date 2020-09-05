@@ -106,7 +106,7 @@
 													?>
 												</td>
 												<td>
-													<a class="btn btn-primary btn-sm" href="<?=base_url()?>CreatePDF/GeneratePaySlip?id=<?php echo $row['id'];?>"><i class="fas fa-file fa-fw"></i> Print </a>
+													<a class="btn btn-primary btn-sm" href="<?=base_url()?>GeneratePaySlip?id=<?php echo $row['id'];?>"><i class="fas fa-file fa-fw"></i> Print </a>
 												</td>
 											</tr>
 										<?php endforeach ?>
