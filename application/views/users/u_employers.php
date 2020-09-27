@@ -5,57 +5,59 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="row p-5">
+				<div class="content m-4">
 					<?php echo $this->session->flashdata('prompts'); ?>
-					<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
-						<h4 class="tabs-icon">
-							<i class="fas fa-building fa-fw"></i> Employers x <?php echo $ShowEmployers->num_rows() ?>
-						</h4>
-					</div>
-					<div class="col-8 col-sm-8 col-md-8 text-right">
-						<button class="btn btn-primary" data-toggle="modal" data-target="#addEmployer"><i class="fas fa-user-plus"></i> New</button>
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
-					</div>
-					<div class="col-sm-12">
-						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-							<table id="EmployersTable" class="table table-bordered PrintOut" style="width: 100%;">
-								<thead>
-									<tr class="text-center align-middle">
-										<th> Name </th>
-										<th> Contact </th>
-										<th> Area </th>
-										<th> Address </th>
-										<th> Branches </th>
-										<th class="text-center PrintExclude" style="width: 5%;"> Action </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($ShowEmployers->result_array() as $row): ?>
+					<div class="row content-body">
+						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
+							<h4 class="tabs-icon">
+								<i class="fas fa-building fa-fw"></i> Employers x <?php echo $ShowEmployers->num_rows() ?>
+							</h4>
+						</div>
+						<div class="col-8 col-sm-8 col-md-8 text-right">
+							<button class="btn btn-primary" data-toggle="modal" data-target="#addEmployer"><i class="fas fa-user-plus"></i> New</button>
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
+						</div>
+						<div class="col-sm-12">
+							<div class="table-responsive pt-4 pb-4 pl-2 pr-2">
+								<table id="EmployersTable" class="table table-bordered PrintOut" style="width: 100%;">
+									<thead>
 										<tr class="text-center align-middle">
-											<td>
-												<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
-											</td>
-											<td>
-												<?php echo $row['ContactNumber']; ?>
-											</td>
-											<td>
-												<?php echo $row['Area']; ?>
-											</td>
-											<td>
-												<?php echo $row['Address']; ?>
-											</td>
-											<td>
-												<?php echo $this->Model_Selects->GetEmployerBranches($row['EmployerID'])->num_rows(); ?>
-											</td>
-											<td class="text-center align-middle PrintExclude">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Employers?employerID=<?php echo $row['EmployerID']; ?>"><i class="fas fa-building"></i> Branches</a>
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ModifyEmployer?id=<?php echo $row['EmployerID']; ?>"><i class="fas fa-edit"></i> Edit</a>
-												<a href="<?=base_url()?>RemoveEmployer?id=<?=$row['EmployerID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Employer?')"><i class="fas fa-trash"></i> Delete</a>
-											</td>
+											<th> Name </th>
+											<th> Contact </th>
+											<th> Area </th>
+											<th> Address </th>
+											<th> Branches </th>
+											<th class="text-center PrintExclude" style="width: 5%;"> Action </th>
 										</tr>
-									<?php endforeach ?>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<?php foreach ($ShowEmployers->result_array() as $row): ?>
+											<tr class="text-center align-middle">
+												<td>
+													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
+												</td>
+												<td>
+													<?php echo $row['ContactNumber']; ?>
+												</td>
+												<td>
+													<?php echo $row['Area']; ?>
+												</td>
+												<td>
+													<?php echo $row['Address']; ?>
+												</td>
+												<td>
+													<?php echo $this->Model_Selects->GetEmployerBranches($row['EmployerID'])->num_rows(); ?>
+												</td>
+												<td class="text-center align-middle PrintExclude">
+													<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>Employers?employerID=<?php echo $row['EmployerID']; ?>"><i class="fas fa-building"></i> Branches</a>
+													<a class="btn btn-primary btn-sm w-100 mb-1" href="<?=base_url()?>ModifyEmployer?id=<?php echo $row['EmployerID']; ?>"><i class="fas fa-edit"></i> Edit</a>
+													<a href="<?=base_url()?>RemoveEmployer?id=<?=$row['EmployerID']?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Employer?')"><i class="fas fa-trash"></i> Delete</a>
+												</td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

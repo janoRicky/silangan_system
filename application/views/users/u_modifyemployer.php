@@ -9,45 +9,49 @@
 					<div class="col-sm-12">
 						<div class="p-5">
 							<?php echo $this->session->flashdata('prompts'); ?>
-							<div class="mb-3">
-								<h5>
-									<i class="fas fa-user-alt"></i> Personal Information
-								</h5>
-							</div>
 							<!-- Start form -->
 							<form action="<?=base_url()?>UpdateEmployer" method="POST" enctype="multipart/form-data">
-								<input type="hidden" name="M_EmployerID" value="<?php echo $EmployerID; ?>">
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Last Name</label>
-										<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $LastName; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>First Name</label>
-										<input class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $FirstName; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Middle Initial</label>
-										<input class="form-control" type="text" name="MiddleInitial" autocomplete="off" value="<?php echo $MiddleInitial; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Contact Number</label>
-										<input class="form-control" type="text" name="ContactNumber" autocomplete="off" value="<?php echo $ContactNumber; ?>">
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-group col-sm-12 col-md-4">
-										<label>Area</label>
-										<input class="form-control" type="text" name="Area" autocomplete="off" value="<?php echo $Area; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-4">
-										<label>Address</label>
-										<input class="form-control" type="text" name="Address" autocomplete="off" value="<?php echo $Address; ?>">
-									</div>
-								</div>
-								<div class="form-row pt-5 pb-4">
-									<div class="form-group mr-auto">
-										<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
+								<div class="content mt-3">
+									<div class="content-body">
+										<div class="cbody-header mb-3">
+											<h5>
+												<i class="fas fa-user-alt"></i> Personal Information
+											</h5>
+										</div>
+										<input type="hidden" name="M_EmployerID" value="<?php echo $EmployerID; ?>">
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Last Name</label>
+												<input class="form-control" type="text" name="LastName" autocomplete="off" value="<?php echo $LastName; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>First Name</label>
+												<input class="form-control" type="text" name="FirstName" autocomplete="off" value="<?php echo $FirstName; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Middle Initial</label>
+												<input class="form-control" type="text" name="MiddleInitial" autocomplete="off" value="<?php echo $MiddleInitial; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Contact Number</label>
+												<input class="form-control" type="text" name="ContactNumber" autocomplete="off" value="<?php echo $ContactNumber; ?>">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-md-4">
+												<label>Area</label>
+												<input class="form-control" type="text" name="Area" autocomplete="off" value="<?php echo $Area; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-4">
+												<label>Address</label>
+												<input class="form-control" type="text" name="Address" autocomplete="off" value="<?php echo $Address; ?>">
+											</div>
+										</div>
+										<div class="form-row pt-5 pb-4">
+											<div class="form-group ml-auto">
+												<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
+											</div>
+										</div>
 									</div>
 								</div>
 							</form>

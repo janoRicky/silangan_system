@@ -9,48 +9,52 @@
 					<div class="col-sm-12">
 						<div class="p-5">
 							<?php echo $this->session->flashdata('prompts'); ?>
-							<div class="mb-3">
-								<h5>
-									<i class="fas fa-building"></i> Branch Information
-								</h5>
-							</div>
 							<!-- Start form -->
 							<form action="<?=base_url()?>UpdateBranch" method="POST" enctype="multipart/form-data">
-								<input type="hidden" name="M_BranchID" value="<?=$BranchID; ?>">
-								<div class="form-row">
-									<div class="form-row">
-										<div class="form-group col-12">
-											<label>Choose Employer</label>
-											<select class="form-control" name="EmployerID">
-												<?php $GetEmployers = $this->Model_Selects->GetEmployers(); ?>
-												<?php foreach ($GetEmployers->result_array() as $row): ?>
-													<option value="<?=$row['EmployerID'];?>" <?php if ($EmployerID == $row["EmployerID"]) echo "selected"; ?>>
-														<?=$row['LastName']; ?>, <?=$row['FirstName']; ?> <?=$row['MiddleInitial'];?>.
-													</option>
-												<?php endforeach ?>
-											</select>
+								<div class="content mt-3">
+									<div class="content-body">
+										<div class="cbody-header mb-3">
+											<h5>
+												<i class="fas fa-building"></i> Branch Information
+											</h5>
 										</div>
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Name</label>
-										<input class="form-control" type="text" name="Name" autocomplete="off" value="<?php echo $Name; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Address</label>
-										<input class="form-control" type="text" name="Address" autocomplete="off" value="<?php echo $Address; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Contact Number</label>
-										<input class="form-control" type="text" name="ContactNumber" autocomplete="off" value="<?php echo $ContactNumber; ?>">
-									</div>
-									<div class="form-group col-sm-12 col-md-2">
-										<label>Employee ID Suffix</label>
-										<input class="form-control" type="text" name="EmployeeIDSuffix" autocomplete="off" value="<?php echo $EmployeeIDSuffix; ?>">
-									</div>
-								</div>
-								<div class="form-row pt-5 pb-4">
-									<div class="form-group mr-auto">
-										<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
+										<input type="hidden" name="M_BranchID" value="<?=$BranchID; ?>">
+										<div class="form-row">
+											<div class="form-row">
+												<div class="form-group col-12">
+													<label>Choose Employer</label>
+													<select class="form-control" name="EmployerID">
+														<?php $GetEmployers = $this->Model_Selects->GetEmployers(); ?>
+														<?php foreach ($GetEmployers->result_array() as $row): ?>
+															<option value="<?=$row['EmployerID'];?>" <?php if ($EmployerID == $row["EmployerID"]) echo "selected"; ?>>
+																<?=$row['LastName']; ?>, <?=$row['FirstName']; ?> <?=$row['MiddleInitial'];?>.
+															</option>
+														<?php endforeach ?>
+													</select>
+												</div>
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Name</label>
+												<input class="form-control" type="text" name="Name" autocomplete="off" value="<?php echo $Name; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Address</label>
+												<input class="form-control" type="text" name="Address" autocomplete="off" value="<?php echo $Address; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Contact Number</label>
+												<input class="form-control" type="text" name="ContactNumber" autocomplete="off" value="<?php echo $ContactNumber; ?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-2">
+												<label>Employee ID Suffix</label>
+												<input class="form-control" type="text" name="EmployeeIDSuffix" autocomplete="off" value="<?php echo $EmployeeIDSuffix; ?>">
+											</div>
+										</div>
+										<div class="form-row pt-5 pb-4">
+											<div class="form-group ml-auto">
+												<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save</button>
+											</div>
+										</div>
 									</div>
 								</div>
 							</form>

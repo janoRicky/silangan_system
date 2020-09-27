@@ -19,10 +19,12 @@
 			
 		</div>
 		<li class="nav-item">
-			<a class="link-s" href="<?=base_url()?>Dashboard"><span class="fas fa-tachometer-alt fa-fw"></span> Dashboard </a>
+			<a class="link-s" href="<?=base_url()?>Dashboard">
+				<span class="fas fa-tachometer-alt fa-fw"></span> Dashboard 
+			</a>
 		</li>
 		<li class="nav-item">
-			<a class="link-s" href="<?=base_url()?>Employee"><span class="fas fa-user-tie fa-fw"></span> Employees </a>
+			<a class="link-s" href="<?=base_url()?>Employee"><span class="fas fa-user-tie"></span> Employees </a>
 		</li>
 
 		
@@ -41,7 +43,7 @@
 			<a class="link-s" href="<?=base_url()?>Payroll"><span class="fas fa-dollar-sign fa-fw"></span> Payroll </a>
 		</li>
 		<li>
-			<a class="link-s" href="#siteSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-cogs fa-fw"></i> Settings </a>
+			<a class="link-s" href="#siteSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fas fa-cogs fa-fw"></span> Settings </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteSettings">
 				<li>
 					<a class="link-s" class="sublink" href="#"><i class="fas fa-table fa-fw"></i> USERS </a>

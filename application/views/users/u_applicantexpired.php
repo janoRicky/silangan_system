@@ -10,16 +10,22 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<div class="col-12 col-sm-12 tabs">
-					<ul>
-						<li><a href="<?php echo base_url() ?>Employee">Employees (<?php echo $get_employee->num_rows()?>)</a></li>
-						<li class="tabs-active"><a href="<?php echo base_url() ?>ApplicantsExpired">Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a></li>
-					</ul>
-				</div>
-				<div class="row rcontent">
+				<div class="row content mt-4 ml-3 mr-3">
+					<div class="col-12 col-sm-12 tabs mb-3">
+						<ul>
+							<li>
+								<a href="<?php echo base_url() ?>Employee"><i class="fas fa-user-tie fa-lg"></i>Employees (<?php echo $get_employee->num_rows()?>)</a>
+							</li>
+							<li class="tab-divider">&nbsp;</li>
+							<li class="tabs-active">
+								<a href="<?php echo base_url() ?>ApplicantsExpired"><i class="fas fa-user-friends fa-lg"></i>Expired (<?php echo $get_ApplicantExpired->num_rows()?>)</a>
+								<div class="tab-indicator">&nbsp;</div>
+							</li>
+						</ul>
+					</div>
 					<div class="col-5 PrintPageName PrintOut">
 						<h4 class="tabs-icon">
-							<i class="fas fa-user-friends fa-fw"></i> x <?php echo $get_ApplicantExpired->num_rows() ?>
+							Expired x <?php echo $get_ApplicantExpired->num_rows() ?>
 						</h4> 
 					</div>
 					<div class="col-7 text-right">

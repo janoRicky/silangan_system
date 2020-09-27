@@ -191,64 +191,70 @@
 					</div> -->
 
 					<!-- LOGBOOK -->
-					<div id="Logbook" class="col-sm-12 col-lg-12 mt-5">
-						<div class="chart-title text-center">
-							<h5>
-								<i class="fas fa-list"></i> Notifications
-							</h5>
-						</div>
-					</div>
-					<div class="col-sm-12 col-lg-12 mt-2">
-						<div class="text-center">
-							<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#AddNote"><i class="fas fa-plus"></i> Add Note</button>
-							<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download" style="margin-right: -1px;"></i></button>
-						</div>
-					</div>
-					<div class="col-sm-12">
-						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
-							<table id="ListLogbook" class="table table-condensed PrintOut" style="width: 100%;">
-								<thead>
-									<tr class="text-center align-middle">
-										<th> Time </th>
-										<th> Event </th>
-										<th> Action </th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php foreach ($GetLogbook->result_array() as $row): ?>
-										<tr class="
-											<?php 
-												if ($row['Type'] == 'New' || $row['Type'] == 'Employment') 
-												{ 
-													echo 'logbook-success'; 
-												}
-												elseif ($row['Type'] == 'Archival') 
-												{
-													echo 'logbook-danger';
-												} 
-												elseif ($row['Type'] == 'Update')
-												{
-													echo 'logbook-info';
-												}
-												elseif ($row['Type'] == 'Reminder' || $row['Type'] == 'Note') 
-												{
-													echo 'logbook-warning';
-												}
-											?>">
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['Time']; ?>
-											</td>
-											<td class="text-center align-middle">
-												<?php echo $row['Event']; ?>
-											</td>
-											<td class="text-center align-middle PrintExclude" width="100">
-												<a href="<?php echo $row['Link'] ?>" class="btn btn-primary btn-sm w-100 mb-1" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View</a>
-											</td>
-										</tr>
-									<?php endforeach; ?>
-								</tbody>
-							</table>
+					<div id="Logbook" class="col-sm-12 col-lg-12 mt-2 mb-2">
+						<div class="content mt-1 mb-4">
+							<div class="row content-body">
+								<div class="col-sm-6">
+									<div class="chart-title">
+										<h5>
+											<i class="fas fa-list"></i> Notifications
+										</h5>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="text-right">
+										<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#AddNote"><i class="fas fa-plus"></i> Add Note</button>
+										<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download" style="margin-right: -1px;"></i></button>
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="table-responsive mt-4">
+										<table id="ListLogbook" class="table table-condensed PrintOut" style="width: 100%;">
+											<thead>
+												<tr class="text-center align-middle">
+													<th> Time </th>
+													<th> Event </th>
+													<th> Action </th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php foreach ($GetLogbook->result_array() as $row): ?>
+													<tr class="
+														<?php 
+															if ($row['Type'] == 'New' || $row['Type'] == 'Employment') 
+															{ 
+																echo 'logbook-success'; 
+															}
+															elseif ($row['Type'] == 'Archival') 
+															{
+																echo 'logbook-danger';
+															} 
+															elseif ($row['Type'] == 'Update')
+															{
+																echo 'logbook-info';
+															}
+															elseif ($row['Type'] == 'Reminder' || $row['Type'] == 'Note') 
+															{
+																echo 'logbook-warning';
+															}
+														?>">
+														</td>
+														<td class="text-center align-middle">
+															<?php echo $row['Time']; ?>
+														</td>
+														<td class="text-center align-middle">
+															<?php echo $row['Event']; ?>
+														</td>
+														<td class="text-center align-middle PrintExclude" width="100">
+															<a href="<?php echo $row['Link'] ?>" class="btn btn-primary btn-sm w-100 mb-1" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View</a>
+														</td>
+													</tr>
+												<?php endforeach; ?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					
