@@ -24,7 +24,7 @@
 										<th> Address </th>
 										<th> Contact </th>
 										<th> Employees </th>
-										<th class="text-center PrintExclude" style="width: 5%;"> View Hours </th>
+										<th class="text-center PrintExclude" style="width: 5%;"> Action </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -43,14 +43,14 @@
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['BranchID'])->num_rows(); ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
-												<button id="<?php echo $row['BranchID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewBranchIDButton"  data-toggle="modal" data-target="#ModalBranchView"><i class="fas fa-calendar-alt"></i> Date Range</button>
+												<button id="<?php echo $row['BranchID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewBranchIDButton"  data-toggle="modal" data-target="#ModalBranchView"><i class="fas fa-calendar-alt"></i> View by Date</button>
 												<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
 													<input type="hidden" name="ExcelBranchID" value="<?php echo $row['BranchID']; ?>">
 													<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
-													<button type="button" class="ImportButton btn btn-sm btn-success w-100"><i class="fas fa-file-excel"></i> Excel</button>
+													<button type="button" class="ImportButton btn btn-sm btn-success w-100"><i class="fas fa-file-excel"></i> Import Excel</button>
 												</form>
 												<!-- <a class="btn btn-success btn-sm w-100 mb-1" href="<?=base_url()?>ViewBranch?id=<?php echo $row['BranchID']; ?>"><i class="fas fa-file-excel"></i> Excel</a> -->
-												<button id="<?php echo $row['BranchID']; ?>" type="button" class="excel_formatbtn btn btn-secondary btn-sm w-100 mb-1 mt-1"  data-toggle="modal" data-target="#DateFroto_modal"><i class="fas fa-file-download"></i> Excel Format</button>
+												<button id="<?php echo $row['BranchID']; ?>" type="button" class="excel_formatbtn btn btn-secondary btn-sm w-100 mb-1 mt-1"  data-toggle="modal" data-target="#DateFroto_modal"><i class="fas fa-file-download"></i> Excel Template</button>
 											</td>
 										</tr>
 									<?php endforeach ?>

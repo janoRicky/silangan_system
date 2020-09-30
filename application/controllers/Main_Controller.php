@@ -283,9 +283,9 @@ class Main_Controller extends CI_Controller {
 				$this->load->view('users/u_dashboard',$data);
 			}
 		}
-		
+
 	}
-	
+
 	public function V_Applicants()
 	{
 		unset($_SESSION["bencart"]);
@@ -421,7 +421,7 @@ class Main_Controller extends CI_Controller {
 		$data['get_ssstable'] = $this->Model_Selects->sss_Contri();
 		$this->load->view('users/u_ssstable',$data);
 	}
-	
+
 	public function ViewEmployee()
 	{
 		unset($_SESSION["bencart"]);
@@ -618,7 +618,7 @@ class Main_Controller extends CI_Controller {
 					'PhilHealth' => $ged['PhilHealth'],
 
 					'ATM_No' => $ged['ATM_No'],
-					
+
 					'ConLDOR' => $ged['ConLDOR'],
 					'ConMTAA' => $ged['ConMTAA'],
 					'CaseAC' => $ged['CaseAC'],
@@ -682,7 +682,7 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
-		
+
 		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 		$header['title'] = 'New Employee | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -817,7 +817,7 @@ class Main_Controller extends CI_Controller {
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
 			$GetBranchDetails = $this->Model_Selects->GetBranchID($id);
-			
+
 			if ($GetBranchDetails->num_rows() > 0) {
 				$ged = $GetBranchDetails->row_array();
 				$data = array(
@@ -891,9 +891,9 @@ class Main_Controller extends CI_Controller {
 		);
 		$ApplicantID = $row['ApplicantID'];
 		$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
-		
+
 		$data['get_applicantContri'] = $this->Model_Selects->get_applicantContri($id);
-		
+
 
 
 		$data['IsFromExcel'] = False;
@@ -944,9 +944,9 @@ class Main_Controller extends CI_Controller {
 				);
 				$ApplicantID = $row['ApplicantID'];
 			}
-			
-			
-			
+
+
+
 			$data['GetWeeklyList'] = $GetWeeklyList;
 			if ($id == 'excel') {
 				$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployeeFromImports($ApplicantsArray);
@@ -968,7 +968,7 @@ class Main_Controller extends CI_Controller {
 			</nav>';
 			##### $this->load->view('payroll/p_viewBranch',$data);
 			$this->load->view('payroll/p_viewbranch',$data);
-			
+
 		}
 		else
 		{
@@ -1071,7 +1071,7 @@ class Main_Controller extends CI_Controller {
 			if ($row['bencart']['c_id'] == $_POST['row_id']) {
 				unset($_SESSION["bencart"][$s_da]);
 				if(empty($_SESSION["bencart"]))
-					unset($_SESSION["bencart"]);
+				unset($_SESSION["bencart"]);
 			}
 		}
 	}
@@ -1170,7 +1170,7 @@ class Main_Controller extends CI_Controller {
 			if ($row['acadcart']['c_id'] == $_POST['row_id']) {
 				unset($_SESSION["acadcart"][$s_da]);
 				if(empty($_SESSION["acadcart"]))
-					unset($_SESSION["acadcart"]);
+				unset($_SESSION["acadcart"]);
 			}
 		}
 	}
@@ -1270,7 +1270,7 @@ class Main_Controller extends CI_Controller {
 			if ($row['emp_cart']['emp_id'] == $_POST['row_id']) {
 				unset($_SESSION["emp_cart"][$s_da]);
 				if(empty($_SESSION["emp_cart"]))
-					unset($_SESSION["emp_cart"]);
+				unset($_SESSION["emp_cart"]);
 			}
 		}
 	}
@@ -1351,7 +1351,7 @@ class Main_Controller extends CI_Controller {
 			if ($row['ref_cart']['c_id'] == $_POST['row_id']) {
 				unset($_SESSION["ref_cart"][$s_da]);
 				if(empty($_SESSION["ref_cart"]))
-					unset($_SESSION["ref_cart"]);
+				unset($_SESSION["ref_cart"]);
 			}
 		}
 	}

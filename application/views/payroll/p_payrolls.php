@@ -43,9 +43,9 @@
 										<th>GROSS PAY</th>
 										<th>REG. HRS.</th>
 										<th>OVERTIME</th>
-										<th>SSS CONTRIBUTION</th>
-										<th>HDMF CONTRIBUTION</th>
-										<th>Philhealth CONTRIBUTION</th>
+										<th>SSS CONTRI.</th>
+										<th>HDMF CONTRI.</th>
+										<th>PHILHEALTH CONTRI.</th>
 										<th>TAX</th>
 										<th>NET PAY</th>
 										<th>TOTAL DEDUC.</th>

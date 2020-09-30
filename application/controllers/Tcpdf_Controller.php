@@ -26,26 +26,10 @@ class Tcpdf_Controller extends CI_Controller {
 		$data['nGetApplicantDet'] = $GetApplicantDet->row_array();
 
 		$htmlContent = $this->load->view('pdf/pay_slips', $data, TRUE);
-		$createPDFFile = time().'.pdf';
+		$createPDFFile = $ApplicantID.'_'.time().'.pdf';
 
-		// if ($this->CreatePdfPay($createPDFFile, $htmlContent) == TRUE) {
-		// 	redirect('assets/pdf/'.$createPDFFile);
-		// }
-		// else
-		// {
-		// 	$this->CreatePdfPay($createPDFFile, $htmlContent)
-		// 	redirect('assets/pdf/'.$createPDFFile);
-		// }
-		if ($this->CreatePdfPay($createPDFFile, $htmlContent) == TRUE) {
-			redirect('assets/pdf/'.$createPDFFile);
-		}
-		else
-		{
-			$this->CreatePdfPay($createPDFFile, $htmlContent);
-			redirect('assets/pdf/'.$createPDFFile);
-		}
-
-		
+		$this->CreatePdfPay($createPDFFile, $htmlContent);
+		// redirect('assets/pdf/'.$createPDFFile);
 		
 	}
 
@@ -55,10 +39,10 @@ class Tcpdf_Controller extends CI_Controller {
 		$this->load->library('Pdf');
 		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 		$pdf->SetCreator(PDF_CREATOR);
-		$pdf->SetAuthor('WERCHER');
+		$pdf->SetAuthor('Silangan Lumber');
 		$pdf->SetTitle('Employee Payslip');
 		$pdf->SetSubject('Current PaySlip');
-		$pdf->SetKeywords('WERCHER');
+		$pdf->SetKeywords('Silangan Lumber');
 		$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -75,14 +59,15 @@ class Tcpdf_Controller extends CI_Controller {
 		if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 			require_once(dirname(__FILE__).'/lang/eng.php');
 			$pdf->setLanguageArray($l);
-		}       
+		}
 		$pdf->SetFont('dejavusans', '', 10);
 		$pdf->AddPage();
 		$pdf->writeHTML($html, true, false, true, false, '');
 
-		$pdf->lastPage();       
+		$pdf->lastPage();
 		ob_end_clean();
-		$OutputFiless = 'assets/pdf/' . time().'.pdf';
-		$pdf->Output(FCPATH . $OutputFiless, 'F');
+		// $OutputFiless = date('Ydm').'_'.time().'.pdf';
+		$OutputFiless = $fileName;
+		$pdf->Output($OutputFiless, 'D');
 	}
 }
