@@ -21,7 +21,7 @@ class Add_Controller extends CI_Controller {
 		$SalaryType = $this->input->post('SalaryType');
 		$Rate = $this->input->post('Rate');
 		$AppliedOn = $this->input->post('AppliedOn');
-		// $SalaryExpected = $this->input->post('SalaryExpected');
+		$SalaryExpected = $this->input->post('Rate');
 		$LastName = $this->input->post('LastName');
 		$FirstName = $this->input->post('FirstName');
 		$MI = $this->input->post('MI');
@@ -85,6 +85,7 @@ class Add_Controller extends CI_Controller {
 				'ContractType' => $ContractType,
 				'SalaryType' => $SalaryType,
 				'Rate' => $Rate,
+				'SalaryExpected' => $SalaryExpected,
 				'LastName' => $LastName,
 				'FirstName' => $FirstName,
 				'MI' => $MI,
@@ -293,7 +294,7 @@ class Add_Controller extends CI_Controller {
 						foreach ($_SESSION["emp_cart"] as $s_da) {
 							$data = array(
 								'ApplicantID' => $customid,
-								'Name' => $s_da['emp_cart']['EmployeerName'],
+								'Name' => $s_da['emp_cart']['EmployerName'],
 								'Address' => $s_da['emp_cart']['emAddress'],
 								'PeriodCovered' => $s_da['emp_cart']['PeriodCovered'],
 								'Position' => $s_da['emp_cart']['Position'],
@@ -358,7 +359,7 @@ class Add_Controller extends CI_Controller {
 								'BranchEmployed' => $BranchID,
 								'DateStarted' => $DateStarted,
 								'DateEnds' => $DateEnds,
-								'Salary' => $Salary,
+								'SalaryExpected' => $SalaryExpected,
 							);
 							$EmployNewApplicant = $this->Model_Updates->EmployNewApplicant($Temp_ApplicantID,$ApplicantID,$data);
 							$data = array(

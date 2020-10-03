@@ -397,15 +397,15 @@
 											</div>
 											<div class="form-group col-sm-12 col-lg-3">
 												<label>Years</label>
-												<input class="form-control" type="number" name="H_Years" autocomplete="off" value="<?php if (empty($this->session->flashdata('H_Years'))) {echo 1;} else {echo $this->session->flashdata('H_Years');} ?>">
+												<input class="form-control" type="number" name="H_Years" autocomplete="off" value="<?php if (empty($this->session->flashdata('H_Years'))) {echo 1;} else {echo $this->session->flashdata('H_Years');} ?>" min="0">
 											</div>
 											<div class="form-group col-sm-12 col-lg-3">
 												<label>Months</label>
-												<input class="form-control" type="number" name="H_Months" autocomplete="off"  value="<?php if (empty($this->session->flashdata('H_Months'))) {echo 0;} else {echo $this->session->flashdata('H_Months');} ?>">
+												<input class="form-control" type="number" name="H_Months" autocomplete="off"  value="<?php if (empty($this->session->flashdata('H_Months'))) {echo 0;} else {echo $this->session->flashdata('H_Months');} ?>" min="0">
 											</div>
 											<div class="form-group col-sm-12 col-lg-3">
 												<label>Days</label>
-												<input class="form-control" type="number" name="H_Days" autocomplete="off" value="<?php if (empty($this->session->flashdata('H_Days'))) {echo 0;} else {echo $this->session->flashdata('H_Days');} ?>">
+												<input class="form-control" type="number" name="H_Days" autocomplete="off" value="<?php if (empty($this->session->flashdata('H_Days'))) {echo 0;} else {echo $this->session->flashdata('H_Days');} ?>" min="0">
 											</div>
 										</div>
 										<div class="form-row">
@@ -556,8 +556,8 @@
 					<form action="#" method="post">
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-6">
-								<label>Employeer Name</label>
-								<input id="EmployeerName" class="form-control" type="text" name="">
+								<label>Employer Name</label>
+								<input id="EmployerName" class="form-control" type="text" name="">
 							</div>
 						</div>
 						<div class="form-row">

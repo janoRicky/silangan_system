@@ -12,7 +12,7 @@ class Model_Updates extends CI_Model {
 			'BranchEmployed' => $BranchEmployed,
 			'DateStarted' => $DateStarted,
 			'DateEnds' => $DateEnds,
-			'SalaryExpected' => $Salary,
+			'SalaryExpected' => $SalaryExpected,
 			'Status' => 'Employed',
 		);
 		$this->db->where('ApplicantID', $ApplicantID);
