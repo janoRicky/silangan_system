@@ -1,6 +1,6 @@
 <div class="modal fade" id="ModalBranchView" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content">
+		<div class="modal-content m-content">
 			<?php echo form_open(base_url().'ViewBranchEmployees','method="POST"');?>
 			<div class="load-container modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">View Branch</h5>

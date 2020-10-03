@@ -1,6 +1,6 @@
 <div class="modal fade" id="AddSuppDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
+		<div class="modal-content m-content">
 			<?php echo form_open_multipart(base_url().'AddSupDoc','method="post"'); ?>
 				<input id="pImageChecker" type="hidden" name="pImageChecker">
 				<div class="modal-header">

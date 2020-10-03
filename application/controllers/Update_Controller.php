@@ -811,7 +811,7 @@ class Update_Controller extends CI_Controller {
 		if (isset($_POST['ApplicantID'])) {
 
 			$ApplicantID = $this->input->post('ApplicantID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
-			$ClientID = $this->input->post('ClientID',TRUE);
+			$BranchID = $this->input->post('BranchID',TRUE);
 			$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
 			$ArrayInt = 0;
 			$ArrayLength = $GetWeeklyDates->num_rows();
@@ -861,7 +861,7 @@ class Update_Controller extends CI_Controller {
 					date_default_timezone_set('Asia/Manila');
 
 					$data = array(
-						'ClientID' => $ClientID,
+						'BranchID' => $BranchID,
 						'Date' => $Date,
 						'Hours' => $Hours,
 						'Overtime' => $Overtime,
@@ -1121,7 +1121,7 @@ class Update_Controller extends CI_Controller {
 			}
 
 			$data = array(
-				'ClientID' => $ClientID,
+				'BranchID' => $BranchID,
 				'ApplicantID' => $ApplicantID,
 				'gross_pay' => round($gross_pay,2),
 				'sss_contri' => $sss_contri,
@@ -1312,7 +1312,7 @@ class Update_Controller extends CI_Controller {
 								// 	}
 								$rHours = $Split[0];
 								$data = array(
-									'ClientID' => $BranchID,
+									'BranchID' => $BranchID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
 									
 									'Hours' => $rHours

@@ -876,16 +876,16 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["mach_cart"]);
 
 		$id = $_GET['id'];
-		$ClientID = $_GET['id'];
+		$BranchID = $_GET['id'];
 
 		$header['title'] = 'Branch Information | Wercher Solutions and Resources Workers Cooperative';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
-		$GetWeeklyList = $this->Model_Selects->GetWeeklyList($ClientID);
+		$GetWeeklyList = $this->Model_Selects->GetWeeklyList($BranchID);
 
 		$row = $GetWeeklyList->row_array();
 		$data = array(
-			'ClientID' => $row['ClientID'],
+			'BranchID' => $row['BranchID'],
 			'ApplicantID' => $row['ApplicantID'],
 
 		);
@@ -921,7 +921,7 @@ class Main_Controller extends CI_Controller {
 		if (isset($_GET['id'])) {
 
 			$id = $_GET['id'];
-			$ClientID = $_GET['id'];
+			$BranchID = $_GET['id'];
 
 			$header['title'] = 'Branch Information | Silangan Lumber';
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -933,13 +933,13 @@ class Main_Controller extends CI_Controller {
 				$ApplicantsArray = unserialize($ApplicantsArray);
 				$GetWeeklyList = $this->Model_Selects->GetWeeklyImports($ApplicantsArray);
 			} else {
-				$GetWeeklyList = $this->Model_Selects->GetWeeklyList($ClientID);
+				$GetWeeklyList = $this->Model_Selects->GetWeeklyList($BranchID);
 			}
 
 			if (isset($GetWeeklyList)) {
 				$row = $GetWeeklyList->row_array();
 				$data = array(
-					'ClientID' => $row['ClientID'],
+					'BranchID' => $row['BranchID'],
 					'ApplicantID' => $row['ApplicantID'],
 				);
 				$ApplicantID = $row['ApplicantID'];

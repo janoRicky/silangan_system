@@ -1,6 +1,6 @@
 <div class="modal fade" id="AddNote" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content">
+		<div class="modal-content m-content">
 			<?php echo form_open(base_url().'AddNoteDocuments','method="POST"');?>
 			<input id="AddNote_ApplicantID" type="hidden" name="ApplicantID">
 			<div class="modal-header">

@@ -68,7 +68,7 @@
 	
 	<div class="modal fade" id="employerBranches" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl">
-			<div class="modal-content">
+			<div class="modal-content m-content">
 
 				<!-- Modal Header -->
 				<div class="modal-header">
@@ -164,7 +164,7 @@
 	</div>
 	<div class="modal fade" id="branchEmployees" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl">
-			<div class="modal-content">
+			<div class="modal-content m-content">
 
 				<!-- Modal Header -->
 				<div class="modal-header">
@@ -265,7 +265,7 @@
 	</div>
 	<div class="modal fade" id="addEmployer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content m-content">
 				<?php echo form_open(base_url().'Add_NewEmployer','method="post"');?>
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Add New Employer</h5>
@@ -320,7 +320,7 @@
 	</div>
 	<div class="modal fade" id="addBranch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content m-content">
 				<?php echo form_open(base_url().'Add_NewBranch','method="post"');?>
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Add New Branch</h5>

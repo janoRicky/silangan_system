@@ -93,7 +93,7 @@
 	<div class="modal fade" id="add_UserAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<?php echo form_open(base_url().'Add_NewAdmin','method="post"');?>
-			<div class="modal-content">
+			<div class="modal-content m-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">Add Admin</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">

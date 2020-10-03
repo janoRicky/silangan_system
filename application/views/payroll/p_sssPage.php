@@ -91,7 +91,7 @@
 	<div class="modal fade" id="AddSSSdata" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<?php echo form_open(base_url().'AddthisSss','method="post"'); ?>
-			<div class="modal-content">
+			<div class="modal-content m-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Add to SSS table</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">

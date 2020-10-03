@@ -11,15 +11,15 @@
 				<?php echo $this->session->flashdata('prompts'); ?>
 				<div class="col-12 col-sm-12 payroll-tabs">
 					<ul>
-						<li class="payroll-tabs-active"><a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $ClientID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a></li>
-						<li><a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $ClientID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a></li>
+						<li class="payroll-tabs-active"><a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a></li>
+						<li><a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a></li>
 					</ul>
 				</div>
 				<div class="rcontent">
 				<div class="row">
 					<div class="col-8 mb-2">
 						<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
-							<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $ClientID; ?>">
+							<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $BranchID; ?>">
 							<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
 							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
 							<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Export (WIP)</button>
@@ -193,7 +193,7 @@
 	<!-- LOAD MODAL -->
 	<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content m-content">
 				<div class="modal-body">
 					<div class="form-row">
 						<div class="text-center ml-auto mr-auto">

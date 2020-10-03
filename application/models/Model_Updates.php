@@ -108,7 +108,7 @@ class Model_Updates extends CI_Model {
 		extract($data);
 		$data = array(
 			'ApplicantID' => $ApplicantID,
-			'ClientID' => $ClientID,
+			'BranchID' => $BranchID,
 			'Time' => $Date,
 			'Hours' => $Hours,
 			'Overtime' => $Overtime,
@@ -123,7 +123,7 @@ class Model_Updates extends CI_Model {
 		);
 		$SQL = "REPLACE INTO hours_weekly
 		SET ApplicantID = '$ApplicantID',
-		ClientID = '$ClientID',
+		BranchID = '$BranchID',
 		Time = '$Date', Hours = '$Hours',
 		Overtime = '$Overtime',
 		NightHours = '$NightHours',
@@ -143,7 +143,7 @@ class Model_Updates extends CI_Model {
 		extract($data);
 		$data = array(
 			'ApplicantID' => $ApplicantID,
-			'ClientID' => $ClientID,
+			'BranchID' => $BranchID,
 			'Time' => $Date,
 			'Hours' => $Hours,
 		);
@@ -152,7 +152,7 @@ class Model_Updates extends CI_Model {
 		}
 		$SQL = "REPLACE INTO hours_weekly
 		SET ApplicantID = '$ApplicantID',
-		ClientID = '$ClientID',
+		BranchID = '$BranchID',
 		Time = '$Date',
 		Hours = '$Hours'";
 		$result = $this->db->query($SQL,$ApplicantID);

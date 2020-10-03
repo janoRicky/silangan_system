@@ -16,10 +16,10 @@ class Tcpdf_Controller extends CI_Controller {
 		$gtData = $getPayslip->row_array();
 		$data['ngetPayslip'] = $gtData;
 
-		$ClientID = $gtData['ClientID'];
+		$BranchID = $gtData['BranchID'];
 		$ApplicantID = $gtData['ApplicantID'];
 
-		$GetClientDet = $this->Model_Selects->GetClientDet($ClientID);
+		$GetClientDet = $this->Model_Selects->GetClientDet($BranchID);
 		$GetApplicantDet = $this->Model_Selects->GetApplicantDet($ApplicantID);
 
 		$data['nGetClientDet'] = $GetClientDet->row_array();

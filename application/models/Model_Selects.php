@@ -227,9 +227,9 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetWeeklyList($ClientID) // Argument is $id originally from source.
+	public function GetWeeklyList($BranchID) // Argument is $id originally from source.
 	{
-		$SQL = "SELECT * FROM hours_weekly WHERE ClientID = '$ClientID'";
+		$SQL = "SELECT * FROM hours_weekly WHERE BranchID = '$BranchID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -239,9 +239,9 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$BranchID);
 		return $result;
 	}
-	public function GetWeeklyListEmployee($ClientID)
+	public function GetWeeklyListEmployee($BranchID)
 	{
-		$SQL = "SELECT * FROM applicants WHERE BranchEmployed = '$ClientID'";
+		$SQL = "SELECT * FROM applicants WHERE BranchEmployed = '$BranchID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -257,9 +257,9 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	// public function GetWeeklyListEmployeeActive($BranchID)
+	// public function GetWeeklyListEmployeeActive($ClientID)
 	// {
-	// 	$SQL = "SELECT * FROM hours_weekly WHERE BranchID = '$BranchID' AND ApplicantID IS NOT NULL AND Name IS NOT NULL";
+	// 	$SQL = "SELECT * FROM hours_weekly WHERE ClientID = '$ClientID' AND ApplicantID IS NOT NULL AND Name IS NOT NULL";
 	// 	$result = $this->db->query($SQL);
 	// 	return $result;
 	// }
@@ -364,7 +364,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function get_applicantContri($id)
 	{
-		$SQL = "SELECT * FROM tracking_table WHERE ClientID = $id";
+		$SQL = "SELECT * FROM tracking_table WHERE BranchID = $id";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -579,8 +579,8 @@ class Model_Selects extends CI_Model {
 
 	public function getPayslipFromto($branch_id,$nf_date,$nt_date)
 	{
-		// $SQL = "SELECT * FROM tracking_table WHERE ClientID = '$branch_id' AND Date_Generated >= '$nf_date' AND Date_Generated <= '$nt_date'";
-		$SQL = "SELECT * FROM tracking_table WHERE ClientID = '$branch_id' AND Date_Generated BETWEEN '$nf_date' AND '$nt_date'";
+		// $SQL = "SELECT * FROM tracking_table WHERE BranchID = '$branch_id' AND Date_Generated >= '$nf_date' AND Date_Generated <= '$nt_date'";
+		$SQL = "SELECT * FROM tracking_table WHERE BranchID = '$branch_id' AND Date_Generated BETWEEN '$nf_date' AND '$nt_date'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -590,9 +590,9 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function GetClientDet($ClientID)
+	public function GetClientDet($BranchID)
 	{
-		$SQL = "SELECT * FROM branches WHERE BranchID= '$ClientID'";
+		$SQL = "SELECT * FROM branches WHERE BranchID= '$BranchID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

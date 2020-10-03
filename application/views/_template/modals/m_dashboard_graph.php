@@ -1,6 +1,6 @@
 <div class="modal <?php if (!isset($_GET['Year'])) {echo 'fade';} ?>" id="GraphChartModal">
 	<div class="modal-dialog modal-xxl">
-		<div class="modal-content">
+		<div class="modal-content m-content">
 
 		<!-- Modal Header -->
 		<div class="modal-header">

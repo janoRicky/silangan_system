@@ -1,6 +1,6 @@
 <div class="modal fade" id="hirthis" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content">
+		<div class="modal-content m-content">
 			<?php echo form_open(base_url().'EmployApplicant','method="POST"');?>
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Hire Applicant</h5>

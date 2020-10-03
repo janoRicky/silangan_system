@@ -13,10 +13,10 @@
 				<div class="col-12 col-sm-12 payroll-tabs">
 					<ul>
 						<li>
-							<a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $ClientID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a>
+							<a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a>
 						</li>
 						<li class="payroll-tabs-active">
-							<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $ClientID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a>
+							<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a>
 						</li>
 					</ul>
 				</div>
@@ -24,7 +24,7 @@
 					<div class="row">
 						<div class="col-8 mb-2">
 							<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
-								<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $ClientID; ?>">
+								<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $BranchID; ?>">
 								<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
 								<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
 								<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Export (WIP)</button>
@@ -33,7 +33,7 @@
 						</div>
 						<div class="col-4 mb-2 text-right">
 							<!-- <a href="<?=base_url()?>export_payslip?id=<?php echo $ClientID; ?>" class="btn btn-secondary"><i class="fas fa-lock"></i> Generate Payslip (WIP)</a> -->
-							<button type="button" id="<?php echo $ClientID; ?>" class="btn btn-secondary gen_paysli" data-toggle="modal" data-target="#Gen_paydate"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
+							<button type="button" id="<?php echo $BranchID; ?>" class="btn btn-secondary gen_paysli" data-toggle="modal" data-target="#Gen_paydate"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
 						</div>
 						<div class="col-sm-12 col-mb-12">
 							<div class="table-responsive w-100">
@@ -120,7 +120,7 @@
 			<!-- LOAD MODAL -->
 			<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
 				<div class="modal-dialog" role="document">
-					<div class="modal-content">
+					<div class="modal-content m-content">
 						<div class="modal-body">
 							<div class="form-row">
 								<div class="text-center ml-auto mr-auto">
@@ -138,7 +138,7 @@
 	<div class="modal fade" id="Gen_paydate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<?php echo form_open(base_url().'export_payslip','method="post"'); ?>
-			<div class="modal-content">
+			<div class="modal-content m-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">Generate Payslip</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">

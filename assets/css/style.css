@@ -14,9 +14,15 @@ html,body
 	/*background-image: url("../img/lowpoly_white.png");*/
 }
 
+.btn {
+	font-weight: bold;
+}
 .btn-primary {
-	background-color: #365899;
+	background-color: #4267B2;
 	border: 1px solid #29487D;
+}
+.btn-primary:hover {
+	background-color: #365899;
 }
 
 .wrapper {
@@ -288,18 +294,28 @@ a[data-toggle="collapse"] {
 	background-color: #007bff;
 
 }*/
-
 .tab-divider {
 	width: 2px;
 	background-color: #CCD0D5;
 	cursor: default;
 	padding: 14px 0;
 }
-
 .tabs-icon {
 	font-size: 30px;
 	color: rgba(0, 0, 0, 0.75);
 }
+.m-content {
+	background-color: #ffffff;
+	border-radius: 3px;
+	border-color: #767676;
+}
+.m-content .modal-header {
+	background-color: #f5f6f7;
+}
+.m-content .modal-footer {
+	margin: 0 15px;
+}
+
 .employee-container {
 	margin-top: -75px;
 }

@@ -437,7 +437,7 @@
 	<!-- Modal -->
 	<div class="modal fade" id="benFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
+			<div class="modal-content m-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Beneficiaries</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -482,7 +482,7 @@
 	</div>
 	<div class="modal fade" id="acadFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
+			<div class="modal-content m-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Academic Details</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -545,7 +545,7 @@
 	</div>
 	<div class="modal fade" id="skillsFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-			<div class="modal-content">
+			<div class="modal-content m-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Employment Details</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -596,7 +596,7 @@
 	</div>
 	<div class="modal fade" id="refFields" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-			<div class="modal-content">
+			<div class="modal-content m-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Character References</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">

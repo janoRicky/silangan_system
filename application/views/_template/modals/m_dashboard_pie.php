@@ -1,6 +1,6 @@
 <div class="modal fade" id="PieChartModal">
 	<div class="modal-dialog modal-xl">
-		<div class="modal-content">
+		<div class="modal-content m-content">
 
 		<!-- Modal Header -->
 		<div class="modal-header">
