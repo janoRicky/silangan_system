@@ -14,102 +14,77 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<div class="text-center mt-5">
-					<h5 style="font-size: 18px; font-style: Arial, Helvetica, sans-serif;">
-						Payslip (Date: <?php echo date('yy-d-m'); ?>)
-					</h5>
-				</div>
-				<div class="mt-2 mb-2">
-					<table cellpadding="5">
+				<style>
+					.table {
+						padding: 10px;
+					}
+				</style>
+				<h3>Payslip</h3>
+				<table class="table table-bordered">
+					<tbody>
 						<tr>
-							<td>
-								<label>ID : <?php print $ngetPayslip['ApplicantID']; ?></label>
-							</td>
-							<td>
-								<label>Branch : <?php print $nGetClientDet['Name']; ?></label>
-							</td>
-							<td>
-								<label>Name : <?php print $nGetApplicantDet['LastName']; ?></label>, 
-								<label><?php print $nGetApplicantDet['FirstName']; ?></label> 
-								<label><?php print $nGetApplicantDet['MiddleInitial']; ?></label>
-							</td>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">Employee Name</td>
+							<td style="border: 2px solid black; background-color: white;"><?php echo $nGetApplicantDet['LastName'] .",". $nGetApplicantDet['FirstName'] ." ". $nGetApplicantDet['MiddleInitial'] ."." ?></td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+				<h3>Hours</h3>
+				<table class="table table-bordered">
+					<tbody>
+						<tr>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">Total Hours</td>
+							<td style="border: 2px solid black; background-color: white;"><?php echo $nPayslipDet['TotalHours'];?></td>
 						</tr>
 						<tr>
-							<td>
-								<label>Total Hrs : <?php print $ngetPayslip['TotalHours']; ?></label>
-							</td>
-							<td>
-								<label>Total Overtime : <?php print $ngetPayslip['TotaOT']; ?></label>
-							</td>
-							<td>
-								
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div class="mb-2">
-					<h5 style="font-size: 18px; font-style: Arial, Helvetica, sans-serif;">
-						Deductions
-					</h5>
-				</div>
-				<div class="mb-2">
-					<table cellpadding="5">
-						<tr>
-							<th>
-								SSS
-							</th>
-							<th>
-								PhilHealth
-							</th>
-							<th>
-								HDMF
-							</th>
-							<th>
-								TAX
-							</th>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">Total OT</td>
+							<td style="border: 2px solid black; background-color: white;"><?php echo $nPayslipDet['TotaOT'];?></td>
 						</tr>
 						<tr>
-							<td style="border: 1px solid gray;">
-								<label><?php print $ngetPayslip['sss_contri']; ?></label>
-							</td>
-							<td style="border: 1px solid gray;">
-								<label><?php print $ngetPayslip['hdmf_contri']; ?></label>
-							</td>
-							<td style="border: 1px solid gray;">
-								<label><?php print $ngetPayslip['philhealth_contri']; ?></label>
-							</td>
-							<td style="border: 1px solid gray;">
-								<label><?php print $ngetPayslip['tax']; ?></label>
-							</td>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">GROSS PAY</td>
+							<td style="border: 2px solid black; background-color: white;"><?php echo $nPayslipDet['gross_pay'];?></td>
 						</tr>
-					</table>
-				</div>
-				<div class="mb-2">
-					<table cellpadding="5">
+					</tbody>
+				</table>
+				<br>
+				<h3>Deductions</h3>
+				<table class="table table-bordered">
+					<tbody>
 						<tr>
-							<th>
-								Total Deduction
-							</th>
-							<th>
-								Gross Pay
-							</th>
-							<th>
-								Net Pay
-							</th>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">SSS Contribution</td>
+							<td style="border: 2px solid black; background-color: white;"><?php echo $nPayslipDet['sss_contri'];?></td>
 						</tr>
 						<tr>
-							<td style="border: 1px solid gray;">
-								<label><?php print $ngetPayslip['tota_deduc']; ?> PHP</label>
-							</td>
-							<td style="border: 1px solid gray;">
-								<label><?php print $ngetPayslip['gross_pay']; ?> PHP</label>
-							</td>
-							<td style="border: 1px solid gray;">
-								<label><?php print $ngetPayslip['net_pay']; ?> PHP</label>
-							</td>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">HDMF Contribution</td>
+							<td style="border: 2px solid black; background-color: white;"><?php echo $nPayslipDet['hdmf_contri'];?></td>
 						</tr>
-					</table>
-				</div>
+						<tr>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">Philhealth</td>
+							<td style="border: 2px solid black; background-color: white;"><?php echo $nPayslipDet['philhealth_contri'];?></td>
+						</tr>
+						<tr>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">Tax</td>
+							<td style="border: 2px solid black; background-color: white;"><?php echo $nPayslipDet['tax'];?></td>
+						</tr>
+						<tr>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">Company Deductions</td>
+							<td style="border: 2px solid black; background-color: white;">&nbsp;</td>
+						</tr>
+						<tr>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">Total Deductions</td>
+							<td style="border: 2px solid black; background-color: white;"><?php echo $nPayslipDet['tota_deduc'];?></td>
+						</tr>
+					</tbody>
+				</table>
+				<br><br><br><br>
+				<table class="table table-bordered">
+					<tbody>
+						<tr>
+							<td style="border: 2px solid black; font-weight: bold; background-color: white;">NET PAY</td>
+							<td style="border: 2px solid black; background-color: white;"><?php echo $nPayslipDet['net_pay'];?></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

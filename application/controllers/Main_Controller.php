@@ -518,7 +518,7 @@ class Main_Controller extends CI_Controller {
 				$data['ShowBranches'] = $this->Model_Selects->GetBranches();
 				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
 				$data['GetPreviousContract'] = $this->Model_Selects->GetPreviousContract($ApplicantID);
-				$data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
+				// $data['GetViolations'] = $this->Model_Selects->GetViolations($ApplicantID);
 				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
 				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID);
 				$data['GetDocumentsNotes'] = $this->Model_Selects->GetDocumentsNotes($ApplicantID);

@@ -65,7 +65,7 @@
 							<select id="Type" class="form-control" name="Type">
 								<option value="Document">Document</option>
 								<option value="Violation">Violation</option>
-								<option value="Blacklist">Blacklist</option>
+								<!-- <option value="Blacklist">Blacklist</option> -->
 							</select>
 						</div>
 						<div class="form-group col-sm-8 text-center">

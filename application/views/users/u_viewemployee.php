@@ -1025,8 +1025,6 @@
 	<?php $this->load->view('_template/modals/m_extendcontract'); ?>
 	<!-- SET A REMINDER MODAL -->
 	<?php $this->load->view('_template/modals/m_setreminder'); ?>
-	<!-- VIOLATIONS MODAL -->
-	<?php $this->load->view('_template/modals/m_violations'); ?>
 	<!-- DOCUMENT MODAL -->
 	<?php $this->load->view('_template/modals/m_documents'); ?>
 	<!-- DOCUMENTS NOTE MODAL -->
@@ -1057,13 +1055,13 @@
 		});
 		$("#Type").change(function(){
 			$('#ViolationNotice').hide();
-			$('#BlacklistNotice').hide();
+			// $('#BlacklistNotice').hide();
 			if ( $(this).val() == "Violation" ) { 
 				$("#ViolationNotice").fadeIn();
 		    }
-		    if ( $(this).val() == "Blacklist" ) { 
-				$("#BlacklistNotice").fadeIn();
-		    }
+		  //   if ( $(this).val() == "Blacklist" ) { 
+				// $("#BlacklistNotice").fadeIn();
+		  //   }
 		});
 		$('.doc_btn').on('click', function () {
 			$('#Pass_ID').val($(this).attr('id'));
@@ -1234,7 +1232,6 @@
 			console.log($('#ReminderID').val());
 		});
 		$('#ListContractHistory').DataTable();
-		$('#ListViolations').DataTable();
 		// Contract Bar
 		var rPercentage = $("#TimeLeft").val();
 		// if (rPercentage > 100) {

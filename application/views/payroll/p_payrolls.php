@@ -10,18 +10,20 @@
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<?php echo $this->session->flashdata('prompts'); ?>
 				<br>
-				<div class="col-12 col-sm-12 payroll-tabs">
-					<ul>
-						<li>
-							<a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a>
-						</li>
-						<li class="payroll-tabs-active">
-							<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a>
-						</li>
-					</ul>
-				</div>
-				<div class="rcontent">
-					<div class="row">
+				<div class="row content m-4">
+					<div class="col-12 col-sm-12 tabs">
+						<ul>
+							<li>
+								<a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a>
+							</li>
+							<li class="tab-divider">&nbsp;</li>
+							<li class="tabs-active">
+								<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a>
+								<div class="tab-indicator">&nbsp;</div>
+							</li>
+						</ul>
+					</div>
+					<div class="row content-body">
 						<div class="col-8 mb-2">
 							<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
 								<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $BranchID; ?>">

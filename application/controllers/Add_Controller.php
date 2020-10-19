@@ -612,7 +612,7 @@ class Add_Controller extends CI_Controller {
 				}
 				$data = array(
 					'ApplicantID' => $ApplicantID,
-					'Doc_Image' => $pImage,
+					// 'Doc_Image' => $pImage,
 					'Doc_File' => $pFile,
 					'Doc_FileName' => $pFileName,
 					'Type' => $Type,

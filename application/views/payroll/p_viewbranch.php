@@ -9,183 +9,191 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<?php echo $this->session->flashdata('prompts'); ?>
-				<div class="col-12 col-sm-12 payroll-tabs">
-					<ul>
-						<li class="payroll-tabs-active"><a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a></li>
-						<li><a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a></li>
-					</ul>
-				</div>
-				<div class="rcontent">
-				<div class="row">
-					<div class="col-8 mb-2">
-						<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
-							<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $BranchID; ?>">
-							<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
-							<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
-							<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Export (WIP)</button>
-						</form>
-						<!-- <div id="datatables-export"></div> -->
+				<br>
+				<div class="row content m-4">
+					<div class="col-12 col-sm-12 tabs">
+						<ul>
+							<li class="tabs-active">
+								<a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a>
+								<div class="tab-indicator">&nbsp;</div>
+							</li>
+							<li class="tab-divider">&nbsp;</li>
+							<li>
+								<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a>
+							</li>
+						</ul>
 					</div>
-					<div class="col-4 mb-2 text-right">
-						<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
-					</div>
-					<div class="col-sm-12 col-mb-12">
-						<div class="table-responsive w-100">
-							<table id="WeeklyTable" class="table table-condensed">
-								<thead>
-									<th style="min-width: 100px;">Applicant ID</th>
-									<th style="min-width: 300px;">Name</th>
-									<th style="min-width: 75px;">Salary (₱)</th>
-									<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
-										<th><?php echo $row['Time']; ?></th>
-									<?php endforeach; ?>
-									<th style="min-width: 75px;">Reg. Hrs</th>
-									<th style="min-width: 75px;">Total OT Hrs</th>
-								</thead>
-								<tbody>
-									<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
-										$TotalRegHours = 0;
-										$TotalOTHours = 0;?>
-										<tr id="<?php echo $row['Rate']; ?>" data-branchid="<?php echo $row['BranchEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
-											<td><?php echo $row['ApplicantID'];?></td>
-											<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
-											<td><?php echo $row['Rate'];?></td>
-											<?php foreach ($GetWeeklyDates->result_array() as $brow):
-												?> <td> <?php
-												if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
-													foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
-														$Hours = $nrow['Hours'];
-														$OT = $nrow['Overtime'];
-														$totalh =  $nrow['Hours'] + $nrow['Overtime'];
-														echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $Hours . '<br>Overtime: ' . $nrow['Overtime'] . '">' . $totalh . '</div>';
-														$TotalRegHours = $TotalRegHours + $Hours;
-														$TotalOTHours = $TotalOTHours + $OT;
-													endforeach;
-												} else {
-													echo '0';
-												} ?> </td>
-											<?php endforeach; ?>
-											<td><?php echo $TotalRegHours; ?></td>
-											<td><?php echo $TotalOTHours; ?></td>
-	
-											</tr>
-									<?php endforeach; ?>
-								</tbody>
-							</table>
+					<div class="row content-body">
+						<div class="col-8 mb-2">
+							<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
+								<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $BranchID; ?>">
+								<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
+								<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
+								<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Export (WIP)</button>
+							</form>
+							<!-- <div id="datatables-export"></div> -->
 						</div>
+						<div class="col-4 mb-2 text-right">
+							<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
+						</div>
+						<div class="col-sm-12 col-mb-12">
+							<div class="table-responsive w-100">
+								<table id="WeeklyTable" class="table table-condensed">
+									<thead>
+										<th style="min-width: 100px;">Applicant ID</th>
+										<th style="min-width: 300px;">Name</th>
+										<th style="min-width: 75px;">Salary (₱)</th>
+										<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
+											<th><?php echo $row['Time']; ?></th>
+										<?php endforeach; ?>
+										<th style="min-width: 75px;">Reg. Hrs</th>
+										<th style="min-width: 75px;">Total OT Hrs</th>
+									</thead>
+									<tbody>
+										<?php foreach ($GetWeeklyListEmployee->result_array() as $row):
+											$TotalRegHours = 0;
+											$TotalOTHours = 0;?>
+											<tr id="<?php echo $row['Rate']; ?>" data-branchid="<?php echo $row['BranchEmployed']; ?>" data="<?php echo $row['ApplicantID']; ?>" class='clickable-row' data-toggle="modal" data-target="#HoursWeeklyModal_<?php echo $row['ApplicantID']; ?>">
+												<td><?php echo $row['ApplicantID'];?></td>
+												<td><?php echo $row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial'];?></td>
+												<td><?php echo $row['Rate'];?></td>
+												<?php foreach ($GetWeeklyDates->result_array() as $brow):
+													?> <td> <?php
+													if($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->num_rows() > 0) {
+														foreach ($this->Model_Selects->GetMatchingDates($row['ApplicantID'], $brow['Time'])->result_array() as $nrow):
+															$Hours = $nrow['Hours'];
+															$OT = $nrow['Overtime'];
+															$totalh =  $nrow['Hours'] + $nrow['Overtime'];
+															echo '<div data-toggle="tooltip" data-placement="top" data-html="true" title="Regular Hours: '. $Hours . '<br>Overtime: ' . $nrow['Overtime'] . '">' . $totalh . '</div>';
+															$TotalRegHours = $TotalRegHours + $Hours;
+															$TotalOTHours = $TotalOTHours + $OT;
+														endforeach;
+													} else {
+														echo '0';
+													} ?> </td>
+												<?php endforeach; ?>
+												<td><?php echo $TotalRegHours; ?></td>
+												<td><?php echo $TotalOTHours; ?></td>
+		
+												</tr>
+										<?php endforeach; ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- <div class="col-sm-8 col-md-8 ml-auto text-right PrintExclude">
+							<button id="ShowDemo" type="button" class="btn btn-primary mr-auto"><i class="fas fa-flask"></i> Demo</button>
+							<button type="button" class="btn btn-primary mr-auto"><i class="fas fa-import-file"></i> Import Excel File</button>
+							<button onClick="printContent('PrintOutTable')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+						</div>
+						<div id="TaxTable" class="col-sm-12"> -->
+
+							<?php
+
+							// if ( $xlsx = SimpleXLSX::parse(base_url() . 'assets/excel/Tax Calc.xlsx')) {
+
+							// 	echo '<table border="1" cellpadding="3" style="border-collapse: collapse">';
+
+							// 	$dim = $xlsx->dimension();
+							// 	$cols = $dim[0];
+
+							// 	foreach ( $xlsx->rows() as $k => $r ) {
+							// 		//		if ($k == 0) continue; // skip first row
+							// 		echo '<tr>';
+							// 		for ( $i = 0; $i < $cols; $i ++ ) {
+							// 			echo '<td class="test">' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '</td>';
+							// 		}
+							// 		echo '</tr>';
+							// 	}
+							// 	echo '</table>';
+							// } else {
+							// 	echo SimpleXLSX::parseError();
+							// }
+							?>
+
+							<!-- <table class="table table-hover">
+								<th>Compensation Range</th>
+								<th>Withholding Tax</th>
+								<tr>
+									<td>0</td>
+									<td>0 (0%)</td>
+								</tr>
+								<tr>
+									<td>10,416 to 16,666</td>
+									<td>0 (20%)</td>
+								</tr>
+								<tr>
+									<td>16,667 to 33,333</td>
+									<td>1250 (25%)</td>
+								</tr>
+								<tr>
+									<td>33,334 to 83,333</td>
+									<td>5416.67 (30%)</td>
+								</tr>
+								<tr>
+									<td>83,334 to 333,333</td>
+									<td>20416.67 (32%)</td>
+								</tr>
+								<tr>
+									<td>333,334 to 500,000</td>
+									<td>100,416.67 (35%)</td>
+								</tr>
+							</table>
+
+
+						</div>
+
 					</div>
-					<!-- <div class="col-sm-8 col-md-8 ml-auto text-right PrintExclude">
-						<button id="ShowDemo" type="button" class="btn btn-primary mr-auto"><i class="fas fa-flask"></i> Demo</button>
-						<button type="button" class="btn btn-primary mr-auto"><i class="fas fa-import-file"></i> Import Excel File</button>
-						<button onClick="printContent('PrintOutTable')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
-					</div>
-					<div id="TaxTable" class="col-sm-12"> -->
-
-						<?php
-
-						// if ( $xlsx = SimpleXLSX::parse(base_url() . 'assets/excel/Tax Calc.xlsx')) {
-
-						// 	echo '<table border="1" cellpadding="3" style="border-collapse: collapse">';
-
-						// 	$dim = $xlsx->dimension();
-						// 	$cols = $dim[0];
-
-						// 	foreach ( $xlsx->rows() as $k => $r ) {
-						// 		//		if ($k == 0) continue; // skip first row
-						// 		echo '<tr>';
-						// 		for ( $i = 0; $i < $cols; $i ++ ) {
-						// 			echo '<td class="test">' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '</td>';
-						// 		}
-						// 		echo '</tr>';
-						// 	}
-						// 	echo '</table>';
-						// } else {
-						// 	echo SimpleXLSX::parseError();
-						// }
-						?>
-
-						<!-- <table class="table table-hover">
-							<th>Compensation Range</th>
-							<th>Withholding Tax</th>
-							<tr>
-								<td>0</td>
-								<td>0 (0%)</td>
-							</tr>
-							<tr>
-								<td>10,416 to 16,666</td>
-								<td>0 (20%)</td>
-							</tr>
-							<tr>
-								<td>16,667 to 33,333</td>
-								<td>1250 (25%)</td>
-							</tr>
-							<tr>
-								<td>33,334 to 83,333</td>
-								<td>5416.67 (30%)</td>
-							</tr>
-							<tr>
-								<td>83,334 to 333,333</td>
-								<td>20416.67 (32%)</td>
-							</tr>
-							<tr>
-								<td>333,334 to 500,000</td>
-								<td>100,416.67 (35%)</td>
-							</tr>
-						</table>
-
-
-					</div>
-
+					<div class="row rcontent PrintOut">
+						<div class="col-sm-12 col-md-4 mb-5">
+							<h4>
+								<i class="fas fa-vial"></i> Tax Input for ...
+							</h4>
+						</div>
+						<div class="col-sm-8 col-md-8 ml-auto text-right PrintExclude">
+							<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
+						</div>
+						<div class="col-sm-12 form-group">
+							<label>Gross Income (Monthly)</label>
+							<input type="text" class="form-control" name="Gross" id="Gross" value="20000">
+						</div>
+						<div class="col-sm-12 col-md-4 form-group">
+							<label>SSS</label>
+							<input type="text" class="form-control" name="SSS" id="SSS" value="500">
+						</div>
+						<div class="col-sm-12 col-md-4 form-group">
+							<label>PhilHealth</label>
+							<input type="text" class="form-control" name="PhilHealth" id="PhilHealth" value="750">
+						</div>
+						<div class="col-sm-12 col-md-4 form-group">
+							<label>HDMF</label>
+							<input type="text" class="form-control" class="form-control" name="Gross" id="Gross" value="10%" readonly>
+						</div>
+						<div class="col-sm-12 form-group text-center PrintExclude">
+							<button class="btn btn-primary w-50" onclick="Compute()">Calculate</button>
+						</div>
+						<div class="col-sm-12 col-md-6 form-group">
+							<label>Taxable Income</label>
+							<input type="text" class="form-control" name="TaxableIncome" id="TaxableIncome" readonly>
+						</div>
+						<div class="col-sm-12 col-md-6 form-group">
+							<label>Total Tax</label>
+							<input type="text" class="form-control" name="TotalTax" id="TotalTax" readonly>
+						</div>
+						<div class="col-sm-12 col-md-6 form-group">
+							<label>Range</label>
+							<input type="text" class="form-control" name="CompRange" id="CompRange" readonly>
+						</div>
+						<div class="col-sm-12 col-md-6 form-group">
+							<label>Formula</label>
+							<input type="text" class="form-control" name="Formula" id="Formula" readonly>
+						</div>
+						<div class="col-sm-12 form-group">
+							<label>Take Home Pay</label>
+							<input type="text" class="form-control" name="TakeHomePay" id="TakeHomePay" readonly>
+						</div>
+					</div> -->
 				</div>
-				<div class="row rcontent PrintOut">
-					<div class="col-sm-12 col-md-4 mb-5">
-						<h4>
-							<i class="fas fa-vial"></i> Tax Input for ...
-						</h4>
-					</div>
-					<div class="col-sm-8 col-md-8 ml-auto text-right PrintExclude">
-						<button onClick="printContent('PrintOut')" type="button" class="btn btn-primary mr-auto"><i class="fas fa-print"></i> Print</button>
-					</div>
-					<div class="col-sm-12 form-group">
-						<label>Gross Income (Monthly)</label>
-						<input type="text" class="form-control" name="Gross" id="Gross" value="20000">
-					</div>
-					<div class="col-sm-12 col-md-4 form-group">
-						<label>SSS</label>
-						<input type="text" class="form-control" name="SSS" id="SSS" value="500">
-					</div>
-					<div class="col-sm-12 col-md-4 form-group">
-						<label>PhilHealth</label>
-						<input type="text" class="form-control" name="PhilHealth" id="PhilHealth" value="750">
-					</div>
-					<div class="col-sm-12 col-md-4 form-group">
-						<label>HDMF</label>
-						<input type="text" class="form-control" class="form-control" name="Gross" id="Gross" value="10%" readonly>
-					</div>
-					<div class="col-sm-12 form-group text-center PrintExclude">
-						<button class="btn btn-primary w-50" onclick="Compute()">Calculate</button>
-					</div>
-					<div class="col-sm-12 col-md-6 form-group">
-						<label>Taxable Income</label>
-						<input type="text" class="form-control" name="TaxableIncome" id="TaxableIncome" readonly>
-					</div>
-					<div class="col-sm-12 col-md-6 form-group">
-						<label>Total Tax</label>
-						<input type="text" class="form-control" name="TotalTax" id="TotalTax" readonly>
-					</div>
-					<div class="col-sm-12 col-md-6 form-group">
-						<label>Range</label>
-						<input type="text" class="form-control" name="CompRange" id="CompRange" readonly>
-					</div>
-					<div class="col-sm-12 col-md-6 form-group">
-						<label>Formula</label>
-						<input type="text" class="form-control" name="Formula" id="Formula" readonly>
-					</div>
-					<div class="col-sm-12 form-group">
-						<label>Take Home Pay</label>
-						<input type="text" class="form-control" name="TakeHomePay" id="TakeHomePay" readonly>
-					</div>
-				</div> -->
 			</div>
 		</div>
 	</div>

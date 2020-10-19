@@ -287,20 +287,7 @@
 			</p>
 		</div>
 	<?php } ?>
-	<div class="col-sm-12 col-md-2 e-title PrintExclude">
-		<h6>
-			Violations (<?php echo $GetViolations->num_rows(); ?>)
-		</h6>
-	</div>
-	<div class="col-sm-12 col-md-4 e-det PrintExclude">
-		<p>
-			<?php if ($GetViolations->num_rows() > 0): ?>
-				<button id="ViolationsButton" class="btn btn-danger btn-sm w-50 mb-1" data-toggle="modal" data-target="#ViolationsModal"><i class="far fa-eye"></i> View Violations</button>
-			<?php else: ?>
-				No violations on record.
-			<?php endif; ?>
-		</p>
-	</div>
+
 
 	<!-- Relatives -->
 	<div class="col-sm-12 mt-5 mb-3">
