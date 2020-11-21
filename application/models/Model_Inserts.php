@@ -43,6 +43,11 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('branches', $data);
 		return $result;
 	}
+	public function InsertBranchColor($data)
+	{
+		$result = $this->db->insert('branch_colors', $data);
+		return $result;
+	}
 	// RECORDS
 
 	public function InsertContractHistory($data)

@@ -22,9 +22,14 @@ class Login_Controller extends CI_Controller {
 			if ($CheckAdminCred->num_rows() > 0) {
 				$d_row = $CheckAdminCred->row_array();
 				if (password_verify($Password, $d_row['Password'])) {
+					// get branch icon
+					$GetBranchInfo = $this->Model_Selects->GetBranchDet($d_row['BranchID']);
+					$BranchInfo = $GetBranchInfo->row_array();
+
 					$data = array(
 						'AdminNo' => $d_row['AdminNo'],
 						'AdminLevel' => $d_row['AdminLevel'],
+						'BranchID' => $d_row['BranchID'],
 						'Position' => $d_row['Position'],
 						'AdminID' => $d_row['AdminID'],
 						'FirstName' => $d_row['FirstName'],
@@ -33,7 +38,11 @@ class Login_Controller extends CI_Controller {
 						'Gender' => $d_row['Gender'],
 						'DateAdded' => $d_row['DateAdded'],
 						'is_logged_in' => 'Active',
-					);
+
+						'BranchName' => $BranchInfo['Name'],
+						'BranchIcon' => $BranchInfo['BranchIcon'],
+						'Colors' => $this->Model_Selects->getBranchColors($d_row['BranchID'])->result_array(),
+						);
 					$this->session->set_userdata($data);
 					redirect('Dashboard');
 				}

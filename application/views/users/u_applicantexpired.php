@@ -1,8 +1,3 @@
-<style>
-	html, body {
-		background-color: #ebebeb;
-	}
-</style>
 <?php $T_Header;?>
 <body>
 	<div class="wrapper">

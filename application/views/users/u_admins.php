@@ -110,6 +110,18 @@
 								<option value="Level_3">Level 3 Accounting</option>
 							</select>
 						</div>
+						<div class="form-row">
+							<div class="form-group m-1 col">
+								<label>Choose Branch</label>
+								<select class="form-control" name="BranchID">
+									<?php foreach ($getBranchOption->result_array() as $row): ?>
+										<option value="<?=$row['BranchID'];?>">
+											<?=$row['Name'];?>
+										</option>
+									<?php endforeach ?>
+								</select>
+							</div>
+						</div>
 						<div class="form-group m-1 col">
 							<label>Position</label>
 							<select class="form-control" name="Position">

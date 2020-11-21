@@ -400,6 +400,7 @@ class Add_Controller extends CI_Controller {
 	public function Add_NewAdmin()
 	{
 		$AdminLevel = $this->input->post('AdminLevel',TRUE);
+		$BranchID = $this->input->post('BranchID',TRUE);
 		$Position = $this->input->post('Position',TRUE);
 		$AdminID = $this->input->post('AdminID',TRUE);
 		$Password = $this->input->post('Password',TRUE);
@@ -408,7 +409,7 @@ class Add_Controller extends CI_Controller {
 		$LastName = $this->input->post('LastName',TRUE);
 		$Gender = $this->input->post('Gender',TRUE);
 
-		if ($AdminLevel == NULL || $Position == NULL || $AdminID == NULL || $Password == NULL || $FirstName == NULL || $MiddleIN == NULL || $LastName == NULL || $Gender == NULL) {
+		if ($AdminLevel == NULL || $BranchID == NULL || $Position == NULL || $AdminID == NULL || $Password == NULL || $FirstName == NULL || $MiddleIN == NULL || $LastName == NULL || $Gender == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			redirect('Admin_List');
 		}
@@ -429,6 +430,7 @@ class Add_Controller extends CI_Controller {
 				$DateAdded = time();
 				$data = array(
 					'AdminLevel' => $AdminLevel,
+					'BranchID' => $BranchID,
 					'Position' => $Position,
 					'AdminID' => $AdminID,
 					'Password' => $En_Password,
@@ -506,13 +508,17 @@ class Add_Controller extends CI_Controller {
 	public function Add_NewBranch()
 	{
 		$EmployerID = $this->input->post('EmployerID',TRUE);
+		$pImageChecker = $this->input->post('pImageChecker',TRUE);
 		$BranchName = $this->input->post('BranchName',TRUE);
 		$BranchAddress = $this->input->post('BranchAddress',TRUE);
 		$BranchContact = $this->input->post('BranchContact',TRUE);
 		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix',TRUE);
 
+		// color parts
+		$colors = array("NavbarBG", "NavbarColor", "NavbarBorder", "NavbarSideBG", "NavbarSideBorder", "SidebarBG", "SidebarBorder", "SideLinkBG", "SideLinkColor", "SideLinkBorder", "MainBG", "WindowsBG", "WindowsBorder", "TableBG", "TableColor", "TableBorder", "TabsBG", "TabsLinkColor", "TabsActiveColor", "TabsBorder", "ButtonBG", "ButtonColor", "ButtonBorder", "ButtonHover", "ProgressRemaining", "ProgressBar", "PageNoBG", "PageNoColor", "PageNoActiveBG", "PageNoActiveColor", "PageNoActiveBorder", "HeadColor");
+
 		if ( $EmployerID == NULL || $BranchName == NULL || $BranchAddress == NULL || $BranchContact == NULL || $EmployeeIDSuffix == NULL ) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required! ' . "1:" . $EmployerID . "2:" . $BranchName . "3:" . $BranchAddress . "4:" . $BranchContact . "5:" . $EmployeeIDSuffix . '</h5></div>');
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			redirect('Employers');
 		}
 		else
@@ -529,8 +535,39 @@ class Add_Controller extends CI_Controller {
 			}
 			else
 			{
+				$customid = $EmployerID . "-" . date("dmYHis") . "-E";
+
+				$config['upload_path']          = './uploads/'.$customid;
+				$config['allowed_types']        = 'gif|jpg|png';
+				$config['max_size']             = 2000;
+				$config['max_width']            = 2000;
+				$config['max_height']           = 2000;
+
+				$this->load->library('upload', $config);
+				if (!is_dir('uploads'))
+				{
+					mkdir('./uploads', 0777, true);
+				}
+				if (!is_dir('uploads/' . $customid))
+				{
+					mkdir('./uploads/' . $customid, 0777, true);
+					$dir_exist = false;
+				}
+				if ($pImageChecker != NULL) {
+					if ( ! $this->upload->do_upload('pImage'))
+					{
+						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+						redirect('Employers');
+					}
+					else
+					{
+						$pImage = base_url().'uploads/'.$customid.'/'.$this->upload->data('file_name');
+					}
+				}
+
 				$data = array(
 					'EmployerID' => $EmployerID,
+					'BranchIcon' => $pImage,
 					'Name' => $BranchName,
 					'Address' => $BranchAddress,
 					'ContactNumber' => $BranchContact,
@@ -538,6 +575,20 @@ class Add_Controller extends CI_Controller {
 					'Status' => 'Active',
 				);
 				$InsertNewBranch = $this->Model_Inserts->InsertNewBranch($data);
+
+				// get new branch ID
+				$newBranchID = $this->db->insert_id();
+				// insert colors
+				foreach ($colors as $key => $val) {
+					$data = array(
+						'BranchID' => $newBranchID,
+						'Part' => $val,
+						'HexColor' => $this->input->post('brcol' . $val,TRUE),
+					);
+
+					$this->Model_Inserts->InsertBranchColor($data);
+				}
+
 				if ($InsertNewBranch == TRUE) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Branch added!</h5></div>');
 					// LOGBOOK

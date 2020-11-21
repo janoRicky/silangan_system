@@ -1,7 +1,18 @@
 <nav id="sidebar" style="position: fixed;">
 	<div class="sidebar-banner text-center">
 		<b>
-			Silangan Lumber
+			<a href="Dashboard">
+				<?php
+				if (isset($_SESSION['is_logged_in'])) {
+					echo '<img class="m-auto BranchIcon" src="' . $_SESSION["BranchIcon"] . '" style="height: 100%;">';
+				}
+				else
+				{
+					echo $_SESSION['BranchName'];
+				}
+				?>
+				
+			</a>
 		</b>
 	</div>
 	<ul class="list-unstyled components">
@@ -46,13 +57,13 @@
 			<a class="link-s" href="#siteSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fas fa-cogs fa-fw"></span> Settings </a>
 			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteSettings">
 				<li>
-					<a class="link-s" class="sublink" href="#"><i class="fas fa-table fa-fw"></i> USERS </a>
+					<a class="link-s" class="sublink" href="Admin_List"><i class="fas fa-table fa-fw"></i> USERS </a>
 				</li>
 				<li>
 					<a class="link-s" class="sublink" href="<?=base_url()?>sss_table"><i class="fas fa-table fa-fw"></i> SSS Table </a>
 				</li>
 				<li>
-					<a class="link-s" class="sublink" href="#"><i class="fas fa-sign-out-alt fa-fw"></i> Log-out </a>
+					<a class="link-s" class="sublink" href="Logout"><i class="fas fa-sign-out-alt fa-fw"></i> Log-out </a>
 				</li>
 			</ul>
 		</li>

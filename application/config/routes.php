@@ -76,6 +76,8 @@ $route['sss_table'] = 'Main_Controller/sss_table';
 
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';
+// LOGIN
+$route['Logout'] = 'Main_Controller/Logout';
 // CREATE
 $route['addem'] = 'Add_Controller/addem';
 $route['addNewEmployee'] = 'Add_Controller/addNewEmployee';

@@ -321,7 +321,7 @@
 	<div class="modal fade" id="addBranch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content m-content">
-				<?php echo form_open(base_url().'Add_NewBranch','method="post"');?>
+				<?php echo form_open(base_url().'Add_NewBranch','method="post" enctype="multipart/form-data"');?>
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Add New Branch</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -330,6 +330,18 @@
 				</div>
 				<div class="modal-body">
 					<input class="form-control" type="hidden" name="EmployerID" autocomplete="off" value="<?php if (isset($_GET['employerID']) && !isset($_GET['branchID'])) echo $_GET['employerID']; ?>">
+
+					<input id="pImageChecker" type="hidden" name="pImageChecker">
+					<div class="form-row mb-2">
+						<div class="form-group col-sm-12">
+							<input type='file' id="imgInp" name="pImage" style="display: none;">
+							<?php if(!$this->agent->is_mobile()): ?>
+								<img class="image-hover" id="imgPreview" src="<?php echo base_url() ?>assets/img/silangan_default_photo.png" width="100%" height="120">
+							<?php else: ?>
+								<img class="image-hover" id="imgPreview" src="<?php echo base_url() ?>assets/img/silangan_default_photo_mobile.png" width="100%" height="120">
+							<?php endif; ?>
+						</div>
+					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-12">
 							<label>Name</label>
@@ -354,6 +366,166 @@
 							<input class="form-control" type="text" name="EmployeeIDSuffix" autocomplete="off">
 						</div>
 					</div>
+					<div class="form-row pt-2">
+						<div class="col-sm-12">
+							<h4>Branch Colors</h4>
+						</div>
+					</div>
+					<hr>
+					<div class="form-row">
+						<div class="form-group col-sm-4">
+							<label>NavbarBG</label>
+							<input id="NavbarBG" class="form-control" type="color" name="brcolNavbarBG">
+						</div>
+						<div class="form-group col-sm-4">
+							<label>NavbarColor</label>
+							<input id="NavbarColor" class="form-control" type="color" name="brcolNavbarColor">
+						</div>
+						<div class="form-group col-sm-4">
+							<label>NavbarBorder</label>
+							<input id="NavbarBorder" class="form-control" type="color" name="brcolNavbarBorder">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-6">
+							<label>NavbarSideBG</label>
+							<input id="NavbarSideBG" class="form-control" type="color" name="brcolNavbarSideBG">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>NavbarSideBorder</label>
+							<input id="NavbarSideBorder" class="form-control" type="color" name="brcolNavbarSideBorder">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-6">
+							<label>SidebarBG</label>
+							<input id="SidebarBG" class="form-control" type="color" name="brcolSidebarBG">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>SidebarBorder</label>
+							<input id="SidebarBorder" class="form-control" type="color" name="brcolSidebarBorder">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-4">
+							<label>SideLinkBG</label>
+							<input id="SideLinkBG" class="form-control" type="color" name="brcolSideLinkBG">
+						</div>
+						<div class="form-group col-sm-4">
+							<label>SideLinkColor</label>
+							<input id="SideLinkColor" class="form-control" type="color" name="brcolSideLinkColor">
+						</div>
+						<div class="form-group col-sm-4">
+							<label>SideLinkBorder</label>
+							<input id="SideLinkBorder" class="form-control" type="color" name="brcolSideLinkBorder">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-12">
+							<label>MainBG</label>
+							<input id="MainBG" class="form-control" type="color" name="brcolMainBG">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-6">
+							<label>WindowsBG</label>
+							<input id="WindowsBG" class="form-control" type="color" name="brcolWindowsBG">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>WindowsBorder</label>
+							<input id="WindowsBorder" class="form-control" type="color" name="brcolWindowsBorder">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-4">
+							<label>TableBG</label>
+							<input id="TableBG" class="form-control" type="color" name="brcolTableBG">
+						</div>
+						<div class="form-group col-sm-4">
+							<label>TableColor</label>
+							<input id="TableColor" class="form-control" type="color" name="brcolTableColor">
+						</div>
+						<div class="form-group col-sm-4">
+							<label>TableBorder</label>
+							<input id="TableBorder" class="form-control" type="color" name="brcolTableBorder">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-3">
+							<label>TabsBG</label>
+							<input id="TabsBG" class="form-control" type="color" name="brcolTabsBG">
+						</div>
+						<div class="form-group col-sm-3">
+							<label>TabsLinkColor</label>
+							<input id="TabsLinkColor" class="form-control" type="color" name="brcolTabsLinkColor">
+						</div>
+						<div class="form-group col-sm-3">
+							<label>TabsActiveColor</label>
+							<input id="TabsActiveColor" class="form-control" type="color" name="brcolTabsActiveColor">
+						</div>
+						<div class="form-group col-sm-3">
+							<label>TabsBorder</label>
+							<input id="TabsBorder" class="form-control" type="color" name="brcolTabsBorder">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-3">
+							<label>ButtonBG</label>
+							<input id="ButtonBG" class="form-control" type="color" name="brcolButtonBG">
+						</div>
+						<div class="form-group col-sm-3">
+							<label>ButtonColor</label>
+							<input id="ButtonColor" class="form-control" type="color" name="brcolButtonColor">
+						</div>
+						<div class="form-group col-sm-3">
+							<label>ButtonBorder</label>
+							<input id="ButtonBorder" class="form-control" type="color" name="brcolButtonBorder">
+						</div>
+						<div class="form-group col-sm-3">
+							<label>ButtonHover</label>
+							<input id="ButtonHover" class="form-control" type="color" name="brcolButtonHover">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-6">
+							<label>ProgressRemaining</label>
+							<input id="ProgressRemaining" class="form-control" type="color" name="brcolProgressRemaining">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>ProgressBar</label>
+							<input id="ProgressBar" class="form-control" type="color" name="brcolProgressBar">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-6">
+							<label>PageNoBG</label>
+							<input id="PageNoBG" class="form-control" type="color" name="brcolPageNoBG">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>PageNoColor</label>
+							<input id="PageNoColor" class="form-control" type="color" name="brcolPageNoColor">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-4">
+							<label>PageNoActiveBG</label>
+							<input id="PageNoActiveBG" class="form-control" type="color" name="brcolPageNoActiveBG">
+						</div>
+						<div class="form-group col-sm-4">
+							<label>PageNoActiveColor</label>
+							<input id="PageNoActiveColor" class="form-control" type="color" name="brcolPageNoActiveColor">
+						</div>
+						<div class="form-group col-sm-4">
+							<label>PageNoActiveBorder</label>
+							<input id="PageNoActiveBorder" class="form-control" type="color" name="brcolPageNoActiveBorder">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-12">
+							<label>HeadColor</label>
+							<input id="HeadColor" class="form-control" type="color" name="brcolHeadColor">
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
@@ -370,12 +542,19 @@
 	$(document).ready(function () {
 		<?php if (isset($_GET['employerID']) && !isset($_GET['branchID'])): ?>
 			$('#employerBranches').modal('show');
+			// assign current branch colors to color selection
+			<?php
+			foreach ($_SESSION['Colors'] as $row) {
+				echo "$('#" . $row["Part"] . "').val('" . $row["HexColor"] . "');";
+			}
+			?>
 		<?php elseif(isset($_GET['employerID']) && isset($_GET['branchID'])): ?>
 			$('#branchEmployees').modal('show');
 		<?php endif; ?>
 		$('#EmployeeIDSuffix').bind('input', function() {
 			$('#SuffixPreview').val('SL' + $(this).val() + '-####-20');
 		});
+
 		$('[data-toggle="tooltip"]').tooltip();
 		if (localStorage.getItem('SidebarVisible') == 'true') {
 			$('#sidebar').addClass('active');
@@ -549,6 +728,22 @@
 	    $('#EmployeesExportPDF').on('click', function () {
 	        employeesTable.button('4').trigger();
     	});
+
+    	// check branch icon
+		$('#imgPreview').click(function(){ $('#imgInp').trigger('click'); });
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#imgPreview').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		$("#imgInp").change(function() {
+			readURL(this);
+			$('#pImageChecker').val('Has Image')
+		});
 	});
 </script>
 </html>

@@ -137,7 +137,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function CheckBranch($BranchName)
 	{
-		$SQL = "SELECT * FROM branches WHERE Name = ?";
+		$SQL = "SELECT * FROM branches WHERE Name = ? AND Status = 'Active'";
 		$result = $this->db->query($SQL,$BranchName);
 		return $result;
 	}
@@ -145,6 +145,12 @@ class Model_Selects extends CI_Model {
 	{
 		$SQL = "SELECT * FROM branches WHERE Status = 'Active'";
 		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function getBranchColors($BranchID)
+	{
+		$SQL = "SELECT * FROM branch_colors WHERE BranchID = ?";
+		$result = $this->db->query($SQL,$BranchID);
 		return $result;
 	}
 	public function GetContractHistory($id)

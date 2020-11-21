@@ -95,8 +95,8 @@ class Main_Controller extends CI_Controller {
 	public function index()
 	{
 		$this->session->unset_userdata('acadcart');
-		redirect('Dashboard');
-		// $this->load->view('Login');
+		// redirect('Dashboard');
+		$this->load->view('Login');
 	}
 	public function CheckUserLogin()
 	{
@@ -117,7 +117,7 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["mach_cart"]);
 
 		###	CHECK SESSION
-		// $this->CheckUserLogin();
+		$this->CheckUserLogin();
 
 		$header['title'] = 'Dashboard | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -712,6 +712,7 @@ class Main_Controller extends CI_Controller {
 		</ol>
 		</nav>';
 		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
+		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 		$this->load->view('users/u_admins',$data);
 	}
 	// public function Branches()
@@ -1358,5 +1359,6 @@ class Main_Controller extends CI_Controller {
 	public function Logout()
 	{
 		session_destroy();
+		redirect('');
 	}
 }

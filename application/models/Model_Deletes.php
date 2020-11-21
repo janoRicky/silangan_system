@@ -23,6 +23,9 @@ class Model_Deletes extends CI_Model {
 	}
 	public function RemoveBranchM($id)
 	{
+		$SQL = "DELETE FROM branch_colors WHERE BranchID = '$id'";
+		$result = $this->db->query($SQL);
+
 		$SQL = "UPDATE branches SET Status ='Deleted' WHERE BranchID = ?";
 		$result = $this->db->query($SQL,$id);
 		return $result;
