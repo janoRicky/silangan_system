@@ -15,6 +15,21 @@
             <input id="idforFormatex" type="text" class="form-control" name="id" readonly="" hidden="">
           </div>
         </div>
+        <div class="form-row">
+          <div class="form-group col-12">
+            <select class="form-control" name="Mode">
+              <option value="Weekly">
+                Weekly
+              </option>
+              <option value="Semi-Monthly">
+                Semi-Monthly
+              </option>
+              <option value="Monthly">
+                Monthly
+              </option>
+            </select>
+          </div>
+        </div>
         <div class="row">
           <div class="col">
             <label><strong>From</strong></label>

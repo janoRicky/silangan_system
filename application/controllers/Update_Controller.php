@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Update_Controller extends CI_Controller {
 
-
 	public function __construct() {
 		parent::__construct();
 
@@ -1174,6 +1173,7 @@ class Update_Controller extends CI_Controller {
 			$date2 = new DateTime($ToDate);
 
 			$diff = $date2->diff($date1)->format("%a");
+
 			// if ($diff <= 7) {
 			// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 1 week</h5></div>');
 			// 	redirect($_SERVER['HTTP_REFERER']);
@@ -1182,12 +1182,13 @@ class Update_Controller extends CI_Controller {
 			// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #FFA500;"><h5><i class="fas fa-exclamation-triangle"></i> Note: You are viewing at a huge date range, performance may get slower than usual</h5></div>');
 			// }
 			// TODO: Clean & optimize this. May cause lag on huge database.
+			
 			$this->Model_Updates->UpdateWeeklyHoursCurrent();
 			$this->Model_Deletes->CleanWeeklyDates();
 			$HoursHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
 			$SpecialHolidays = array('01-25', '02-25', '04-11', '08-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
 
-			for ($i = 0; $i <= $diff; $i++) {
+			for ($i = 1; $i <= $diff; $i++) {
 				$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($FromDate)));
 				$DateChecker = new DateTime($Date);
 				if (in_array($DateChecker->format('m-d'), $HoursHolidays)) {
@@ -1215,6 +1216,10 @@ class Update_Controller extends CI_Controller {
 		date_default_timezone_set('Asia/Manila');
 		// $this->load->library('SimpleXLSX');
 		if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
+			$arsss = $xlsx->rows();
+
+			$id = $arsss[1][0]; // ID
+			$mode = $arsss[1][1]; // MODE
 
 			$dim = $xlsx->dimension();
 			$cols = $dim[0];
@@ -1226,7 +1231,7 @@ class Update_Controller extends CI_Controller {
 					if ($k == 0) continue; // skip first row
 					// echo '<tr class="clickable-row" data-toggle="modal" data-target="#HoursWeeklyModal">';
 					for ( $i = 0; $i < $cols; $i ++ ) {
-						if ($RowCount == 0){
+						if ($RowCount == 1){
 							if ($ColCount == 3) {
 								$StartingDate = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
 
@@ -1249,16 +1254,6 @@ class Update_Controller extends CI_Controller {
 										'Time' => $Date,
 										'Current' => 'Current',
 									);
-									// if (isset($Holiday)) {
-									// 	$data['Holiday'] = '1';
-									// } else {
-									// 	$data['Holiday'] = NULL;
-									// }
-									// if (isset($Special)) {
-									// 	$data['Special'] = '1';
-									// } else {
-									// 	$data['Special'] = NULL;
-									// }
 									$BranchViewTime = $this->Model_Inserts->InsertDummyHours($data);
 								}
 
@@ -1314,7 +1309,6 @@ class Update_Controller extends CI_Controller {
 								$data = array(
 									'BranchID' => $BranchID,
 									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
-									
 									'Hours' => $rHours
 								);
 								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHoursFromImport($ApplicantID,$data);
@@ -1327,26 +1321,28 @@ class Update_Controller extends CI_Controller {
 								// echo '------------- <br>';
 							}
 						}
-						// echo '<td><i class="Hours_' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '"></i>' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '</td>';
 						$ColCount++;
 					}
-					// echo '</tr>';
+
 					$RowCount++;
 					$ColCount = 0;
 				endforeach;
 				if ($RowCount <= $xlsx->rows()) {
 					$ApplicantsArray = serialize($ApplicantsArray);
 					$this->session->set_userdata('ApplicantsArray', $ApplicantsArray);
-					redirect('ViewBranch?id=excel');
+					redirect('ViewBranch?id='.$id.'&Mode='.$mode);
 				}
 				$this->load->view('_template/users/u_redirecting');
-				// echo '</table>';
+				
 			} else {
 				$Error = SimpleXLSX::parseError();
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: ' . $Error . '</h5></div>');
 				redirect($_SERVER['HTTP_REFERER']);
+			
 			}
-
+			
+			
+			
 			// $date1 = new DateTime($FromDate);
 			// $date2 = new DateTime($ToDate);
 
