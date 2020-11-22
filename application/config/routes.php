@@ -123,3 +123,10 @@ $route['export_payslip'] = 'PhpOffice_Controller/export_payslip';
 
 // TCPDF
 $route['GeneratePaySlip'] = 'Tcpdf_Controller/GeneratePaySlip';
+
+// NEW UPDATE
+$route['v_importexceldata'] = 'Update_Controller/v_importexceldata';
+$route['UpdatethisAttRecord'] = 'Update_Controller/UpdatethisAttRecord';
+$route['GetDataByApplicantID'] = 'Main_Controller/GetDataByApplicantID';
+$route['ViewThisAttendance'] = 'Main_Controller/ViewThisAttendance';
+$route['GetDateByApplicantID'] = 'Main_Controller/GetDateByApplicantID';

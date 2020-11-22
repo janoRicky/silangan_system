@@ -10,23 +10,21 @@
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<?php echo $this->session->flashdata('prompts'); ?>
 				<br>
-				<div class="row content m-4">
-					<div class="col-12 col-sm-12 tabs">
-						<ul>
-							<li>
-								<a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a>
-							</li>
-							<li class="tab-divider">&nbsp;</li>
-							<li class="tabs-active">
-								<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $BranchID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a>
-								<div class="tab-indicator">&nbsp;</div>
-							</li>
-						</ul>
-					</div>
-					<div class="row content-body">
+				<div class="col-12 col-sm-12 payroll-tabs">
+					<ul>
+						<li>
+							<a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $ClientID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a>
+						</li>
+						<li class="payroll-tabs-active">
+							<a href="<?php echo base_url() ?>Payrollsss?id=<?php echo $ClientID; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Pay Slip</a>
+						</li>
+					</ul>
+				</div>
+				<div class="rcontent">
+					<div class="row">
 						<div class="col-8 mb-2">
 							<form action="<?php echo base_url().'ImportExcel'; ?>" method="post" enctype="multipart/form-data">
-								<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $BranchID; ?>">
+								<input id="ExcelBranchID" type="hidden" name="ExcelBranchID" value="<?php echo $ClientID; ?>">
 								<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">
 								<button id="ImportButton" type="button" class="btn btn-success"><i class="fas fa-file-excel"></i> Import</button>
 								<button id="ImportButton" type="button" class="btn btn-secondary"><i class="fas fa-lock"></i> Export (WIP)</button>
@@ -35,15 +33,16 @@
 						</div>
 						<div class="col-4 mb-2 text-right">
 							<!-- <a href="<?=base_url()?>export_payslip?id=<?php echo $ClientID; ?>" class="btn btn-secondary"><i class="fas fa-lock"></i> Generate Payslip (WIP)</a> -->
-							<button type="button" id="<?php echo $BranchID; ?>" class="btn btn-secondary gen_paysli" data-toggle="modal" data-target="#Gen_paydate"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
+							<button type="button" id="<?php echo $ClientID; ?>" class="btn btn-secondary gen_paysli" data-toggle="modal" data-target="#Gen_paydate"><i class="fas fa-lock"></i> Generate Payslip (WIP)</button>
 						</div>
 						<div class="col-sm-12 col-mb-12">
-							<div class="table-responsive w-100">
+							<div class="table-responsive col-12">
 								<table id="WeeklyTable" class="table table-condensed">
 									<thead>
 										<th>APPLICANT ID</th>
 										<th>GROSS PAY</th>
 										<th>REG. HRS.</th>
+										<th>Late HRS.</th>
 										<th>OVERTIME</th>
 										<th>SSS CONTRI.</th>
 										<th>HDMF CONTRI.</th>
@@ -55,7 +54,6 @@
 										<th>PDF</th>
 									</thead>
 									<tbody>
-										
 										<?php foreach ($get_applicantContri->result_array() as $row): ?>
 											<tr>
 												<td>
@@ -66,6 +64,14 @@
 												</td>
 												<td>
 													<?php echo $row['TotalHours'];?>
+												</td>
+												<td>
+													<?php if ($row['Total_Late'] < 1) {
+														echo '<strong class="text-success">None</strong>';
+													} else 
+													{
+														echo '<strong class="text-warning">'.$row['Total_Late'].'</strong>';
+													}?>
 												</td>
 												<td>
 													<?php echo $row['TotaOT'];?>
@@ -122,7 +128,7 @@
 			<!-- LOAD MODAL -->
 			<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
 				<div class="modal-dialog" role="document">
-					<div class="modal-content m-content">
+					<div class="modal-content">
 						<div class="modal-body">
 							<div class="form-row">
 								<div class="text-center ml-auto mr-auto">
@@ -140,7 +146,7 @@
 	<div class="modal fade" id="Gen_paydate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<?php echo form_open(base_url().'export_payslip','method="post"'); ?>
-			<div class="modal-content m-content">
+			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLongTitle">Generate Payslip</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -253,7 +253,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetWeeklyList($BranchID) // Argument is $id originally from source.
 	{
-		$SQL = "SELECT * FROM hours_weekly WHERE BranchID = '$BranchID'";
+		$SQL = "SELECT * FROM tb_attendance WHERE BranchID = '$BranchID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -614,4 +614,64 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function getEmplAtt($ApplicantID, $Time)
+	{
+		$SQL = "SELECT * FROM hours_weekly WHERE ApplicantID = '$ApplicantID' AND Time = '$Time'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function get_totallate($ApplicantID)
+	{
+		$this->db->select_sum('late_hours');
+		$this->db->where('ApplicantID', $ApplicantID);
+		$result = $this->db->get('hours_weekly')->row();  
+		return $result->late_hours;
+	}
+	public function CheckDataImported($data)
+	{
+		extract($data);
+		$SQL = "SELECT * FROM tb_attendance WHERE ApplicantID = '$ApplicantID' AND Date_Time = '$Date_Time'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+
+	public function GetAttendances($BranchID)
+	{
+		$SQL = "SELECT * FROM tb_attendance WHERE BranchID = '$BranchID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetDateTime($BranchID)
+	{
+		$SQL = "SELECT DISTINCT Time FROM tb_attendance WHERE BranchID = '$BranchID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function getApplicantDataa($ApplicantID)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function getApplicantDataaRow($ApplicantID)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	
+	public function GetDateAttendance($ApplicantID,$startDate,$EndDate)
+	{
+		$SQL = "SELECT * FROM tb_attendance WHERE ApplicantID = '$ApplicantID' AND Date_Time BETWEEN '$startDate' AND '$EndDate'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+
+	public function getDateDataByID($id)
+	{
+		$SQL = "SELECT * FROM tb_attendance WHERE id = '$id'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+
 }

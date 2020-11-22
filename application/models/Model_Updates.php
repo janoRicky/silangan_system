@@ -203,4 +203,16 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update_batch('branch_colors', $data, 'Part');
 		return $result;
 	}
+	public function UpdateArecord($date_id,$data)
+	{
+		$this->db->where('id', $date_id);
+		$result = $this->db->update('tb_attendance', $data);
+		if ($result == TRUE) {
+			return 'success';
+		}
+		else
+		{
+			return 'error';
+		}
+	}
 }

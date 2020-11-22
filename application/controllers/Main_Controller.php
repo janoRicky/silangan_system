@@ -118,28 +118,28 @@ class Main_Controller extends CI_Controller {
 
 		###	CHECK SESSION
 		$this->CheckUserLogin();
-
 		$header['title'] = 'Dashboard | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
 		// CHART
-		// $result =  $this->Model_Selects->GetApplicantSkills();
+		$result =  $this->Model_Selects->GetApplicantSkills();
 
-		// $record = $result->result();
-		// $data = [];
+		$record = $result->result_array();
+		$data = [];
 
-		// foreach($record as $row) {
-		// 	$data['label'][] = $row->PositionGroup;
-		// 	$data['data'][] = (int) $row->count;
-		// }
-		// $data['chart_data'] = json_encode($data);
-		// $edata = [];
-		// $GetApplicantSkillsExpired = $this->Model_Selects->GetApplicantSkillsExpired();
-		// $edata['data'][] = $GetApplicantSkillsExpired->num_rows();
-		// foreach($GetApplicantSkillsExpired->result_array() as $row) {
-		// 	$edata['label'][] = $row['PositionGroup'];
-		// }
-		// $data['chart_data_expired'] = json_encode($edata);
+		foreach($record as $row) {
+			$data['label'][] = $row->PositionGroup;
+			$data['data'][] = (int) $row->count;
+		}
+		$data['chart_data'] = json_encode($data);
+		$edata = [];
+		$GetApplicantSkillsExpired = $this->Model_Selects->GetApplicantSkillsExpired();
+		$edata['data'][] = $GetApplicantSkillsExpired->num_rows();
+		foreach($GetApplicantSkillsExpired->result_array() as $row) {
+			$edata['label'][] = $row['PositionGroup'];
+		}
+		$data['chart_data_expired'] = json_encode($edata);
+		
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
@@ -929,48 +929,23 @@ class Main_Controller extends CI_Controller {
 
 			$id = $_GET['id'];
 			$BranchID = $_GET['id'];
+			$ClientID = $_GET['id'];
 
 			$header['title'] = 'Branch Information | Silangan Lumber';
 			$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
-			####### ERROR IF DATA IS NULL
-			if ($id == 'excel') {
-				// print_r($ApplicantsArray);
-				$ApplicantsArray = $this->session->userdata('ApplicantsArray');
-				$ApplicantsArray = unserialize($ApplicantsArray);
-				$GetWeeklyList = $this->Model_Selects->GetWeeklyImports($ApplicantsArray);
-			} else {
-				$GetWeeklyList = $this->Model_Selects->GetWeeklyList($BranchID);
-			}
 
-			if (isset($GetWeeklyList)) {
-				$row = $GetWeeklyList->row_array();
-				$data = array(
-					'BranchID' => $row['BranchID'],
-					'ApplicantID' => $row['ApplicantID'],
-				);
-				$ApplicantID = $row['ApplicantID'];
-			}
+			$data['GetBranchID'] = $this->Model_Selects->GetBranchID($BranchID);
+			$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
+			$data['GetAttendances'] = $this->Model_Selects->GetAttendances($BranchID);
+			// $data['GetDateTime'] = $this->Model_Selects->GetDateTime($BranchID);
 
-
-
-			$data['GetWeeklyList'] = $GetWeeklyList;
-			if ($id == 'excel') {
-				$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployeeFromImports($ApplicantsArray);
-			} else {
-				$data['GetWeeklyListEmployee'] = $this->Model_Selects->GetWeeklyListEmployee($id);
-			}
-
-			// $data['GetWeeklyListEmployeeActive'] = $this->Model_Selects->GetWeeklyListEmployeeActive($id);
-			$data['GetBranchID'] = $this->Model_Selects->GetBranchID($id);
-			$data['GetWeeklyDates'] = $this->Model_Selects->GetWeeklyDates();
-			// $data['GetWeeklyDatesForEmployee'] = $this->Model_Selects->GetWeeklyDatesForEmployee($row['ApplicantID']);
 			$data['IsFromExcel'] = False;
 			$data['Breadcrumb'] = '
 			<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: transparent;">
 			<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
-			<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewBranch?id=' . $id . '">Details</a></li>
+			<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewBranch?id=' . $id . '">Attendance</a></li>
 			</ol>
 			</nav>';
 			##### $this->load->view('payroll/p_viewBranch',$data);
@@ -1361,6 +1336,125 @@ class Main_Controller extends CI_Controller {
 				unset($_SESSION["ref_cart"]);
 			}
 		}
+	}
+	public function ViewThisAttendance()
+	{
+		unset($_SESSION["bencart"]);
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+
+		$data['IsFromExcel'] = False;
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a href="Payroll">Payroll</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="ViewBranch?id=">Details</a></li>
+		</ol>
+		</nav>';
+
+		$ApplicantID = $this->input->get('ApplicantID');
+		$startDate = $this->input->get('startDate');
+		$EndDate = $this->input->get('EndDate');
+		
+		$header['title'] = $ApplicantID.' | Silangan Lumber';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+
+		if ($ApplicantID == NULL || $startDate == NULL || $EndDate == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Please select start and end date!</h5></div>');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		$GetDateAttendance = $this->Model_Selects->GetDateAttendance($ApplicantID,$startDate,$EndDate);
+		$getApplicantDataaRow = $this->Model_Selects->getApplicantDataaRow($ApplicantID);
+		if ($GetDateAttendance->num_rows() > 0) {
+			$data['GetDateAttendance'] = $GetDateAttendance;
+			$data['getApplicantDataa'] = $getApplicantDataaRow->row_array();
+			$this->load->view('payroll/p_attendance',$data);
+		}
+		else
+		{
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date doesn\'t exist!</h5></div>');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+
+	}
+
+	### AJAX GET DATA
+	public function GetDataByApplicantID()
+	{
+		$ApplicantID = $this->input->post('id');
+		$getApplicantDataa = $this->Model_Selects->getApplicantDataa($ApplicantID);
+
+		$arr = array();
+		foreach ($getApplicantDataa->result() as $row) {
+			$arr[] = array(
+				'ApplicantID' => $row->ApplicantID,
+				'Altid' => md5($row->ApplicantID),
+				'FirstName' => $row->FirstName,
+				'LastName' => $row->LastName,
+				'MiddleInitial' => $row->MiddleInitial,
+			);
+		}
+        //save data mysql data in json encode format       
+		echo $json_data = json_encode($arr);
+
+	}
+	public function GetDateByApplicantID()
+	{
+		$id = $this->input->post('id');
+
+		$getDateDataByID = $this->Model_Selects->getDateDataByID($id);
+		
+		$arr = array();
+		foreach ($getDateDataByID->result() as $row) {
+
+			$cur_rate = 400;
+			$ncrate = $cur_rate / 8;
+			$diff_am = abs(strtotime($row->Timein_AM) - strtotime($row->Timeout_AM));
+			$diff_pm = abs(strtotime($row->Timein_PM) - strtotime($row->Timeout_PM));
+
+			$tmins_am = $diff_am/60;
+			$tmins_pm = $diff_pm/60;
+
+			$hours_am = $tmins_am/60;
+			$hours_pm = $tmins_pm/60;
+
+			$mins_am = $tmins_am%60;
+			$mins_pm = $tmins_pm%60;
+			$sumHrs =$tmins_am + $tmins_pm;
+
+			$sumbyHRS = $hours_am + $hours_pm;
+
+			$totalPay = $sumbyHRS * $ncrate;
+			
+			$arr[] = array(
+				'id' => $row->id,
+				'ApplicantID' => $row->ApplicantID,
+				'Date_Time' => $row->Date_Time,
+				'Timein_AM' => $row->Timein_AM,
+				'Timeout_AM' => $row->Timeout_AM,
+				'Timein_PM' => $row->Timein_PM,
+				'Timeout_PM' => $row->Timeout_PM,
+				'Late_Time' => $row->Late_Time,
+				'Leave_Early' => $row->Leave_Early,
+				'Absence_Time' => $row->Absence_Time,
+				'Total_BYmin' => $row->Total_BYmin,
+				'Note' => $row->Note,
+				'shift_type' => $row->shift_type,
+				'regular_day' => $row->regular_day,
+				'sp_day' => $row->sp_day,
+				'nh_day' => $row->nh_day,
+				'cur_rate' => $cur_rate,
+				'totalHrs' => $sumHrs /60,
+				'overtime' => $row->overtime,
+				'totalPay' => $totalPay,
+				
+			);
+		}
+        //save data mysql data in json encode format       
+		echo $json_data = json_encode($arr);
+
 	}
 	public function Logout()
 	{
