@@ -55,6 +55,10 @@ class Delete_Controller extends CI_Controller {
 		if (!isset($_GET['id'])) {
 			redirect('Admin_List');
 		}
+		elseif ($id == $_SESSION['AdminNo']) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times fa-fw"></i> You cannot remove an active admin.</h5></div>');
+			redirect('Admin_List');
+		}
 		else
 		{
 			$Removethis = $this->Model_Deletes->RemoveAdminM($id);
@@ -128,8 +132,13 @@ class Delete_Controller extends CI_Controller {
 		else
 		{
 			if ($this->Model_Selects->GetBranchesEmployed($id)->num_rows() > 0) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Please terminate the branch&#39s employees first.</h5></div>');\
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Please terminate the branch&#39s employees first.</h5></div>');
 				redirect('Employers');
+			}
+			elseif ($this->Model_Selects->GetBranchesAdmin($id)->num_rows() > 0) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> There are still admins assigned to this branch.</h5></div>');
+				redirect('Employers');
+
 			}
 			else
 			{

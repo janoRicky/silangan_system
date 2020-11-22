@@ -3,8 +3,8 @@
 		<b>
 			<a href="Dashboard">
 				<?php
-				if (isset($_SESSION['is_logged_in'])) {
-					echo '<img class="m-auto BranchIcon" src="' . $_SESSION["BranchIcon"] . '" style="height: 100%;">';
+				if (isset($_SESSION['BranchIcon'])) {
+					echo '<img class="m-auto BranchIcon" src="' . base_url() . $_SESSION["BranchIcon"] . '" style="height: 100%;">';
 				}
 				else
 				{

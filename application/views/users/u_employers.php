@@ -345,25 +345,25 @@
 					<div class="form-row">
 						<div class="form-group col-sm-12">
 							<label>Name</label>
-							<input class="form-control" type="text" name="BranchName" autocomplete="off">
+							<input class="form-control" type="text" name="BranchName" autocomplete="off" value="<?=$this->session->flashdata('BranchName')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-12">
 							<label>Address</label>
-							<input class="form-control" type="text" name="BranchAddress" autocomplete="off">
+							<input class="form-control" type="text" name="BranchAddress" autocomplete="off" value="<?=$this->session->flashdata('BranchAddress')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-12">
 							<label>Contact Number</label>
-							<input class="form-control" type="text" name="BranchContact" autocomplete="off">
+							<input class="form-control" type="text" name="BranchContact" autocomplete="off" value="<?=$this->session->flashdata('BranchContact')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-12">
 							<label>ID Suffix</label>
-							<input class="form-control" type="text" name="EmployeeIDSuffix" autocomplete="off">
+							<input class="form-control" type="text" name="EmployeeIDSuffix" autocomplete="off" value="<?=$this->session->flashdata('EmployeeIDSuffix')?>">
 						</div>
 					</div>
 					<div class="form-row pt-2">
@@ -375,155 +375,155 @@
 					<div class="form-row">
 						<div class="form-group col-sm-4">
 							<label>NavbarBG</label>
-							<input id="NavbarBG" class="form-control" type="color" name="brcolNavbarBG">
+							<input id="NavbarBG" class="form-control" type="color" name="brcolNavbarBG" value="<?=$this->session->flashdata('brcolNavbarBG')?>">
 						</div>
 						<div class="form-group col-sm-4">
 							<label>NavbarColor</label>
-							<input id="NavbarColor" class="form-control" type="color" name="brcolNavbarColor">
+							<input id="NavbarColor" class="form-control" type="color" name="brcolNavbarColor" value="<?=$this->session->flashdata('brcolNavbarColor')?>">
 						</div>
 						<div class="form-group col-sm-4">
 							<label>NavbarBorder</label>
-							<input id="NavbarBorder" class="form-control" type="color" name="brcolNavbarBorder">
+							<input id="NavbarBorder" class="form-control" type="color" name="brcolNavbarBorder" value="<?=$this->session->flashdata('brcolNavbarBorder')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-6">
 							<label>NavbarSideBG</label>
-							<input id="NavbarSideBG" class="form-control" type="color" name="brcolNavbarSideBG">
+							<input id="NavbarSideBG" class="form-control" type="color" name="brcolNavbarSideBG" value="<?=$this->session->flashdata('brcolNavbarSideBG')?>">
 						</div>
 						<div class="form-group col-sm-6">
 							<label>NavbarSideBorder</label>
-							<input id="NavbarSideBorder" class="form-control" type="color" name="brcolNavbarSideBorder">
+							<input id="NavbarSideBorder" class="form-control" type="color" name="brcolNavbarSideBorder" value="<?=$this->session->flashdata('brcolNavbarSideBorder')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-6">
 							<label>SidebarBG</label>
-							<input id="SidebarBG" class="form-control" type="color" name="brcolSidebarBG">
+							<input id="SidebarBG" class="form-control" type="color" name="brcolSidebarBG" value="<?=$this->session->flashdata('brcolSidebarBG')?>">
 						</div>
 						<div class="form-group col-sm-6">
 							<label>SidebarBorder</label>
-							<input id="SidebarBorder" class="form-control" type="color" name="brcolSidebarBorder">
+							<input id="SidebarBorder" class="form-control" type="color" name="brcolSidebarBorder" value="<?=$this->session->flashdata('brcolSidebarBorder')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-4">
 							<label>SideLinkBG</label>
-							<input id="SideLinkBG" class="form-control" type="color" name="brcolSideLinkBG">
+							<input id="SideLinkBG" class="form-control" type="color" name="brcolSideLinkBG" value="<?=$this->session->flashdata('brcolSideLinkBG')?>">
 						</div>
 						<div class="form-group col-sm-4">
 							<label>SideLinkColor</label>
-							<input id="SideLinkColor" class="form-control" type="color" name="brcolSideLinkColor">
+							<input id="SideLinkColor" class="form-control" type="color" name="brcolSideLinkColor" value="<?=$this->session->flashdata('brcolSideLinkColor')?>">
 						</div>
 						<div class="form-group col-sm-4">
 							<label>SideLinkBorder</label>
-							<input id="SideLinkBorder" class="form-control" type="color" name="brcolSideLinkBorder">
+							<input id="SideLinkBorder" class="form-control" type="color" name="brcolSideLinkBorder" value="<?=$this->session->flashdata('brcolSideLinkBorder')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-12">
 							<label>MainBG</label>
-							<input id="MainBG" class="form-control" type="color" name="brcolMainBG">
+							<input id="MainBG" class="form-control" type="color" name="brcolMainBG" value="<?=$this->session->flashdata('brcolMainBG')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-6">
 							<label>WindowsBG</label>
-							<input id="WindowsBG" class="form-control" type="color" name="brcolWindowsBG">
+							<input id="WindowsBG" class="form-control" type="color" name="brcolWindowsBG" value="<?=$this->session->flashdata('brcolWindowsBG')?>">
 						</div>
 						<div class="form-group col-sm-6">
 							<label>WindowsBorder</label>
-							<input id="WindowsBorder" class="form-control" type="color" name="brcolWindowsBorder">
+							<input id="WindowsBorder" class="form-control" type="color" name="brcolWindowsBorder" value="<?=$this->session->flashdata('brcolWindowsBorder')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-4">
 							<label>TableBG</label>
-							<input id="TableBG" class="form-control" type="color" name="brcolTableBG">
+							<input id="TableBG" class="form-control" type="color" name="brcolTableBG" value="<?=$this->session->flashdata('brcolTableBG')?>">
 						</div>
 						<div class="form-group col-sm-4">
 							<label>TableColor</label>
-							<input id="TableColor" class="form-control" type="color" name="brcolTableColor">
+							<input id="TableColor" class="form-control" type="color" name="brcolTableColor" value="<?=$this->session->flashdata('brcolTableColor')?>">
 						</div>
 						<div class="form-group col-sm-4">
 							<label>TableBorder</label>
-							<input id="TableBorder" class="form-control" type="color" name="brcolTableBorder">
+							<input id="TableBorder" class="form-control" type="color" name="brcolTableBorder" value="<?=$this->session->flashdata('brcolTableBorder')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-3">
 							<label>TabsBG</label>
-							<input id="TabsBG" class="form-control" type="color" name="brcolTabsBG">
+							<input id="TabsBG" class="form-control" type="color" name="brcolTabsBG" value="<?=$this->session->flashdata('brcolTabsBG')?>">
 						</div>
 						<div class="form-group col-sm-3">
 							<label>TabsLinkColor</label>
-							<input id="TabsLinkColor" class="form-control" type="color" name="brcolTabsLinkColor">
+							<input id="TabsLinkColor" class="form-control" type="color" name="brcolTabsLinkColor" value="<?=$this->session->flashdata('brcolTabsLinkColor')?>">
 						</div>
 						<div class="form-group col-sm-3">
 							<label>TabsActiveColor</label>
-							<input id="TabsActiveColor" class="form-control" type="color" name="brcolTabsActiveColor">
+							<input id="TabsActiveColor" class="form-control" type="color" name="brcolTabsActiveColor" value="<?=$this->session->flashdata('brcolTabsActiveColor')?>">
 						</div>
 						<div class="form-group col-sm-3">
 							<label>TabsBorder</label>
-							<input id="TabsBorder" class="form-control" type="color" name="brcolTabsBorder">
+							<input id="TabsBorder" class="form-control" type="color" name="brcolTabsBorder" value="<?=$this->session->flashdata('brcolTabsBorder')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-3">
 							<label>ButtonBG</label>
-							<input id="ButtonBG" class="form-control" type="color" name="brcolButtonBG">
+							<input id="ButtonBG" class="form-control" type="color" name="brcolButtonBG" value="<?=$this->session->flashdata('brcolButtonBG')?>">
 						</div>
 						<div class="form-group col-sm-3">
 							<label>ButtonColor</label>
-							<input id="ButtonColor" class="form-control" type="color" name="brcolButtonColor">
+							<input id="ButtonColor" class="form-control" type="color" name="brcolButtonColor" value="<?=$this->session->flashdata('brcolButtonColor')?>">
 						</div>
 						<div class="form-group col-sm-3">
 							<label>ButtonBorder</label>
-							<input id="ButtonBorder" class="form-control" type="color" name="brcolButtonBorder">
+							<input id="ButtonBorder" class="form-control" type="color" name="brcolButtonBorder" value="<?=$this->session->flashdata('brcolButtonBorder')?>">
 						</div>
 						<div class="form-group col-sm-3">
 							<label>ButtonHover</label>
-							<input id="ButtonHover" class="form-control" type="color" name="brcolButtonHover">
+							<input id="ButtonHover" class="form-control" type="color" name="brcolButtonHover" value="<?=$this->session->flashdata('brcolButtonHover')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-6">
 							<label>ProgressRemaining</label>
-							<input id="ProgressRemaining" class="form-control" type="color" name="brcolProgressRemaining">
+							<input id="ProgressRemaining" class="form-control" type="color" name="brcolProgressRemaining" value="<?=$this->session->flashdata('brcolProgressRemaining')?>">
 						</div>
 						<div class="form-group col-sm-6">
 							<label>ProgressBar</label>
-							<input id="ProgressBar" class="form-control" type="color" name="brcolProgressBar">
+							<input id="ProgressBar" class="form-control" type="color" name="brcolProgressBar" value="<?=$this->session->flashdata('brcolProgressBar')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-6">
 							<label>PageNoBG</label>
-							<input id="PageNoBG" class="form-control" type="color" name="brcolPageNoBG">
+							<input id="PageNoBG" class="form-control" type="color" name="brcolPageNoBG" value="<?=$this->session->flashdata('brcolPageNoBG')?>">
 						</div>
 						<div class="form-group col-sm-6">
 							<label>PageNoColor</label>
-							<input id="PageNoColor" class="form-control" type="color" name="brcolPageNoColor">
+							<input id="PageNoColor" class="form-control" type="color" name="brcolPageNoColor" value="<?=$this->session->flashdata('brcolPageNoColor')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-4">
 							<label>PageNoActiveBG</label>
-							<input id="PageNoActiveBG" class="form-control" type="color" name="brcolPageNoActiveBG">
+							<input id="PageNoActiveBG" class="form-control" type="color" name="brcolPageNoActiveBG" value="<?=$this->session->flashdata('brcolPageNoActiveBG')?>">
 						</div>
 						<div class="form-group col-sm-4">
 							<label>PageNoActiveColor</label>
-							<input id="PageNoActiveColor" class="form-control" type="color" name="brcolPageNoActiveColor">
+							<input id="PageNoActiveColor" class="form-control" type="color" name="brcolPageNoActiveColor" value="<?=$this->session->flashdata('brcolPageNoActiveColor')?>">
 						</div>
 						<div class="form-group col-sm-4">
 							<label>PageNoActiveBorder</label>
-							<input id="PageNoActiveBorder" class="form-control" type="color" name="brcolPageNoActiveBorder">
+							<input id="PageNoActiveBorder" class="form-control" type="color" name="brcolPageNoActiveBorder" value="<?=$this->session->flashdata('brcolPageNoActiveBorder')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-12">
 							<label>HeadColor</label>
-							<input id="HeadColor" class="form-control" type="color" name="brcolHeadColor">
+							<input id="HeadColor" class="form-control" type="color" name="brcolHeadColor" value="<?=$this->session->flashdata('brcolHeadColor')?>">
 						</div>
 					</div>
 				</div>
@@ -544,8 +544,10 @@
 			$('#employerBranches').modal('show');
 			// assign current branch colors to color selection
 			<?php
-			foreach ($_SESSION['Colors'] as $row) {
-				echo "$('#" . $row["Part"] . "').val('" . $row["HexColor"] . "');";
+			if (is_null($this->session->flashdata('inpError'))) {
+				foreach ($_SESSION['Colors'] as $row) {
+					echo "$('#" . $row["Part"] . "').val('" . $row["HexColor"] . "');";
+				}
 			}
 			?>
 		<?php elseif(isset($_GET['employerID']) && isset($_GET['branchID'])): ?>

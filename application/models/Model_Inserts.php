@@ -43,9 +43,9 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('branches', $data);
 		return $result;
 	}
-	public function InsertBranchColor($data)
+	public function InsertBranchColors($data)
 	{
-		$result = $this->db->insert('branch_colors', $data);
+		$result = $this->db->insert_batch('branch_colors', $data);
 		return $result;
 	}
 	// RECORDS

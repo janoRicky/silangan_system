@@ -75,6 +75,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function CheckAdminNo($AdminNo)
+	{
+		$SQL = "SELECT * FROM admin WHERE AdminNo = ?";
+		$result = $this->db->query($SQL,$AdminNo);
+		return $result;
+	}
 	public function CheckAdminID($AdminID)
 	{
 		$SQL = "SELECT * FROM admin WHERE AdminID = ?";
@@ -141,6 +147,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL,$BranchName);
 		return $result;
 	}
+	public function GetBranchID($BranchID)
+	{
+		$SQL = "SELECT * FROM branches WHERE BranchID = '$BranchID'";
+		$result = $this->db->query($SQL,$BranchID);
+		return $result;
+	}
 	public function getBranchOption()
 	{
 		$SQL = "SELECT * FROM branches WHERE Status = 'Active'";
@@ -186,6 +198,12 @@ class Model_Selects extends CI_Model {
 	public function GetBranchesEmployed($BranchID)
 	{
 		$SQL = "SELECT * FROM applicants, branches WHERE applicants.BranchEmployed = '$BranchID' AND branches.BranchID = '$BranchID'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function GetBranchesAdmin($BranchID)
+	{
+		$SQL = "SELECT * FROM admin, branches WHERE admin.BranchID = '$BranchID' AND branches.BranchID = '$BranchID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -237,12 +255,6 @@ class Model_Selects extends CI_Model {
 	{
 		$SQL = "SELECT * FROM hours_weekly WHERE BranchID = '$BranchID'";
 		$result = $this->db->query($SQL);
-		return $result;
-	}
-	public function GetBranchID($BranchID)
-	{
-		$SQL = "SELECT * FROM branches WHERE BranchID = '$BranchID'";
-		$result = $this->db->query($SQL,$BranchID);
 		return $result;
 	}
 	public function GetWeeklyListEmployee($BranchID)

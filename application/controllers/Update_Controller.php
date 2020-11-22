@@ -150,7 +150,7 @@ class Update_Controller extends CI_Controller {
 			$E_Years = $this->input->post('E_Years',TRUE);
 
 			if ($ApplicantID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) A:' . $ApplicantID . ' D:' . $E_Days . ' H:' . $E_Months . ' Y:' . $E_Years . ' </h5></div>');
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) </h5></div>');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -394,7 +394,7 @@ class Update_Controller extends CI_Controller {
 				}
 				else
 				{
-					$pImage = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
+					$pImage = 'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
 				}
 			}
 				// INSERT EMPLOYEE
@@ -555,6 +555,41 @@ class Update_Controller extends CI_Controller {
 			{
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
 				redirect($_SERVER['HTTP_REFERER']);
+			}
+		}
+	}
+	public function ReassignAdmin()
+	{
+		$AdminNo = $this->input->post('R_AdminNo',TRUE);
+		$BranchID = $this->input->post('R_BranchID',TRUE);
+
+		if ($BranchID == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! </h5></div>');
+			redirect('Admin_List');
+		}
+		else
+		{
+			$CheckAdminNo = $this->Model_Selects->CheckAdminNo($AdminNo);
+			if ($CheckAdminNo->num_rows() > 0) {
+				$data = array(
+					'BranchID' => $BranchID,
+				);
+				$UpdateAdminInfo = $this->Model_Updates->UpdateAdmin($AdminNo,$data);
+
+				if ($UpdateAdminInfo == TRUE) {
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Admin Reassigned!</h5></div>');
+					redirect('Admin_List');
+				}
+				else
+				{
+					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+					redirect('Admin_List');
+				}
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+				redirect('Admin_List');
 			}
 		}
 	}
@@ -1228,297 +1263,343 @@ class Update_Controller extends CI_Controller {
 			$ApplicantsArray = array();
 
 			foreach ( $xlsx->rows() as $k => $r ):
-					if ($k == 0) continue; // skip first row
-					// echo '<tr class="clickable-row" data-toggle="modal" data-target="#HoursWeeklyModal">';
-					for ( $i = 0; $i < $cols; $i ++ ) {
-						if ($RowCount == 1){
-							if ($ColCount == 3) {
-								$StartingDate = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+				if ($k == 0) continue; // skip first row
+				// echo '<tr class="clickable-row" data-toggle="modal" data-target="#HoursWeeklyModal">';
+				for ( $i = 0; $i < $cols; $i ++ ) {
+					if ($RowCount == 1){
+						if ($ColCount == 3) {
+							$StartingDate = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
 
-								$this->Model_Updates->UpdateWeeklyHoursCurrent();
-								$this->Model_Deletes->CleanWeeklyDates();
-								$HoursHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
-								$SpecialHolidays = array('01-25', '02-25', '04-11', '08-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
+							$this->Model_Updates->UpdateWeeklyHoursCurrent();
+							$this->Model_Deletes->CleanWeeklyDates();
+							$HoursHolidays = array('01-01', '04-09', '04-10', '05-01', '06-12', '08-31', '11-30', '12-25', '12-30'); // MONTH - DAY
+							$SpecialHolidays = array('01-25', '02-25', '04-11', '08-21', '11-01', '11-02', '12-08', '12-24', '12-31'); // MONTH - DAY
 
-								for ($i = 0; $i <= $cols - 5; $i++) {
-									$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($StartingDate)));
-									$DateChecker = new DateTime($Date);
-									if (in_array($DateChecker->format('m-d'), $HoursHolidays)) {
-										$Type = 'Holiday';
-									} elseif (in_array($DateChecker->format('m-d'), $SpecialHolidays)) {
-										$Type = 'Special';
-									} else {
-										$Type = 'Normal';
-									}
-									$data = array(
-										'Time' => $Date,
-										'Current' => 'Current',
-									);
-									$BranchViewTime = $this->Model_Inserts->InsertDummyHours($data);
+							for ($i = 0; $i <= $cols - 5; $i++) {
+								$Date = date('Y-m-d', strtotime('+' . $i . ' day', strtotime($StartingDate)));
+								$DateChecker = new DateTime($Date);
+								if (in_array($DateChecker->format('m-d'), $HoursHolidays)) {
+									$Type = 'Holiday';
+								} elseif (in_array($DateChecker->format('m-d'), $SpecialHolidays)) {
+									$Type = 'Special';
+								} else {
+									$Type = 'Normal';
 								}
-
-							}
-
-						}
-						if ($RowCount >= 1) {
-							if ($ColCount == 0) {
-								$ApplicantID = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
-								array_push($ApplicantsArray, $ApplicantID);
-							}
-							if ($ColCount == 1) {
-								$Name = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
-							}
-							if ($ColCount == 2) {
-								$Salary = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
-							}
-							if ($ColCount >= 3 && $ColCount < $cols - 1) {
-								$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
-								// foreach ($GetWeeklyDates->result_array($ColCount - 3) as $nrow):
-								// 	echo $nrow['Time'];
-								// endforeach;
-
-								// Attempt at an Excel format. TODO: Fix later.
-								$Split = explode('/', ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ));
-								// if ($Split[0] == 'N') {
-								// 	$Type = 'Normal';
-								// } elseif ($Split[0] == 'R') {
-								// 	$Type = 'Rest Day';
-								// } elseif ($Split[0] == 'H') {
-								// 	$Type = 'Holiday';
-								// } elseif ($Split[0] == 'S') {
-								// 	$Type = 'Special';
-								// } else {
-								// 	$Type = 'Unknown';
-								// }
-
-								// if ( $Split[0] > 8) {
-								// 		$otValue = $Split[0] - 8;
-								// 	}
-								// 	else
-								// 	{
-								// 		$otValue = 0;
-								// 	}
-								// 	if ( $Split[0] > 8) {
-								// 		$rHours = 8;
-								// 	}
-								// 	else
-								// 	{
-								// 		$rHours = $Split[0];
-								// 	}
-								$rHours = $Split[0];
 								$data = array(
-									'BranchID' => $BranchID,
-									'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
-									'Hours' => $rHours
+									'Time' => $Date,
+									'Current' => 'Current',
 								);
-								$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHoursFromImport($ApplicantID,$data);
-								// echo '------------- <br>';
-								// echo 'Applicant ID: ' . $ApplicantID . '<br>';
-								// echo 'Name: ' . $Name . '<br>';
-								// echo 'Salary: ' . $Salary . '<br>';
-								// echo 'Date: ' . $GetWeeklyDates->result_array()[$ColCount - 3]['Time'] . '<br>';
-								// echo 'Hours: ' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '<br>';
-								// echo '------------- <br>';
+								$BranchViewTime = $this->Model_Inserts->InsertDummyHours($data);
 							}
+
 						}
-						$ColCount++;
+
 					}
+					if ($RowCount >= 1) {
+						if ($ColCount == 0) {
+							$ApplicantID = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+							array_push($ApplicantsArray, $ApplicantID);
+						}
+						if ($ColCount == 1) {
+							$Name = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+						}
+						if ($ColCount == 2) {
+							$Salary = ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' );
+						}
+						if ($ColCount >= 3 && $ColCount < $cols - 1) {
+							$GetWeeklyDates = $this->Model_Selects->GetWeeklyDates();
+							// foreach ($GetWeeklyDates->result_array($ColCount - 3) as $nrow):
+							// 	echo $nrow['Time'];
+							// endforeach;
 
-					$RowCount++;
-					$ColCount = 0;
-				endforeach;
-				if ($RowCount <= $xlsx->rows()) {
-					$ApplicantsArray = serialize($ApplicantsArray);
-					$this->session->set_userdata('ApplicantsArray', $ApplicantsArray);
-					redirect('ViewBranch?id='.$id.'&Mode='.$mode);
-				}
-				$this->load->view('_template/users/u_redirecting');
-				
-			} else {
-				$Error = SimpleXLSX::parseError();
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: ' . $Error . '</h5></div>');
-				redirect($_SERVER['HTTP_REFERER']);
-			
-			}
-			
-			
-			
-			// $date1 = new DateTime($FromDate);
-			// $date2 = new DateTime($ToDate);
+							// Attempt at an Excel format. TODO: Fix later.
+							$Split = explode('/', ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ));
+							// if ($Split[0] == 'N') {
+							// 	$Type = 'Normal';
+							// } elseif ($Split[0] == 'R') {
+							// 	$Type = 'Rest Day';
+							// } elseif ($Split[0] == 'H') {
+							// 	$Type = 'Holiday';
+							// } elseif ($Split[0] == 'S') {
+							// 	$Type = 'Special';
+							// } else {
+							// 	$Type = 'Unknown';
+							// }
 
-			// $diff = $date2->diff($date1)->format("%a");
-			// if ($diff > 730) {
-			// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 2 years</h5></div>');
-			// 	redirect($_SERVER['HTTP_REFERER']);
-			// } elseif ($diff > 180 && $diff < 730) {
-			// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #FFA500;"><h5><i class="fas fa-exclamation-triangle"></i> Note: You are viewing at a huge date range, performance may get slower than usual</h5></div>');
-			// }
-			// // TODO: Clean & optimize this. May cause lag on huge database.
-			// $this->Model_Updates->UpdateWeeklyHoursCurrent();
-			// $this->Model_Deletes->CleanWeeklyDates();
-			// for ($i = 0; $i <= $diff; $i++) {
-			// 	if ($Day < 10 && $i != 0) {
-			// 		$Date = $Year . '-' . $Month . '-' . '0' . $Day;
-			// 	} else {
-			// 		$Date = $Year . '-' . $Month . '-' . $Day;
-			// 	}
-			// 	$data = array(
-			// 		'Time' => $Date,
-			// 		'Current' => 'Current',
-			// 	);
-			// 	$BranchViewTime = $this->Model_Inserts->InsertBranchViewTime($data);
-			// 	$Day++;
-			// 	if ($BranchViewTime && $i == $diff) {
-			// 		redirect('ViewBranch?id=' . $BranchID);
-			// 	}
-			// }
-		}
-
-		public function TerminateContract() {
-
-			$ApplicantID = $this->input->get('id');
-			if (!isset($_GET['id'])) {
-				redirect('Employee');
-			}
-			else
-			{
-				date_default_timezone_set('Asia/Manila');
-
-				$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
-				$GetBranch = $this->Model_Selects->getBranchOption();
-
-				if ($CheckEmployee->num_rows() > 0) {
-					foreach ($CheckEmployee->result_array() as $row) {
-						foreach ($GetBranch->result_array() as $nrow) {
-							if ($row['BranchEmployed'] == $nrow['BranchID']) {
-								$BranchName = $nrow['Name'];
-
-								$data = array(
-									'ApplicantID' => $ApplicantID,
-									'PreviousDateStarted' => $row['DateStarted'],
-									'PreviousDateEnds' => $row['DateEnds'],
-									'Branch' => $BranchName,
-									'Notes' => 'Terminated at ' . date('Y-m-d h:i:s A'),
-								);
-								$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);
-								$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantID);
-								if ($ApplicantExpired == TRUE) {
-									$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . "'s contract has been terminated!</h5></div>");
-								// LOGBOOK
-								// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-								// $LogbookType = 'Update';
-								// $LogbookEvent = "Employee " . $ApplicantID . "'s contract has been terminated!";
-								// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-								// $data = array(
-								// 	'Time' => $LogbookCurrentTime,
-								// 	'Type' => $LogbookType,
-								// 	'Event' => $LogbookEvent,
-								// 	'Link' => $LogbookLink,
-								// );
-								// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-									redirect('ApplicantsExpired');
-								}
-								else
-								{
-									$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
-								}
-							}
+							// if ( $Split[0] > 8) {
+							// 		$otValue = $Split[0] - 8;
+							// 	}
+							// 	else
+							// 	{
+							// 		$otValue = 0;
+							// 	}
+							// 	if ( $Split[0] > 8) {
+							// 		$rHours = 8;
+							// 	}
+							// 	else
+							// 	{
+							// 		$rHours = $Split[0];
+							// 	}
+							$rHours = $Split[0];
+							$data = array(
+								'BranchID' => $BranchID,
+								'Date' => $GetWeeklyDates->result_array()[$ColCount - 3]['Time'],
+								'Hours' => $rHours
+							);
+							$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHoursFromImport($ApplicantID,$data);
+							// echo '------------- <br>';
+							// echo 'Applicant ID: ' . $ApplicantID . '<br>';
+							// echo 'Name: ' . $Name . '<br>';
+							// echo 'Salary: ' . $Salary . '<br>';
+							// echo 'Date: ' . $GetWeeklyDates->result_array()[$ColCount - 3]['Time'] . '<br>';
+							// echo 'Hours: ' . ( isset( $r[ $i ] ) ? $r[ $i ] : '&nbsp;' ) . '<br>';
+							// echo '------------- <br>';
 						}
 					}
+					$ColCount++;
 				}
-				else
-				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
-				}
-			}
-		}
-		public function UpdateEmployer()
-		{
-			$EmployerID = $this->input->post('M_EmployerID');
-			$LastName = $this->input->post('LastName');
-			$FirstName = $this->input->post('FirstName');
-			$MiddleInitial = $this->input->post('MiddleInitial');
-			$ContactNumber = $this->input->post('ContactNumber');
-			$Area = $this->input->post('Area');
-			$Address = $this->input->post('Address');
 
-			if ($LastName == NULL || $FirstName == NULL || $MiddleInitial == NULL || $ContactNumber == NULL || $Area == NULL || $Address == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
-				$data = array(
-					'EmployerID' => $EmployerID,
-					'LastName' => $LastName,
-					'FirstName' => $FirstName,
-					'MiddleInitial' => $MiddleInitial,
-					'ContactNumber' => $ContactNumber,
-					'Area' => $Area,
-					'Address' => $Address,
-				);
-				$this->session->set_flashdata($data);
-				redirect($_SERVER['HTTP_REFERER']);
+				$RowCount++;
+				$ColCount = 0;
+			endforeach;
+			if ($RowCount <= $xlsx->rows()) {
+				$ApplicantsArray = serialize($ApplicantsArray);
+				$this->session->set_userdata('ApplicantsArray', $ApplicantsArray);
+				redirect('ViewBranch?id='.$id.'&Mode='.$mode);
+			}
+			$this->load->view('_template/users/u_redirecting');
+			
+		} else {
+			$Error = SimpleXLSX::parseError();
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: ' . $Error . '</h5></div>');
+			redirect($_SERVER['HTTP_REFERER']);
+		
+		}
+		
+		
+		
+		// $date1 = new DateTime($FromDate);
+		// $date2 = new DateTime($ToDate);
+
+		// $diff = $date2->diff($date1)->format("%a");
+		// if ($diff > 730) {
+		// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date Range for weekly must be lower than 2 years</h5></div>');
+		// 	redirect($_SERVER['HTTP_REFERER']);
+		// } elseif ($diff > 180 && $diff < 730) {
+		// 	$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #FFA500;"><h5><i class="fas fa-exclamation-triangle"></i> Note: You are viewing at a huge date range, performance may get slower than usual</h5></div>');
+		// }
+		// // TODO: Clean & optimize this. May cause lag on huge database.
+		// $this->Model_Updates->UpdateWeeklyHoursCurrent();
+		// $this->Model_Deletes->CleanWeeklyDates();
+		// for ($i = 0; $i <= $diff; $i++) {
+		// 	if ($Day < 10 && $i != 0) {
+		// 		$Date = $Year . '-' . $Month . '-' . '0' . $Day;
+		// 	} else {
+		// 		$Date = $Year . '-' . $Month . '-' . $Day;
+		// 	}
+		// 	$data = array(
+		// 		'Time' => $Date,
+		// 		'Current' => 'Current',
+		// 	);
+		// 	$BranchViewTime = $this->Model_Inserts->InsertBranchViewTime($data);
+		// 	$Day++;
+		// 	if ($BranchViewTime && $i == $diff) {
+		// 		redirect('ViewBranch?id=' . $BranchID);
+		// 	}
+		// }
+	}
+
+	public function TerminateContract() {
+
+		$ApplicantID = $this->input->get('id');
+		if (!isset($_GET['id'])) {
+			redirect('Employee');
+		}
+		else
+		{
+			date_default_timezone_set('Asia/Manila');
+
+			$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
+			$GetBranch = $this->Model_Selects->getBranchOption();
+
+			if ($CheckEmployee->num_rows() > 0) {
+				foreach ($CheckEmployee->result_array() as $row) {
+					foreach ($GetBranch->result_array() as $nrow) {
+						if ($row['BranchEmployed'] == $nrow['BranchID']) {
+							$BranchName = $nrow['Name'];
+
+							$data = array(
+								'ApplicantID' => $ApplicantID,
+								'PreviousDateStarted' => $row['DateStarted'],
+								'PreviousDateEnds' => $row['DateEnds'],
+								'Branch' => $BranchName,
+								'Notes' => 'Terminated at ' . date('Y-m-d h:i:s A'),
+							);
+							$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);
+							$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantID);
+							if ($ApplicantExpired == TRUE) {
+								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . "'s contract has been terminated!</h5></div>");
+							// LOGBOOK
+							// $LogbookCurrentTime = date('Y-m-d h:i:s A');
+							// $LogbookType = 'Update';
+							// $LogbookEvent = "Employee " . $ApplicantID . "'s contract has been terminated!";
+							// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+							// $data = array(
+							// 	'Time' => $LogbookCurrentTime,
+							// 	'Type' => $LogbookType,
+							// 	'Event' => $LogbookEvent,
+							// 	'Link' => $LogbookLink,
+							// );
+							// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+								redirect('ApplicantsExpired');
+							}
+							else
+							{
+								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+							}
+						}
+					}
+				}
 			}
 			else
 			{
-				$data = array(
-					'LastName' => $LastName,
-					'FirstName' => $FirstName,
-					'MiddleInitial' => $MiddleInitial,
-					'ContactNumber' => $ContactNumber,
-					'Area' => $Area,
-					'Address' => $Address,
-				);
-				$updatedEmployer = $this->Model_Updates->UpdateEmployer($EmployerID, $data);
-				if ($updatedEmployer) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
-					redirect("Employers");
-				}
-				else
-				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
-					redirect("Employers");
-				}
-			}
-		}
-		public function UpdateBranch()
-		{
-			$BranchID = $this->input->post('M_BranchID');
-			$EmployerID = $this->input->post('EmployerID');
-			$Name = $this->input->post('Name');
-			$Address = $this->input->post('Address');
-			$ContactNumber = $this->input->post('ContactNumber');
-			$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix');
-
-			if ($EmployerID == NULL || $Name == NULL || $Address == NULL || $ContactNumber == NULL || $EmployeeIDSuffix == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
-				$data = array(
-					'BranchID' => $BranchID,
-					'EmployerID' => $EmployerID,
-					'Name' => $Name,
-					'Address' => $Address,
-					'ContactNumber' => $ContactNumber,
-					'EmployeeIDSuffix' => $EmployeeIDSuffix,
-				);
-				$this->session->set_flashdata($data);
-				redirect($_SERVER['HTTP_REFERER']);
-			}
-			else
-			{
-				$data = array(
-					'EmployerID' => $EmployerID,
-					'Name' => $Name,
-					'Address' => $Address,
-					'ContactNumber' => $ContactNumber,
-					'EmployeeIDSuffix' => $EmployeeIDSuffix,
-				);
-				$updatedBranch = $this->Model_Updates->UpdateBranch($BranchID, $data);
-				if ($updatedBranch) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
-					redirect("Employers");
-				}
-				else
-				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
-					redirect("Employers");
-				}
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
 			}
 		}
 	}
+	public function UpdateEmployer()
+	{
+		$EmployerID = $this->input->post('M_EmployerID');
+		$LastName = $this->input->post('LastName');
+		$FirstName = $this->input->post('FirstName');
+		$MiddleInitial = $this->input->post('MiddleInitial');
+		$ContactNumber = $this->input->post('ContactNumber');
+		$Area = $this->input->post('Area');
+		$Address = $this->input->post('Address');
+
+		if ($LastName == NULL || $FirstName == NULL || $MiddleInitial == NULL || $ContactNumber == NULL || $Area == NULL || $Address == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$data = array(
+				'EmployerID' => $EmployerID,
+				'LastName' => $LastName,
+				'FirstName' => $FirstName,
+				'MiddleInitial' => $MiddleInitial,
+				'ContactNumber' => $ContactNumber,
+				'Area' => $Area,
+				'Address' => $Address,
+			);
+			$this->session->set_flashdata($data);
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			$data = array(
+				'LastName' => $LastName,
+				'FirstName' => $FirstName,
+				'MiddleInitial' => $MiddleInitial,
+				'ContactNumber' => $ContactNumber,
+				'Area' => $Area,
+				'Address' => $Address,
+			);
+			$updatedEmployer = $this->Model_Updates->UpdateEmployer($EmployerID, $data);
+			if ($updatedEmployer) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+				redirect("Employers");
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+				redirect("Employers");
+			}
+		}
+	}
+	public function UpdateBranch()
+	{
+		$BranchID = $this->input->post('M_BranchID');
+		$EmployerID = $this->input->post('EmployerID');
+		$pImage = $this->input->post('M_BranchIcon');
+		$Name = $this->input->post('Name');
+		$Address = $this->input->post('Address');
+		$ContactNumber = $this->input->post('ContactNumber');
+		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix');
+
+		$colors = array("NavbarBG", "NavbarColor", "NavbarBorder", "NavbarSideBG", "NavbarSideBorder", "SidebarBG", "SidebarBorder", "SideLinkBG", "SideLinkColor", "SideLinkBorder", "MainBG", "WindowsBG", "WindowsBorder", "TableBG", "TableColor", "TableBorder", "TabsBG", "TabsLinkColor", "TabsActiveColor", "TabsBorder", "ButtonBG", "ButtonColor", "ButtonBorder", "ButtonHover", "ProgressRemaining", "ProgressBar", "PageNoBG", "PageNoColor", "PageNoActiveBG", "PageNoActiveColor", "PageNoActiveBorder", "HeadColor");
+
+		if ($EmployerID == NULL || $Name == NULL || $Address == NULL || $ContactNumber == NULL || $EmployeeIDSuffix == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$data = array(
+				'BranchID' => $BranchID,
+				'EmployerID' => $EmployerID,
+				'Name' => $Name,
+				'Address' => $Address,
+				'ContactNumber' => $ContactNumber,
+				'EmployeeIDSuffix' => $EmployeeIDSuffix,
+			);
+			$this->session->set_flashdata($data);
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			$custombranchid = str_pad($BranchID,5,0,STR_PAD_LEFT) . "-B";
+
+			$config['upload_path']          = './uploads/'.$custombranchid;
+			$config['allowed_types']        = 'gif|jpg|png';
+			$config['max_size']             = 2000;
+			$config['max_width']            = 2000;
+			$config['max_height']           = 2000;
+
+			$this->load->library('upload', $config);
+			if (!is_dir('uploads'))
+			{
+				mkdir('./uploads', 0777, true);
+			}
+			if (!is_dir('uploads/' . $custombranchid))
+			{
+				mkdir('./uploads/' . $custombranchid, 0777, true);
+				$dir_exist = false;
+			}
+
+			if (!$_FILES['pImage']['name'] == '') {
+				if (! $this->upload->do_upload('pImage'))
+				{
+					$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+					redirect($_SERVER['HTTP_REFERER']);
+				}
+				else
+				{
+					$pImage = 'uploads/'.$custombranchid.'/'.$this->upload->data('file_name');
+				}
+			}
+
+
+			$data = array(
+				'EmployerID' => $EmployerID,
+				'BranchIcon' => $pImage,
+				'Name' => $Name,
+				'Address' => $Address,
+				'ContactNumber' => $ContactNumber,
+				'EmployeeIDSuffix' => $EmployeeIDSuffix,
+			);
+			$updatedBranch = $this->Model_Updates->UpdateBranch($BranchID, $data);
+
+			$dataColors = array();
+			foreach ($colors as $key => $val) {
+				$dataColors[] = array(
+					'Part' => $val,
+					'HexColor' => $this->input->post('brcol' . $val,TRUE),
+				);
+			}
+			$this->Model_Updates->UpdateBranchColors($BranchID,$dataColors);
+
+			if ($updatedBranch) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+				redirect("ModifyBranch?id=" . $BranchID);
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+				redirect("Employers");
+			}
+		}
+	}
+}

@@ -824,11 +824,17 @@ class Main_Controller extends CI_Controller {
 				$data = array(
 					'BranchID' => $ged['BranchID'],
 					'EmployerID' => $ged['EmployerID'],
+					'BranchIcon' => $ged['BranchIcon'],
 					'Name' => $ged['Name'],
 					'Address' => $ged['Address'],
 					'ContactNumber' => $ged['ContactNumber'],
 					'EmployeeIDSuffix' => $ged['EmployeeIDSuffix'],
 				);
+
+				$branchColors = $this->Model_Selects->getBranchColors($ged['BranchID'])->result_array();
+				foreach ($branchColors as $key => $val) {
+					$data['brcol' . $val["Part"]] = $val["HexColor"];
+				}
 
 				$data['Breadcrumb'] = '
 				<nav aria-label="breadcrumb">

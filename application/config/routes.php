@@ -102,6 +102,7 @@ $route['remove_contri'] = 'Delete_Controller/remove_contri';
 $route['EmployApplicant'] = 'Update_Controller/EmployApplicant';
 $route['ExtendContract'] = 'Update_Controller/ExtendContract';
 $route['UpdateEmployee'] = 'Update_Controller/UpdateEmployee';
+$route['ReassignAdmin'] = 'Update_Controller/ReassignAdmin';
 $route['UpdateEmployer'] = 'Update_Controller/UpdateEmployer';
 $route['UpdateBranch'] = 'Update_Controller/UpdateBranch';
 $route['AddNote'] = 'Update_Controller/AddNote';

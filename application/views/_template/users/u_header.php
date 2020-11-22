@@ -12,54 +12,40 @@
 		<?php endif ?>
 	</title>
 	
-	<!-- if color is null make it transparent -->
+<!-- INSERT INTO `branch_colors`(`BranchID`, `Part`, `HexColor`) VALUES
+('21', 'NavbarBG', '#ff0600'),
+('21', 'NavbarColor', '#ffffff'),
+('21', 'NavbarBorder', '#fffe7e'),
+('21', 'NavbarSideBG', '#ff0600'),
+('21', 'NavbarSideBorder', '#fffe7e'),
+('21', 'SidebarBG', '#ffffff'),
+('21', 'SidebarBorder', '#fffe7e'),
+('21', 'SideLinkBG', '#ffffff'),
+('21', 'SideLinkColor', '#000000'),
+('21', 'SideLinkBorder', '#fffe7e'),
+('21', 'MainBG', '#ffffff'),
+('21', 'WindowsBG', '#ffffff'),
+('21', 'WindowsBorder', '#fffe7e'),
+('21', 'TableBG', '#ffffff'),
+('21', 'TableColor', '#000000'),
+('21', 'TableBorder', '#fffea9'),
+('21', 'TabsBG', '#fcfcfc'),
+('21', 'TabsLinkColor', '#545429'),
+('21', 'TabsActiveColor', '#272713'),
+('21', 'TabsBorder', '#fffe7e'),
+('21', 'ButtonBG', '#ff4b49'),
+('21', 'ButtonColor', '#ffffff'),
+('21', 'ButtonBorder', '#ffffff'),
+('21', 'ButtonHover', '#ff0600'),
+('21', 'ProgressRemaining',­ '#ff2f2b'),
+('21', 'ProgressBar', '#ff4b49'),
+('21', 'PageNoBG', '#ffffff'),
+('21', 'PageNoColor', '#537468'),
+('21', 'PageNoActiveBG', '#ff4b49'),
+('21', 'PageNoActiveColor',­ '#ffffff'),
+('21', 'PageNoActiveBorder'­, '#ffffff'),
+('21', 'HeadColor', '#272713') -->
 	<style>
-		/*INSERT INTO `branch_colors`(`BColorID`, `BranchID`, `Part`, `HexColor`) VALUES 
-
-		('19', 'NavbarBG', '#ff0600'),
-		('19', 'NavbarColor', '#ffffff'),
-		('19', 'NavbarBorder', '#fffe7e'),
-
-		('19', 'NavbarSideBG', '#ff0600'),
-		('19', 'NavbarSideBorder', '#fffe7e'),
-
-		('19', 'SidebarBG', '#ffffff'),
-		('19', 'SidebarBorder', '#fffe7e'),
-
-		('19', 'SideLinkBG', '#ffffff'),
-		('19', 'SideLinkColor', '#000000'),
-		('19', 'SideLinkBorder', '#fffe7e'),
-
-		('19', 'MainBG', '#ffffff'),
-
-		('19', 'WindowsBG', '#ffffff'),
-		('19', 'WindowsBorder', '#fffe7e'),
-
-		('19', 'TableBG', '#ffffff'),
-		('19', 'TableColor', '#000000'),
-		('19', 'TableBorder', '#fffea9'),
-
-		('19', 'TabsBG', '#fcfcfc'),
-		('19', 'TabsLinkColor', '#545429'),
-		('19', 'TabsActiveColor', '#272713'),
-		('19', 'TabsBorder', '#fffe7e'),
-
-		('19', 'ButtonBG', '#ff4b49'),
-		('19', 'ButtonColor', '#ffffff'),
-		('19', 'ButtonBorder', '#ffffff'),
-		('19', 'ButtonHover', '#ff0600'),
-
-		('19', 'ProgressRemaining', '#ff2f2b'),
-		('19', 'ProgressBar', '#ff4b49'),
-
-		('19', 'PageNoBG', '#ffffff'),
-		('19', 'PageNoColor', '#537468'),
-
-		('19', 'PageNoActiveBG', '#ff4b49'),
-		('19', 'PageNoActiveColor', '#ffffff'),
-		('19', 'PageNoActiveBorder', '#ffffff'),
-
-		('19', 'HeadColor', '#272713')*/
 		:root {
 			<?php
 			$Colors = $_SESSION['Colors'];

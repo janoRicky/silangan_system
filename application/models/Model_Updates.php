@@ -49,6 +49,12 @@ class Model_Updates extends CI_Model {
 		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
+	public function UpdateAdmin($AdminNo,$data)
+	{
+		$this->db->where('AdminNo', $AdminNo);
+		$result = $this->db->update('admin', $data);
+		return $result;
+	}
 	public function ReminderLocked($ApplicantID)
 	{
 		$data = array(
@@ -189,6 +195,12 @@ class Model_Updates extends CI_Model {
 	{
 		$this->db->where('BranchID', $BranchID);
 		$result = $this->db->update('branches', $data);
+		return $result;
+	}
+	public function UpdateBranchColors($BranchID,$data)
+	{
+		$this->db->where('BranchID', $BranchID);
+		$result = $this->db->update_batch('branch_colors', $data, 'Part');
 		return $result;
 	}
 }

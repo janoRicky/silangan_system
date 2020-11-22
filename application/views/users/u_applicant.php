@@ -52,7 +52,7 @@
 										<tr>
 											<td class="text-center">
 												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													<img src="<?=base_url() . $row['ApplicantImage']?>" width="70" height="70" class="rounded-circle">
 												</div>
 												<div class="col-sm-12 align-middle">
 													<?php echo $row['ApplicantID']; ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2020 at 01:15 PM
+-- Generation Time: Nov 22, 2020 at 05:12 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -225,7 +225,8 @@ INSERT INTO `branches` (`BranchID`, `EmployerID`, `BranchIcon`, `Name`, `Address
 (16, '2', 0x687474703a2f2f6c6f63616c686f73742f73696c616e67616e5f73797374656d2f75706c6f6164732f322d32313131323032303132313834332d452f72617069645f636974795f7265616c74792d37353070782e706e67, 'Rapid City Realty', 'Test', 'Test', 'RCR', 'Active'),
 (17, '2', 0x687474703a2f2f6c6f63616c686f73742f73696c616e67616e5f73797374656d2f75706c6f6164732f322d32313131323032303132353535362d452f676f6f645f736565642d37353070782e706e67, 'Good Seed Mining Corporation', 'Test', 'Test', 'GSMC', 'Active'),
 (18, '3', NULL, 'Silangan Lumber', 'Test', 'Test', 'SL', 'Deleted'),
-(19, '3', 0x687474703a2f2f6c6f63616c686f73742f73696c616e67616e5f73797374656d2f75706c6f6164732f332d32313131323032303132353834322d452f73696c616e67616e5f6c756d6265722d37353070782e706e67, 'Silangan Lumber', 'Test', 'Test', 'SL', 'Active');
+(19, '3', 0x687474703a2f2f6c6f63616c686f73742f73696c616e67616e5f73797374656d2f75706c6f6164732f332d32313131323032303132353834322d452f73696c616e67616e5f6c756d6265722d37353070782e706e67, 'Silangan Lumber', 'Test', 'Test', 'SL', 'Active'),
+(20, '4', 0x687474703a2f2f6c6f63616c686f73742f73696c616e67616e5f73797374656d2f75706c6f6164732f30303031332d422f72617069645f636974795f7265616c74792d35303070782e706e67, 'test', 'Test', 'TEST', 'TesT', 'Active');
 
 -- --------------------------------------------------------
 
@@ -340,7 +341,39 @@ INSERT INTO `branch_colors` (`BColorID`, `BranchID`, `Part`, `HexColor`) VALUES
 (381, '19', 'PageNoActiveBG', '#ff4b49'),
 (382, '19', 'PageNoActiveColor', '#ffffff'),
 (383, '19', 'PageNoActiveBorder', '#ffffff'),
-(384, '19', 'HeadColor', '#272713');
+(384, '19', 'HeadColor', '#272713'),
+(385, '20', 'NavbarBG', '#91a98b'),
+(386, '20', 'NavbarColor', '#ffffff'),
+(387, '20', 'NavbarBorder', '#6e806a'),
+(388, '20', 'NavbarSideBG', '#91a98b'),
+(389, '20', 'NavbarSideBorder', '#6e806a'),
+(390, '20', 'SidebarBG', '#ffffff'),
+(391, '20', 'SidebarBorder', '#6e806a'),
+(392, '20', 'SideLinkBG', '#ffffff'),
+(393, '20', 'SideLinkColor', '#000000'),
+(394, '20', 'SideLinkBorder', '#6e806a'),
+(395, '20', 'MainBG', '#ffffff'),
+(396, '20', 'WindowsBG', '#ffffff'),
+(397, '20', 'WindowsBorder', '#6e806a'),
+(398, '20', 'TableBG', '#ffffff'),
+(399, '20', 'TableColor', '#000000'),
+(400, '20', 'TableBorder', '#7b8f76'),
+(401, '20', 'TabsBG', '#fcfcfc'),
+(402, '20', 'TabsLinkColor', '#545429'),
+(403, '20', 'TabsActiveColor', '#272713'),
+(404, '20', 'TabsBorder', '#6e806a'),
+(405, '20', 'ButtonBG', '#537468'),
+(406, '20', 'ButtonColor', '#ffffff'),
+(407, '20', 'ButtonBorder', '#ffffff'),
+(408, '20', 'ButtonHover', '#91a98b'),
+(409, '20', 'ProgressRemaining', '#364c44'),
+(410, '20', 'ProgressBar', '#537468'),
+(411, '20', 'PageNoBG', '#ffffff'),
+(412, '20', 'PageNoColor', '#537468'),
+(413, '20', 'PageNoActiveBG', '#537468'),
+(414, '20', 'PageNoActiveColor', '#ffffff'),
+(415, '20', 'PageNoActiveBorder', '#ffffff'),
+(416, '20', 'HeadColor', '#272713');
 
 -- --------------------------------------------------------
 
@@ -1072,13 +1105,13 @@ ALTER TABLE `beneficiaries`
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `BranchID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `BranchID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `branch_colors`
 --
 ALTER TABLE `branch_colors`
-  MODIFY `BColorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=385;
+  MODIFY `BColorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=417;
 
 --
 -- AUTO_INCREMENT for table `char_references`

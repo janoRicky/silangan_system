@@ -24,6 +24,7 @@
 								<thead>
 									<tr>
 										<th> Level </th>
+										<th> Branch </th>
 										<th> Position </th>
 										<th> Employee ID </th>
 										<th> Full Name </th>
@@ -33,7 +34,16 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($ShowAdmin->result_array() as $row): ?>
+									<?php
+									// get branch names
+									$Admins = $ShowAdmin->result_array();
+									foreach ($Admins as $key => $row) {
+										$GetBranchInfo = $this->Model_Selects->GetBranchID($row['BranchID']);
+										$BranchInfo = $GetBranchInfo->row_array();
+										$Admins[$key]['BranchName'] = $BranchInfo['Name'];
+									}
+									?>
+									<?php foreach ($Admins as $row): ?>
 										<tr>
 											<td class="text-center align-middle">
 												<?php
@@ -55,6 +65,9 @@
 												?>
 											</td>
 											<td class="text-center align-middle">
+												<?php echo $row['BranchName'] ; ?>
+											</td>
+											<td class="text-center align-middle">
 												<?php echo $row['Position'] ; ?>
 											</td>
 											<td class="text-center align-middle">
@@ -73,6 +86,7 @@
 												?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
+												<button id="<?=$row['AdminNo']?>" type="button" class="btn btn-info btn-sm w-100 mb-1 ModalReassign" data-toggle="modal" data-target="#reassign_Admin"><i class="fas fa-user-edit"></i> Reassign</button>
 												<?php if ($ShowAdmin->num_rows() > 1) { ?>
 													<a href="<?=base_url()?>RemoveAdmin?id=<?php echo $row['AdminNo']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Admin?')"><i class="fas fa-trash"></i> Delete</a>
 												<?php } else { ?>
@@ -110,17 +124,15 @@
 								<option value="Level_3">Level 3 Accounting</option>
 							</select>
 						</div>
-						<div class="form-row">
-							<div class="form-group m-1 col">
-								<label>Choose Branch</label>
-								<select class="form-control" name="BranchID">
-									<?php foreach ($getBranchOption->result_array() as $row): ?>
-										<option value="<?=$row['BranchID'];?>">
-											<?=$row['Name'];?>
-										</option>
-									<?php endforeach ?>
-								</select>
-							</div>
+						<div class="form-group m-1 col">
+							<label>Choose Branch</label>
+							<select class="form-control" name="BranchID">
+								<?php foreach ($getBranchOption->result_array() as $row): ?>
+									<option value="<?=$row['BranchID'];?>">
+										<?=$row['Name'];?>
+									</option>
+								<?php endforeach ?>
+							</select>
 						</div>
 						<div class="form-group m-1 col">
 							<label>Position</label>
@@ -170,6 +182,38 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</div>
+			<?php echo form_close();?>
+		</div>
+	</div>
+	<div class="modal fade" id="reassign_Admin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<?php echo form_open(base_url().'ReassignAdmin','method="post"');?>
+			<div class="modal-content m-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Reassign Admin</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body p-5">
+					<input id="R_AdminNo" type="hidden" name="R_AdminNo">
+					<div class="form-row">
+						<div class="form-group m-1 col">
+							<label>Choose Branch</label>
+							<select class="form-control" name="R_BranchID">
+								<?php foreach ($getBranchOption->result_array() as $row): ?>
+									<option value="<?=$row['BranchID'];?>">
+										<?=$row['Name'];?>
+									</option>
+								<?php endforeach ?>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Reassign</button>
 				</div>
 			</div>
 			<?php echo form_close();?>
@@ -253,6 +297,10 @@
 	    $('#ExportPDF').on('click', function () {
 	        table.button('4').trigger();
 	    });
+
+		$('.ModalReassign').on('click', function () {
+			$('#R_AdminNo').val($(this).attr('id'));
+		});
 	});
 </script>
 </html>
