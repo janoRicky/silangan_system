@@ -4,14 +4,13 @@
 			<a href="Dashboard">
 				<?php
 				if (isset($_SESSION['BranchIcon'])) {
-					echo '<img class="m-auto BranchIcon" src="' . base_url() . $_SESSION["BranchIcon"] . '" style="height: 100%;">';
+					echo '<img class="m-auto BranchIcon" src="' .$_SESSION["BranchIcon"] . '" style="height: 100%;">';
 				}
 				else
 				{
-					echo $_SESSION['BranchName'];
+					echo $_SESSION['BranchIcon'];
 				}
 				?>
-				
 			</a>
 		</b>
 	</div>
