@@ -1053,7 +1053,7 @@ class Main_Controller extends CI_Controller {
 			if ($row['bencart']['c_id'] == $_POST['row_id']) {
 				unset($_SESSION["bencart"][$s_da]);
 				if(empty($_SESSION["bencart"]))
-				unset($_SESSION["bencart"]);
+					unset($_SESSION["bencart"]);
 			}
 		}
 	}
@@ -1152,7 +1152,7 @@ class Main_Controller extends CI_Controller {
 			if ($row['acadcart']['c_id'] == $_POST['row_id']) {
 				unset($_SESSION["acadcart"][$s_da]);
 				if(empty($_SESSION["acadcart"]))
-				unset($_SESSION["acadcart"]);
+					unset($_SESSION["acadcart"]);
 			}
 		}
 	}
@@ -1252,7 +1252,7 @@ class Main_Controller extends CI_Controller {
 			if ($row['emp_cart']['emp_id'] == $_POST['row_id']) {
 				unset($_SESSION["emp_cart"][$s_da]);
 				if(empty($_SESSION["emp_cart"]))
-				unset($_SESSION["emp_cart"]);
+					unset($_SESSION["emp_cart"]);
 			}
 		}
 	}
@@ -1333,7 +1333,7 @@ class Main_Controller extends CI_Controller {
 			if ($row['ref_cart']['c_id'] == $_POST['row_id']) {
 				unset($_SESSION["ref_cart"][$s_da]);
 				if(empty($_SESSION["ref_cart"]))
-				unset($_SESSION["ref_cart"]);
+					unset($_SESSION["ref_cart"]);
 			}
 		}
 	}
@@ -1411,23 +1411,81 @@ class Main_Controller extends CI_Controller {
 
 			$cur_rate = 400;
 			$ncrate = $cur_rate / 8;
-			$diff_am = abs(strtotime($row->Timein_AM) - strtotime($row->Timeout_AM));
-			$diff_pm = abs(strtotime($row->Timein_PM) - strtotime($row->Timeout_PM));
 
-			$tmins_am = $diff_am/60;
-			$tmins_pm = $diff_pm/60;
+			$am_in = $row->Timein_AM;
+			$am_out = $row->Timeout_AM;
+			$pm_in = $row->Timein_PM;
+			$pm_out = $row->Timeout_PM;
 
-			$hours_am = $tmins_am/60;
-			$hours_pm = $tmins_pm/60;
+			if ($am_out == NULL AND $pm_in == NULL) {		## NO BREAK BETWEEN AM IN AND PM OUT
 
-			$mins_am = $tmins_am%60;
-			$mins_pm = $tmins_pm%60;
-			$sumHrs =$tmins_am + $tmins_pm;
+				$totaldiff = abs(strtotime($am_in) - strtotime($pm_out));
+				$mins = $totaldiff/60;	## total mins
+				$totalhours = $mins/60;	## total hours
+				$remmins = $mins%60;	## total remainder
 
-			$sumbyHRS = $hours_am + $hours_pm;
+				$sumHrs = $mins;
 
-			$totalPay = $sumbyHRS * $ncrate;
-			
+				$sumbyHRS = $totalhours;
+
+				$totalPay = $sumbyHRS * $ncrate;
+
+			}
+			elseif ($am_in == NULL AND $am_out == NULL) {		## HALFDAY PM
+				$totaldiff = abs(strtotime($pm_in) - strtotime($pm_out));
+				$mins = $totaldiff/60;	## total mins
+				$totalhours = $mins/60;	## total hours
+				$remmins = $mins%60;	## total remainder
+
+				$sumHrs = $mins;
+
+				$sumbyHRS = $totalhours;
+
+				$totalPay = $sumbyHRS * $ncrate;
+			}
+			elseif ($pm_in == NULL AND $pm_out == NULL) {		## HALFDAY AM
+				$totaldiff = abs(strtotime($am_in) - strtotime($am_out));
+				$mins = $totaldiff/60;	## total mins
+				$totalhours = $mins/60;	## total hours
+				$remmins = $mins%60;	## total remainder
+
+				$sumHrs = $mins;
+
+				$sumbyHRS = $totalhours;
+
+				$totalPay = $sumbyHRS * $ncrate;
+			}
+			elseif (isset($am_in) AND isset($am_out) AND isset($pm_in) AND isset($pm_out))
+			{
+				$diff_am = abs(strtotime($am_in) - strtotime($am_out));
+				$diff_pm = abs(strtotime($pm_in) - strtotime($pm_out));
+
+				$tmins_am = $diff_am/60;
+				$tmins_pm = $diff_pm/60;
+
+
+				$hours_am = $tmins_am/60;
+				$hours_pm = $tmins_pm/60;
+
+				$mins_am = $tmins_am%60;
+				$mins_pm = $tmins_pm%60;
+
+				$sumHrs = $mins_am + $mins_pm;
+
+				$sumbyHRS = $hours_am + $hours_pm;
+
+				$totalPay = $sumbyHRS * $ncrate;
+			}
+			if ($sumbyHRS > 8) {
+				$totalPay = 8 * $ncrate;
+			}
+			else
+			{
+				$totalPay = $totalPay;
+			}
+			$n_ot = ($row->overtime / 60);
+			$ot_earned = ($ncrate * 1.25) * $n_ot;
+
 			$arr[] = array(
 				'id' => $row->id,
 				'ApplicantID' => $row->ApplicantID,
@@ -1446,13 +1504,13 @@ class Main_Controller extends CI_Controller {
 				'sp_day' => $row->sp_day,
 				'nh_day' => $row->nh_day,
 				'cur_rate' => $cur_rate,
-				'totalHrs' => $sumHrs /60,
+				'totalHrs' => $sumbyHRS,
 				'overtime' => $row->overtime,
 				'totalPay' => $totalPay,
-				
+				'ot_earned' => $ot_earned,
+
 			);
 		}
-        //save data mysql data in json encode format       
 		echo $json_data = json_encode($arr);
 
 	}

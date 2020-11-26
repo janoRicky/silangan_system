@@ -94,12 +94,12 @@
             <input id="overtime" type="text" class="form-control text-center" readonly="">
           </div>
           <div class="form-group col-2 text-center">
-            <label for="">Day pay</label>
+            <label for="">Earned (PHP)</label>
             <input id="totalPay" type="text" class="form-control text-center" readonly="">
           </div>
           <div class="form-group col-2 text-center mr-auto">
-            <label for="">Overtime pay</label>
-            <input id="totalPay" type="text" class="form-control text-center" readonly="">
+            <label for="">OT Earned (PHP)</label>
+            <input id="otpay" type="text" class="form-control text-center" readonly="">
           </div>
         </div>
         <div class="form-row mt-4">

@@ -59,17 +59,40 @@
 							border: 1px solid #D186D8 !important;
 						}
 					</style>
-					<div class="col-12 mt-4 mb-4">
-						<button class="btn btn-primary" type="button">
-							<i class="fas fa-receipt"></i> View Payslips
-						</button>
-						<button class="btn btn-success" type="button">
-							<i class="fas fa-receipt"></i> Generate Payslip
-						</button>
+					
+					<div class="w-100 mt-4 mb-4 mr-3 ml-3 p-4" style="border: 1px solid rgba(0,0,0,0.1); border-radius: 5px;">
+						<?php echo form_open(base_url().'ViewThisAttendance','method="get"'); ?>
+						<div class="fom-row">
+							<input class="form-control" type="text" name="ApplicantID" hidden="" value="<?php echo $getApplicantDataa['ApplicantID'];?>">
+							<div class="form-group col-12 col-md-2" style="display: inline-block; float: left;">
+								<label>Start Date</label>
+								<input class="form-control" type="date" name="startDate">
+							</div>
+							<div class="form-group col-12 col-md-2" style="display: inline-block; float: left;">
+								<label>End Date</label>
+								<input class="form-control" type="date" name="EndDate">
+							</div>
+							<div class="form-group col-12" style="display: block; float: left;">
+								<button class="btn btn-success" type="submit">
+									<i class="fas fa-filter f-w"></i> Filter Date
+								</button>
+							</div>
+						</div>
+						<?php echo form_close(); ?>
+					</div>
+					<div class="w-100 mb-4 ml-3 mr-3 p-4" style="border: 1px solid rgba(0,0,0,0.1); border-radius: 5px;">
+						<div class="fom-row">
+							<button class="btn btn-primary" type="button">
+								<i class="fas fa-receipt"></i> View Payslips
+							</button>
+							<button id="submitformslip" class="btn btn-success" type="button">
+								<i class="fas fa-receipt"></i> Generate Payslip
+							</button>
+						</div>
 					</div>
 					<div class="col-sm-12 col-mb-12 mt-2">
 						<div class="table-responsive p-1">
-							<table id="dateTable" class="table table-condensed table-bordered w-100">
+							<table id="dateTable" class="table table-condensed table-bordered w-100" data-page-length='25'>
 								<thead>
 									<tr style="border: none;">
 										<th class="text-center" style="background-color: #23BBD6; color: #EAEAEA; border: none;" data-sortable="false">
@@ -132,78 +155,91 @@
 								</thead>
 								<tbody>
 									<?php foreach ($GetDateAttendance->result_array() as $row) { ?>
-										<tr class='clickable-row'>
-											<td class="text-center">
-												<input class="checkSelectall chk_customsize" type="checkbox" name="row_id[]" value="<?php echo $row['id']; ?>">
-											</td>
-											<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
-												<?php echo $row['Date_Time']; ?>
-											</td>
-											<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
-												<?php echo $row['Timein_AM']; ?>
-											</td>
-											<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
-												<?php echo $row['Timeout_AM']; ?>
-											</td>
-											<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
-												<?php echo $row['Timein_PM']; ?>
-											</td>
-											<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
-												<?php echo $row['Timeout_PM']; ?>
-											</td>
-											<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
-												<?php if (!isset($row['Late_Time']) || $row['Late_Time'] < 1) {
-													echo "0";
-												} else {
-													echo $row['Late_Time'];
-												} ?>
-											</td>
-											<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
-												<?php if (!isset($row['Leave_Early']) || $row['Leave_Early'] < 1) {
-													echo "0";
-												} else {
-													echo $row['Leave_Early'];
-												} ?>
-											</td>
-											<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
-												<?php if (!isset($row['Absence_Time']) || $row['Absence_Time'] < 1) {
-													echo "0";
-												} else {
-													echo $row['Absence_Time'];
-												} ?>
-											</td>
-											<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
-												<?php if (isset($row['overtime']) || $row['overtime'] < 1) {
-													echo $row['overtime'];
-												} ?>
-											</td>
-											<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
-												<?php if (!isset($row['Total_BYmin']) || $row['Total_BYmin'] < 1) { ?>
-													0
-												<?php } else { ?>
-													<span data-toggle="tooltip" data-html="true" title="<?php echo 'Regular Hrs : '.floor($row['Total_BYmin']/60).' Hr(s) </br>OT : '.($row['Total_BYmin']%60).' min(s)'; ?>"><?php echo $row['Total_BYmin']; ?></span>
-												<?php } ?>
-											</td>
-											<?php if ($row['row_status'] == '1') { ?>
-												<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata" data-toggle="tooltip" data-html="true" title="Updated">
-													<i class="fas fa-check-circle" style="color: #0DB425;"></i>
-												</td>
+										<tr class='clickable-row <?php if ($row['row_status'] == 2) {
+											echo 'absent_back';
+										} ?>'>
+										<td class="text-center">
+											<input id="sel_ids" class="checkSelectall chk_customsize" type="checkbox" name="row_id[]" value="<?php echo $row['id']; ?>">
+										</td>
+										<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
+											<?php echo $row['Date_Time']; ?>
+										</td>
+										<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
+											<?php echo $row['Timein_AM']; ?>
+										</td>
+										<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
+											<?php echo $row['Timeout_AM']; ?>
+										</td>
+										<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
+											<?php echo $row['Timein_PM']; ?>
+										</td>
+										<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
+											<?php echo $row['Timeout_PM']; ?>
+										</td>
+										<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
+											<?php if (!isset($row['Late_Time']) || $row['Late_Time'] < 1) {
+												echo "0";
+											} else {
+												echo $row['Late_Time'];
+											} ?>
+										</td>
+										<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
+											<?php if (!isset($row['Leave_Early']) || $row['Leave_Early'] < 1) {
+												echo "0";
+											} else {
+												echo $row['Leave_Early'];
+											} ?>
+										</td>
+										<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
+											<?php if (!isset($row['Absence_Time']) || $row['Absence_Time'] < 1) {
+												echo "0";
+											} else {
+												echo $row['Absence_Time'];
+											} ?>
+										</td>
+										<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
+											<?php if (isset($row['overtime']) || $row['overtime'] < 1) {
+												echo $row['overtime'];
+											} ?>
+										</td>
+										<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata">
+											<?php if (!isset($row['Total_BYmin']) || $row['Total_BYmin'] < 1) { ?>
+												0
 											<?php } else { ?>
-												<td id="<?php echo $row['id']; ?>" class="text-center vm_witdata" data-toggle="tooltip" data-html="true" title="Need update">
-													<i class="fas fa-ban" style="color: #D83838;"></i>
-												</td>
+												<span data-toggle="tooltip" data-html="true" title="<?php echo 'Regular Hrs : '.floor($row['Total_BYmin']/60).' Hr(s) </br>OT : '.($row['Total_BYmin']%60).' min(s)'; ?>"><?php echo $row['Total_BYmin']; ?></span>
 											<?php } ?>
-										</tr>
-									<?php } ?>
-								</tbody>
-							</table>
-						</div>
+										</td>
+										<?php switch ($row['row_status']) {
+											case '0':
+											echo '<td id="'.$row['id'].'" class="text-center vm_witdata" data-toggle="tooltip" data-html="true" title="Need update">
+											<i class="fas fa-ban" style="color: #E47216;"></i>
+											</td>';
+											break;
+											case '1':
+											echo '<td id="'.$row['id'].'" class="text-center vm_witdata" data-toggle="tooltip" data-html="true" title="Updated">
+											<i class="fas fa-check-circle" style="color: #0DB425;"></i>
+											</td>';
+											break;
+											case '2':
+											echo '<td id="'.$row['id'].'" class="text-center vm_witdata" data-toggle="tooltip" data-html="true" title="Absent">
+											<i class="fas fa-times-circle"></i>
+											</td>';
+											break;
+											default:
+											echo '<td></td>';
+											break;
+										} ?>
+									</tr>
+								<?php } ?>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<?php $this->load->view('_template/modals/m_p_attendance'); ?>
+</div>
+<?php $this->load->view('_template/modals/m_p_attendance'); ?>
 </body>
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
@@ -293,6 +329,8 @@
 						$('#totalHrs').val(obj[0]['totalHrs']);
 						$('#overtime').val(obj[0]['overtime']);
 						$('#totalPay').val(obj[0]['totalPay']);
+						$('#otpay').val(obj[0]['ot_earned']);
+						
 						
 						$('#modalDateEditor').modal({
 							backdrop: 'static',
@@ -305,103 +343,486 @@
 		$('#selectALl').on('click', function () {
 			if ($('.checkSelectall').is(':checked')) {
 				$('.checkSelectall').prop( "checked",false).change();
+				$('.checkSelectall').removeClass("for_submit");
 			} else {
 				$('.checkSelectall').prop( "checked",true).change();
+				$('.checkSelectall').addClass("for_submit");
 			}
 		});
 		$('#time_inam , #time_outam , #time_inpm ,#time_outpm').on('change', function () {
 
-			var amtime1 = $("#time_inam").val().split(':'), amtime2 = $("#time_outam").val().split(':');
-		     var hours1 = parseInt(amtime1[0], 10), 
-		         hours2 = parseInt(amtime2[0], 10),
-		         mins1 = parseInt(amtime1[1], 10),
-		         mins2 = parseInt(amtime2[1], 10);
-		     var amhours = hours2 - hours1, mins = 0;
-		     // get hours
-		     if(amhours < 0) amhours = 24 + amhours;
+			var time_inam = $('#time_inam').val();
+			var time_outam = $('#time_outam').val();
+			var time_inpm = $('#time_inpm').val();
+			var time_outpm = $('#time_outpm').val();
 
-		     // get minutes
-		     if(mins2 >= mins1) {
-		         mins = mins2 - mins1;
-		     }
-		     else {
-		         mins = (mins2 + 60) - mins1;
-		         amhours--;
-		     }
+			if (time_outam == "" && time_inpm == "") 
+			{
+				var amtime1 = time_inam.split(':'), amtime2 = time_outpm.split(':');
+				var hours1 = parseInt(amtime1[0], 10), 
+				hours2 = parseInt(amtime2[0], 10),
+				mins1 = parseInt(amtime1[1], 10),
+				mins2 = parseInt(amtime2[1], 10);
+				var amhours = hours2 - hours1, mins = 0;
 
-		     // convert to fraction of 60
-		     mins = mins / 60; 
-
-		     amhours += mins;
-		     amhours = amhours.toFixed(2);
-
-		     var pmtime1 = $("#time_inpm").val().split(':'), pmtime2 = $("#time_outpm").val().split(':');
-		     var hours3 = parseInt(pmtime1[0], 10), 
-		         hours4 = parseInt(pmtime2[0], 10),
-		         mins3 = parseInt(pmtime1[1], 10),
-		         mins4 = parseInt(pmtime2[1], 10);
-		     var pmhours = hours4 - hours3, mins = 0;
-		     // get hours
-		     if(pmhours < 0) pmhours = 24 + pmhours;
-
-		     // get minutes
-		     if(mins4 >= mins3) {
-		         mins1 = mins4 - mins3;
-		     }
-		     else {
-		         mins1 = (mins4 + 60) - mins3;
-		         pmhours--;
-		     }
-
-		     // convert to fraction of 60
-		     mins1 = mins1 / 60; 
-
-		     pmhours += mins1;
-		     pmhours = pmhours.toFixed(2);
-
-	         
-	         var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
+				if(amhours < 0) amhours = 24 + amhours;
 
 
-	         var c_rate = $('#cur_rate').val() / 8;
-	         if (newtotal > 8) {
-	         	var dtotal = 8;
-	         }
-	         else
-	         {
-	         	var dtotal = newtotal;
-	         }
+				if(mins2 >= mins1) {
+					mins = mins2 - mins1;
+				}
+				else {
+					mins = (mins2 + 60) - mins1;
+					amhours--;
+				}
 
-	         var totalPay = dtotal * c_rate;
-	         var novertime
-	         if (newtotal >= 8) {
-	         	novertime = newtotal - 8;
-	         	novertime = novertime * 60;
-	         } else {
-	         	novertime = 0;
-	         }
-	         $("#overtime").val(novertime);
-	         $("#totalPay").val(totalPay);
-	         $("#totalHrs").val(newtotal);
 
-	         if ($("#totalHrs").val() < 0) {
-	         	Command: toastr["error"]("Error in time checked-in.", "Warning!")
-	         	toastr.options = {
-	         		"showDuration": "300",
-	         		"hideDuration": "1000",
-	         		"timeOut": "5000",
-	         		"extendedTimeOut": "1000",
-	         		"showEasing": "swing",
-	         		"hideEasing": "linear",
-	         		"showMethod": "fadeIn",
-	         		"hideMethod": "fadeOut"
-	         	}
-	         }
-	     });
-		$(function () {
-			$('[data-toggle="tooltip"]').tooltip()
+				mins = mins / 60; 
+
+				amhours += mins;
+				amhours = amhours.toFixed(2);
+				var newtotal = parseFloat(amhours);
+
+			}
+			else if (time_inpm == "" && time_outpm == "") {
+				var amtime1 = time_inam.split(':'), amtime2 = time_outam.split(':');
+				var hours1 = parseInt(amtime1[0], 10), 
+				hours2 = parseInt(amtime2[0], 10),
+				mins1 = parseInt(amtime1[1], 10),
+				mins2 = parseInt(amtime2[1], 10);
+				var amhours = hours2 - hours1, mins = 0;
+
+				if(amhours < 0) amhours = 24 + amhours;
+
+
+				if(mins2 >= mins1) {
+					mins = mins2 - mins1;
+				}
+				else {
+					mins = (mins2 + 60) - mins1;
+					amhours--;
+				}
+
+
+				mins = mins / 60; 
+
+				amhours += mins;
+				amhours = amhours.toFixed(2);
+				var newtotal = parseFloat(amhours);
+			}
+			else if (time_inam == "" && time_outam == "") {
+				var amtime1 = time_inpm.split(':'), amtime2 = time_outpm.split(':');
+				var hours1 = parseInt(amtime1[0], 10), 
+				hours2 = parseInt(amtime2[0], 10),
+				mins1 = parseInt(amtime1[1], 10),
+				mins2 = parseInt(amtime2[1], 10);
+				var amhours = hours2 - hours1, mins = 0;
+
+				if(amhours < 0) amhours = 24 + amhours;
+
+
+				if(mins2 >= mins1) {
+					mins = mins2 - mins1;
+				}
+				else {
+					mins = (mins2 + 60) - mins1;
+					amhours--;
+				}
+
+
+				mins = mins / 60; 
+
+				amhours += mins;
+				amhours = amhours.toFixed(2);
+				var newtotal = parseFloat(amhours);
+			}
+			else if (time_inam != "" && time_outam != "" && time_inpm != "" && time_outpm != "")
+			{
+				var amin = time_inam.split(':'), amout = time_outam.split(':');
+				var h_amin = parseInt(amin[0], 10), 
+				h_amout = parseInt(amout[0], 10),
+				m_amin = parseInt(amin[1], 10),
+				m_amout = parseInt(amout[1], 10);
+				var amhours = h_amout - h_amin, minsam = 0;
+				if(amhours < 0) amhours = 24 + amhours;
+				if(m_amout >= m_amin) {
+					mins1 = m_amout - m_amin;
+				}
+				else {
+					mins1 = (m_amout + 60) - m_amin;
+					amhours--;
+				}
+				mins1 = mins1 / 60;
+				amhours += mins1;
+				amhours = amhours.toFixed(2);
+
+
+				var pmin = time_inpm.split(':'), pmout = time_outpm.split(':');
+				var h_pmin = parseInt(pmin[0], 10), 
+				h_pmout = parseInt(pmout[0], 10),
+				m_pmin = parseInt(pmin[1], 10),
+				m_pmout = parseInt(pmout[1], 10);
+				var pmhours = h_pmout - h_pmin, minspm = 0;
+				if(pmhours < 0) pmhours = 24 + pmhours;
+				if(m_pmout >= m_pmin) {
+					mins2 = m_pmout - m_pmin;
+				}
+				else {
+					mins2 = (m_pmout + 60) - m_pmin;
+					pmhours--;
+				}
+				mins2 = mins2 / 60; 
+				pmhours += mins2;
+				pmhours = pmhours.toFixed(2);
+
+				var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
+			}
+
+			var c_rate = $('#cur_rate').val() / 8;
+
+			if (newtotal > 8) {
+				var dtotal = 8;
+			}
+			else
+			{
+				var dtotal = newtotal;
+			}
+
+			var totalPay = dtotal * c_rate;
+			var novertime , totaOtearned , holidayrate
+
+			if ($('#regular_day').is(':checked')) {
+				holidayrate = 2.60;
+			}
+			else if ($('#sp_day').is(':checked')) {
+				holidayrate = 1.69;
+			}
+			else {
+				holidayrate = 1.25;
+			}
+			if (newtotal > 8) {
+				novertime = newtotal - 8;
+				novertime = novertime * 60;
+				overtimeh = newtotal - 8;
+
+				var otvarrr = (parseFloat(c_rate) * holidayrate);
+				totaOtearned = (parseFloat(otvarrr) * parseFloat(overtimeh));
+
+			} else {
+				novertime = 0;
+				totaOtearned = 0;
+			}
+
+			$("#overtime").val(novertime);
+			$("#totalPay").val(totalPay);
+			$("#totalHrs").val(newtotal);
+			$("#otpay").val(totaOtearned);
+
+			if ($("#totalHrs").val() < 0) {
+				Command: toastr["error"]("Error in time checked-in.", "Warning!")
+				toastr.options = {
+					"showDuration": "300",
+					"hideDuration": "1000",
+					"timeOut": "5000",
+					"extendedTimeOut": "1000",
+					"showEasing": "swing",
+					"hideEasing": "linear",
+					"showMethod": "fadeIn",
+					"hideMethod": "fadeOut"
+				}
+			}
 		});
+$(function () {
+	$('[data-toggle="tooltip"]').tooltip()
+});
+$('#submitformslip').on('click', function () {
+	if ($('.checkSelectall').is(':checked')) {
+		var row_id = $('.for_submit').map(function(){ 
+			return this.value; 
+		}).get();
+	}
+	$.ajax({
+		type: 'POST',
+		url: 'generate_payslip',
+		data: {
+			'row_id[]': row_id,
+		},
+		success: function(data) {
+			alert(data);
+		}
 	});
+});
+$('.checkSelectall').change(function() {
+	if(this.checked) {
+		$(this).addClass("for_submit");
+	}
+	else
+	{
+		$(this).removeClass("for_submit");
+	}
+});
+$('#regular_day').on('change', function () {
+
+	var time_inam = $('#time_inam').val();
+	var time_outam = $('#time_outam').val();
+	var time_inpm = $('#time_inpm').val();
+	var time_outpm = $('#time_outpm').val();
+	if(this.checked) {
+		if (time_outam == "" && time_inpm == "") 
+		{
+			var amtime1 = time_inam.split(':'), amtime2 = time_outpm.split(':');
+			var hours1 = parseInt(amtime1[0], 10), 
+			hours2 = parseInt(amtime2[0], 10),
+			mins1 = parseInt(amtime1[1], 10),
+			mins2 = parseInt(amtime2[1], 10);
+			var amhours = hours2 - hours1, mins = 0;
+			if(amhours < 0) amhours = 24 + amhours;
+			if(mins2 >= mins1) {
+				mins = mins2 - mins1;
+			}
+			else {
+				mins = (mins2 + 60) - mins1;
+				amhours--;
+			}
+			mins = mins / 60; 
+			amhours += mins;
+			amhours = amhours.toFixed(2);
+			var newtotal = parseFloat(amhours);
+		}
+		else if (time_inpm == "" && time_outpm == "") {
+			var amtime1 = time_inam.split(':'), amtime2 = time_outam.split(':');
+			var hours1 = parseInt(amtime1[0], 10), 
+			hours2 = parseInt(amtime2[0], 10),
+			mins1 = parseInt(amtime1[1], 10),
+			mins2 = parseInt(amtime2[1], 10);
+			var amhours = hours2 - hours1, mins = 0;
+			if(amhours < 0) amhours = 24 + amhours;
+			if(mins2 >= mins1) {
+				mins = mins2 - mins1;
+			}
+			else {
+				mins = (mins2 + 60) - mins1;
+				amhours--;
+			}
+			mins = mins / 60; 
+			amhours += mins;
+			amhours = amhours.toFixed(2);
+			var newtotal = parseFloat(amhours);
+		}
+		else if (time_inam == "" && time_outam == "") {
+			var amtime1 = time_inpm.split(':'), amtime2 = time_outpm.split(':');
+			var hours1 = parseInt(amtime1[0], 10), 
+			hours2 = parseInt(amtime2[0], 10),
+			mins1 = parseInt(amtime1[1], 10),
+			mins2 = parseInt(amtime2[1], 10);
+			var amhours = hours2 - hours1, mins = 0;
+			if(amhours < 0) amhours = 24 + amhours;
+			if(mins2 >= mins1) {
+				mins = mins2 - mins1;
+			}
+			else {
+				mins = (mins2 + 60) - mins1;
+				amhours--;
+			}
+			mins = mins / 60; 
+			amhours += mins;
+			amhours = amhours.toFixed(2);
+			var newtotal = parseFloat(amhours);
+		}
+		else if (time_inam != "" && time_outam != "" && time_inpm != "" && time_outpm != "")
+		{
+			var amin = time_inam.split(':'), amout = time_outam.split(':');
+			var h_amin = parseInt(amin[0], 10), 
+			h_amout = parseInt(amout[0], 10),
+			m_amin = parseInt(amin[1], 10),
+			m_amout = parseInt(amout[1], 10);
+			var amhours = h_amout - h_amin, minsam = 0;
+			if(amhours < 0) amhours = 24 + amhours;
+			if(m_amout >= m_amin) {
+				mins1 = m_amout - m_amin;
+			}
+			else {
+				mins1 = (m_amout + 60) - m_amin;
+				amhours--;
+			}
+			mins1 = mins1 / 60;
+			amhours += mins1;
+			amhours = amhours.toFixed(2);
+			var pmin = time_inpm.split(':'), pmout = time_outpm.split(':');
+			var h_pmin = parseInt(pmin[0], 10), 
+			h_pmout = parseInt(pmout[0], 10),
+			m_pmin = parseInt(pmin[1], 10),
+			m_pmout = parseInt(pmout[1], 10);
+			var pmhours = h_pmout - h_pmin, minspm = 0;
+			if(pmhours < 0) pmhours = 24 + pmhours;
+			if(m_pmout >= m_pmin) {
+				mins2 = m_pmout - m_pmin;
+			}
+			else {
+				mins2 = (m_pmout + 60) - m_pmin;
+				pmhours--;
+			}
+			mins2 = mins2 / 60; 
+			pmhours += mins2;
+			pmhours = pmhours.toFixed(2);
+			var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
+		}
+		var c_rate = $('#cur_rate').val() / 8;
+		if (newtotal > 8) {
+			var dtotal = 8;
+		}
+		else
+		{
+			var dtotal = newtotal;
+		}
+		var totalPay = dtotal * c_rate;
+		var novertime , totaOtearned
+		if (newtotal > 8) {
+			novertime = newtotal - 8;
+			novertime = novertime * 60;
+			overtimeh = newtotal - 8;
+
+			var otvarrr = (parseFloat(c_rate) * 2.60);
+			totaOtearned = (parseFloat(otvarrr) * parseFloat(overtimeh));
+
+		} else {
+			novertime = 0;
+			totaOtearned = 0;
+		}
+	}
+	else
+	{
+		if (time_outam == "" && time_inpm == "") 
+		{
+			var amtime1 = time_inam.split(':'), amtime2 = time_outpm.split(':');
+			var hours1 = parseInt(amtime1[0], 10), 
+			hours2 = parseInt(amtime2[0], 10),
+			mins1 = parseInt(amtime1[1], 10),
+			mins2 = parseInt(amtime2[1], 10);
+			var amhours = hours2 - hours1, mins = 0;
+			if(amhours < 0) amhours = 24 + amhours;
+			if(mins2 >= mins1) {
+				mins = mins2 - mins1;
+			}
+			else {
+				mins = (mins2 + 60) - mins1;
+				amhours--;
+			}
+			mins = mins / 60; 
+
+			amhours += mins;
+			amhours = amhours.toFixed(2);
+			var newtotal = parseFloat(amhours);
+		}
+		else if (time_inpm == "" && time_outpm == "") {
+			var amtime1 = time_inam.split(':'), amtime2 = time_outam.split(':');
+			var hours1 = parseInt(amtime1[0], 10), 
+			hours2 = parseInt(amtime2[0], 10),
+			mins1 = parseInt(amtime1[1], 10),
+			mins2 = parseInt(amtime2[1], 10);
+			var amhours = hours2 - hours1, mins = 0;
+			if(amhours < 0) amhours = 24 + amhours;
+			if(mins2 >= mins1) {
+				mins = mins2 - mins1;
+			}
+			else {
+				mins = (mins2 + 60) - mins1;
+				amhours--;
+			}
+			mins = mins / 60; 
+			amhours += mins;
+			amhours = amhours.toFixed(2);
+			var newtotal = parseFloat(amhours);
+		}
+		else if (time_inam == "" && time_outam == "") {
+			var amtime1 = time_inpm.split(':'), amtime2 = time_outpm.split(':');
+			var hours1 = parseInt(amtime1[0], 10), 
+			hours2 = parseInt(amtime2[0], 10),
+			mins1 = parseInt(amtime1[1], 10),
+			mins2 = parseInt(amtime2[1], 10);
+			var amhours = hours2 - hours1, mins = 0;
+			if(amhours < 0) amhours = 24 + amhours;
+			if(mins2 >= mins1) {
+				mins = mins2 - mins1;
+			}
+			else {
+				mins = (mins2 + 60) - mins1;
+				amhours--;
+			}
+			mins = mins / 60; 
+			amhours += mins;
+			amhours = amhours.toFixed(2);
+			var newtotal = parseFloat(amhours);
+		}
+		else if (time_inam != "" && time_outam != "" && time_inpm != "" && time_outpm != "")
+		{
+			var amin = time_inam.split(':'), amout = time_outam.split(':');
+			var h_amin = parseInt(amin[0], 10), 
+			h_amout = parseInt(amout[0], 10),
+			m_amin = parseInt(amin[1], 10),
+			m_amout = parseInt(amout[1], 10);
+			var amhours = h_amout - h_amin, minsam = 0;
+			if(amhours < 0) amhours = 24 + amhours;
+			if(m_amout >= m_amin) {
+				mins1 = m_amout - m_amin;
+			}
+			else {
+				mins1 = (m_amout + 60) - m_amin;
+				amhours--;
+			}
+			mins1 = mins1 / 60;
+			amhours += mins1;
+			amhours = amhours.toFixed(2);
+			var pmin = time_inpm.split(':'), pmout = time_outpm.split(':');
+			var h_pmin = parseInt(pmin[0], 10), 
+			h_pmout = parseInt(pmout[0], 10),
+			m_pmin = parseInt(pmin[1], 10),
+			m_pmout = parseInt(pmout[1], 10);
+			var pmhours = h_pmout - h_pmin, minspm = 0;
+			if(pmhours < 0) pmhours = 24 + pmhours;
+			if(m_pmout >= m_pmin) {
+				mins2 = m_pmout - m_pmin;
+			}
+			else {
+				mins2 = (m_pmout + 60) - m_pmin;
+				pmhours--;
+			}
+			mins2 = mins2 / 60; 
+			pmhours += mins2;
+			pmhours = pmhours.toFixed(2);
+			var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
+		}
+
+		var c_rate = $('#cur_rate').val() / 8;
+
+		if (newtotal > 8) {
+			var dtotal = 8;
+		}
+		else
+		{
+			var dtotal = newtotal;
+		}
+		var totalPay = dtotal * c_rate;
+		var novertime , totaOtearned
+		if (newtotal > 8) {
+			novertime = newtotal - 8;
+			novertime = novertime * 60;
+			overtimeh = newtotal - 8;
+
+			var otvarrr = (parseFloat(c_rate) * 1.25);
+			totaOtearned = (parseFloat(otvarrr) * parseFloat(overtimeh));
+
+		} else {
+			novertime = 0;
+			totaOtearned = 0;
+		}
+	}
+	$("#overtime").val(novertime);
+	$("#totalPay").val(totalPay);
+	$("#totalHrs").val(newtotal);
+	$("#otpay").val(totaOtearned);
+});
+});
 </script>
 <script type="text/javascript">
 	<?php if ($this->session->flashdata('alert_error') == 'amin_error') { ?>
@@ -468,9 +889,14 @@
 	#dateTable td {
 
 	}
+	.absent_back {
+		background-color: #F23D3D;
+		color: #FFFFFF;
+	}
 	#dateTable tbody tr:hover {
 		background-color: rgba(125, 125, 255, 0.25);
 		cursor: pointer;
+		color: #3B3B3B;
 	}
 	.modal-open {
 		overflow-y: auto !important;

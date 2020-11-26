@@ -86,6 +86,9 @@ $route['Add_NewEmployer'] = 'Add_Controller/Add_NewEmployer';
 $route['Add_NewBranch'] = 'Add_Controller/Add_NewBranch';
 $route['AddSupDoc'] = 'Add_Controller/AddSupDoc';
 $route['add_newcontri'] = 'Add_Controller/add_newcontri';
+$route['generate_payslip'] = 'Add_Controller/generate_payslip';
+
+
 
 
 
