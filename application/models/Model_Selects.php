@@ -101,12 +101,12 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetApplicantSkills()
 	{
-		$result =  $this->db->query("SELECT PositionGroup, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' AND PositionGroup IS NOT NULL GROUP BY PositionGroup");
+		$result =  $this->db->query("SELECT PositionDesired, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' AND PositionDesired IS NOT NULL GROUP BY PositionDesired");
 		return $result;
 	}
 	public function GetApplicantSkillsExpired()
 	{
-		$result =  $this->db->query("SELECT PositionGroup, COUNT(*) as count FROM applicants WHERE Status = 'Expired' AND PositionGroup IS NOT NULL GROUP BY PositionGroup");
+		$result =  $this->db->query("SELECT PositionDesired, COUNT(*) as count FROM applicants WHERE Status = 'Expired' AND PositionDesired IS NOT NULL GROUP BY PositionDesired");
 		return $result;
 	}
 	public function CheckApplicant($ApplicantID)
@@ -411,9 +411,9 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function SearchPositionGroups($query)
+	public function SearchPositionDesireds($query)
 	{
-		$SQL = "SELECT * FROM applicants WHERE PositionGroup LIKE '%$query%'";
+		$SQL = "SELECT * FROM applicants WHERE PositionDesired LIKE '%$query%'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
@@ -605,12 +605,6 @@ class Model_Selects extends CI_Model {
 	public function getAllApplicantName()
 	{
 		$SQL = "SELECT * FROM applicants";
-		$result = $this->db->query($SQL);
-		return $result;
-	}
-	public function GetClientDet($BranchID)
-	{
-		$SQL = "SELECT * FROM branches WHERE BranchID= '$BranchID'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

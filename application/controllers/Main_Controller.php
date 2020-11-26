@@ -94,9 +94,17 @@ class Main_Controller extends CI_Controller {
 	}
 	public function index()
 	{
-		$this->session->unset_userdata('acadcart');
-		// redirect('Dashboard');
-		$this->load->view('Login');
+		unset($_SESSION["bencart"]);
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+		
+		if (isset($_SESSION['is_logged_in'])) {
+			redirect('Dashboard');
+		} else {
+			$this->load->view('Login');
+		}
 	}
 	public function CheckUserLogin()
 	{
@@ -129,7 +137,7 @@ class Main_Controller extends CI_Controller {
 		// $data = [];
 
 		// foreach($record as $row) {
-		// 	$data['label'][] = $row->PositionGroup;
+		// 	$data['label'][] = $row->PositionDesired;
 		// 	$data['data'][] = (int) $row->count;
 		// }
 		// $data['chart_data'] = json_encode($data);
@@ -137,7 +145,7 @@ class Main_Controller extends CI_Controller {
 		// $GetApplicantSkillsExpired = $this->Model_Selects->GetApplicantSkillsExpired();
 		// $edata['data'][] = $GetApplicantSkillsExpired->num_rows();
 		// foreach($GetApplicantSkillsExpired->result_array() as $row) {
-		// 	$edata['label'][] = $row['PositionGroup'];
+		// 	$edata['label'][] = $row['PositionDesired'];
 		// }
 		// $data['chart_data_expired'] = json_encode($edata);
 		$data['Breadcrumb'] = '
@@ -294,6 +302,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
+		###	CHECK SESSION
+		$this->CheckUserLogin();
+
 		$header['title'] = 'Applicants | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -318,6 +329,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
+		###	CHECK SESSION
+		$this->CheckUserLogin();
+
 		$header['title'] = 'Expired Contracts | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -341,6 +355,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
+		###	CHECK SESSION
+		$this->CheckUserLogin();
+
 		$header['title'] = 'Archived | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 		$data['Breadcrumb'] = '
@@ -363,6 +380,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		$header['title'] = 'Blacklisted | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -386,6 +406,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		$header['title'] = 'Employees | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -409,6 +432,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		$header['title'] = 'SSS Table | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -429,6 +455,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		if (isset($_GET['id'])) {
 
@@ -558,6 +587,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		if (isset($_GET['id'])) {
 
@@ -682,6 +714,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 		$header['title'] = 'New Employee | Silangan Lumber';
@@ -702,6 +737,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		$header['title'] = 'Administrator | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -741,6 +779,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		$header['title'] = 'Employers | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -760,6 +801,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		if (isset($_GET['id'])) {
 
@@ -809,6 +853,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		if (isset($_GET['id'])) {
 
@@ -863,6 +910,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		$header['title'] = 'Branches | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
@@ -878,9 +928,14 @@ class Main_Controller extends CI_Controller {
 	}
 	public function Payrollsss()
 	{
+		unset($_SESSION["bencart"]);
 		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		$id = $_GET['id'];
 		$BranchID = $_GET['id'];
@@ -924,6 +979,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		if (isset($_GET['id'])) {
 
@@ -989,6 +1047,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["ref_cart"]);
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
 
 		$header['title'] = 'Experimental | Silangan Lumber';
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);

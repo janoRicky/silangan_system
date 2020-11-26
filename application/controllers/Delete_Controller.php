@@ -22,19 +22,21 @@ class Delete_Controller extends CI_Controller {
 			$Removethis = $this->Model_Deletes->RemoveEmpl($id);
 			if ($Removethis) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $id . ' has been succesfully removed!</h5></div>');
+
 				// LOGBOOK
-				// date_default_timezone_set('Asia/Manila');
-				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-				// $LogbookType = 'Archival';
-				// $LogbookEvent = 'Employee ID ' . $id .' has been archived.';
-				// $LogbookLink = base_url() . 'ViewEmployee?id=' . $id;
-				// $data = array(
-				// 	'Time' => $LogbookCurrentTime,
-				// 	'Type' => $LogbookType,
-				// 	'Event' => $LogbookEvent,
-				// 	'Link' => $LogbookLink,
-				// );
-				// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Archival';
+				$LogbookEvent = 'Employee ID ' . $id .' has been archived.';
+				$LogbookLink = base_url() . 'ViewEmployee?id=' . $id;
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -64,19 +66,21 @@ class Delete_Controller extends CI_Controller {
 			$Removethis = $this->Model_Deletes->RemoveAdminM($id);
 			if ($Removethis) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Admin ID ' . $id . ' has been succesfully removed!</h5></div>');
+
 				// LOGBOOK
-				// date_default_timezone_set('Asia/Manila');
-				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-				// $LogbookType = 'Deletion';
-				// $LogbookEvent = 'Admin ID ' . $id .' has been removed.';
-				// $LogbookLink = base_url() . 'Admin_List';
-				// $data = array(
-				// 	'Time' => $LogbookCurrentTime,
-				// 	'Type' => $LogbookType,
-				// 	'Event' => $LogbookEvent,
-				// 	'Link' => $LogbookLink,
-				// );
-				// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Deletion';
+				$LogbookEvent = 'Admin ID ' . $id .' has been removed.';
+				$LogbookLink = base_url() . 'Admin_List';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
 				if (isset($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
 				}
@@ -108,6 +112,21 @@ class Delete_Controller extends CI_Controller {
 				$Removethis = $this->Model_Deletes->RemoveEmployerM($id);
 				if ($Removethis) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employer ID ' . $id . ' has been succesfully removed!</h5></div>');
+
+					// LOGBOOK
+					date_default_timezone_set('Asia/Manila');
+					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+					$LogbookType = 'Deletion';
+					$LogbookEvent = 'Employer ID ' . $id .' has been removed.';
+					$LogbookLink = base_url() . 'Employers';
+					$data = array(
+						'Time' => $LogbookCurrentTime,
+						'Type' => $LogbookType,
+						'Event' => $LogbookEvent,
+						'Link' => $LogbookLink,
+					);
+					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
 					if (isset($_SERVER['HTTP_REFERER'])) {
 						redirect($_SERVER['HTTP_REFERER']);
 					}
@@ -145,19 +164,21 @@ class Delete_Controller extends CI_Controller {
 				$Removethis = $this->Model_Deletes->RemoveBranchM($id);
 				if ($Removethis) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Branch ID ' . $id . ' has been succesfully removed!</h5></div>');
+
 					// LOGBOOK
-					// date_default_timezone_set('Asia/Manila');
-					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-					// $LogbookType = 'Deletion';
-					// $LogbookEvent = 'Branch ID ' . $id .' has been removed.';
-					// $LogbookLink = base_url() . 'Branches';
-					// $data = array(
-					// 	'Time' => $LogbookCurrentTime,
-					// 	'Type' => $LogbookType,
-					// 	'Event' => $LogbookEvent,
-					// 	'Link' => $LogbookLink,
-					// );
-					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					date_default_timezone_set('Asia/Manila');
+					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+					$LogbookType = 'Deletion';
+					$LogbookEvent = 'Branch ID ' . $id .' has been removed.';
+					$LogbookLink = base_url() . 'Branches';
+					$data = array(
+						'Time' => $LogbookCurrentTime,
+						'Type' => $LogbookType,
+						'Event' => $LogbookEvent,
+						'Link' => $LogbookLink,
+					);
+					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					
 					if (isset($_SERVER['HTTP_REFERER'])) {
 						redirect($_SERVER['HTTP_REFERER']);
 					}

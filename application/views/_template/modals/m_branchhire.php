@@ -18,6 +18,9 @@
 					<div class="form-group col-12">
 						<label>Choose Branch</label>
 						<select id="Branchselect" class="form-control" name="BranchID">
+							<option value="" selected="">
+								Select a Branch
+							</option>
 							<?php foreach ($getBranchOption->result_array() as $row): ?>
 								<option value="<?=$row['BranchID'];?>">
 									<?=$row['Name'];?>
@@ -48,7 +51,7 @@
 				<div class="form-row mx-1">
 					<div class="form-group col-12">
 						<label>Employee ID</label>
-						<input id="EmployeeID" class="form-control" type="text" name="EmployeeID" value="">
+						<input id="EmployeeID" class="form-control" type="text" name="EmployeeID" value="" autocomplete="off">
 					</div>
 				</div>
 			</div>

@@ -15,7 +15,7 @@ html,body
 	/*background-image: url("../img/lowpoly_white.png");*/
 }
 
-.btn {
+/*.btn {
 	font-weight: bold;
 }
 .btn-primary {
@@ -26,28 +26,16 @@ html,body
 .btn-primary:hover {
 	background-color: var(--ButtonHover);
 	border: 1px solid var(--ButtonBorder);
-}
+}*/
 
 .table-bordered {
-	color: var(--TableColor) !important;
-	background-color: var(--TableBG) !important;
-	border: 2px solid var(--TableBorder);
+	background-color: var(--MainBG) !important;
+	border: 2px solid var(--Borders);
 	border-left: 0;
 	border-right: 0;
 }
 .table-bordered th, .table-bordered td, .table th, .table td {
-	border-color: var(--TableBorder) !important;
-}
-
-.page-link {
-	color: var(--PageNoColor) !important;
-	background-color: var(--PageNoBG) !important;
-}
-
-.active .page-link {
-	color: var(--PageNoActiveColor) !important;
-	background-color: var(--PageNoActiveBG) !important;
-	border-color: var(--PageNoActiveBorder) !important;
+	border-color: var(--Borders) !important;
 }
 
 .wrapper {
@@ -64,9 +52,9 @@ html,body
 #sidebar {
 	min-width: 250px;
 	max-width: 250px;
-	background-color: var(--SidebarBG);
+	background-color: var(--MainBG);
 	/*background-image: url("../img/lowpoly_sidebar_long.png");*/
-	border: 3px solid var(--SidebarBorder);
+	border: 1px solid var(--Borders);
 	border-top: 0;
 	color: black;
 	/*transition: all 0.3s;*/
@@ -76,11 +64,11 @@ html,body
 .nactive {
 	color: black !important;
 	/*border-left: 4px solid #007bff;*/
-	background: var(--SideLinkBG);
+	background: var(--MainBG);
 	padding-left: 17px !important;
 
 	font-weight: bold;
-	border: 2px solid var(--SideLinkBorder) !important;
+	border: 2px solid var(--Borders) !important;
 }
 #sidebar.active{
 	margin-left: -250px;
@@ -105,12 +93,12 @@ html,body
 	font-family: 'Georgia', sans-serif;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	border-bottom: 3px solid var(--NavbarSideBorder);
-	border-top: 3px solid var(--NavbarSideBorder);
+	border-bottom: 2px solid var(--Borders);
+	border-top: 1px solid var(--Borders);
 	border-right: 0px;
 	font-size: 22px;
 	color: var(--NavbarColor);
-	background-color: var(--NavbarSideBG);
+	background-color: var(--NavbarBG);
 
 	height: 54px;
 }
@@ -141,10 +129,10 @@ html,body
 #sidebar ul li a:hover {
 	color: #000000;
 	/*border-left: 4px solid rgb(230,230,230);*/
-	background: var(--SideLinkBG);
+	background: var(--MainBG);
 	/*padding-left: 17px;*/
 
-	border: 1px solid var(--SideLinkBorder);
+	border: 1px solid var(--Borders);
 }
 a[data-toggle="collapse"] {
 	position: relative;
@@ -244,10 +232,10 @@ a[data-toggle="collapse"] {
 	box-shadow: 2px 0 2px #555;
 }
 .progressRemainingColor {
-	background: var(--ProgressRemaining);
+	background: var(--NavbarBG);
 }
 .progressRemaining {
-	background: var(--ProgressBar);
+	background: var(--NavbarBG);
 }
 .logbook-success {
 	background: linear-gradient(90deg, rgba(148,240,146,1) 28%, rgba(216,255,216,1) 100%);
@@ -275,8 +263,8 @@ a[data-toggle="collapse"] {
 }
 
 .content {
-	background-color: var(--WindowsBG);
-	border: 3px solid var(--WindowsBorder);
+	background-color: var(--MainBG);
+	border: 1px solid var(--Borders);
 }
 .content-body {
 	padding: 20px 30px;
@@ -287,17 +275,20 @@ a[data-toggle="collapse"] {
 
 }
 .tabs {
-	background-color: var(--TabsBG);
-	border-bottom: 2px solid var(--TabsBorder);
+	background-color: var(--MainBG);
+	border-bottom: 2px solid var(--Borders);
 }
 .tab-indicator {
 	width: 0;
 	height: 0;
 	border-left: 33px solid transparent;
 	border-right: 33px solid transparent;
-	border-bottom: 20px solid var(--WindowsBG);
+	border-bottom: 13px solid var(--Borders);
 	margin: 0 auto;
 	cursor: default;
+
+	bottom: 7px;
+	position: relative;
 }
 .tabs ul {
 	list-style-type: none;
@@ -315,7 +306,7 @@ a[data-toggle="collapse"] {
 	/*border-radius: 4px;
 	border-bottom: 2px solid white;
 	background-color: #ffffff !important;*/
-	color: var(--TabsActiveColor) !important;
+	color: #000000 !important;
 	font-size: 15px;
 	font-weight: bold;
 }
@@ -329,7 +320,7 @@ a[data-toggle="collapse"] {
 }*/
 .tab-divider {
 	width: 2px;
-	background-color: var(--TabsBorder);
+	background-color: var(--Borders);
 	cursor: default;
 	padding: 14px 0;
 }
@@ -410,21 +401,21 @@ a[data-toggle="collapse"] {
 
 }
 .employee-dynamic-header {
-	color: var(--HeadColor);
+	color: #000000;
 }
 .employee-personal-row:hover {
 	border-radius: 10px;
 	background-color: rgba(75, 75, 185, 0.14);
 }
 .employee-table-header {
-	color: var(--HeadColor);
+	color: #000000;
 }
 .employee-contract-container {
 	border-radius: 6px;
 	border: 1px solid #007bff;
 }
 .employee-contract-header-title:before {
-	border-bottom: 2px solid var(--HeadColor);
+	border-bottom: 2px solid #000000;
 }
 .employee-documents-notes {
 	margin-top: -16px;
@@ -432,13 +423,13 @@ a[data-toggle="collapse"] {
 }
 .employee-documents-title {
 	font-size: 18px;
-	color: var(--HeadColor);
+	color: #000000;
 }
 .folder-button {
 	outline-style: none;
 	cursor: pointer;
 	font-size: 16px;
-	color: var(--HeadColor);
+	color: #000000;
 }
 .folder-button i {
 	font-size: 24px;
@@ -638,8 +629,9 @@ a[data-toggle="collapse"] {
 	color: var(--NavbarColor);
 	background-color: var(--NavbarBG);
 	text-decoration: none;
-	border: 3px solid var(--NavbarBorder);
+	border: 1px solid var(--Borders);
 	border-left: 0;
+	border-bottom-width: 2px;
 	/*transition:all 0.4s ease-in-out;
 	-webkit-transition:all 0.4s ease-in-out;
 	-moz-transition:all 0.4s ease-in-out;*/
@@ -726,7 +718,7 @@ a[data-toggle="collapse"] {
 	cursor: not-allowed !important;
 }
 .silangan-progress-bar {
-	background-color: var(--ProgressBar) !important;
+	background-color: var(--NavbarBG) !important;
 }
 .silangan-search {
 	border-radius: 6px;
@@ -861,7 +853,7 @@ input[type=number]::-webkit-inner-spin-button {
 		border-right: none;
 		/*border-radius: 4px;
 		border-bottom: 8px solid #ffffff;*/
-		color: var(--TabsLinkColor);
+		color: #000000;
 		/*background-color: #4267B2;*/
 	}
 	.payroll-tabs li a {

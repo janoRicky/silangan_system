@@ -33,7 +33,7 @@ class Update_Controller extends CI_Controller {
 			$Temp_ApplicantID = $ApplicantID;
 			$Temp_ApplicantID++;
 
-			if ($ApplicantID == NULL || $BranchID == NULL) {
+			if ($ApplicantID == NULL || $BranchID == NULL || $EmployeeID == NULL) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s) A:' . $ApplicantID . ' C:' . $BranchID .' D:' . $H_Days . ' H:' . $H_Months . ' Y:' . $H_Years . ' </h5></div>');
 				redirect($_SERVER['HTTP_REFERER']);
 			}
@@ -81,44 +81,48 @@ class Update_Controller extends CI_Controller {
 					$EmployNewApplicant = $this->Model_Inserts->InsertToBranch($BranchID,$Temp_ApplicantID,$data);
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
+
 						// LOGBOOK
-						// date_default_timezone_set('Asia/Manila');
-						// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-						// $LogbookType = 'Employment';
-						// $LogbookEvent = 'Applicant ID ' . $Temp_ApplicantID .' has been employed to Branch ID ' . $BranchID . ' for ';
-						// if($H_Years != 0) {
-						// 	$LogbookEvent = $LogbookEvent . $H_Years;
-						// 	if($H_Years == 1) {
-						// 		$LogbookEvent = $LogbookEvent . ' year, ';
-						// 	} else {
-						// 		$LogbookEvent = $LogbookEvent . ' years, ';
-						// 	}
-						// }
-						// if($H_Months != 0) {
-						// 	$LogbookEvent = $LogbookEvent . $H_Months;
-						// 	if($H_Months == 1) {
-						// 		$LogbookEvent = $LogbookEvent . ' month, ';
-						// 	} else {
-						// 		$LogbookEvent = $LogbookEvent . ' months, ';
-						// 	}
-						// }
-						// if($H_Days != 0) {
-						// 	$LogbookEvent = $LogbookEvent . $H_Days;
-						// 	if($H_Days == 1) {
-						// 		$LogbookEvent = $LogbookEvent . ' day, ';
-						// 	} else {
-						// 		$LogbookEvent = $LogbookEvent . ' days, ';
-						// 	}
-						// }
-						// $LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						// $LogbookLink = base_url() . 'ViewEmployee?id=' . $Temp_ApplicantID;
-						// $data = array(
-						// 	'Time' => $LogbookCurrentTime,
-						// 	'Type' => $LogbookType,
-						// 	'Event' => $LogbookEvent,
-						// 	'Link' => $LogbookLink,
-						// );
-						// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						$GetBranchInfo = $this->Model_Selects->GetBranchDet($BranchID);
+						$BranchInfo = $GetBranchInfo->row_array();
+						date_default_timezone_set('Asia/Manila');
+						$LogbookCurrentTime = date('Y-m-d h:i:s A');
+						$LogbookType = 'Employment';
+						$LogbookEvent = 'Applicant ID ' . $ApplicantID .' has been employed to Branch ' . $BranchInfo['Name'] . ' for ';
+						if($H_Years != 0) {
+							$LogbookEvent = $LogbookEvent . $H_Years;
+							if($H_Years == 1) {
+								$LogbookEvent = $LogbookEvent . ' year, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' years, ';
+							}
+						}
+						if($H_Months != 0) {
+							$LogbookEvent = $LogbookEvent . $H_Months;
+							if($H_Months == 1) {
+								$LogbookEvent = $LogbookEvent . ' month, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' months, ';
+							}
+						}
+						if($H_Days != 0) {
+							$LogbookEvent = $LogbookEvent . $H_Days;
+							if($H_Days == 1) {
+								$LogbookEvent = $LogbookEvent . ' day, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' days, ';
+							}
+						}
+						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
+						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+						$data = array(
+							'Time' => $LogbookCurrentTime,
+							'Type' => $LogbookType,
+							'Event' => $LogbookEvent,
+							'Link' => $LogbookLink,
+						);
+						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 					else
@@ -149,8 +153,11 @@ class Update_Controller extends CI_Controller {
 			$E_Months = $this->input->post('E_Months',TRUE);
 			$E_Years = $this->input->post('E_Years',TRUE);
 
-			if ($ApplicantID == NULL) {
+			if ($E_CurrentDate == NULL || $ApplicantID == NULL) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) </h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			elseif ($E_Days + $E_Months + $E_Years < 1) {
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -182,44 +189,46 @@ class Update_Controller extends CI_Controller {
 					$EmployNewApplicant = $this->Model_Updates->ExtendContract($ApplicantID,$data);
 					if ($EmployNewApplicant == TRUE) {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Contract Extended to ' . $DateEnds . '!</h5></div>');
+
 						// LOGBOOK
-						// date_default_timezone_set('Asia/Manila');
-						// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-						// $LogbookType = 'Update';
-						// $LogbookEvent = 'Applicant ID ' . $ApplicantID .' has their contract extended by ';
-						// if($E_Years != 0) {
-						// 	$LogbookEvent = $LogbookEvent . $E_Years;
-						// 	if($E_Years == 1) {
-						// 		$LogbookEvent = $LogbookEvent . ' year, ';
-						// 	} else {
-						// 		$LogbookEvent = $LogbookEvent . ' years, ';
-						// 	}
-						// }
-						// if($E_Months != 0) {
-						// 	$LogbookEvent = $LogbookEvent . $E_Months;
-						// 	if($E_Months == 1) {
-						// 		$LogbookEvent = $LogbookEvent . ' month, ';
-						// 	} else {
-						// 		$LogbookEvent = $LogbookEvent . ' months, ';
-						// 	}
-						// }
-						// if($E_Days != 0) {
-						// 	$LogbookEvent = $LogbookEvent . $E_Days;
-						// 	if($E_Days == 1) {
-						// 		$LogbookEvent = $LogbookEvent . ' day, ';
-						// 	} else {
-						// 		$LogbookEvent = $LogbookEvent . ' days, ';
-						// 	}
-						// }
-						// $LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract';
-						// $data = array(
-						// 	'Time' => $LogbookCurrentTime,
-						// 	'Type' => $LogbookType,
-						// 	'Event' => $LogbookEvent,
-						// 	'Link' => $LogbookLink,
-						// );
-						// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+						date_default_timezone_set('Asia/Manila');
+						$LogbookCurrentTime = date('Y-m-d h:i:s A');
+						$LogbookType = 'Update';
+						$LogbookEvent = 'Applicant ID ' . $ApplicantID .' has their contract extended by ';
+						if($E_Years != 0) {
+							$LogbookEvent = $LogbookEvent . $E_Years;
+							if($E_Years == 1) {
+								$LogbookEvent = $LogbookEvent . ' year, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' years, ';
+							}
+						}
+						if($E_Months != 0) {
+							$LogbookEvent = $LogbookEvent . $E_Months;
+							if($E_Months == 1) {
+								$LogbookEvent = $LogbookEvent . ' month, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' months, ';
+							}
+						}
+						if($E_Days != 0) {
+							$LogbookEvent = $LogbookEvent . $E_Days;
+							if($E_Days == 1) {
+								$LogbookEvent = $LogbookEvent . ' day, ';
+							} else {
+								$LogbookEvent = $LogbookEvent . ' days, ';
+							}
+						}
+						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
+						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract';
+						$data = array(
+							'Time' => $LogbookCurrentTime,
+							'Type' => $LogbookType,
+							'Event' => $LogbookEvent,
+							'Link' => $LogbookLink,
+						);
+						$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
 						redirect($_SERVER['HTTP_REFERER'] . '#Contract');
 					}
 					else
@@ -536,19 +545,21 @@ class Update_Controller extends CI_Controller {
 				unset($_SESSION["mach_cart"]);
 
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
-					// LOGBOOK
-					// date_default_timezone_set('Asia/Manila');
-					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-					// $LogbookType = 'Update';
-					// $LogbookEvent = 'Updated details on Person ID ' . $ApplicantID . '.';
-					// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
-					// $data = array(
-					// 	'Time' => $LogbookCurrentTime,
-					// 	'Type' => $LogbookType,
-					// 	'Event' => $LogbookEvent,
-					// 	'Link' => $LogbookLink,
-					// );
-					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Update';
+				$LogbookEvent = 'Updated details on Employee ID ' . $ApplicantID . '.';
+				$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -576,8 +587,35 @@ class Update_Controller extends CI_Controller {
 				);
 				$UpdateAdminInfo = $this->Model_Updates->UpdateAdmin($AdminNo,$data);
 
+				$GetBranchInfo = $this->Model_Selects->GetBranchDet($BranchID);
+				$BranchInfo = $GetBranchInfo->row_array();
+
+				if ($_SESSION["AdminNo"] == $AdminNo && $_SESSION["BranchID"] != $BranchID) {
+					$dataSession['BranchID'] = $BranchID;
+					$dataSession['BranchName'] = $BranchInfo['Name'];
+					$dataSession['BranchIcon'] = $BranchInfo['BranchIcon'];
+					$dataSession['Colors'] = $this->Model_Selects->getBranchColors($BranchID)->result_array();
+
+					$this->session->set_userdata($dataSession);
+				}
+
 				if ($UpdateAdminInfo == TRUE) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Admin Reassigned!</h5></div>');
+
+					// LOGBOOK
+					date_default_timezone_set('Asia/Manila');
+					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+					$LogbookType = 'Update';
+					$LogbookEvent = 'Admin #' . $AdminNo . '\'s branch reassigned to ' . $BranchInfo['Name'] . '.';
+					$LogbookLink = base_url() . 'Admin_List';
+					$data = array(
+						'Time' => $LogbookCurrentTime,
+						'Type' => $LogbookType,
+						'Event' => $LogbookEvent,
+						'Link' => $LogbookLink,
+					);
+					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
 					redirect('Admin_List');
 				}
 				else
@@ -1523,7 +1561,8 @@ class Update_Controller extends CI_Controller {
 		$ContactNumber = $this->input->post('ContactNumber');
 		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix');
 
-		$colors = array("NavbarBG", "NavbarColor", "NavbarBorder", "NavbarSideBG", "NavbarSideBorder", "SidebarBG", "SidebarBorder", "SideLinkBG", "SideLinkColor", "SideLinkBorder", "MainBG", "WindowsBG", "WindowsBorder", "TableBG", "TableColor", "TableBorder", "TabsBG", "TabsLinkColor", "TabsActiveColor", "TabsBorder", "ButtonBG", "ButtonColor", "ButtonBorder", "ButtonHover", "ProgressRemaining", "ProgressBar", "PageNoBG", "PageNoColor", "PageNoActiveBG", "PageNoActiveColor", "PageNoActiveBorder", "HeadColor");
+		// color parts
+		$colors = array("NavbarBG", "NavbarColor", "MainBG", "Borders");
 
 		if ($EmployerID == NULL || $Name == NULL || $Address == NULL || $ContactNumber == NULL || $EmployeeIDSuffix == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
@@ -1540,27 +1579,27 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
-			$custombranchid = str_pad($BranchID,5,0,STR_PAD_LEFT) . "-B";
-
-			$config['upload_path']          = './uploads/'.$custombranchid;
-			$config['allowed_types']        = 'gif|jpg|png';
-			$config['max_size']             = 2000;
-			$config['max_width']            = 2000;
-			$config['max_height']           = 2000;
-
-			$this->load->library('upload', $config);
-			if (!is_dir('uploads'))
-			{
-				mkdir('./uploads', 0777, true);
-			}
-			if (!is_dir('uploads/' . $custombranchid))
-			{
-				mkdir('./uploads/' . $custombranchid, 0777, true);
-				$dir_exist = false;
-			}
-
 			if (!$_FILES['pImage']['name'] == '') {
-				if (! $this->upload->do_upload('pImage'))
+				$custombranchid = str_pad($BranchID,5,0,STR_PAD_LEFT) . '-B';
+
+				$config['file_name']          = 'b_icon-'.$_FILES['pImage']['name'];
+				$config['upload_path']          = './uploads/'.$custombranchid;
+				$config['allowed_types']        = 'gif|jpg|png';
+				$config['max_size']             = 2000;
+				$config['max_width']            = 2000;
+				$config['max_height']           = 2000;
+
+				$this->load->library('upload', $config);
+				if (!is_dir('uploads'))
+				{
+					mkdir('./uploads', 0777, true);
+				}
+				if (!is_dir('uploads/' . $custombranchid))
+				{
+					mkdir('./uploads/' . $custombranchid, 0777, true);
+				}
+
+				if (!$this->upload->do_upload('pImage'))
 				{
 					$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
 					redirect($_SERVER['HTTP_REFERER']);
@@ -1568,6 +1607,16 @@ class Update_Controller extends CI_Controller {
 				else
 				{
 					$pImage = 'uploads/'.$custombranchid.'/'.$this->upload->data('file_name');
+
+					// delete unused files in the upload folder
+					$dir = './uploads/'.$custombranchid.'/';
+					$folderfiles = get_filenames($dir);
+					foreach ($folderfiles as $val) {
+						$file = $dir . $val;
+						if ($file != ('./'.$pImage) && substr($val,0,7) == 'b_icon-' && is_readable($file)) {
+							unlink($file);
+						}
+					}
 				}
 			}
 
@@ -1590,6 +1639,15 @@ class Update_Controller extends CI_Controller {
 				);
 			}
 			$this->Model_Updates->UpdateBranchColors($BranchID,$dataColors);
+
+			// update session values
+			if ($_SESSION["BranchID"] == $BranchID) {
+				$dataSession['BranchName'] = $Name;
+				$dataSession['BranchIcon'] = $pImage;
+				$dataSession['Colors'] = $dataColors;
+				
+				$this->session->set_userdata($dataSession);
+			}
 
 			if ($updatedBranch) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');

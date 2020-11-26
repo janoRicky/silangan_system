@@ -18,15 +18,15 @@
 				<div class="form-row mx-1">
 					<div class="form-group col-4">
 						<label>Days</label>
-						<input class="form-control" type="number" name="E_Days">
+						<input class="form-control" type="number" name="E_Days" value="0">
 					</div>
 					<div class="form-group col-4">
 						<label>Months</label>
-						<input class="form-control" type="number" name="E_Months">
+						<input class="form-control" type="number" name="E_Months" value="0">
 					</div>
 					<div class="form-group col-4">
 						<label>Years</label>
-						<input class="form-control" type="number" name="E_Years">
+						<input class="form-control" type="number" name="E_Years" value="0">
 					</div>
 				</div>
 			</div>

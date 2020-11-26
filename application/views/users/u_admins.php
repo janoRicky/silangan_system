@@ -149,25 +149,25 @@
 					<div class="form-row">
 						<div class="form-group m-1 col">
 							<label>Admin ID</label>
-							<input class="form-control" type="text" name="AdminID">
+							<input class="form-control" type="text" name="AdminID" autocomplete="off">
 						</div>
 						<div class="form-group m-1 col">
 							<label>Password</label>
-							<input class="form-control" type="text" name="Password">
+							<input class="form-control" type="text" name="Password" autocomplete="off">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group m-1 col">
 							<label>First Name</label>
-							<input class="form-control" type="text" name="FirstName">
+							<input class="form-control" type="text" name="FirstName" autocomplete="off">
 						</div>
 						<div class="form-group m-1 col">
 							<label>Middle Initial/Name</label>
-							<input class="form-control" type="text" name="MiddleIN">
+							<input class="form-control" type="text" name="MiddleIN" autocomplete="off">
 						</div>
 						<div class="form-group m-1 col">
 							<label>Last Name</label>
-							<input class="form-control" type="text" name="LastName">
+							<input class="form-control" type="text" name="LastName" autocomplete="off">
 						</div>
 					</div>
 					<div class="form-row">

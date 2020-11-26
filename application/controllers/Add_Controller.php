@@ -372,6 +372,20 @@ class Add_Controller extends CI_Controller {
 							$EmployNewApplicant = $this->Model_Inserts->InsertToBranch($BranchID,$Temp_ApplicantID,$data);
 							if ($EmployNewApplicant == TRUE) {
 								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
+
+									// LOGBOOK
+									date_default_timezone_set('Asia/Manila');
+									$LogbookCurrentTime = date('Y-m-d h:i:s A');
+									$LogbookType = 'New';
+									$LogbookEvent = 'New Employee added! (Name: ' . ucfirst($row['LastName']) . ', ' . ucfirst($row['FirstName']) .  ' ' . ucfirst($row['MiddleInitial']) .  '. | Position: ' . $PositionDesired . ')';
+									$LogbookLink = base_url() . 'ViewEmployee?id=' . $customid;
+									$data = array(
+										'Time' => $LogbookCurrentTime,
+										'Type' => $LogbookType,
+										'Event' => $LogbookEvent,
+										'Link' => $LogbookLink,
+									);
+									$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 							}
 							else
 							{
@@ -445,18 +459,18 @@ class Add_Controller extends CI_Controller {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Admin added!</h5></div>');
 
 					// LOGBOOK
-					// date_default_timezone_set('Asia/Manila');
-					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-					// $LogbookType = 'New';
-					// $LogbookEvent = 'New Admin added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) .  '. | Position: ' . $Position . ')';
-					// $LogbookLink = base_url() . 'Admin_List';
-					// $data = array(
-					// 	'Time' => $LogbookCurrentTime,
-					// 	'Type' => $LogbookType,
-					// 	'Event' => $LogbookEvent,
-					// 	'Link' => $LogbookLink,
-					// );
-					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					date_default_timezone_set('Asia/Manila');
+					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+					$LogbookType = 'New';
+					$LogbookEvent = 'New Admin added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) .  '. | Position: ' . $Position . ')';
+					$LogbookLink = base_url() . 'Admin_List';
+					$data = array(
+						'Time' => $LogbookCurrentTime,
+						'Type' => $LogbookType,
+						'Event' => $LogbookEvent,
+						'Link' => $LogbookLink,
+					);
+					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
 					redirect('Admin_List');
 				}
 				else
@@ -495,6 +509,21 @@ class Add_Controller extends CI_Controller {
 			$InsertNewEmployer = $this->Model_Inserts->InsertNewEmployer($data);
 			if ($InsertNewEmployer == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Branch added!</h5></div>');
+
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'New';
+				$LogbookEvent = 'New Employer added! (Name: ' . ucfirst($EmployerLastName) . ', ' . ucfirst($EmployerFirstName) .  ' ' . ucfirst($EmployerMI) . '.)';
+				$LogbookLink = base_url() . 'Employers';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
 				redirect('Employers');
 			}
 			else
@@ -515,7 +544,7 @@ class Add_Controller extends CI_Controller {
 		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix',TRUE);
 
 		// color parts
-		$colors = array("NavbarBG", "NavbarColor", "NavbarBorder", "NavbarSideBG", "NavbarSideBorder", "SidebarBG", "SidebarBorder", "SideLinkBG", "SideLinkColor", "SideLinkBorder", "MainBG", "WindowsBG", "WindowsBorder", "TableBG", "TableColor", "TableBorder", "TabsBG", "TabsLinkColor", "TabsActiveColor", "TabsBorder", "ButtonBG", "ButtonColor", "ButtonBorder", "ButtonHover", "ProgressRemaining", "ProgressBar", "PageNoBG", "PageNoColor", "PageNoActiveBG", "PageNoActiveColor", "PageNoActiveBorder", "HeadColor");
+		$colors = array("NavbarBG", "NavbarColor", "MainBG", "Borders");
 
 		if ( $EmployerID == NULL || $BranchName == NULL || $BranchAddress == NULL || $BranchContact == NULL || $EmployeeIDSuffix == NULL ) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
@@ -604,19 +633,21 @@ class Add_Controller extends CI_Controller {
 
 				if ($InsertNewBranch == TRUE) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Branch added!</h5></div>');
+					
 					// LOGBOOK
-					// date_default_timezone_set('Asia/Manila');
-					// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-					// $LogbookType = 'New';
-					// $LogbookEvent = 'New Branch added! (Name: ' . $BranchName . ' | Contact: ' . $BranchContact . ')';
-					// $LogbookLink = base_url() . 'Branches';
-					// $data = array(
-					// 	'Time' => $LogbookCurrentTime,
-					// 	'Type' => $LogbookType,
-					// 	'Event' => $LogbookEvent,
-					// 	'Link' => $LogbookLink,
-					// );
-					// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+					date_default_timezone_set('Asia/Manila');
+					$LogbookCurrentTime = date('Y-m-d h:i:s A');
+					$LogbookType = 'New';
+					$LogbookEvent = 'New Branch added! (Name: ' . $BranchName . ' | Contact: ' . $BranchContact . ')';
+					$LogbookLink = base_url() . 'Employers';
+					$data = array(
+						'Time' => $LogbookCurrentTime,
+						'Type' => $LogbookType,
+						'Event' => $LogbookEvent,
+						'Link' => $LogbookLink,
+					);
+					$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
 					redirect('Employers?employerID=' . $EmployerID);
 				}
 				else

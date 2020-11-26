@@ -225,7 +225,7 @@
 															{ 
 																echo 'logbook-success'; 
 															}
-															elseif ($row['Type'] == 'Archival') 
+															elseif ($row['Type'] == 'Archival' || $row['Type'] == 'Deletion') 
 															{
 																echo 'logbook-danger';
 															} 
