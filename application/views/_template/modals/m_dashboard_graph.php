@@ -107,7 +107,7 @@
 										<?php echo $row['LastName']; ?> , <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
 									</td>
 									<td class="text-center align-middle">
-										<?php echo $row['PositionDesired']; ?>
+										<?php echo $row['PositionGroup']; ?>
 									</td>
 									<td class="text-center align-middle">
 										<?php echo $row['AppliedOn']; ?>

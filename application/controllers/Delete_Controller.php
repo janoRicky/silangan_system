@@ -28,7 +28,7 @@ class Delete_Controller extends CI_Controller {
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'Archival';
 				$LogbookEvent = 'Employee ID ' . $id .' has been archived.';
-				$LogbookLink = base_url() . 'ViewEmployee?id=' . $id;
+				$LogbookLink = 'ViewEmployee?id=' . $id;
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
@@ -72,7 +72,7 @@ class Delete_Controller extends CI_Controller {
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'Deletion';
 				$LogbookEvent = 'Admin ID ' . $id .' has been removed.';
-				$LogbookLink = base_url() . 'Admin_List';
+				$LogbookLink = 'Admin_List';
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
@@ -118,7 +118,7 @@ class Delete_Controller extends CI_Controller {
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'Deletion';
 					$LogbookEvent = 'Employer ID ' . $id .' has been removed.';
-					$LogbookLink = base_url() . 'Employers';
+					$LogbookLink = 'Employers';
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
@@ -170,7 +170,7 @@ class Delete_Controller extends CI_Controller {
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'Deletion';
 					$LogbookEvent = 'Branch ID ' . $id .' has been removed.';
-					$LogbookLink = base_url() . 'Branches';
+					$LogbookLink = 'Branches';
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,

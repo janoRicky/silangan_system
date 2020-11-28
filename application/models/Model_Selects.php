@@ -101,12 +101,12 @@ class Model_Selects extends CI_Model {
 	}
 	public function GetApplicantSkills()
 	{
-		$result =  $this->db->query("SELECT PositionDesired, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' AND PositionDesired IS NOT NULL GROUP BY PositionDesired");
+		$result =  $this->db->query("SELECT PositionGroup, COUNT(*) as count FROM applicants WHERE Status = 'Applicant' AND PositionGroup IS NOT NULL GROUP BY PositionGroup");
 		return $result;
 	}
 	public function GetApplicantSkillsExpired()
 	{
-		$result =  $this->db->query("SELECT PositionDesired, COUNT(*) as count FROM applicants WHERE Status = 'Expired' AND PositionDesired IS NOT NULL GROUP BY PositionDesired");
+		$result =  $this->db->query("SELECT PositionGroup, COUNT(*) as count FROM applicants WHERE Status = 'Expired' AND PositionGroup IS NOT NULL GROUP BY PositionGroup");
 		return $result;
 	}
 	public function CheckApplicant($ApplicantID)
@@ -411,15 +411,15 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function SearchPositionDesireds($query)
+	public function SearchPositionGroups($query)
 	{
-		$SQL = "SELECT * FROM applicants WHERE PositionDesired LIKE '%$query%'";
+		$SQL = "SELECT * FROM applicants WHERE PositionGroup LIKE '%$query%'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}
 	public function SearchPositionSpecific($query)
 	{
-		$SQL = "SELECT * FROM applicants WHERE PositionDesired LIKE '%$query%'";
+		$SQL = "SELECT * FROM applicants WHERE PositionGroup LIKE '%$query%'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

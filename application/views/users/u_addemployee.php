@@ -35,7 +35,7 @@
 										<div class="form-row">
 											<div class="form-group col-sm-12 col-md-2">
 												<label>Position</label>
-												<input class="form-control" type="text" name="PositionDesired" autocomplete="off" value="<?php echo $this->session->flashdata('PositionDesired'); ?>">
+												<input class="form-control" type="text" name="PositionGroup" autocomplete="off" value="<?php echo $this->session->flashdata('PositionGroup'); ?>">
 											</div>
 											<div class="form-group col-sm-12 col-md-2">
 												<label>Employed Date</label>

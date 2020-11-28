@@ -15,7 +15,7 @@ class Add_Controller extends CI_Controller {
 	{
 		# PERSONAL INFORMATION
 		$pImageChecker = $this->input->post('pImageChecker');
-		$PositionDesired = $this->input->post('PositionDesired');
+		$PositionGroup = $this->input->post('PositionGroup');
 		$PersonRecommending = $this->input->post('PersonRecommending');
 		$ContractType = $this->input->post('ContractType');
 		$SalaryType = $this->input->post('SalaryType');
@@ -77,10 +77,10 @@ class Add_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($PositionDesired == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL || $MotherName == NULL || $MotherOccupation == NULL || $FatherName == NULL || $FatherOccupation == NULL || $BranchID == NULL) {
+		if ($PositionGroup == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL || $MotherName == NULL || $MotherOccupation == NULL || $FatherName == NULL || $FatherOccupation == NULL || $BranchID == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
-				'PositionDesired' => $PositionDesired,
+				'PositionGroup' => $PositionGroup,
 				'PersonRecommending' => $PersonRecommending,
 				'ContractType' => $ContractType,
 				'SalaryType' => $SalaryType,
@@ -194,7 +194,7 @@ class Add_Controller extends CI_Controller {
 				$data = array(
 					'ApplicantImage' => $pImage,
 					'ApplicantID' => $customid,
-					'PositionDesired' => $PositionDesired,
+					'PositionGroup' => $PositionGroup,
 					'PersonRecommending' => $PersonRecommending,
 					'ContractType' => $ContractType,
 					'SalaryType' => $SalaryType,
@@ -377,8 +377,8 @@ class Add_Controller extends CI_Controller {
 									date_default_timezone_set('Asia/Manila');
 									$LogbookCurrentTime = date('Y-m-d h:i:s A');
 									$LogbookType = 'New';
-									$LogbookEvent = 'New Employee added! (Name: ' . ucfirst($row['LastName']) . ', ' . ucfirst($row['FirstName']) .  ' ' . ucfirst($row['MiddleInitial']) .  '. | Position: ' . $PositionDesired . ')';
-									$LogbookLink = base_url() . 'ViewEmployee?id=' . $customid;
+									$LogbookEvent = 'New Employee added! (Name: ' . ucfirst($row['LastName']) . ', ' . ucfirst($row['FirstName']) .  ' ' . ucfirst($row['MiddleInitial']) .  '. | Position: ' . $PositionGroup . ')';
+									$LogbookLink = 'ViewEmployee?id=' . $customid;
 									$data = array(
 										'Time' => $LogbookCurrentTime,
 										'Type' => $LogbookType,
@@ -463,7 +463,7 @@ class Add_Controller extends CI_Controller {
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'New';
 					$LogbookEvent = 'New Admin added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) .  '. | Position: ' . $Position . ')';
-					$LogbookLink = base_url() . 'Admin_List';
+					$LogbookLink = 'Admin_List';
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
@@ -515,7 +515,7 @@ class Add_Controller extends CI_Controller {
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'New';
 				$LogbookEvent = 'New Employer added! (Name: ' . ucfirst($EmployerLastName) . ', ' . ucfirst($EmployerFirstName) .  ' ' . ucfirst($EmployerMI) . '.)';
-				$LogbookLink = base_url() . 'Employers';
+				$LogbookLink = 'Employers';
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
@@ -639,7 +639,7 @@ class Add_Controller extends CI_Controller {
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'New';
 					$LogbookEvent = 'New Branch added! (Name: ' . $BranchName . ' | Contact: ' . $BranchContact . ')';
-					$LogbookLink = base_url() . 'Employers';
+					$LogbookLink = 'Employers';
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,

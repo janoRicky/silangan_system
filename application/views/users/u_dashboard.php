@@ -246,7 +246,7 @@
 															<?php echo $row['Event']; ?>
 														</td>
 														<td class="text-center align-middle PrintExclude" width="100">
-															<a href="<?php echo $row['Link'] ?>" class="btn btn-primary btn-sm w-100 mb-1" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View</a>
+															<a href="<?php echo base_url() . $row['Link'] ?>" class="btn btn-primary btn-sm w-100 mb-1" href="#" target="_blank"><i class="fas fa-external-link-alt"></i> View</a>
 														</td>
 													</tr>
 												<?php endforeach; ?>

@@ -64,7 +64,7 @@
 													<?php echo $row['LastName']; ?>, <?php echo $row['FirstName']; ?> <?php echo $row['MiddleInitial']; ?>.
 												</td>
 												<td class="text-center align-middle">
-													<?php echo $row['PositionDesired']; ?>
+													<?php echo $row['PositionGroup']; ?>
 												</td>
 												<?php foreach ($getBranchOption->result_array() as $nrow): ?>
 													<?php if ($row['BranchEmployed'] == $nrow['BranchID']) {

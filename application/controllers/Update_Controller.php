@@ -114,7 +114,7 @@ class Update_Controller extends CI_Controller {
 							}
 						}
 						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+						$LogbookLink = 'ViewEmployee?id=' . $ApplicantID;
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
@@ -220,7 +220,7 @@ class Update_Controller extends CI_Controller {
 							}
 						}
 						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Contract';
+						$LogbookLink = 'ViewEmployee?id=' . $ApplicantID . '#Contract';
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
@@ -256,7 +256,7 @@ class Update_Controller extends CI_Controller {
 		$EmployeeID = $this->input->post('EmployeeID');
 		$pImage = $this->input->post('M_ApplicantImage');
 		# PERSONAL INFORMATION
-		$PositionDesired = $this->input->post('PositionDesired');
+		$PositionGroup = $this->input->post('PositionGroup');
 		$ContractType = $this->input->post('ContractType');
 		$PersonRecommending = $this->input->post('PersonRecommending');
 		$SalaryType = $this->input->post('SalaryType');
@@ -316,11 +316,11 @@ class Update_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($PositionDesired == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL) {
+		if ($PositionGroup == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
 				'EmployeeID' => $EmployeeID,
-				'PositionDesired' => $PositionDesired,
+				'PositionGroup' => $PositionGroup,
 				'ContractType' => $ContractType,
 				'PersonRecommending' => $PersonRecommending,
 				'SalaryType' => $SalaryType,
@@ -411,7 +411,7 @@ class Update_Controller extends CI_Controller {
 				'ApplicantImage' => $pImage,
 				'ApplicantID' => $ApplicantID,
 				'EmployeeID' => $EmployeeID,
-				'PositionDesired' => $PositionDesired,
+				'PositionGroup' => $PositionGroup,
 				'ContractType' => $ContractType,
 				'PersonRecommending' => $PersonRecommending,
 				'SalaryType' => $SalaryType,
@@ -551,7 +551,7 @@ class Update_Controller extends CI_Controller {
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'Update';
 				$LogbookEvent = 'Updated details on Employee ID ' . $ApplicantID . '.';
-				$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+				$LogbookLink = 'ViewEmployee?id=' . $ApplicantID;
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
@@ -607,7 +607,7 @@ class Update_Controller extends CI_Controller {
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'Update';
 					$LogbookEvent = 'Admin #' . $AdminNo . '\'s branch reassigned to ' . $BranchInfo['Name'] . '.';
-					$LogbookLink = base_url() . 'Admin_List';
+					$LogbookLink = 'Admin_List';
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
@@ -773,7 +773,7 @@ class Update_Controller extends CI_Controller {
 							}
 						}
 						$LogbookEvent = substr($LogbookEvent, 0, -2) . '!';
-						$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+						$LogbookLink = 'ViewEmployee?id=' . $ApplicantID;
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
@@ -818,7 +818,7 @@ class Update_Controller extends CI_Controller {
 				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 				// $LogbookType = 'Archival';
 				// $LogbookEvent = 'Employee ID ' . $ApplicantID .' has been blacklisted.';
-				// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+				// $LogbookLink = 'ViewEmployee?id=' . $ApplicantID;
 				// $data = array(
 				// 	'Time' => $LogbookCurrentTime,
 				// 	'Type' => $LogbookType,
@@ -856,7 +856,7 @@ class Update_Controller extends CI_Controller {
 				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 				// $LogbookType = 'Update';
 				// $LogbookEvent = 'Employee ID ' . $ApplicantID .' has been restored as an Applicant.';
-				// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+				// $LogbookLink = 'ViewEmployee?id=' . $ApplicantID;
 				// $data = array(
 				// 	'Time' => $LogbookCurrentTime,
 				// 	'Type' => $LogbookType,
@@ -958,8 +958,8 @@ class Update_Controller extends CI_Controller {
 							// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 							// $LogbookType = 'Update';
 							// $LogbookEvent = 'Updated weekly hours for ' . $ApplicantID . '.';
-							// $LogbookLink = base_url() . 'ViewBranch?id=' . $Temp_ApplicantID;
-							// $LogbookLink = base_url() . 'Branches';
+							// $LogbookLink = 'ViewBranch?id=' . $Temp_ApplicantID;
+							// $LogbookLink = 'Branches';
 							// $data = array(
 							// 	'Time' => $LogbookCurrentTime,
 							// 	'Type' => $LogbookType,
@@ -1481,7 +1481,7 @@ class Update_Controller extends CI_Controller {
 							// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 							// $LogbookType = 'Update';
 							// $LogbookEvent = "Employee " . $ApplicantID . "'s contract has been terminated!";
-							// $LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+							// $LogbookLink = 'ViewEmployee?id=' . $ApplicantID;
 							// $data = array(
 							// 	'Time' => $LogbookCurrentTime,
 							// 	'Type' => $LogbookType,

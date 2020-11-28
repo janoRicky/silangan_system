@@ -258,7 +258,7 @@
 										</div>
 										<div class="row">
 											<div class="col-sm-2 employee-dynamic-item">
-												<?php echo $PositionDesired; ?>
+												<?php echo $PositionGroup; ?>
 											</div>
 											<div class="col-sm-2 employee-dynamic-item">
 												<?php echo $ContractType; ?>
@@ -581,7 +581,7 @@
 												<div class="card mb-3" style="max-width: 18rem;">
 													<div class="card-header employee-dynamic-header text-center"><b><i class="fas fa-user-tie"></i> Position</b></div>
 													<div class="card-body text-dark">
-														<h5 class="card-title text-center silangan-card-title"><?php echo $PositionDesired; ?></h5>
+														<h5 class="card-title text-center silangan-card-title"><?php echo $PositionGroup; ?></h5>
 														<p class="card-text">
 															<div class="col-sm-12 employee-static-item text-center mt-3">
 																<div class="col-sm-12 employee-dynamic-header">

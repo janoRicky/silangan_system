@@ -44,7 +44,7 @@
 	</div>
 	<div class="col-sm-12 col-md-4 e-det">
 		<p>
-			<?php echo $PositionDesired; ?>
+			<?php echo $PositionGroup; ?>
 		</p>
 	</div>
 	<div class="col-sm-12 col-md-2 e-title">

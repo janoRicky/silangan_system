@@ -28,7 +28,7 @@ class Main_Controller extends CI_Controller {
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'Reminder';
 					$LogbookEvent = 'Employee ' . $ApplicantID . ' is expiring in ' . $row['ReminderDateString'] . '!';
-					$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+					$LogbookLink = 'ViewEmployee?id=' . $ApplicantID;
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
@@ -69,7 +69,7 @@ class Main_Controller extends CI_Controller {
 							$LogbookCurrentTime = date('Y-m-d h:i:s A');
 							$LogbookType = 'Update';
 							$LogbookEvent = 'Employee ' . $ApplicantID . ' has expired!';
-							$LogbookLink = base_url() . 'ViewEmployee?id=' . $ApplicantID;
+							$LogbookLink = 'ViewEmployee?id=' . $ApplicantID;
 							$data = array(
 								'Time' => $LogbookCurrentTime,
 								'Type' => $LogbookType,
@@ -137,7 +137,7 @@ class Main_Controller extends CI_Controller {
 		// $data = [];
 
 		// foreach($record as $row) {
-		// 	$data['label'][] = $row->PositionDesired;
+		// 	$data['label'][] = $row->PositionGroup;
 		// 	$data['data'][] = (int) $row->count;
 		// }
 		// $data['chart_data'] = json_encode($data);
@@ -145,7 +145,7 @@ class Main_Controller extends CI_Controller {
 		// $GetApplicantSkillsExpired = $this->Model_Selects->GetApplicantSkillsExpired();
 		// $edata['data'][] = $GetApplicantSkillsExpired->num_rows();
 		// foreach($GetApplicantSkillsExpired->result_array() as $row) {
-		// 	$edata['label'][] = $row['PositionDesired'];
+		// 	$edata['label'][] = $row['PositionGroup'];
 		// }
 		// $data['chart_data_expired'] = json_encode($edata);
 		$data['Breadcrumb'] = '
@@ -475,7 +475,7 @@ class Main_Controller extends CI_Controller {
 					'ApplicantImage' => $ged['ApplicantImage'],
 					'EmployeeID' => $ged['EmployeeID'],
 					'ApplicantID' => $ged['ApplicantID'],
-					'PositionDesired' => $ged['PositionDesired'],
+					'PositionGroup' => $ged['PositionGroup'],
 					'PersonRecommending' => $ged['PersonRecommending'],
 					'ContractType' => $ged['ContractType'],
 					'SalaryType' => $ged['SalaryType'],
@@ -607,7 +607,7 @@ class Main_Controller extends CI_Controller {
 					'ApplicantImage' => $ged['ApplicantImage'],
 					'ApplicantID' => $ged['ApplicantID'],
 					'EmployeeID' => $ged['EmployeeID'],
-					'PositionDesired' => $ged['PositionDesired'],
+					'PositionGroup' => $ged['PositionGroup'],
 					'PersonRecommending' => $ged['PersonRecommending'],
 					'ContractType' => $ged['ContractType'],
 					'SalaryType' => $ged['SalaryType'],
