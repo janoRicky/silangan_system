@@ -132,20 +132,26 @@ class Model_Inserts extends CI_Model {
 		return $result;
 	}
 
-
-
-
-
 	public function InsertTrackingTable($data)
 	{
 		$result = $this->db->insert('tracking_table',$data);
 		return $result;
-		
 	}
 
 	public function InsertDeferred($id,$empid,$amount,$period)
 	{
 		$SQL = "insert into deferred_deduction (id,employee_id,amount,period) values ($id,$empid,$amount,$period)";
         $result = $this->db->query($SQL,$id,$empid,$amount,$period);
+	}
+	public function UpdateDatafromBio($ApplicantID,$Date_Time,$data)
+	{
+
+		$this->db->where(array('ApplicantID' => $ApplicantID,'Date_Time' => $Date_Time));
+		$result = $this->db->update('tb_attendance', $data);
+		return $result;
+	}
+	public function InsertDatafromBio($data)
+	{
+		return $this->db->replace('tb_attendance', $data);
 	}
 }

@@ -180,7 +180,7 @@
 						<?php endif; ?>
 						Employees of <?php
 						$BranchID = $_GET['branchID'];
-						$GetBranch = $this->Model_Selects->GetBranchID($BranchID);
+						$GetBranch = $this->Model_Selects->GetBranchDet($BranchID);
 						foreach($GetBranch->result_array() as $row):
 							echo $row['Name'];
 						endforeach;

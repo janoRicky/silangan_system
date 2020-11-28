@@ -1411,7 +1411,7 @@ class Update_Controller extends CI_Controller {
 			$Error = SimpleXLSX::parseError();
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: ' . $Error . '</h5></div>');
 			redirect($_SERVER['HTTP_REFERER']);
-		
+
 		}
 		
 		
@@ -1658,6 +1658,380 @@ class Update_Controller extends CI_Controller {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
 				redirect("Employers");
 			}
+		}
+	}
+	public function v_importexceldata()
+	{
+		include 'vendor/autoload.php';
+
+		if($_FILES["file"]["name"] != '')
+		{
+			$allowed_extension = array('xls', 'csv', 'xlsx');
+			$file_array = explode(".", $_FILES["file"]["name"]);
+			$file_extension = end($file_array);
+			$BranchID = $this->input->post('ExcelBranchID');
+
+			if(in_array($file_extension, $allowed_extension))
+			{
+				$file_name = time() . '.' . $file_extension;
+				move_uploaded_file($_FILES['file']['tmp_name'], $file_name);
+				$file_type = \PhpOffice\PhpSpreadsheet\IOFactory::identify($file_name);
+				$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($file_type);
+
+				$spreadsheet = $reader->load($file_name);
+
+				unlink($file_name);
+
+				$data = $spreadsheet->getSheet(3)->toArray();
+
+
+				foreach($data as $row) {
+					if ($row[0] <= 0) continue;
+
+					$data = array(
+						'ApplicantID' => $row[0],
+						'Date_Time' => $row[3],
+					);
+
+					$CheckDataImported = $this->Model_Selects->CheckDataImported($data);
+
+					$am_in = $row[4];
+					$am_out = $row[5];
+					$pm_in = $row[6];
+					$pm_out = $row[7];
+
+					if ($am_in != NULL AND $am_out == NULL AND $pm_in == NULL AND $pm_out != NULL) {		## NO BREAK BETWEEN AM IN AND PM OUT
+
+						$totaldiff = abs(strtotime($am_in) - strtotime($pm_out));
+						$mins = $totaldiff/60;	## total mins
+						$totalhours = $mins/60;	## total hours
+						$remmins = $mins%60;	## total remainder
+						$total_regpay = $mins;
+
+						$nam_in = str_pad($am_in,5,"0",STR_PAD_LEFT);
+						$nam_out = NULL;
+						$npm_in = NULL;
+						$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
+
+						$row_status = 0; // NEED UPDATES
+
+					}
+					elseif ($am_in == NULL AND $am_out == NULL AND $pm_in != NULL AND $pm_out != NULL) {		## HALFDAY PM
+						$totaldiff = abs(strtotime($pm_in) - strtotime($pm_out));
+						$mins = $totaldiff/60;	## total mins
+						$totalhours = $mins/60;	## total hours
+						$remmins = $mins%60;	## total remainder
+						$total_regpay = $mins;
+
+						$nam_in = NULL;
+						$nam_out = NULL;
+						$npm_in = str_pad($pm_in,5,"0",STR_PAD_LEFT);
+						$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
+
+						$row_status = 0; // NEED UPDATES
+					}
+					elseif ($am_in != NULL AND $am_out != NULL AND $pm_in == NULL AND $pm_out == NULL) {		## HALFDAY AM
+						$totaldiff = abs(strtotime($am_in) - strtotime($am_out));
+						$mins = $totaldiff/60;	## total mins
+						$totalhours = $mins/60;	## total hours
+						$remmins = $mins%60;	## total remainder
+						$total_regpay = $mins;
+						$nam_in = str_pad($am_in,5,"0",STR_PAD_LEFT);
+						$nam_out = str_pad($am_out,5,"0",STR_PAD_LEFT);
+						$npm_in = NULL;
+						$npm_out = NULL;
+
+						$row_status = 0; // NEED UPDATES
+					}
+					elseif ($am_in == null || $am_out == null || $pm_in == null || $pm_out == null) {		## ABSENT AM AND PM BLANK
+
+						$total_regpay = null;
+						$nam_in = null;
+						$nam_out = null;
+						$npm_in = NULL;
+						$npm_out = NULL;
+
+						$row_status = 2; // ABSENT
+					}
+					elseif ($am_in != null || $am_out != null || $pm_in != null || $pm_out != null)
+					{
+						$diff_am = abs(strtotime($am_in) - strtotime($am_out));
+						$diff_pm = abs(strtotime($pm_in) - strtotime($pm_out));
+
+						$tmins_am = $diff_am/60;
+						$tmins_pm = $diff_pm/60;
+
+
+						$hours_am = $tmins_am/60;
+						$hours_pm = $tmins_pm/60;
+
+						$mins_am = $tmins_am%60;
+						$mins_pm = $tmins_pm%60;
+
+						$total_regpay =$tmins_am + $tmins_pm;
+						$nam_in = str_pad($am_in,5,"0",STR_PAD_LEFT);
+						$nam_out = str_pad($am_out,5,"0",STR_PAD_LEFT);
+						$npm_in = str_pad($pm_in,5,"0",STR_PAD_LEFT);
+						$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
+
+						$row_status = 0; // NEED UPDATES
+					}
+					if ($row[12] == null) {
+						$note = 'No existing note.';
+					}
+					else
+					{
+						$note = $row[12];
+					}
+					if (isset($am_in)) {
+						$shift_type = 'day';
+					}
+					else
+					{
+						$shift_type = 'night';
+					}
+					if ($total_regpay > 480) {
+						$overtime = ($total_regpay - 480);
+						$total_regpay = 480;
+
+						$Current_Rate = 400 / 8;
+						$overtime_H = $overtime / 60;
+						$Ot_Earned = ($Current_Rate * $overtime_H) *  1.25; 
+
+						$Day_Earned = ($total_regpay / 60 ) * $Current_Rate;
+					}
+					else
+					{
+						$Current_Rate = 400 / 8;
+						$overtime = 0;
+						$total_regpay = $total_regpay;
+						$Ot_Earned = 0;
+						$Day_Earned = ($total_regpay / 60 ) * $Current_Rate;
+					}
+
+					if ($CheckDataImported->num_rows() > 0) {
+
+						$ApplicantID = $row[0];
+						$Date_Time = $row[3];
+
+						$data = array(
+							'Name' => $row[1],
+							'BranchID' => $row[2],
+							'Timein_AM' => $nam_in,
+							'Timeout_AM' => $nam_out,
+							'Timein_PM' => $npm_in,
+							'Timeout_PM' => $npm_out,
+							'Late_Time' => $row[8],
+							'Leave_Early' => $row[9],
+							'Absence_Time' => $row[10],
+							'Total_BYmin' => $total_regpay,
+							'Note' => $note,
+
+							'shift_type' => $shift_type,
+							'regular_day' => 'no',
+							'sp_day' => 'no',
+							'nh_day' => 'no',
+							'overtime' => $overtime,
+
+							'Day_Earned' => $Day_Earned,
+							'Ot_Earned' => $Ot_Earned,
+
+							'row_status' => $row_status,
+
+						);
+
+						$UpdateDatafromBio = $this->Model_Inserts->UpdateDatafromBio($ApplicantID,$Date_Time,$data);
+					}
+					else
+					{
+
+						$data = array(
+							'ApplicantID' => $row[0],
+							'Name' => $row[1],
+							'BranchID' => $row[2],
+							'Date_Time' => $row[3],
+
+							'Timein_AM' => $nam_in,
+							'Timeout_AM' => $nam_out,
+							'Timein_PM' => $npm_in,
+							'Timeout_PM' => $npm_out,
+
+							// 'Late_Time' => floor($row[8]/60)." hr ".($row[8]%60)." min",
+							'Late_Time' => $row[8],
+							'Leave_Early' => $row[9],
+							'Absence_Time' => $row[10],
+							'Total_BYmin' => $total_regpay,
+							'Note' => $note,
+
+							'shift_type' => $shift_type,
+							// days option
+							'regular_day' => 'no',
+							'sp_day' => 'no',
+							'nh_day' => 'no',
+							'overtime' => $overtime,
+
+							'Day_Earned' => $Day_Earned,
+							'Ot_Earned' => $Ot_Earned,
+
+							'row_status' => 0,
+						);
+						$InsertDatafromBio = $this->Model_Inserts->InsertDatafromBio($data);
+					}
+				}
+
+				redirect('ViewBranch?id='.$BranchID.'&Mode=monthly');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Only .xls .csv or .xlsx file allowed</h5></div>');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Please Select File</h5></div>');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+	}
+	public function UpdatethisAttRecord()
+	{
+
+		$date_id = $this->input->post('date_id');
+		$ApplicantID = $this->input->post('ApplicantID');
+		$startDate = $this->input->post('startDate');
+		$EndDate = $this->input->post('EndDate');
+
+		$shift_type = $this->input->post('shift_type');
+		if ($shift_type == 'day') {
+			$shift_type = 'day';
+		} else {
+			$shift_type = 'night';
+		}
+
+		$am_in = $this->input->post('time_inam');
+		$am_out = $this->input->post('time_outam');
+		$pm_in = $this->input->post('time_inpm');
+		$pm_out = $this->input->post('time_outpm');
+
+		$regular_day = $this->input->post('regular_day');
+		if ($regular_day == 'yes') {
+			$regular_day = 'yes';
+		} else {
+			$regular_day = 'no';
+		}
+
+		$sp_day = $this->input->post('sp_day');
+		$nh_day = $this->input->post('nh_day');
+
+		/*
+		if ($time_inam == NULL) {
+			$this->session->set_flashdata('alert_error','amin_error');
+			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
+		}
+		if ($time_outam == NULL) {
+			$this->session->set_flashdata('alert_error','amout_error');
+			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
+		}
+		if ($time_inpm == NULL) {
+			$this->session->set_flashdata('alert_error','pmin_error');
+			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
+		}
+		if ($time_outpm == NULL) {
+			$this->session->set_flashdata('alert_error','pmout_error');
+			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
+		}
+		*/
+		if ($am_in != NULL AND $am_out == NULL AND$pm_in == NULL AND $pm_out != NULL) {		## NO BREAK BETWEEN AM IN AND PM OUT
+
+			$totaldiff = abs(strtotime($am_in) - strtotime($pm_out));
+			$mins = $totaldiff/60;	## total mins
+			$totalhours = $mins/60;	## total hours
+			$remmins = $mins%60;	## total remainder
+			$total_regpay = $mins;
+
+			$nam_in = str_pad($am_in,5,"0",STR_PAD_LEFT);
+			$nam_out = NULL;
+			$npm_in = NULL;
+			$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
+
+		}
+		elseif ($am_in == NULL AND $am_out == NULL AND $pm_in != NULL AND $pm_out != NULL) {		## HALFDAY PM
+			$totaldiff = abs(strtotime($pm_in) - strtotime($pm_out));
+			$mins = $totaldiff/60;	## total mins
+			$totalhours = $mins/60;	## total hours
+			$remmins = $mins%60;	## total remainder
+			$total_regpay = $mins;
+
+			$nam_in = NULL;
+			$nam_out = NULL;
+			$npm_in = str_pad($pm_in,5,"0",STR_PAD_LEFT);
+			$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
+		}
+		elseif ($am_in != NULL AND $am_out != NULL AND $pm_in == NULL AND $pm_out == NULL) {		## HALFDAY AM
+			$totaldiff = abs(strtotime($am_in) - strtotime($am_out));
+			$mins = $totaldiff/60;	## total mins
+			$totalhours = $mins/60;	## total hours
+			$remmins = $mins%60;	## total remainder
+			$total_regpay = $mins;
+			$nam_in = str_pad($am_in,5,"0",STR_PAD_LEFT);
+			$nam_out = str_pad($am_out,5,"0",STR_PAD_LEFT);
+			$npm_in = NULL;
+			$npm_out = NULL;
+		}
+		elseif (!isset($am_in) AND !isset($am_out) AND !isset($pm_in) AND !isset($pm_out)) {		## ABSENT AM AND PM BLANK
+
+			$total_regpay = null;
+			$nam_in = null;
+			$nam_out = null;
+			$npm_in = NULL;
+			$npm_out = NULL;
+		}
+		elseif (isset($am_in) AND isset($am_out) AND isset($pm_in) AND isset($pm_out))
+		{
+			$diff_am = abs(strtotime($am_in) - strtotime($am_out));
+			$diff_pm = abs(strtotime($pm_in) - strtotime($pm_out));
+
+			$tmins_am = $diff_am/60;
+			$tmins_pm = $diff_pm/60;
+
+
+			$hours_am = $tmins_am/60;
+			$hours_pm = $tmins_pm/60;
+
+			$mins_am = $tmins_am%60;
+			$mins_pm = $tmins_pm%60;
+
+			$total_regpay =$tmins_am + $tmins_pm;
+			$nam_in = str_pad($am_in,5,"0",STR_PAD_LEFT);
+			$nam_out = str_pad($am_out,5,"0",STR_PAD_LEFT);
+			$npm_in = str_pad($pm_in,5,"0",STR_PAD_LEFT);
+			$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
+		}
+
+		if ($total_regpay > 480) {
+			$overtime = ($total_regpay - 480);
+		}
+		else
+		{
+			$overtime = 0;
+		}
+		$data = array(
+			'shift_type' => $shift_type,
+			'Timein_AM' => $nam_in,
+			'Timeout_AM' => $nam_out,
+			'Timein_PM' => $npm_in,
+			'Timeout_PM' => $npm_out,
+			'Total_BYmin' => $total_regpay,
+			'overtime' => $overtime,
+			'row_status' => 1,
+		);
+		$UpdateArecord = $this->Model_Updates->UpdateArecord($date_id,$data);
+		if ($UpdateArecord == 'success') {
+			$this->session->set_flashdata('alert_error','update_success');
+			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
+		} else {
+			$this->session->set_flashdata('alert_error','update_error');
+			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
 		}
 	}
 }

@@ -39,7 +39,7 @@
 										// get branch names
 										$Admins = $ShowAdmin->result_array();
 										foreach ($Admins as $key => $row) {
-											$GetBranchInfo = $this->Model_Selects->GetBranchID($row['BranchID']);
+											$GetBranchInfo = $this->Model_Selects->GetBranchDet($row['BranchID']);
 											$BranchInfo = $GetBranchInfo->row_array();
 											$Admins[$key]['BranchName'] = $BranchInfo['Name'];
 										}

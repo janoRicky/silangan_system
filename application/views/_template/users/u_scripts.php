@@ -26,6 +26,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
 <script src="<?=base_url()?>assets/js/1.14.7_popper.min.js"></script>
 <script src="<?=base_url()?>assets/js/4.3.1_bootstrap.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <script src="<?=base_url()?>assets/js/custom.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/cfunctions.js"></script>
 

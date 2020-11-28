@@ -86,6 +86,9 @@ $route['Add_NewEmployer'] = 'Add_Controller/Add_NewEmployer';
 $route['Add_NewBranch'] = 'Add_Controller/Add_NewBranch';
 $route['AddSupDoc'] = 'Add_Controller/AddSupDoc';
 $route['add_newcontri'] = 'Add_Controller/add_newcontri';
+$route['generate_payslip'] = 'Add_Controller/generate_payslip';
+
+
 
 
 
@@ -123,3 +126,10 @@ $route['export_payslip'] = 'PhpOffice_Controller/export_payslip';
 
 // TCPDF
 $route['GeneratePaySlip'] = 'Tcpdf_Controller/GeneratePaySlip';
+
+// NEW UPDATE
+$route['v_importexceldata'] = 'Update_Controller/v_importexceldata';
+$route['UpdatethisAttRecord'] = 'Update_Controller/UpdatethisAttRecord';
+$route['GetDataByApplicantID'] = 'Main_Controller/GetDataByApplicantID';
+$route['ViewThisAttendance'] = 'Main_Controller/ViewThisAttendance';
+$route['GetDateByApplicantID'] = 'Main_Controller/GetDateByApplicantID';

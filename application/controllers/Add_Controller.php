@@ -774,4 +774,15 @@ class Add_Controller extends CI_Controller {
 			redirect('sss_table');
 		}
 	}
+	public function generate_payslip()
+	{
+		if (isset($_POST['row_id']) == NULL) {
+			echo 'PROMPT EMPTY ERRORS';
+			exit();
+		}
+		$id = $_POST['row_id'];
+		foreach($id as $key => $n) {
+		  echo $id[$key];
+		}
+	}
 }

@@ -1,7 +1,7 @@
 <?php foreach ($GetWeeklyListEmployee->result_array() as $erow): ?>
 <div class="modal fade wercher-modal-background" id="HoursWeeklyModal_<?php echo $erow['ApplicantID']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xxl" role="document">
-			<div class="modal-content m-content">
+			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Work Hours for <?php echo $erow['LastName'] . ', ' . $erow['FirstName'] . ' ' . $erow['MiddleInitial'] ?> | <span class="TotalHoursInAWeek">48</span> Hours Total</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -11,7 +11,7 @@
 				<div class="modal-body">
 					<form action="<?php echo base_url().'SetWeeklyHours'; ?>" method="post">
 						<input id="ApplicantID" type="hidden" name="ApplicantID" value="<?php echo $erow['ApplicantID']; ?>">
-						<input id="BranchID" type="hidden" name="BranchID" value="<?php echo $erow['BranchEmployed']; ?>">
+						<input id="BranchID" type="hidden" name="ClientID" value="<?php echo $erow['BranchEmployed']; ?>">
 						<div class="form-row">
 							<div class="form-group col-sm-12 col-md-2">
 								<label>Type</label>
@@ -36,7 +36,7 @@
 							</div>
 						</div>
 						<div id="SalaryDays" class="form-row">
-							<?php foreach ($GetWeeklyDates->result_array() as $row): ?>
+							<?php foreach ($GetAttendances->result_array() as $row): ?>
 								<input id="<?php echo $row['Time']; ?>" type="hidden" name="<?php echo $row['Time']; ?>" value="<?php echo $row['Time']; ?>">
 								<div class="day-hover day-container_<?php echo $row['Time']; ?> col-sm-12 col-md-3 text-center rcontent mr-4">
 									<div class="row">
@@ -47,15 +47,10 @@
 									<div class="form-row mt-2">
 										<div class="form-group col-8">
 											<div>Hours</div>
-											<input id="" class="form-control Hours_<?php echo $row['Time']; ?>" type="number" name="Hours_<?php echo $row['Time']; ?>" value="<?php
-													foreach ($this->Model_Selects->GetMatchingDates($erow['ApplicantID'], $row['Time'])->result_array() as $nrow):
-														if($nrow['Hours'] != NULL) {
-															echo $nrow['Hours'];
-														} else {
-															echo '0';
-														}
-													endforeach;
-											?>">
+											<input id="" class="form-control Hours_<?php echo $row['Time']; ?>" type="number" name="Hours_<?php echo $row['Time']; ?>" value="
+											<?php if($erow['ApplicantID'] == $row['ApplicantID']) {
+												echo $row['Time'];
+											} ?>">
 										</div>
 										<div class="form-group col-4">
 											<div class="">Overtime</div>
@@ -195,9 +190,7 @@
 
 					<button id="MoreOptions" type="button" class="btn btn-primary mr-auto"><i class="fas fa-cog"></i> More Options</button>
 
-					<input type="hidden" name="CutoffMode" value="<?php if (isset($_GET['Mode'])) {
-	echo $_GET['Mode'];
-} ?>">
+					<input type="hidden" name="CutoffMode" value="<?php if (isset($_GET['Mode'])) {	echo $_GET['Mode']; } ?>">
 					<input type="radio" id="" name="DeductionOption" value="0">
 					<label for="rdNoDeductions">No Deductions</label><br>
 					<input type="radio" id="rdWithDeductions" name="DeductionOption" value="1" checked>

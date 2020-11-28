@@ -22,7 +22,7 @@
 					<div class="col-sm-12 col-md-12 mb-5">
 						<h4>
 							<i class="fas fa-user-tag"></i> 
-							<?php foreach ($GetBranchID->result_array() as $row): 
+							<?php foreach ($GetBranchDet->result_array() as $row): 
 								echo $row['Name'];
 							endforeach; ?>'s Employees (<?php echo $GetWeeklyList->num_rows(); ?>)
 						</h4>
