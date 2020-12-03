@@ -251,39 +251,40 @@
 			}
 		});
 		var table = $('#ListAdmins').DataTable( {
-        buttons: [
-            {
-	            extend: 'print',
-	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
-	            }
-	        },
-	        {
-	            extend: 'copyHtml5',
-	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
-	            }
-	        },
-	        {
-	            extend: 'excelHtml5',
-	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
-	            }
-	        },
-	        {
-	            extend: 'csvHtml5',
-	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
-	            }
-	        },
-	        {
-	            extend: 'pdfHtml5',
-	            exportOptions: {
-	                columns: [ 1, 2, 3, 4, 5 ]
-	            }
-	        }
-        ]
-    } );
+			"order": [[ 6, "asc" ]],
+	        buttons: [
+				{
+					extend: 'print',
+					exportOptions: {
+						columns: [ 1, 2, 3, 4, 5 ]
+					}
+				},
+				{
+			    	extend: 'copyHtml5',
+			    	exportOptions: {
+			        	columns: [ 1, 2, 3, 4, 5 ]
+					}
+				},
+			    {
+		            extend: 'excelHtml5',
+		            exportOptions: {
+		                columns: [ 1, 2, 3, 4, 5 ]
+		            }
+		        },
+		        {
+		            extend: 'csvHtml5',
+		            exportOptions: {
+		                columns: [ 1, 2, 3, 4, 5 ]
+		            }
+		        },
+		        {
+		            extend: 'pdfHtml5',
+		            exportOptions: {
+		                columns: [ 1, 2, 3, 4, 5 ]
+		            }
+		        }
+	        ]
+	    } );
 		$('#ExportPrint').on('click', function () {
 	        table.button('0').trigger();
 	    });

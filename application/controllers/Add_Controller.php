@@ -14,7 +14,7 @@ class Add_Controller extends CI_Controller {
 	public function addNewEmployee()
 	{
 		# PERSONAL INFORMATION
-		$pImageChecker = $this->input->post('pImageChecker');
+		$pImage = $this->input->post('pImageChecker');
 		$PositionGroup = $this->input->post('PositionGroup');
 		$PersonRecommending = $this->input->post('PersonRecommending');
 		$ContractType = $this->input->post('ContractType');
@@ -168,7 +168,7 @@ class Add_Controller extends CI_Controller {
 					mkdir('./uploads/' . $customid, 0777, true);
 					$dir_exist = false;
 				}
-				if ($pImageChecker != NULL) {
+				if ($pImage != NULL) {
 					if ( ! $this->upload->do_upload('pImage'))
 					{
 						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
@@ -537,7 +537,7 @@ class Add_Controller extends CI_Controller {
 	public function Add_NewBranch()
 	{
 		$EmployerID = $this->input->post('EmployerID',TRUE);
-		$pImageChecker = $this->input->post('pImageChecker',TRUE);
+		$pImage = $this->input->post('pImageChecker',TRUE);
 		$BranchName = $this->input->post('BranchName',TRUE);
 		$BranchAddress = $this->input->post('BranchAddress',TRUE);
 		$BranchContact = $this->input->post('BranchContact',TRUE);
@@ -546,11 +546,9 @@ class Add_Controller extends CI_Controller {
 		// color parts
 		$colors = array("NavbarBG", "NavbarColor", "MainBG", "Borders");
 
-		if ( $EmployerID == NULL || $BranchName == NULL || $BranchAddress == NULL || $BranchContact == NULL || $EmployeeIDSuffix == NULL ) {
+		if ($pImage == NULL || $EmployerID == NULL || $BranchName == NULL || $BranchAddress == NULL || $BranchContact == NULL || $EmployeeIDSuffix == NULL ) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
-				'inpError' => TRUE,
-
 				'BranchName' => $BranchName,
 				'BranchAddress' => $BranchAddress,
 				'BranchContact' => $BranchContact,
@@ -577,25 +575,26 @@ class Add_Controller extends CI_Controller {
 			}
 			else
 			{
-				$customid = str_pad(($this->db->count_all('branches') + 1),5,0,STR_PAD_LEFT) . "-B";
+				if (!$_FILES['pImage']['name'] == '') {
+					$customid = str_pad(($this->db->count_all('branches') + 1),5,0,STR_PAD_LEFT) . "-B";
 
-				$config['upload_path']          = './uploads/'.$customid;
-				$config['allowed_types']        = 'gif|jpg|png';
-				$config['max_size']             = 2000;
-				$config['max_width']            = 2000;
-				$config['max_height']           = 2000;
+					$config['file_name']          = 'b_icon-'.$_FILES['pImage']['name'];
+					$config['upload_path']          = './uploads/'.$customid;
+					$config['allowed_types']        = 'gif|jpg|png';
+					$config['max_size']             = 2000;
+					$config['max_width']            = 2000;
+					$config['max_height']           = 2000;
 
-				$this->load->library('upload', $config);
-				if (!is_dir('uploads'))
-				{
-					mkdir('./uploads', 0777, true);
-				}
-				if (!is_dir('uploads/' . $customid))
-				{
-					mkdir('./uploads/' . $customid, 0777, true);
-					$dir_exist = false;
-				}
-				if ($pImageChecker != NULL) {
+					$this->load->library('upload', $config);
+					if (!is_dir('uploads'))
+					{
+						mkdir('./uploads', 0777, true);
+					}
+					if (!is_dir('uploads/' . $customid))
+					{
+						mkdir('./uploads/' . $customid, 0777, true);
+						$dir_exist = false;
+					}
 					if ( ! $this->upload->do_upload('pImage'))
 					{
 						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
@@ -622,6 +621,7 @@ class Add_Controller extends CI_Controller {
 				$newBranchID = $this->db->insert_id();
 				// insert colors
 				$dataColors = array();
+				// set current colors
 				foreach ($colors as $key => $val) {
 					$dataColors[] = array(
 						'BranchID' => $newBranchID,
@@ -629,9 +629,17 @@ class Add_Controller extends CI_Controller {
 						'HexColor' => $this->input->post('brcol' . $val,TRUE),
 					);
 				}
+				// set default colors
+				foreach ($colors as $key => $val) {
+					$dataColors[] = array(
+						'BranchID' => $newBranchID,
+						'Part' => 'default_' . $val,
+						'HexColor' => $this->input->post('brcol' . $val,TRUE),
+					);
+				}
 				$this->Model_Inserts->InsertBranchColors($dataColors);
 
-				if ($InsertNewBranch == TRUE) {
+				if ($InsertNewBranch) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Branch added!</h5></div>');
 					
 					// LOGBOOK
@@ -669,9 +677,7 @@ class Add_Controller extends CI_Controller {
 		if ($ApplicantID == NULL || $Subject == NULL || $Description == NULL || $Remarks == NULL || $Type == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
 			redirect('Employee');
-			exit();
 		}
-
 		else
 		{
 			// Preview Image File Upload
@@ -699,7 +705,7 @@ class Add_Controller extends CI_Controller {
 				redirect('Employee');
 				exit();
 			} else {
-				$pFile = base_url().'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
+				$pFile = 'uploads/'.$ApplicantID.'/'.$this->upload->data('file_name');
 				$pFileName = $this->upload->data('file_name');
 				if (strlen($pFileName) > 15) {
 					$pFileName = substr($pFileName, 0, 15);
@@ -707,7 +713,6 @@ class Add_Controller extends CI_Controller {
 				}
 				$data = array(
 					'ApplicantID' => $ApplicantID,
-					// 'Doc_Image' => $pImage,
 					'Doc_File' => $pFile,
 					'Doc_FileName' => $pFileName,
 					'Type' => $Type,
@@ -716,62 +721,68 @@ class Add_Controller extends CI_Controller {
 					'Remarks' => $Remarks,
 					'DateAdded' => date('Y-m-d'),
 				);
-				if ($Type == 'Blacklist') {
-					$this->Model_Updates->BlacklistEmployee($ApplicantID);
-				}
 				$AddDocuments = $this->Model_Inserts->AddDocuments($data);
-				if ($AddDocuments == TRUE) {
+				if ($AddDocuments) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Document added!</h5></div>');
 					redirect('ViewEmployee?id=' . $ApplicantID . '#Documents');
-					exit();
 				}
 				else
 				{
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
 					redirect('Employee');
-					exit();
 				}
 			}
 		}
 	}
 	public function add_newcontri()
 	{
-		##### SET POST DATA TO VARIABLES
 		$f_range = $this->input->post('f_range',TRUE);
 		$t_range = $this->input->post('t_range',TRUE);
-		$contribution = $this->input->post('contribution',TRUE);
+		$contribution_er = $this->input->post('contribution_er',TRUE);
+		$contribution_ee = $this->input->post('contribution_ee',TRUE);
+		$contribution_ec = $this->input->post('contribution_ec',TRUE);
+		$total = $this->input->post('total',TRUE);
+		$total_with_ec = $this->input->post('total_with_ec',TRUE);
 
-		##### CONDITIONS
-		if ($f_range == null) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Input range, Please try again!</h5></div>');
+		if ($f_range == NULL || $t_range == NULL || $contribution_er == NULL || $contribution_ee == NULL || $contribution_ec == NULL || $total == NULL || $total_with_ec == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			redirect('sss_table');
-			exit();
-		}
-		if ($t_range == null) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Input range, Please try again!</h5></div>');
-			redirect('sss_table');
-			exit();
-		}
-		if ($contribution == null) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Input Contribution, Please try again!</h5></div>');
-			redirect('sss_table');
-			exit();
-		}
-		##### ADD NEW DATA ROW
-		$data = array(
-			'f_range' => $f_range,
-			't_range' => $t_range,
-			'contribution' => $contribution,
-		);
-		$conti_add = $this->Model_Inserts->conti_add($data);
-		if ($conti_add == TRUE) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
-			redirect('sss_table');
-		}
-		else
-		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
-			redirect('sss_table');
+		} else {
+			$data = array(
+				'f_range' => $f_range,
+				't_range' => $t_range,
+				'contribution_er' => $contribution_er,
+				'contribution_ee' => $contribution_ee,
+				'contribution_ec' => $contribution_ec,
+				'total' => $total,
+				'total_with_ec' => $total_with_ec,
+			);
+			$conti_add = $this->Model_Inserts->conti_add($data);
+
+			if ($conti_add == TRUE) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
+
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'New';
+				$LogbookEvent = 'New SSS Row added! (Range: ' . $f_range . ' - ' . $t_range . ')';
+				$LogbookLink = 'sss_table';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+				redirect('sss_table');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				redirect('sss_table');
+			}
 		}
 	}
 	public function generate_payslip()

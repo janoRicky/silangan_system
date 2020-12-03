@@ -652,7 +652,7 @@
 			$Year = date('Y');
 			$Year = substr($Year, 2);
 			// Concatenate them all together
-			$EmployeeID = 'SL' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
+			$EmployeeID = $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
 			?>
 			if ($(this).val() == '<?php echo $row['BranchID']; ?>') {
 				$(this).closest('form').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');

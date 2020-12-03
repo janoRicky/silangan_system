@@ -22,41 +22,47 @@
 						<div class="table-responsive pt-5 pb-5 pl-2 pr-2">
 							<table id="EmployersTable" class="table table-bordered PrintOut" style="width: 100%;">
 								<thead class="text-center align-middle">
-									<th> From </th>
-									<th> To </th>
-									<th> Contribution </th>
+									<th> From / To </th>
+									<th> ER </th>
+									<th> EE </th>
+									<th> EC </th>
+									<th> Total </th>
+									<th> Tot (w/ EC) </th>
 									<th> Action </th>
 								</thead>
 								<tbody>
 									<?php foreach ($get_ssstable->result_array() as $row): ?>
 										<tr class="text-center align-middle">
 											<td>
-												<?php if (isset($row['f_range'])) {
-													echo $row['f_range'];
-												} else {
-													echo '<span class="text-danger"> Null </>';
-												}
-												?>
+												<?php if (isset($row['f_range'])) echo $row['f_range'];
+												else echo '<span class="text-danger"> Null </>'; ?>
+												-
+
+												<?php if (isset($row['t_range'])) echo $row['t_range'];
+												else echo '<span class="text-danger"> Null </>'; ?>
 											</td>
 											<td>
-												<?php if (isset($row['t_range'])) {
-													echo $row['t_range'];
-												} else {
-													echo '<span class="text-danger"> Null </>';
-												}
-												?>
+												<?php if (isset($row['contribution_er'])) echo $row['contribution_er'];
+												else echo '<span class="text-danger"> Null </>'; ?>
 											</td>
 											<td>
-												<?php if (isset($row['contribution'])) {
-													echo $row['contribution'];
-												} else {
-													echo '<span class="text-danger"> Null </>';
-												}
-												?>
+												<?php if (isset($row['contribution_ee'])) echo $row['contribution_ee'];
+												else echo '<span class="text-danger"> Null </>'; ?>
+											</td>
+											<td>
+												<?php if (isset($row['contribution_ec'])) echo $row['contribution_ec'];
+												else echo '<span class="text-danger"> Null </>'; ?>
+											</td>
+											<td>
+												<?php if (isset($row['total'])) echo $row['total'];
+												else echo '<span class="text-danger"> Null </>'; ?>
+											</td>
+											<td>
+												<?php if (isset($row['total_with_ec'])) echo $row['total_with_ec'];
+												else echo '<span class="text-danger"> Null </>'; ?>
 											</td>
 											<td class="text-center align-middle" style="width: 100px;">
-												<a class="btn btn-primary btn-sm w-100 mb-1" href="#"><i class="fas fa-building"></i> Update</a>
-												<a class="btn btn-danger btn-sm w-100 mb-1" href="<?=base_url()?>remove_contri?id=<?php echo $row['id']; ?>"><i class="fas fa-edit"></i> Delete</a>
+												<a href="<?=base_url()?>remove_contri?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm w-100 mb-1" onclick="return confirm('Remove Row?')"><i class="fas fa-trash"></i> Delete</a>
 											</td>
 										</tr>
 									<?php endforeach ?>
@@ -74,47 +80,51 @@
 			<?php echo form_open(base_url().'add_newcontri','method="post"'); ?>
 			<div class="modal-content m-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="Lab_add_ssscontri">New Contribution</h5>
-					<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<h5 class="modal-title" id="Lab_add_ssscontri">New SSS Data</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
-					</button> -->
+					</button>
 				</div>
 				<div class="modal-body">
-					<div class="form-row">
-						<div class="col text-center">
-							<h5 class="">Range</h5>
-						</div>
-						
-					</div>
 					<div class="form-row mb-3">
-
-						<div class="col">
-							<div class="from-group">
-								<label>From</label>
-								<input class="form-control" type="number" name="f_range">
-							</div>
+						<div class="form-group col-sm-6">
+							<label>From</label>
+							<input class="form-control" type="number" name="f_range" autocomplete="off" value="0" step="0.01">
 						</div>
-						<div class="col">
-							<div class="from-group">
-								<label>To</label>
-								<input class="form-control" type="number" name="t_range">
-							</div>
+						<div class="form-group col-sm-6">
+							<label>To</label>
+							<input class="form-control" type="number" name="t_range" autocomplete="off" value="0" step="0.01">
 						</div>
 					</div>
 					<div class="form-row mb-3">
-						<div class="col">
-							<div class="from-group">
-								<div class="col text-center">
-									<h5 class="">Contribution</h5>
-								</div>
-								<input class="form-control" type="number" name="contribution">
-							</div>
+						<div class="form-group col-sm-6 text-center">
+							<label>Employer's Contribution</label>
+							<input id="cER" class="form-control" type="number" name="contribution_er" autocomplete="off" value="0" step="0.01">
+						</div>
+						<div class="form-group col-sm-6 text-center">
+							<label>Employee's Contribution</label>
+							<input id="cEE" class="form-control" type="number" name="contribution_ee" autocomplete="off" value="0" step="0.01">
+						</div>
+					</div>
+					<div class="form-row mb-3">
+						<div class="form-group col-sm-12 text-center">
+							<label>Employee Compensation</label>
+							<input id="cEC" class="form-control" type="number" name="contribution_ec" autocomplete="off" value="0" step="0.01">
+						</div>
+					</div>
+					<div class="form-row mb-3">
+						<div class="form-group col-sm-6 text-center">
+							<label>Total</label>
+							<input id="cTotal" class="form-control" type="number" name="total" autocomplete="off" value="0" step="0.01" readonly>
+						</div>
+						<div class="form-group col-sm-6 text-center">
+							<label>Total (w/ EC)</label>
+							<input id="cTotalwEC" class="form-control" type="number" name="total_with_ec" autocomplete="off" value="0" step="0.01" readonly>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-plus fa-fw"></i> Save</button>
-					<button type="button" class="btn btn-warning btn-sm" data-dismiss="modal"><i class="fas fa-undo fa-fw"></i> Cancel</button>
+					<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Save</button>
 				</div>
 			</div>
 			<?php echo form_close(); ?>
@@ -127,7 +137,7 @@
 	$(document).ready(function () {
 		
 		$('#EmployeeIDSuffix').bind('input', function() {
-			$('#SuffixPreview').val('SL' + $(this).val() + '-####-20');
+			$('#SuffixPreview').val($(this).val() + '-####-20');
 		});
 		$('[data-toggle="tooltip"]').tooltip();
 		if (localStorage.getItem('SidebarVisible') == 'true') {
@@ -153,7 +163,7 @@
 			}
 		});
 		var employersTable = $('#EmployersTable').DataTable( {
-			"order": [[ 3, "desc" ]],
+			"order": [[ 5, "asc" ]],
 			buttons: [
 			{
 				extend: 'print',
@@ -302,6 +312,15 @@
 		$('#EmployeesExportPDF').on('click', function () {
 			employeesTable.button('4').trigger();
 		});
+
+		function showTotal() {
+			var total = parseFloat($("#cER").val()) + parseFloat($("#cEE").val());
+			$("#cTotal").val(total.toFixed(2));
+			$("#cTotalwEC").val((total + parseFloat($("#cEC").val())).toFixed(2));
+		}
+		$("#cER").change(function(e) { showTotal(); });
+		$("#cEE").change(function(e) { showTotal(); });
+		$("#cEC").change(function(e) { showTotal(); });
 	});
 </script>
 </html>

@@ -316,7 +316,7 @@ class Update_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($PositionGroup == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL) {
+		if ($pImage == NULL || $PositionGroup == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
 				'EmployeeID' => $EmployeeID,
@@ -378,24 +378,24 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
-			$config['upload_path']          = './uploads/'.$ApplicantID;
-			$config['allowed_types']        = 'gif|jpg|png';
-			$config['max_size']             = 2000;
-			$config['max_width']            = 2000;
-			$config['max_height']           = 2000;
-
-			$this->load->library('upload', $config);
-			if (!is_dir('uploads'))
-			{
-				mkdir('./uploads', 0777, true);
-			}
-			if (!is_dir('uploads/' . $ApplicantID))
-			{
-				mkdir('./uploads/' . $ApplicantID, 0777, true);
-				$dir_exist = false;
-			}
-
 			if (!$_FILES['pImage']['name'] == '') {
+				$config['upload_path']          = './uploads/'.$ApplicantID;
+				$config['allowed_types']        = 'gif|jpg|png';
+				$config['max_size']             = 2000;
+				$config['max_width']            = 2000;
+				$config['max_height']           = 2000;
+
+				$this->load->library('upload', $config);
+				if (!is_dir('uploads'))
+				{
+					mkdir('./uploads', 0777, true);
+				}
+				if (!is_dir('uploads/' . $ApplicantID))
+				{
+					mkdir('./uploads/' . $ApplicantID, 0777, true);
+					$dir_exist = false;
+				}
+
 				if (! $this->upload->do_upload('pImage'))
 				{
 					$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
@@ -594,12 +594,12 @@ class Update_Controller extends CI_Controller {
 					$dataSession['BranchID'] = $BranchID;
 					$dataSession['BranchName'] = $BranchInfo['Name'];
 					$dataSession['BranchIcon'] = $BranchInfo['BranchIcon'];
-					$dataSession['Colors'] = $this->Model_Selects->getBranchColors($BranchID)->result_array();
+					$dataSession['Colors'] = $this->Model_Selects->getBranchColors($BranchID,FALSE)->result_array();
 
 					$this->session->set_userdata($dataSession);
 				}
 
-				if ($UpdateAdminInfo == TRUE) {
+				if ($UpdateAdminInfo) {
 					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Admin Reassigned!</h5></div>');
 
 					// LOGBOOK
@@ -1564,10 +1564,9 @@ class Update_Controller extends CI_Controller {
 		// color parts
 		$colors = array("NavbarBG", "NavbarColor", "MainBG", "Borders");
 
-		if ($EmployerID == NULL || $Name == NULL || $Address == NULL || $ContactNumber == NULL || $EmployeeIDSuffix == NULL) {
+		if ($pImage == NULL || $EmployerID == NULL || $Name == NULL || $Address == NULL || $ContactNumber == NULL || $EmployeeIDSuffix == NULL) {
 			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
 			$data = array(
-				'BranchID' => $BranchID,
 				'EmployerID' => $EmployerID,
 				'Name' => $Name,
 				'Address' => $Address,
@@ -1632,10 +1631,19 @@ class Update_Controller extends CI_Controller {
 			$updatedBranch = $this->Model_Updates->UpdateBranch($BranchID, $data);
 
 			$dataColors = array();
+			// update current colors
 			foreach ($colors as $key => $val) {
 				$dataColors[] = array(
 					'Part' => $val,
 					'HexColor' => $this->input->post('brcol' . $val,TRUE),
+				);
+			}
+			$sColors = $dataColors;
+			// update default colors
+			foreach ($colors as $key => $val) {
+				$dataColors[] = array(
+					'Part' => 'default_' . $val,
+					'HexColor' => $this->input->post('brcoldefault_' . $val,TRUE),
 				);
 			}
 			$this->Model_Updates->UpdateBranchColors($BranchID,$dataColors);
@@ -1644,7 +1652,7 @@ class Update_Controller extends CI_Controller {
 			if ($_SESSION["BranchID"] == $BranchID) {
 				$dataSession['BranchName'] = $Name;
 				$dataSession['BranchIcon'] = $pImage;
-				$dataSession['Colors'] = $dataColors;
+				$dataSession['Colors'] = $sColors;
 				
 				$this->session->set_userdata($dataSession);
 			}

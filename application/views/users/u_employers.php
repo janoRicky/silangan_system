@@ -109,6 +109,7 @@
 											<table id="EmployerBranchesTable" class="table" style="width: 100%;">
 												<thead>
 													<tr class="text-center">
+														<th> ID </th>
 														<th> Branch Icon </th>
 														<th> Name </th>
 														<th> Address </th>
@@ -123,6 +124,9 @@
 													$GetEmployerBranches = $this->Model_Selects->GetEmployerBranches($_GET['employerID']);
 													foreach ($GetEmployerBranches->result_array() as $row): ?>
 														<tr>
+															<td class="text-center align-middle">
+																<?php echo $row['BranchID']; ?>
+															</td>
 															<td style="text-align: center;">
 																<img src="<?=base_url() . $row['BranchIcon']?>" style="max-width: 120px; max-height: 120px;">
 															</td>
@@ -223,7 +227,7 @@
 														<tr>
 															<td class="text-center">
 																<div class="col-sm-12">
-																	<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+																	<img src="<?php echo base_url() . $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
 																</div>
 																<div class="col-sm-12 align-middle">
 																	<?php if($row['EmployeeID'] != NULL): ?>
@@ -378,21 +382,21 @@
 					<hr>
 					<div class="form-row">
 						<div class="form-group col-sm-6">
-							<label>NavbarBG</label>
+							<label>Navbar Color</label>
 							<input id="NavbarBG" class="form-control" type="color" name="brcolNavbarBG" value="<?=$this->session->flashdata('brcolNavbarBG')?>">
 						</div>
 						<div class="form-group col-sm-6">
-							<label>NavbarColor</label>
+							<label>Navbar Font Color</label>
 							<input id="NavbarColor" class="form-control" type="color" name="brcolNavbarColor" value="<?=$this->session->flashdata('brcolNavbarColor')?>">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-sm-6">
-							<label>MainBG</label>
+							<label>Main Background</label>
 							<input id="MainBG" class="form-control" type="color" name="brcolMainBG" value="<?=$this->session->flashdata('brcolMainBG')?>">
 						</div>
 						<div class="form-group col-sm-6">
-							<label>Borders</label>
+							<label>Border Color</label>
 							<input id="Borders" class="form-control" type="color" name="brcolBorders" value="<?=$this->session->flashdata('brcolBorders')?>">
 						</div>
 					</div>
@@ -414,17 +418,15 @@
 			$('#employerBranches').modal('show');
 			// assign current branch colors to color selection
 			<?php
-			if (is_null($this->session->flashdata('inpError'))) {
-				foreach ($_SESSION['Colors'] as $row) {
-					echo "$('#" . $row["Part"] . "').val('" . $row["HexColor"] . "');";
-				}
+			foreach ($_SESSION['Colors'] as $row) {
+				echo "$('#" . $row["Part"] . "').val('" . $row["HexColor"] . "');";
 			}
 			?>
 		<?php elseif(isset($_GET['employerID']) && isset($_GET['branchID'])): ?>
 			$('#branchEmployees').modal('show');
 		<?php endif; ?>
 		$('#EmployeeIDSuffix').bind('input', function() {
-			$('#SuffixPreview').val('SL' + $(this).val() + '-####-20');
+			$('#SuffixPreview').val($(this).val() + '-####-20');
 		});
 
 		$('[data-toggle="tooltip"]').tooltip();
@@ -501,7 +503,7 @@
 	        employersTable.button('4').trigger();
     	});
 		var branchesTable = $('#EmployerBranchesTable').DataTable( {
-			"order": [[ 4, "desc" ]],
+			"order": [[ 0, "desc" ]],
 			buttons: [
             {
 	            extend: 'print',
@@ -614,7 +616,18 @@
 		}
 		$("#imgInp").change(function() {
 			readURL(this);
-			$('#pImageChecker').val('Has Image')
+			$('#pImageChecker').val('Has Image');
+		});
+		$("#addBranch").on("hidden.bs.modal", function(event) {
+			$("#employerBranches").modal('show');
+		});
+		$("#addBranch").on("show.bs.modal", function(event) {
+			$("#employerBranches").modal('hide');
+		});
+		$("#addBranch").on("shown.bs.modal", function(event) {
+			if (!$("body").hasClass('modal-open')) {
+				$("body").addClass('modal-open');
+			}
 		});
 	});
 </script>

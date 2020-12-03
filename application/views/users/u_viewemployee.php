@@ -25,7 +25,7 @@
 					<div class="row content m-4">
 						<div class="col-2 tabs">
 							<div class="col-12 employee-image">
-								<img class="rounded-circle" src="<?php echo $ApplicantImage; ?>">
+								<img class="rounded-circle" src="<?php echo base_url() . $ApplicantImage; ?>">
 							</div>
 						</div>
 						<div class="col-10 tabs">
@@ -1046,7 +1046,7 @@
 			$Year = date('Y');
 			$Year = substr($Year, 2);
 			// Concatenate them all together
-			$EmployeeID = 'SL' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
+			$EmployeeID = $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
 			?>
 			if ($(this).val() == '<?php echo $row['BranchID']; ?>') {
 				$(this).closest('#BranchModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');

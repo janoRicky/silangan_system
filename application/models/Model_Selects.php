@@ -159,9 +159,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
-	public function getBranchColors($BranchID)
+	public function getBranchColors($BranchID,$default=TRUE)
 	{
 		$SQL = "SELECT * FROM branch_colors WHERE BranchID = ?";
+		if (!$default) { $SQL = $SQL . " AND Part NOT LIKE 'default_%'"; }
 		$result = $this->db->query($SQL,$BranchID);
 		return $result;
 	}
@@ -343,7 +344,7 @@ class Model_Selects extends CI_Model {
 	}
 	public function sss_Contri()
 	{
-		$SQL = "SELECT * FROM sss_table ORDER BY contribution ASC";
+		$SQL = "SELECT * FROM sss_table ORDER BY total ASC";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

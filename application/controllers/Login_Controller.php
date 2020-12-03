@@ -41,7 +41,7 @@ class Login_Controller extends CI_Controller {
 
 						'BranchName' => $BranchInfo['Name'],
 						'BranchIcon' => $BranchInfo['BranchIcon'],
-						'Colors' => $this->Model_Selects->getBranchColors($d_row['BranchID'])->result_array(),
+						'Colors' => $this->Model_Selects->getBranchColors($d_row['BranchID'],FALSE)->result_array(),
 					);
 					$this->session->set_userdata($data);
 					redirect('Dashboard');

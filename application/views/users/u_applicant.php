@@ -27,7 +27,7 @@
 						</h4> 
 					</div>
 					<div class="col-7 text-right">
-						<a href="<?=base_url()?>NewEmployee" class="btn btn-primary" onclick="// return confirm('Add Employee?')">
+						<a href="<?=base_url()?>NewEmployee" class="btn btn-primary">
 							<i class="fas fa-user-plus"></i> New
 						</a>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
@@ -108,7 +108,7 @@
 			$Year = date('Y');
 			$Year = substr($Year, 2);
 			// Concatenate them all together
-			$EmployeeID = 'SL' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
+			$EmployeeID = $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
 			?>
 			if ($(this).val() == '<?php echo $row['BranchID']; ?>') {
 				$(this).closest('#BranchModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');

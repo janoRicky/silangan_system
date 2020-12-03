@@ -49,7 +49,7 @@
 										<tr>
 											<td class="text-center">
 												<div class="col-sm-12">
-													<img src="<?php echo $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
+													<img src="<?php echo base_url() . $row['ApplicantImage']; ?>" width="70" height="70" class="rounded-circle">
 												</div>
 												<div class="col-sm-12 align-middle">
 													<?php echo $row['ApplicantID']; ?>
@@ -105,7 +105,7 @@
 			$Year = date('Y');
 			$Year = substr($Year, 2);
 			// Concatenate them all together
-			$EmployeeID = 'SL' . $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
+			$EmployeeID = $row['EmployeeIDSuffix'] . '-' . $CountEmployees . '-' . $Year;
 			?>
 			if ($(this).val() == '<?php echo $row['BranchID']; ?>') {
 				$(this).closest('#BranchModal').find('#EmployeeID').val('<?php echo $EmployeeID; ?>');

@@ -197,19 +197,39 @@ class Delete_Controller extends CI_Controller {
 	}
 	public function remove_contri()
 	{
-		##### SET GET VALUE TO VARIABLE
 		$id = $this->input->get('id');
-		##### QUERY
-		$remove_contribution = $this->Model_Deletes->remove_contribution($id);
-		##### PROMPTS
-		if ($remove_contribution == TRUE) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row Deleted!</h5></div>');
-			redirect('sss_table');
+
+		if (!isset($_GET['id'])) {
+			redirect('Employers');
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
-			redirect('sss_table');
+			$Removethis = $this->Model_Deletes->remove_contribution($id);
+
+			if ($Removethis) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row Deleted!</h5></div>');
+
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Deletion';
+				$LogbookEvent = 'SSS Row ' . $id .' has been removed.';
+				$LogbookLink = 'sss_table';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+				redirect('sss_table');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				redirect('sss_table');
+			}
 		}
 	}
 }
