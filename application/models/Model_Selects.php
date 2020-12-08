@@ -348,6 +348,18 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function hdmf_Contri()
+	{
+		$SQL = "SELECT * FROM hdmf_table ORDER BY total ASC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function philhealth_Contri()
+	{
+		$SQL = "SELECT * FROM philhealth_table ORDER BY f_range ASC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function Checkkkkkk($ApplicantID)
 	{
 		$SQL = "SELECT * FROM hours_weekly WHERE ApplicantID = '$ApplicantID'";

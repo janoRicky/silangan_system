@@ -195,16 +195,16 @@ class Delete_Controller extends CI_Controller {
 			
 		}
 	}
-	public function remove_contri()
+	public function remove_contri_SSS()
 	{
 		$id = $this->input->get('id');
 
 		if (!isset($_GET['id'])) {
-			redirect('Employers');
+			redirect('sss_table');
 		}
 		else
 		{
-			$Removethis = $this->Model_Deletes->remove_contribution($id);
+			$Removethis = $this->Model_Deletes->remove_contri_SSS($id);
 
 			if ($Removethis) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row Deleted!</h5></div>');
@@ -229,6 +229,80 @@ class Delete_Controller extends CI_Controller {
 			{
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
 				redirect('sss_table');
+			}
+		}
+	}
+	public function remove_contri_HDMF()
+	{
+		$id = $this->input->get('id');
+
+		if (!isset($_GET['id'])) {
+			redirect('hdmf_table');
+		}
+		else
+		{
+			$Removethis = $this->Model_Deletes->remove_contri_HDMF($id);
+
+			if ($Removethis) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row Deleted!</h5></div>');
+
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Deletion';
+				$LogbookEvent = 'HDMF Row ' . $id .' has been removed.';
+				$LogbookLink = 'hdmf_table';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+				redirect('hdmf_table');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				redirect('hdmf_table');
+			}
+		}
+	}
+	public function remove_contri_PhilHealth()
+	{
+		$id = $this->input->get('id');
+
+		if (!isset($_GET['id'])) {
+			redirect('philhealth_table');
+		}
+		else
+		{
+			$Removethis = $this->Model_Deletes->remove_contri_PhilHealth($id);
+
+			if ($Removethis) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row Deleted!</h5></div>');
+
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Deletion';
+				$LogbookEvent = 'PhilHealth Row ' . $id .' has been removed.';
+				$LogbookLink = 'philhealth_table';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+				redirect('philhealth_table');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				redirect('philhealth_table');
 			}
 		}
 	}

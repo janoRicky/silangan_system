@@ -73,6 +73,8 @@ $route['ViewBranch'] = 'Main_Controller/ViewBranch';
 $route['Payrollsss'] = 'Main_Controller/Payrollsss';
 
 $route['sss_table'] = 'Main_Controller/sss_table';
+$route['hdmf_table'] = 'Main_Controller/hdmf_table';
+$route['philhealth_table'] = 'Main_Controller/philhealth_table';
 
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';
@@ -85,7 +87,11 @@ $route['Add_NewAdmin'] = 'Add_Controller/Add_NewAdmin';
 $route['Add_NewEmployer'] = 'Add_Controller/Add_NewEmployer';
 $route['Add_NewBranch'] = 'Add_Controller/Add_NewBranch';
 $route['AddSupDoc'] = 'Add_Controller/AddSupDoc';
-$route['add_newcontri'] = 'Add_Controller/add_newcontri';
+
+$route['add_newcontri_SSS'] = 'Add_Controller/add_newcontri_SSS';
+$route['add_newcontri_HDMF'] = 'Add_Controller/add_newcontri_HDMF';
+$route['add_newcontri_PhilHealth'] = 'Add_Controller/add_newcontri_PhilHealth';
+
 $route['generate_payslip'] = 'Add_Controller/generate_payslip';
 
 
@@ -98,7 +104,10 @@ $route['RemoveEmployee'] = 'Delete_Controller/RemoveEmployee';
 $route['RemoveAdmin'] = 'Delete_Controller/RemoveAdmin';
 $route['RemoveEmployer'] = 'Delete_Controller/RemoveEmployer';
 $route['RemoveBranch'] = 'Delete_Controller/RemoveBranch';
-$route['remove_contri'] = 'Delete_Controller/remove_contri';
+
+$route['remove_contri_SSS'] = 'Delete_Controller/remove_contri_SSS';
+$route['remove_contri_HDMF'] = 'Delete_Controller/remove_contri_HDMF';
+$route['remove_contri_PhilHealth'] = 'Delete_Controller/remove_contri_PhilHealth';
 
 
 // UPDATE

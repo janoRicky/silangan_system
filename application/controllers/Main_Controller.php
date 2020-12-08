@@ -448,6 +448,52 @@ class Main_Controller extends CI_Controller {
 		$this->load->view('users/u_ssstable',$data);
 	}
 
+	public function hdmf_table()
+	{
+		unset($_SESSION["bencart"]);
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
+
+		$header['title'] = 'HDMF Table | Silangan Lumber';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'">HDMF Table</a></li>
+		</ol>
+		</nav>';
+		$data['get_hdmftable'] = $this->Model_Selects->hdmf_Contri();
+		$this->load->view('users/u_hdmftable',$data);
+	}
+
+	public function philhealth_table()
+	{
+		unset($_SESSION["bencart"]);
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
+
+		$header['title'] = 'PhilHealth Table | Silangan Lumber';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'">PhilHealth Table</a></li>
+		</ol>
+		</nav>';
+		$data['get_philhealthtable'] = $this->Model_Selects->philhealth_Contri();
+		$this->load->view('users/u_philhealthtable',$data);
+	}
+
 	public function ViewEmployee()
 	{
 		unset($_SESSION["bencart"]);

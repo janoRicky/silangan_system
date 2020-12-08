@@ -62,6 +62,12 @@
 					<a class="link-s" class="sublink" href="<?=base_url()?>sss_table"><i class="fas fa-table fa-fw"></i> SSS Table </a>
 				</li>
 				<li>
+					<a class="link-s" class="sublink" href="<?=base_url()?>hdmf_table"><i class="fas fa-table fa-fw"></i> HDMF Table </a>
+				</li>
+				<li>
+					<a class="link-s" class="sublink" href="<?=base_url()?>philhealth_table"><i class="fas fa-table fa-fw"></i> PhilHealth Table </a>
+				</li>
+				<li>
 					<a class="link-s" class="sublink" href="Logout"><i class="fas fa-sign-out-alt fa-fw"></i> Log-out </a>
 				</li>
 			</ul>

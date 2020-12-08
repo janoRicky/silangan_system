@@ -734,7 +734,7 @@ class Add_Controller extends CI_Controller {
 			}
 		}
 	}
-	public function add_newcontri()
+	public function add_newcontri_SSS()
 	{
 		$f_range = $this->input->post('f_range',TRUE);
 		$t_range = $this->input->post('t_range',TRUE);
@@ -757,9 +757,9 @@ class Add_Controller extends CI_Controller {
 				'total' => $total,
 				'total_with_ec' => $total_with_ec,
 			);
-			$conti_add = $this->Model_Inserts->conti_add($data);
+			$contri_add_SSS = $this->Model_Inserts->contri_add_SSS($data);
 
-			if ($conti_add == TRUE) {
+			if ($contri_add_SSS == TRUE) {
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
 
 				// LOGBOOK
@@ -782,6 +782,98 @@ class Add_Controller extends CI_Controller {
 			{
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
 				redirect('sss_table');
+			}
+		}
+	}
+	public function add_newcontri_HDMF()
+	{
+		$f_range = $this->input->post('f_range',TRUE);
+		$t_range = $this->input->post('t_range',TRUE);
+		$contribution_er = $this->input->post('contribution_er',TRUE);
+		$contribution_ee = $this->input->post('contribution_ee',TRUE);
+		$total = $this->input->post('total',TRUE);
+
+		if ($f_range == NULL || $t_range == NULL || $contribution_er == NULL || $contribution_ee == NULL || $total == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			redirect('hdmf_table');
+		} else {
+			$data = array(
+				'f_range' => $f_range,
+				't_range' => $t_range,
+				'contribution_er' => $contribution_er,
+				'contribution_ee' => $contribution_ee,
+				'total' => $total,
+			);
+			$contri_add_HDMF = $this->Model_Inserts->contri_add_HDMF($data);
+
+			if ($contri_add_HDMF == TRUE) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
+
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'New';
+				$LogbookEvent = 'New HDMF Row added! (Range: ' . $f_range . ' - ' . $t_range . ')';
+				$LogbookLink = 'hdmf_table';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+				redirect('hdmf_table');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				redirect('hdmf_table');
+			}
+		}
+	}
+	public function add_newcontri_PhilHealth()
+	{
+		$f_range = $this->input->post('f_range',TRUE);
+		$t_range = $this->input->post('t_range',TRUE);
+		$contribution_rate = $this->input->post('contribution_rate',TRUE);
+		$contribution_ee = $this->input->post('contribution_ee',TRUE);
+
+		if ($f_range == NULL || $t_range == NULL || $contribution_rate == NULL || $contribution_ee == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			redirect('philhealth_table');
+		} else {
+			$data = array(
+				'f_range' => $f_range,
+				't_range' => $t_range,
+				'contribution_rate' => $contribution_rate,
+				'contribution_ee' => $contribution_ee,
+			);
+			$contri_add_PhilHealth = $this->Model_Inserts->contri_add_PhilHealth($data);
+
+			if ($contri_add_PhilHealth == TRUE) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
+
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'New';
+				$LogbookEvent = 'New PhilHealth Row added! (Range: ' . $f_range . ' - ' . $t_range . ')';
+				$LogbookLink = 'philhealth_table';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+				redirect('philhealth_table');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				redirect('philhealth_table');
 			}
 		}
 	}
