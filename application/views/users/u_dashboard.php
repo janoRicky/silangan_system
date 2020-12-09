@@ -213,6 +213,7 @@
 											<thead>
 												<tr class="text-center align-middle">
 													<th> Time </th>
+													<th> Admin ID </th>
 													<th> Event </th>
 													<th> Action </th>
 												</tr>
@@ -241,6 +242,9 @@
 														</td>
 														<td class="text-center align-middle">
 															<?php echo $row['Time']; ?>
+														</td>
+														<td class="text-center align-middle">
+															<?php echo $row['AdminID']; ?>
 														</td>
 														<td class="text-center align-middle">
 															<?php echo $row['Event']; ?>

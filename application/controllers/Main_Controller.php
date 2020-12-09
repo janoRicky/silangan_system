@@ -32,6 +32,7 @@ class Main_Controller extends CI_Controller {
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
+						'AdminID' => $_SESSION["AdminID"],
 						'Event' => $LogbookEvent,
 						'Link' => $LogbookLink,
 					);
@@ -73,6 +74,7 @@ class Main_Controller extends CI_Controller {
 							$data = array(
 								'Time' => $LogbookCurrentTime,
 								'Type' => $LogbookType,
+								'AdminID' => $_SESSION["AdminID"],
 								'Event' => $LogbookEvent,
 								'Link' => $LogbookLink,
 							);
@@ -441,13 +443,12 @@ class Main_Controller extends CI_Controller {
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'">SSS Table</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'sss_table">SSS Table</a></li>
 		</ol>
 		</nav>';
 		$data['get_ssstable'] = $this->Model_Selects->sss_Contri();
 		$this->load->view('users/u_ssstable',$data);
 	}
-
 	public function hdmf_table()
 	{
 		unset($_SESSION["bencart"]);
@@ -464,13 +465,12 @@ class Main_Controller extends CI_Controller {
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'">HDMF Table</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'hdmf_table">HDMF Table</a></li>
 		</ol>
 		</nav>';
 		$data['get_hdmftable'] = $this->Model_Selects->hdmf_Contri();
 		$this->load->view('users/u_hdmftable',$data);
 	}
-
 	public function philhealth_table()
 	{
 		unset($_SESSION["bencart"]);
@@ -487,11 +487,33 @@ class Main_Controller extends CI_Controller {
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
 		<ol class="breadcrumb" style="background-color: transparent;">
-		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'">PhilHealth Table</a></li>
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'philhealth_table">PhilHealth Table</a></li>
 		</ol>
 		</nav>';
 		$data['get_philhealthtable'] = $this->Model_Selects->philhealth_Contri();
 		$this->load->view('users/u_philhealthtable',$data);
+	}
+	public function tax_table()
+	{
+		unset($_SESSION["bencart"]);
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+		
+		###	CHECK SESSION
+		$this->CheckUserLogin();
+
+		$header['title'] = 'Tax Table | Silangan Lumber';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'tax_table">Tax Table</a></li>
+		</ol>
+		</nav>';
+		$data['get_taxtable'] = $this->Model_Selects->tax_Contri();
+		$this->load->view('users/u_taxtable',$data);
 	}
 
 	public function ViewEmployee()

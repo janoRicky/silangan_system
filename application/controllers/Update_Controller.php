@@ -118,6 +118,7 @@ class Update_Controller extends CI_Controller {
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
+							'AdminID' => $_SESSION["AdminID"],
 							'Event' => $LogbookEvent,
 							'Link' => $LogbookLink,
 						);
@@ -224,6 +225,7 @@ class Update_Controller extends CI_Controller {
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
+							'AdminID' => $_SESSION["AdminID"],
 							'Event' => $LogbookEvent,
 							'Link' => $LogbookLink,
 						);
@@ -555,6 +557,7 @@ class Update_Controller extends CI_Controller {
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
 					'Event' => $LogbookEvent,
 					'Link' => $LogbookLink,
 				);
@@ -611,6 +614,7 @@ class Update_Controller extends CI_Controller {
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
+						'AdminID' => $_SESSION["AdminID"],
 						'Event' => $LogbookEvent,
 						'Link' => $LogbookLink,
 					);
@@ -642,6 +646,7 @@ class Update_Controller extends CI_Controller {
 			$data = array(
 				'Time' => $LogbookCurrentTime,
 				'Type' => $LogbookType,
+				'AdminID' => $_SESSION["AdminID"],
 				'Event' => $Note,
 			);
 			$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
@@ -662,6 +667,7 @@ class Update_Controller extends CI_Controller {
 			// $data = array(
 			// 	'Time' => $LogbookCurrentTime,
 			// 	'Type' => $LogbookType,
+			// 'AdminID' => $_SESSION["AdminID"],
 			// 	'Event' => 'Added new note for ' . $ApplicantID . '.',
 			// );
 			// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
@@ -777,6 +783,7 @@ class Update_Controller extends CI_Controller {
 						$data = array(
 							'Time' => $LogbookCurrentTime,
 							'Type' => $LogbookType,
+							'AdminID' => $_SESSION["AdminID"],
 							'Event' => $LogbookEvent,
 							'Link' => $LogbookLink,
 						);
@@ -822,6 +829,7 @@ class Update_Controller extends CI_Controller {
 				// $data = array(
 				// 	'Time' => $LogbookCurrentTime,
 				// 	'Type' => $LogbookType,
+				// 'AdminID' => $_SESSION["AdminID"],
 				// 	'Event' => $LogbookEvent,
 				// 	'Link' => $LogbookLink,
 				// );
@@ -860,6 +868,7 @@ class Update_Controller extends CI_Controller {
 				// $data = array(
 				// 	'Time' => $LogbookCurrentTime,
 				// 	'Type' => $LogbookType,
+				// 'AdminID' => $_SESSION["AdminID"],
 				// 	'Event' => $LogbookEvent,
 				// 	'Link' => $LogbookLink,
 				// );
@@ -963,6 +972,7 @@ class Update_Controller extends CI_Controller {
 							// $data = array(
 							// 	'Time' => $LogbookCurrentTime,
 							// 	'Type' => $LogbookType,
+							// 'AdminID' => $_SESSION["AdminID"],
 							// 	'Event' => $LogbookEvent,
 							// 	'Link' => $LogbookLink,
 							// );
@@ -1485,6 +1495,7 @@ class Update_Controller extends CI_Controller {
 							// $data = array(
 							// 	'Time' => $LogbookCurrentTime,
 							// 	'Type' => $LogbookType,
+								// 'AdminID' => $_SESSION["AdminID"],
 							// 	'Event' => $LogbookEvent,
 							// 	'Link' => $LogbookLink,
 							// );

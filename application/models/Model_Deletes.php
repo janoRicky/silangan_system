@@ -84,4 +84,10 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function remove_contri_Tax($id)
+	{
+		$SQL = "DELETE FROM tax_table WHERE id = '$id'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

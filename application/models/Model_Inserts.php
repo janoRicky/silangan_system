@@ -116,11 +116,6 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('tab_documents_notes', $data);
 		return $result;
 	}
-	public function AddtoSSS($data)
-	{
-		$result = $this->db->insert('sss_table', $data);
-		return $result;
-	}
 	public function Insertttttt($data)
 	{
 		$result = $this->db->insert('tracking_table', $data);
@@ -136,9 +131,14 @@ class Model_Inserts extends CI_Model {
 		$result = $this->db->insert('hdmf_table', $data);
 		return $result;
 	}
-	public function contri_add_Philhealth($data)
+	public function contri_add_PhilHealth($data)
 	{
 		$result = $this->db->insert('philhealth_table', $data);
+		return $result;
+	}
+	public function contri_add_Tax($data)
+	{
+		$result = $this->db->insert('tax_table', $data);
 		return $result;
 	}
 

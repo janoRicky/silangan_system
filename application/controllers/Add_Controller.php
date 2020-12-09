@@ -382,6 +382,7 @@ class Add_Controller extends CI_Controller {
 									$data = array(
 										'Time' => $LogbookCurrentTime,
 										'Type' => $LogbookType,
+										'AdminID' => $_SESSION["AdminID"],
 										'Event' => $LogbookEvent,
 										'Link' => $LogbookLink,
 									);
@@ -467,6 +468,7 @@ class Add_Controller extends CI_Controller {
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
+						'AdminID' => $_SESSION["AdminID"],
 						'Event' => $LogbookEvent,
 						'Link' => $LogbookLink,
 					);
@@ -519,6 +521,7 @@ class Add_Controller extends CI_Controller {
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
 					'Event' => $LogbookEvent,
 					'Link' => $LogbookLink,
 				);
@@ -651,6 +654,7 @@ class Add_Controller extends CI_Controller {
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
+						'AdminID' => $_SESSION["AdminID"],
 						'Event' => $LogbookEvent,
 						'Link' => $LogbookLink,
 					);
@@ -771,6 +775,7 @@ class Add_Controller extends CI_Controller {
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
 					'Event' => $LogbookEvent,
 					'Link' => $LogbookLink,
 				);
@@ -818,6 +823,7 @@ class Add_Controller extends CI_Controller {
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
 					'Event' => $LogbookEvent,
 					'Link' => $LogbookLink,
 				);
@@ -863,6 +869,7 @@ class Add_Controller extends CI_Controller {
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
 					'Event' => $LogbookEvent,
 					'Link' => $LogbookLink,
 				);
@@ -874,6 +881,52 @@ class Add_Controller extends CI_Controller {
 			{
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
 				redirect('philhealth_table');
+			}
+		}
+	}
+	public function add_newcontri_Tax()
+	{
+		$f_range = $this->input->post('f_range',TRUE);
+		$t_range = $this->input->post('t_range',TRUE);
+		$tax = $this->input->post('tax',TRUE);
+		$tax_rate = $this->input->post('tax_rate',TRUE);
+
+		if ($f_range == NULL || $t_range == NULL || $tax == NULL || $tax_rate == NULL) {
+			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			redirect('tax_table');
+		} else {
+			$data = array(
+				'f_range' => $f_range,
+				't_range' => $t_range,
+				'tax' => $tax,
+				'tax_rate' => $tax_rate,
+			);
+			$contri_add_Tax = $this->Model_Inserts->contri_add_Tax($data);
+
+			if ($contri_add_Tax == TRUE) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
+
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'New';
+				$LogbookEvent = 'New Tax Row added! (Range: ' . $f_range . ' - ' . $t_range . ')';
+				$LogbookLink = 'tax_table';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+				redirect('tax_table');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				redirect('tax_table');
 			}
 		}
 	}

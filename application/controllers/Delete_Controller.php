@@ -32,6 +32,7 @@ class Delete_Controller extends CI_Controller {
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
 					'Event' => $LogbookEvent,
 					'Link' => $LogbookLink,
 				);
@@ -76,6 +77,7 @@ class Delete_Controller extends CI_Controller {
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
 					'Event' => $LogbookEvent,
 					'Link' => $LogbookLink,
 				);
@@ -122,6 +124,7 @@ class Delete_Controller extends CI_Controller {
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
+						'AdminID' => $_SESSION["AdminID"],
 						'Event' => $LogbookEvent,
 						'Link' => $LogbookLink,
 					);
@@ -174,6 +177,7 @@ class Delete_Controller extends CI_Controller {
 					$data = array(
 						'Time' => $LogbookCurrentTime,
 						'Type' => $LogbookType,
+						'AdminID' => $_SESSION["AdminID"],
 						'Event' => $LogbookEvent,
 						'Link' => $LogbookLink,
 					);
@@ -218,6 +222,7 @@ class Delete_Controller extends CI_Controller {
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
 					'Event' => $LogbookEvent,
 					'Link' => $LogbookLink,
 				);
@@ -255,6 +260,7 @@ class Delete_Controller extends CI_Controller {
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
 					'Event' => $LogbookEvent,
 					'Link' => $LogbookLink,
 				);
@@ -292,6 +298,7 @@ class Delete_Controller extends CI_Controller {
 				$data = array(
 					'Time' => $LogbookCurrentTime,
 					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
 					'Event' => $LogbookEvent,
 					'Link' => $LogbookLink,
 				);
@@ -303,6 +310,44 @@ class Delete_Controller extends CI_Controller {
 			{
 				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
 				redirect('philhealth_table');
+			}
+		}
+	}
+	public function remove_contri_Tax()
+	{
+		$id = $this->input->get('id');
+
+		if (!isset($_GET['id'])) {
+			redirect('tax_table');
+		}
+		else
+		{
+			$Removethis = $this->Model_Deletes->remove_contri_Tax($id);
+
+			if ($Removethis) {
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row Deleted!</h5></div>');
+
+				// LOGBOOK
+				date_default_timezone_set('Asia/Manila');
+				$LogbookCurrentTime = date('Y-m-d h:i:s A');
+				$LogbookType = 'Deletion';
+				$LogbookEvent = 'Tax Row ' . $id .' has been removed.';
+				$LogbookLink = 'tax_table';
+				$data = array(
+					'Time' => $LogbookCurrentTime,
+					'Type' => $LogbookType,
+					'AdminID' => $_SESSION["AdminID"],
+					'Event' => $LogbookEvent,
+					'Link' => $LogbookLink,
+				);
+				$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+				redirect('tax_table');
+			}
+			else
+			{
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				redirect('tax_table');
 			}
 		}
 	}
