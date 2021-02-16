@@ -215,4 +215,16 @@ class Model_Updates extends CI_Model {
 			return 'error';
 		}
 	}
+	public function update_thisdrates($id,$data)
+	{
+		$this->db->where('id', $id);
+		$result = $this->db->update('tb_rates', $data);
+		if ($result == TRUE) {
+			return 'success';
+		}
+		else
+		{
+			return 'error';
+		}
+	}
 }

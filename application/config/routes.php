@@ -77,6 +77,7 @@ $route['hdmf_table'] = 'Main_Controller/hdmf_table';
 $route['philhealth_table'] = 'Main_Controller/philhealth_table';
 $route['tax_table'] = 'Main_Controller/tax_table';
 
+
 // LOGIN
 $route['LoginValidation'] = 'Login_Controller/LoginValidation';
 // LOGIN
@@ -128,6 +129,8 @@ $route['RestoreEmployee'] = 'Update_Controller/RestoreEmployee';
 $route['SetWeeklyHours'] = 'Update_Controller/SetWeeklyHours';
 $route['ViewBranchEmployees'] = 'Update_Controller/ViewBranchEmployees';
 $route['ImportExcel'] = 'Update_Controller/ImportExcel';
+$route['update_drates'] = 'Update_Controller/update_drates';
+
 
 
 $route['TerminateContract'] = 'Update_Controller/TerminateContract';
@@ -145,3 +148,6 @@ $route['UpdatethisAttRecord'] = 'Update_Controller/UpdatethisAttRecord';
 $route['GetDataByApplicantID'] = 'Main_Controller/GetDataByApplicantID';
 $route['ViewThisAttendance'] = 'Main_Controller/ViewThisAttendance';
 $route['GetDateByApplicantID'] = 'Main_Controller/GetDateByApplicantID';
+
+$route['day_rates'] = 'Main_Controller/day_rates';
+

@@ -1919,47 +1919,36 @@ class Update_Controller extends CI_Controller {
 		$ApplicantID = $this->input->post('ApplicantID');
 		$startDate = $this->input->post('startDate');
 		$EndDate = $this->input->post('EndDate');
-
 		$shift_type = $this->input->post('shift_type');
-		if ($shift_type == 'day') {
-			$shift_type = 'day';
-		} else {
-			$shift_type = 'night';
-		}
-
 		$am_in = $this->input->post('time_inam');
 		$am_out = $this->input->post('time_outam');
 		$pm_in = $this->input->post('time_inpm');
 		$pm_out = $this->input->post('time_outpm');
-
 		$regular_day = $this->input->post('regular_day');
-		if ($regular_day == 'yes') {
+		$sp_day = $this->input->post('sp_day');
+		$nh_day = $this->input->post('nh_day');
+		$Note = $this->input->post('note');
+		$row_status = 1;
+
+		if ($regular_day == 'yes') {	### HOLIDAYS
 			$regular_day = 'yes';
 		} else {
 			$regular_day = 'no';
 		}
 
-		$sp_day = $this->input->post('sp_day');
-		$nh_day = $this->input->post('nh_day');
+		$CheckEmployeeOT = $this->Model_Selects->CheckEmployeeOT($ApplicantID);	### EMPLOYEE DATA
+		if ($CheckEmployeeOT->Overtime == 'Yes') {	### CHECK OVERTIME
+			$otAvailable = 'yes';
+		}
+		else
+		{
+			$otAvailable = 'no';
+		}
 
-		/*
-		if ($time_inam == NULL) {
-			$this->session->set_flashdata('alert_error','amin_error');
-			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
-		}
-		if ($time_outam == NULL) {
-			$this->session->set_flashdata('alert_error','amout_error');
-			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
-		}
-		if ($time_inpm == NULL) {
-			$this->session->set_flashdata('alert_error','pmin_error');
-			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
-		}
-		if ($time_outpm == NULL) {
-			$this->session->set_flashdata('alert_error','pmout_error');
-			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
-		}
-		*/
+		$getRegularshift = $this->Model_Selects->getRegularshift();	### REGULAR SHIFT
+		$getREGholiday = $this->Model_Selects->getREGholiday();	### REGULAR HOLIDAY
+		$getOTrates = $this->Model_Selects->getOTrates();	### OVERTIME RATE
+		
 		if ($am_in != NULL AND $am_out == NULL AND$pm_in == NULL AND $pm_out != NULL) {		## NO BREAK BETWEEN AM IN AND PM OUT
 
 			$totaldiff = abs(strtotime($am_in) - strtotime($pm_out));
@@ -1972,7 +1961,6 @@ class Update_Controller extends CI_Controller {
 			$nam_out = NULL;
 			$npm_in = NULL;
 			$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
-
 		}
 		elseif ($am_in == NULL AND $am_out == NULL AND $pm_in != NULL AND $pm_out != NULL) {		## HALFDAY PM
 			$totaldiff = abs(strtotime($pm_in) - strtotime($pm_out));
@@ -1997,13 +1985,19 @@ class Update_Controller extends CI_Controller {
 			$npm_in = NULL;
 			$npm_out = NULL;
 		}
-		elseif (!isset($am_in) AND !isset($am_out) AND !isset($pm_in) AND !isset($pm_out)) {		## ABSENT AM AND PM BLANK
+		elseif ($am_in < 1 AND $am_out < 1 AND $pm_in < 1 AND $pm_out < 1) {		## ABSENT AM AND PM BLANK
 
-			$total_regpay = null;
+			if ($regular_day == 'yes') {	### HOLIDAYS
+				$total_regpay = 480;
+			} else {
+				$total_regpay = null;
+			}
+			
 			$nam_in = null;
 			$nam_out = null;
 			$npm_in = NULL;
 			$npm_out = NULL;
+			$row_status = 2;
 		}
 		elseif (isset($am_in) AND isset($am_out) AND isset($pm_in) AND isset($pm_out))
 		{
@@ -2027,22 +2021,57 @@ class Update_Controller extends CI_Controller {
 			$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
 		}
 
-		if ($total_regpay > 480) {
-			$overtime = ($total_regpay - 480);
+		if ($otAvailable == 'yes') {
+			if ($total_regpay > 480) {
+				$overtime = ($total_regpay - 480);
+			}
+			else
+			{
+				$overtime = 0;
+			}
 		}
 		else
 		{
 			$overtime = 0;
 		}
+
+		$cur_rate = $CheckEmployeeOT->Rate;	### DAY RATE EX: 400
+		$ncrate = $cur_rate / 8; ### EX:	400 / 8 = 50
+
+		if ($shift_type == 'day') {	### SHIFT DAY OR NIGHT
+			$shift_type = 'day';
+			$shiftVal = $getRegularshift->day_shift;
+		} else {
+			$shift_type = 'night';
+			$shiftVal = $getRegularshift->night_shift;
+		}
+
+		$ncrate = $ncrate * $shiftVal;
+		
+		if ($regular_day == 'yes') {	### IF REGULAR HOLIDAY
+			if ($shift_type == 'day') {
+				$ncrate = $ncrate * $getREGholiday->day_shift;
+			}
+			else
+			{
+				$ncrate = $ncrate * $getREGholiday->night_shift;
+			}
+		}
+		$Day_Earned = ($total_regpay / 60) * $ncrate; ### EX: (480/60) * RATE PER HOUR
+
 		$data = array(
-			'shift_type' => $shift_type,
+			
 			'Timein_AM' => $nam_in,
 			'Timeout_AM' => $nam_out,
 			'Timein_PM' => $npm_in,
 			'Timeout_PM' => $npm_out,
 			'Total_BYmin' => $total_regpay,
+			'shift_type' => $shift_type,
+			'regular_day' => $regular_day,
 			'overtime' => $overtime,
-			'row_status' => 1,
+			'row_status' => $row_status,
+			'Note' => $Note,
+			'Day_Earned' => $Day_Earned,
 		);
 		$UpdateArecord = $this->Model_Updates->UpdateArecord($date_id,$data);
 		if ($UpdateArecord == 'success') {
@@ -2051,6 +2080,41 @@ class Update_Controller extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('alert_error','update_error');
 			redirect('ViewThisAttendance?ApplicantID='.$ApplicantID.'&startDate='.$startDate.'&EndDate='.$EndDate);
+		}
+	}
+	public function update_drates()
+	{
+		$id = $this->input->post('id');
+		$day_shift = $this->input->post('day_shift');
+		$night_shift = $this->input->post('night_shift');
+		if (!is_numeric($day_shift)) {
+			$this->session->set_flashdata('prompt_status','Please input valid value!');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		if (!is_numeric($night_shift)) {
+			$this->session->set_flashdata('prompt_status','Please input valid value!');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		if ($id != NULL OR $day_shift != NULL OR $night_shift != NULL) {
+			$data = array(
+				'day_shift' => $day_shift,
+				'night_shift' => $night_shift,
+			);
+			$update_thisdrates = $this->Model_Updates->update_thisdrates($id,$data);
+			if ($update_thisdrates == 'success') {
+				$this->session->set_flashdata('prompt_status','Rate updated');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+			else
+			{
+				$this->session->set_flashdata('prompt_status','Please input valid value!');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('prompt_status','Please input valid value!');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
 }

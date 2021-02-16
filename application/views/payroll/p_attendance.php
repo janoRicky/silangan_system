@@ -66,11 +66,11 @@
 							<input class="form-control" type="text" name="ApplicantID" hidden="" value="<?php echo $getApplicantDataa['ApplicantID'];?>">
 							<div class="form-group col-12 col-md-2" style="display: inline-block; float: left;">
 								<label>Start Date</label>
-								<input class="form-control" type="date" name="startDate">
+								<input class="form-control" type="date" name="startDate" value="<?php echo $_GET['startDate'];?>">
 							</div>
 							<div class="form-group col-12 col-md-2" style="display: inline-block; float: left;">
 								<label>End Date</label>
-								<input class="form-control" type="date" name="EndDate">
+								<input class="form-control" type="date" name="EndDate" value="<?php echo $_GET['EndDate'];?>">
 							</div>
 							<div class="form-group col-12" style="display: block; float: left;">
 								<button class="btn btn-success" type="submit">
@@ -349,6 +349,7 @@
 				$('.checkSelectall').addClass("for_submit");
 			}
 		});
+
 		$('#time_inam , #time_outam , #time_inpm ,#time_outpm').on('change', function () {
 
 			var time_inam = $('#time_inam').val();
@@ -364,10 +365,7 @@
 				mins1 = parseInt(amtime1[1], 10),
 				mins2 = parseInt(amtime2[1], 10);
 				var amhours = hours2 - hours1, mins = 0;
-
 				if(amhours < 0) amhours = 24 + amhours;
-
-
 				if(mins2 >= mins1) {
 					mins = mins2 - mins1;
 				}
@@ -375,10 +373,7 @@
 					mins = (mins2 + 60) - mins1;
 					amhours--;
 				}
-
-
 				mins = mins / 60; 
-
 				amhours += mins;
 				amhours = amhours.toFixed(2);
 				var newtotal = parseFloat(amhours);
@@ -391,10 +386,7 @@
 				mins1 = parseInt(amtime1[1], 10),
 				mins2 = parseInt(amtime2[1], 10);
 				var amhours = hours2 - hours1, mins = 0;
-
 				if(amhours < 0) amhours = 24 + amhours;
-
-
 				if(mins2 >= mins1) {
 					mins = mins2 - mins1;
 				}
@@ -402,10 +394,7 @@
 					mins = (mins2 + 60) - mins1;
 					amhours--;
 				}
-
-
 				mins = mins / 60; 
-
 				amhours += mins;
 				amhours = amhours.toFixed(2);
 				var newtotal = parseFloat(amhours);
@@ -417,10 +406,7 @@
 				mins1 = parseInt(amtime1[1], 10),
 				mins2 = parseInt(amtime2[1], 10);
 				var amhours = hours2 - hours1, mins = 0;
-
 				if(amhours < 0) amhours = 24 + amhours;
-
-
 				if(mins2 >= mins1) {
 					mins = mins2 - mins1;
 				}
@@ -428,10 +414,7 @@
 					mins = (mins2 + 60) - mins1;
 					amhours--;
 				}
-
-
 				mins = mins / 60; 
-
 				amhours += mins;
 				amhours = amhours.toFixed(2);
 				var newtotal = parseFloat(amhours);
@@ -478,9 +461,9 @@
 				var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
 			}
 
-			var c_rate = $('#cur_rate').val() / 8;
+			var c_rate = $('#cur_rate').val() / 8;		//RATE
 
-			if (newtotal > 8) {
+			if (newtotal > 8) {		//CHECK IF EMPLOYEE HAVE OVERTIME
 				var dtotal = 8;
 			}
 			else
@@ -500,6 +483,7 @@
 			else {
 				holidayrate = 1.25;
 			}
+			
 			if (newtotal > 8) {
 				novertime = newtotal - 8;
 				novertime = novertime * 60;
@@ -552,6 +536,28 @@ $('#submitformslip').on('click', function () {
 		}
 	});
 });
+$('#shift_type').change(function() {
+	if(this.checked) {
+		$(this).prop( "checked",true);
+		$(this).val('day');
+	}
+	else
+	{
+		$(this).prop( "checked",false);
+		$(this).val('night');
+	}
+});
+$('#regular_day').change(function() {
+	if(this.checked) {
+		$(this).prop( "checked",true);
+		$(this).val('yes');
+	}
+	else
+	{
+		$(this).prop( "checked",false);
+		$(this).val('no');
+	}
+});
 $('.checkSelectall').change(function() {
 	if(this.checked) {
 		$(this).addClass("for_submit");
@@ -567,6 +573,7 @@ $('#regular_day').on('change', function () {
 	var time_outam = $('#time_outam').val();
 	var time_inpm = $('#time_inpm').val();
 	var time_outpm = $('#time_outpm').val();
+
 	if(this.checked) {
 		if (time_outam == "" && time_inpm == "") 
 		{
@@ -589,7 +596,8 @@ $('#regular_day').on('change', function () {
 			amhours = amhours.toFixed(2);
 			var newtotal = parseFloat(amhours);
 		}
-		else if (time_inpm == "" && time_outpm == "") {
+		else if (time_inpm == "" && time_outpm == "")
+		{
 			var amtime1 = time_inam.split(':'), amtime2 = time_outam.split(':');
 			var hours1 = parseInt(amtime1[0], 10), 
 			hours2 = parseInt(amtime2[0], 10),
@@ -609,7 +617,8 @@ $('#regular_day').on('change', function () {
 			amhours = amhours.toFixed(2);
 			var newtotal = parseFloat(amhours);
 		}
-		else if (time_inam == "" && time_outam == "") {
+		else if (time_inam == "" && time_outam == "")
+		{
 			var amtime1 = time_inpm.split(':'), amtime2 = time_outpm.split(':');
 			var hours1 = parseInt(amtime1[0], 10), 
 			hours2 = parseInt(amtime2[0], 10),
@@ -648,6 +657,7 @@ $('#regular_day').on('change', function () {
 			mins1 = mins1 / 60;
 			amhours += mins1;
 			amhours = amhours.toFixed(2);
+
 			var pmin = time_inpm.split(':'), pmout = time_outpm.split(':');
 			var h_pmin = parseInt(pmin[0], 10), 
 			h_pmout = parseInt(pmout[0], 10),
@@ -665,8 +675,10 @@ $('#regular_day').on('change', function () {
 			mins2 = mins2 / 60; 
 			pmhours += mins2;
 			pmhours = pmhours.toFixed(2);
+
 			var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
 		}
+
 		var c_rate = $('#cur_rate').val() / 8;
 		if (newtotal > 8) {
 			var dtotal = 8;
@@ -714,7 +726,8 @@ $('#regular_day').on('change', function () {
 			amhours = amhours.toFixed(2);
 			var newtotal = parseFloat(amhours);
 		}
-		else if (time_inpm == "" && time_outpm == "") {
+		else if (time_inpm == "" && time_outpm == "")
+		{
 			var amtime1 = time_inam.split(':'), amtime2 = time_outam.split(':');
 			var hours1 = parseInt(amtime1[0], 10), 
 			hours2 = parseInt(amtime2[0], 10),
@@ -734,7 +747,8 @@ $('#regular_day').on('change', function () {
 			amhours = amhours.toFixed(2);
 			var newtotal = parseFloat(amhours);
 		}
-		else if (time_inam == "" && time_outam == "") {
+		else if (time_inam == "" && time_outam == "")
+		{
 			var amtime1 = time_inpm.split(':'), amtime2 = time_outpm.split(':');
 			var hours1 = parseInt(amtime1[0], 10), 
 			hours2 = parseInt(amtime2[0], 10),
@@ -817,6 +831,7 @@ $('#regular_day').on('change', function () {
 			totaOtearned = 0;
 		}
 	}
+
 	$("#overtime").val(novertime);
 	$("#totalPay").val(totalPay);
 	$("#totalHrs").val(newtotal);

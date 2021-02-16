@@ -43,7 +43,8 @@
 												<?php echo $this->Model_Selects->GetWeeklyListEmployee($row['BranchID'])->num_rows(); ?>
 											</td>
 											<td class="text-center align-middle PrintExclude">
-												<button id="<?php echo $row['BranchID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewBranchIDButton"  data-toggle="modal" data-target="#ModalBranchView"><i class="fas fa-calendar-alt"></i> View by Date</button>
+												<!-- <button id="<?php echo $row['BranchID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1 ViewBranchIDButton"  data-toggle="modal" data-target="#ModalBranchView"><i class="fas fa-calendar-alt"></i> View Employee</button> -->
+												<a href="<?=base_url()?>ViewBranch?id=<?php echo $row['BranchID']; ?>" type="button" class="btn btn-primary btn-sm w-100 mb-1"><i class="fas fa-calendar-alt" style="color: #FFFFFF;"></i> View Employee</a>
 												<form action="<?php echo base_url().'v_importexceldata'; ?>" method="post" enctype="multipart/form-data">
 													<input type="hidden" name="ExcelBranchID" value="<?php echo $row['BranchID']; ?>">
 													<input id="file" type="file" name="file" class="btn btn-success" style="display: none;" onchange="form.submit()">

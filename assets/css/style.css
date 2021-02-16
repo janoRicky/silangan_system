@@ -3,6 +3,11 @@
 /* CLASS FONTS */
 .f-opensans { font-family: 'Open Sans', sans-serif; } /*FOR SIDEBARS*/
 .f-roboto { font-family: 'Roboto', sans-serif; } /*FOR HEADINGS*/
+.l-spacing03 { letter-spacing: 0.3px !important; }
+.l-spacing06 { letter-spacing: 0.6px !important; }
+.l-spacing09 { letter-spacing: 0.9px !important; }
+.l-spacing12 { letter-spacing: 1.2px !important; }
+.l-spacing15 { letter-spacing: 1.5px !important; }
 
 
 html,body
@@ -15,18 +20,6 @@ html,body
 	/*background-image: url("../img/lowpoly_white.png");*/
 }
 
-/*.btn {
-	font-weight: bold;
-}
-.btn-primary {
-	color: var(--ButtonColor);
-	background-color: var(--ButtonBG);
-	border: 1px solid var(--ButtonBorder);
-}
-.btn-primary:hover {
-	background-color: var(--ButtonHover);
-	border: 1px solid var(--ButtonBorder);
-}*/
 
 .table-bordered {
 	background-color: var(--MainBG) !important;
