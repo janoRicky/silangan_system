@@ -14,6 +14,9 @@
 			</a>
 		</b>
 	</div>
+	<div class="col text-center p-3">
+		<img src="https://png.pngtree.com/png-vector/20190321/ourmid/pngtree-vector-users-icon-png-image_856952.jpg" width="75" height="75" style="border-radius: 100%;">
+	</div>
 	<ul class="list-unstyled components">
 		<div class="text-center pt-2 pb-3">
 				<?php
@@ -28,6 +31,7 @@
 				?>
 			
 		</div>
+		<div class="pb-1 pt-1" style="border-bottom: 1px solid #E6E6E6;"></div>
 		<li class="nav-item">
 			<a class="link-s" href="<?=base_url()?>Dashboard">
 				<span class="fas fa-tachometer-alt fa-fw"></span> Dashboard 
@@ -52,12 +56,13 @@
 		<li class="nav-item">
 			<a class="link-s" href="<?=base_url()?>Payroll"><span class="fas fa-dollar-sign fa-fw"></span> Payroll </a>
 		</li>
+		<li class="nav-item">
+			<a class="link-s" href="<?=base_url()?>Admin_List"><i class="fas fa-table fa-fw"></i> Users </a>
+		</li>
+		<div class="pb-1 pt-1" style="border-bottom: 1px solid #E6E6E6;"></div>
 		<li>
-			<a class="link-s" href="#siteSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fas fa-cogs fa-fw"></span> Settings </a>
-			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteSettings">
-				<li>
-					<a class="link-s" class="sublink" href="Admin_List"><i class="fas fa-table fa-fw"></i> USERS </a>
-				</li>
+			<a class="link-s" href="#siteTables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fas fa-cogs fa-fw"></span> Tables </a>
+			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteTables">
 				<li>
 					<a class="link-s" class="sublink" href="<?=base_url()?>sss_table"><i class="fas fa-table fa-fw"></i> SSS Table </a>
 				</li>
@@ -69,6 +74,14 @@
 				</li>
 				<li>
 					<a class="link-s" class="sublink" href="<?=base_url()?>tax_table"><i class="fas fa-table fa-fw"></i> Tax Table </a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<a class="link-s" href="#siteSettings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fas fa-cogs fa-fw"></span> Settings </a>
+			<ul class="collapse list-unstyled collapseSettings animated fadeIn" id="siteSettings">
+				<li>
+					<a class="link-s" class="sublink" href="<?=base_url()?>day_rates"><i class="fas fa-table fa-fw"></i> Rates </a>
 				</li>
 				<li>
 					<a class="link-s" class="sublink" href="Logout"><i class="fas fa-sign-out-alt fa-fw"></i> Log-out </a>

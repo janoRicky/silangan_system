@@ -106,7 +106,7 @@ class Delete_Controller extends CI_Controller {
 		else
 		{
 			if ($this->Model_Selects->GetEmployerBranches($id)->num_rows() > 0) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Please reassign the branches first.</h5></div>');\
+				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Please reassign the branches first.</h5></div>');
 				redirect('Employers');
 			}
 			else

@@ -686,4 +686,34 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function get_drates()
+	{
+		$SQL = "SELECT * FROM tb_rates ORDER BY rate_title DESC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
+	public function CheckEmployeeOT($ApplicantID)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID = '$ApplicantID'";
+		$result = $this->db->query($SQL);
+		return $result->row();
+	}
+	public function getRegularshift()
+	{
+		$SQL = "SELECT * FROM tb_rates WHERE rate_title = 'Regular Shift'";
+		$result = $this->db->query($SQL);
+		return $result->row();
+	}
+	public function getOTrates()
+	{
+		$SQL = "SELECT * FROM tb_rates WHERE rate_title = 'Overtime'";
+		$result = $this->db->query($SQL);
+		return $result->row();
+	}
+	public function getREGholiday()
+	{
+		$SQL = "SELECT * FROM tb_rates WHERE rate_title = 'Regular'";
+		$result = $this->db->query($SQL);
+		return $result->row();
+	}
 }

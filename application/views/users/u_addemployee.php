@@ -388,6 +388,9 @@
 											<div class="form-group col-sm-12 col-md-3">
 												<label>Branch</label>
 												<select id="Branchselect" class="form-control" name="BranchID">
+													<option value="" selected="">
+														Select a Branch
+													</option>
 													<?php foreach ($getBranchOption->result_array() as $row): ?>
 														<option value="<?=$row['BranchID'];?>">
 															<?=$row['Name'];?>

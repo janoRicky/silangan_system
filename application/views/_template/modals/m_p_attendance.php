@@ -28,7 +28,7 @@
               Checked-in
             </h4>
             <!------------------ INPUT ------------------>
-            <input id="shift_type" checked="" type="checkbox" data-toggle="toggle" data-width="200" data-size="large" data-style="android" data-on="<i class='fas fa-sun fw'></i> Day shift" data-off="<i class='fas fa-moon fw'></i> Night shift" data-onstyle="primary" data-offstyle="warning" name="shift_type" value="">
+            <input id="shift_type" type="checkbox" data-toggle="toggle" data-width="200" data-size="large" data-style="android" data-on="<i class='fas fa-sun fw'></i> Day shift" data-off="<i class='fas fa-moon fw'></i> Night shift" data-onstyle="primary" data-offstyle="warning" name="shift_type" value="">
           </div>
           <div class="form-group m-auto col-12 text-center pb-3">
             <h6><strong>Holiday</strong></h6>
@@ -105,7 +105,7 @@
         <div class="form-row mt-4">
           <div class="form-group m-auto col-11">
             <!------------------ INPUT ------------------>
-            <textarea id="record_note" class="form-control" rows="7"></textarea>
+            <textarea id="record_note" class="form-control" rows="7" name="note"></textarea>
           </div>
         </div>
       </div>

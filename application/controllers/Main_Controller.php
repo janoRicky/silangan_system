@@ -7,6 +7,7 @@ class Main_Controller extends CI_Controller {
 		$this->load->model('Model_Selects');
 		$this->load->model('Model_Updates'); // TODO: Remove after fixing the call belooooow.
 		$this->load->model('Model_Inserts'); // TODO: Remove after fixing the call belooooow.
+		$this->load->model('Model_Deletes');
 		// echo $_SERVER['REMOTE_ADDR'] . '<br>';
 		// echo $_SERVER['HTTP_USER_AGENT'];
 		$GetEmployee = $this->Model_Selects->GetEmployee();
@@ -90,6 +91,14 @@ class Main_Controller extends CI_Controller {
 						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
 					}
 				}
+			}
+		}
+
+		// removes log after 3months
+		$GetLogbook = $this->Model_Selects->GetLogbook();
+		foreach ($GetLogbook->result_array() as $row) {
+			if (strtotime($row["Time"] . " +90 days") < strtotime($currTime)) {
+				$this->Model_Deletes->removeLog($row["No"]);
 			}
 		}
 
@@ -1491,7 +1500,8 @@ class Main_Controller extends CI_Controller {
 		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
 
 		if ($ApplicantID == NULL || $startDate == NULL || $EndDate == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Please select start and end date!</h5></div>');
+			// $this->session->set_flashdata('alert_error','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Please select start and end date!</h5></div>');
+			$this->session->set_flashdata('alert_error','Please select start and end date!');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 		$GetDateAttendance = $this->Model_Selects->GetDateAttendance($ApplicantID,$startDate,$EndDate);
@@ -1499,11 +1509,13 @@ class Main_Controller extends CI_Controller {
 		if ($GetDateAttendance->num_rows() > 0) {
 			$data['GetDateAttendance'] = $GetDateAttendance;
 			$data['getApplicantDataa'] = $getApplicantDataaRow->row_array();
+
 			$this->load->view('payroll/p_attendance',$data);
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date doesn\'t exist!</h5></div>');
+			// $this->session->set_flashdata('alert_error','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date doesn\'t exist!</h5></div>');
+			$this->session->set_flashdata('alert_error','No records found!');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
@@ -1533,18 +1545,44 @@ class Main_Controller extends CI_Controller {
 	{
 		$id = $this->input->post('id');
 
-		$getDateDataByID = $this->Model_Selects->getDateDataByID($id);
-		
+		$getDateDataByID = $this->Model_Selects->getDateDataByID($id);	### ATTENDANCE DATA
+		$getAppID = $getDateDataByID->row_array();
+		$ApplicantID = $getAppID['ApplicantID'];
+
+		$CheckEmployeeOT = $this->Model_Selects->CheckEmployeeOT($ApplicantID);	### EMPLOYEE DATA
+		if ($CheckEmployeeOT->Overtime == 'Yes') {	### CHECK OVERTIME
+			$otAvailable = 'yes';
+		}
+		else
+		{
+			$otAvailable = 'no';
+		}
+
+		$getRegularshift = $this->Model_Selects->getRegularshift();	### REGULAR SHIFT
+		$getOTrates = $this->Model_Selects->getOTrates();	### OVERTIME RATE
+
 		$arr = array();
 		foreach ($getDateDataByID->result() as $row) {
 
-			$cur_rate = 400;
+			$cur_rate = $CheckEmployeeOT->Rate;
 			$ncrate = $cur_rate / 8;
 
 			$am_in = $row->Timein_AM;
 			$am_out = $row->Timeout_AM;
 			$pm_in = $row->Timein_PM;
 			$pm_out = $row->Timeout_PM;
+
+			if ($row->shift_type == 'day') {
+				$shift_typeVal = $getRegularshift->day_shift;	##	CHANGE TO RATE VALUE IN TABLE
+				$ncrate = $ncrate * $shift_typeVal;
+				$OtRatesss = $getOTrates->day_shift;
+			}
+			else
+			{
+				$shift_typeVal = $getRegularshift->night_shift;	##	CHANGE TO RATE VALUE IN TABLE
+				$ncrate = $ncrate * $shift_typeVal;
+				$OtRatesss = $getOTrates->night_shift;
+			}
 
 			if ($am_out == NULL AND $pm_in == NULL) {		## NO BREAK BETWEEN AM IN AND PM OUT
 
@@ -1558,10 +1596,10 @@ class Main_Controller extends CI_Controller {
 				$sumbyHRS = $totalhours;
 
 				$totalPay = $sumbyHRS * $ncrate;
-
 			}
 			elseif ($am_in == NULL AND $am_out == NULL) {		## HALFDAY PM
 				$totaldiff = abs(strtotime($pm_in) - strtotime($pm_out));
+
 				$mins = $totaldiff/60;	## total mins
 				$totalhours = $mins/60;	## total hours
 				$remmins = $mins%60;	## total remainder
@@ -1592,7 +1630,6 @@ class Main_Controller extends CI_Controller {
 				$tmins_am = $diff_am/60;
 				$tmins_pm = $diff_pm/60;
 
-
 				$hours_am = $tmins_am/60;
 				$hours_pm = $tmins_pm/60;
 
@@ -1605,15 +1642,20 @@ class Main_Controller extends CI_Controller {
 
 				$totalPay = $sumbyHRS * $ncrate;
 			}
-			if ($sumbyHRS > 8) {
+
+			### SOME EMPLOYEE DON'T HAVE OVERTIME
+			if ($otAvailable == 'yes') {
 				$totalPay = 8 * $ncrate;
+				$n_ot = ($row->overtime / 60);
+				$ot_earned = ($ncrate * $OtRatesss) * $n_ot;
 			}
 			else
 			{
 				$totalPay = $totalPay;
+				$n_ot = ($row->overtime / 60);
+				$ot_earned = ($ncrate * $OtRatesss) * $n_ot;
 			}
-			$n_ot = ($row->overtime / 60);
-			$ot_earned = ($ncrate * 1.25) * $n_ot;
+			
 
 			$arr[] = array(
 				'id' => $row->id,
@@ -1635,13 +1677,38 @@ class Main_Controller extends CI_Controller {
 				'cur_rate' => $cur_rate,
 				'totalHrs' => $sumbyHRS,
 				'overtime' => $row->overtime,
-				'totalPay' => $totalPay,
-				'ot_earned' => $ot_earned,
+				'totalPay' => number_format($totalPay,2),
+				'ot_earned' => number_format($ot_earned,2),
+				'otAvailable' => number_format($ot_earned,2),
 
 			);
 		}
 		echo $json_data = json_encode($arr);
 
+	}
+	public function day_rates()
+	{
+		unset($_SESSION["bencart"]);
+		unset($_SESSION["acadcart"]);
+		unset($_SESSION["ref_cart"]);
+		unset($_SESSION["emp_cart"]);
+		unset($_SESSION["mach_cart"]);
+		/*
+		CHECK USER SESSION
+		 */
+		$this->CheckUserLogin();
+
+		$header['title'] = 'Rates | Silangan Lumber';
+		$data['T_Header'] = $this->load->view('_template/users/u_header',$header);
+		$data['Breadcrumb'] = '
+		<nav aria-label="breadcrumb">
+		<ol class="breadcrumb" style="background-color: transparent;">
+		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="'.base_url().'day_rates">RATES</a></li>
+		</ol>
+		</nav>';
+		$data['get_drates'] = $this->Model_Selects->get_drates();
+		$this->load->view('users/u_dayrates',$data);
+		
 	}
 	public function Logout()
 	{
