@@ -11,7 +11,6 @@
 							<button id="DebugFill" type="button" class="btn btn-primary"><i class="fas fa-vial"></i> Debug Fill</button>
 						</div>
 						<div class="p-5">
-							<?php echo $this->session->flashdata('prompts'); ?>
 							<!-- Start form -->
 							<form action="<?=base_url()?>addNewEmployee" method="POST" enctype="multipart/form-data">
 								<div class="content mt-3">
@@ -25,11 +24,7 @@
 										<div class="form-row mb-2">
 											<div class="form-group col-sm-12">
 												<input type='file' id="imgInp" name="pImage" style="display: none;">
-												<?php if(!$this->agent->is_mobile()): ?>
-													<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/silangan_default_photo.png" width="120" height="120">
-												<?php else: ?>
-													<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/silangan_default_photo_mobile.png" width="120" height="120">
-												<?php endif; ?>
+												<img class="image-hover" id="blah" src="<?php echo base_url() ?>assets/img/silangan_default_photo.png" width="120" height="120">
 											</div>
 										</div>
 										<div class="form-row">
@@ -667,6 +662,27 @@
 			$('input[type="text"]').val('TEST-' + Math.floor(Math.random() * Math.floor(9999999)));
 			$('input[type="date"]').val(moment().format('YYYY-MM-DD'));
 		});
+		<?php if ($this->session->flashdata('prompts')) { 
+			$prompts = json_encode($this->session->flashdata('prompts'));
+			echo "var prompts = " . $prompts . ";";
+			?>
+			toastr.options = {
+				"positionClass": "toast-bottom-right",
+				"showDuration": "300",
+				"hideDuration": "1000",
+				"timeOut": "5000",
+				"extendedTimeOut": "1000",
+			}
+			if (prompts[0] == "success") {
+				toastr.success(prompts[1]);
+			} else if (prompts[0] == "error") {
+				toastr.error(prompts[1]);
+			} else if (prompts[0] == "warning") {
+				toastr.warning(prompts[1]);
+			} else if (prompts[0] == "info") {
+				toastr.info(prompts[1]);
+			}
+		<?php } ?>
 		if (localStorage.getItem('SidebarVisible') == 'true') {
 			$('#sidebar').addClass('active');
 			$('.ncontent').addClass('shContent');

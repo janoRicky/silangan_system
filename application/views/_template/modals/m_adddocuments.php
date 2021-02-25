@@ -12,14 +12,6 @@
 				<div class="modal-body">
 					<input id="Pass_ID" type="hidden" name="ApplicantID">
 					<div class="form-row" style="margin-left: 15px; margin-right: 15px;">
-						<?php if($this->agent->is_mobile()): ?>
-						<div class="form-group col-sm-12 mt-5">
-							<div class="input-icon-sm">
-								<input id="pFile" type="file" name="pFile" placeholder="Choose PDF file to upload" style="padding-left: 45px;" value="">
-								<i class="fas fa-file-pdf" style="width: 45px;"></i>
-							</div>
-						</div>
-						<?php else: ?>
 						<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
 
 						<div class="silangan-drop-area form-group col-sm-12 text-center">
@@ -36,7 +28,6 @@
 								</div>
 							</div>
 						</div>
-						<?php endif; ?>
 					</div>
 					<hr>
 					<div id="ViolationNotice" class="row ml-auto mr-auto pb-1 w-100" style="display: none;">

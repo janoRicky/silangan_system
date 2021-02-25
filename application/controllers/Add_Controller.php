@@ -10,6 +10,8 @@ class Add_Controller extends CI_Controller {
 		$this->load->model('Model_Selects');
 		$this->load->model('Model_Inserts');
 		$this->load->model('Model_Updates');
+
+		date_default_timezone_set('Asia/Manila');
 	}
 	public function addNewEmployee()
 	{
@@ -78,7 +80,7 @@ class Add_Controller extends CI_Controller {
 		$Address_Manila = $this->input->post('Address_Manila');
 
 		if ($PositionGroup == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL || $MotherName == NULL || $MotherOccupation == NULL || $FatherName == NULL || $FatherOccupation == NULL || $BranchID == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			$data = array(
 				'PositionGroup' => $PositionGroup,
 				'PersonRecommending' => $PersonRecommending,
@@ -147,7 +149,7 @@ class Add_Controller extends CI_Controller {
 			// Check Employee if exist
 			$chkem = $this->Model_Selects->CheckEmployee($ApplicantID);
 			if ($chkem->num_rows() > 0) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Employee ID exist</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Employee ID exist!'));
 				redirect('NewEmployee');
 			}
 			else
@@ -171,7 +173,7 @@ class Add_Controller extends CI_Controller {
 				if ($pImage != NULL) {
 					if ( ! $this->upload->do_upload('pImage'))
 					{
-						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+						$this->session->set_flashdata('prompts', array('error', $this->upload->display_errors()));
 						redirect('NewEmployee');
 					}
 					else
@@ -325,7 +327,7 @@ class Add_Controller extends CI_Controller {
 					$Temp_ApplicantID++;
 
 					if ($ApplicantID == NULL) {
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+						$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 						redirect('NewEmployee');
 					}
 					else
@@ -334,7 +336,7 @@ class Add_Controller extends CI_Controller {
 						if ($CheckApplicant->num_rows() > 0) {
 							$row = $CheckApplicant->row_array();
 
-							date_default_timezone_set('Asia/Manila');
+							
 
 							$DateStarted = date('Y-m-d h:i:s A');
 
@@ -371,10 +373,10 @@ class Add_Controller extends CI_Controller {
 							);
 							$EmployNewApplicant = $this->Model_Inserts->InsertToBranch($BranchID,$Temp_ApplicantID,$data);
 							if ($EmployNewApplicant == TRUE) {
-								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Employee added!</h5></div>');
+									$this->session->set_flashdata('prompts', array('success', 'New Employee added!'));
 
 									// LOGBOOK
-									date_default_timezone_set('Asia/Manila');
+									
 									$LogbookCurrentTime = date('Y-m-d h:i:s A');
 									$LogbookType = 'New';
 									$LogbookEvent = 'New Employee added! (Name: ' . ucfirst($row['LastName']) . ', ' . ucfirst($row['FirstName']) .  ' ' . ucfirst($row['MiddleInitial']) .  '. | Position: ' . $PositionGroup . ')';
@@ -390,13 +392,13 @@ class Add_Controller extends CI_Controller {
 							}
 							else
 							{
-								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+								$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 								redirect('NewEmployee');
 							}
 						}
 						else
 						{
-							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+							$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 							redirect('NewEmployee');
 						}
 					}
@@ -406,7 +408,7 @@ class Add_Controller extends CI_Controller {
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 					redirect('NewEmployee');
 				}
 			}
@@ -425,14 +427,14 @@ class Add_Controller extends CI_Controller {
 		$Gender = $this->input->post('Gender',TRUE);
 
 		if ($AdminLevel == NULL || $BranchID == NULL || $Position == NULL || $AdminID == NULL || $Password == NULL || $FirstName == NULL || $MiddleIN == NULL || $LastName == NULL || $Gender == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			redirect('Admin_List');
 		}
 		else
 		{
 			$CheckAdminID = $this->Model_Selects->CheckAdminID($AdminID);
 			if ($CheckAdminID->num_rows() > 0) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Admin exist!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Admin exist!'));
 				redirect('Admin_List');
 			}
 			else
@@ -457,10 +459,10 @@ class Add_Controller extends CI_Controller {
 				);
 				$InsertAdmin = $this->Model_Inserts->InsertAdmin($data);
 				if ($InsertAdmin == TRUE) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Admin added!</h5></div>');
+					$this->session->set_flashdata('prompts', array('success', 'New Admin added!'));
 
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
+					
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'New';
 					$LogbookEvent = 'New Admin added! (Name: ' . ucfirst($LastName) . ', ' . ucfirst($FirstName) .  ' ' . ucfirst($MiddleIN) .  '. | Position: ' . $Position . ')';
@@ -477,7 +479,7 @@ class Add_Controller extends CI_Controller {
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 					redirect('Admin_List');
 				}
 			}
@@ -494,7 +496,7 @@ class Add_Controller extends CI_Controller {
 		$EmployerAddress = $this->input->post('EmployerAddress',TRUE);
 
 		if ( $EmployerLastName == NULL || $EmployerFirstName == NULL || $EmployerMI == NULL || $EmployerArea == NULL || $EmployerAddress == NULL || $EmployerContact == NULL ) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			redirect('Employers');
 		}
 		else
@@ -510,10 +512,10 @@ class Add_Controller extends CI_Controller {
 			);
 			$InsertNewEmployer = $this->Model_Inserts->InsertNewEmployer($data);
 			if ($InsertNewEmployer == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Branch added!</h5></div>');
+				$this->session->set_flashdata('prompts', array('success', 'New Branch added!'));
 
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
+				
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'New';
 				$LogbookEvent = 'New Employer added! (Name: ' . ucfirst($EmployerLastName) . ', ' . ucfirst($EmployerFirstName) .  ' ' . ucfirst($EmployerMI) . '.)';
@@ -531,7 +533,7 @@ class Add_Controller extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect('Employers');
 			}
 			
@@ -547,10 +549,10 @@ class Add_Controller extends CI_Controller {
 		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix',TRUE);
 
 		// color parts
-		$colors = array("NavbarBG", "NavbarColor", "MainBG", "Borders");
+		$colors = array("NavbarBG", "NavbarColor", "MainBG", "MainColor", "SidebarBG", "SidebarColor", "Borders");
 
 		if ($pImage == NULL || $EmployerID == NULL || $BranchName == NULL || $BranchAddress == NULL || $BranchContact == NULL || $EmployeeIDSuffix == NULL ) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			$data = array(
 				'BranchName' => $BranchName,
 				'BranchAddress' => $BranchAddress,
@@ -569,11 +571,11 @@ class Add_Controller extends CI_Controller {
 			$CheckBranch = $this->Model_Selects->CheckBranch($BranchName);
 			$GetEmployerByID = $this->Model_Selects->GetEmployerByID($EmployerID);
 			if ($CheckBranch->num_rows() > 0) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Branch exist!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Branch exist!'));
 				redirect('Employers?employerID=' . $EmployerID);
 			}
 			elseif ($GetEmployerByID->num_rows() < 1) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Employer does not exist!'. $EmployerID .'</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Employer does not exist!'));
 				redirect('Employers');
 			}
 			else
@@ -600,7 +602,7 @@ class Add_Controller extends CI_Controller {
 					}
 					if ( ! $this->upload->do_upload('pImage'))
 					{
-						$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+						$this->session->set_flashdata('prompts', array('error', $this->upload->display_errors()));
 						redirect('Employers');
 					}
 					else
@@ -624,16 +626,14 @@ class Add_Controller extends CI_Controller {
 				$newBranchID = $this->db->insert_id();
 				// insert colors
 				$dataColors = array();
-				// set current colors
 				foreach ($colors as $key => $val) {
+					// set current colors
 					$dataColors[] = array(
 						'BranchID' => $newBranchID,
 						'Part' => $val,
 						'HexColor' => $this->input->post('brcol' . $val,TRUE),
 					);
-				}
-				// set default colors
-				foreach ($colors as $key => $val) {
+					// set default colors
 					$dataColors[] = array(
 						'BranchID' => $newBranchID,
 						'Part' => 'default_' . $val,
@@ -643,10 +643,10 @@ class Add_Controller extends CI_Controller {
 				$this->Model_Inserts->InsertBranchColors($dataColors);
 
 				if ($InsertNewBranch) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> New Branch added!</h5></div>');
+					$this->session->set_flashdata('prompts', array('success', 'New Branch added!'));
 					
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
+					
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'New';
 					$LogbookEvent = 'New Branch added! (Name: ' . $BranchName . ' | Contact: ' . $BranchContact . ')';
@@ -664,7 +664,7 @@ class Add_Controller extends CI_Controller {
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 					redirect('Employers?employerID=' . $EmployerID);
 				}
 			}
@@ -679,7 +679,7 @@ class Add_Controller extends CI_Controller {
 		$Type = $this->input->post('Type',TRUE);
 
 		if ($ApplicantID == NULL || $Subject == NULL || $Description == NULL || $Remarks == NULL || $Type == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 			redirect('Employee');
 		}
 		else
@@ -705,7 +705,7 @@ class Add_Controller extends CI_Controller {
 			// TODO: Add restrictions to deny /uploads/ access.
 			// PDF File Upload
 			if ( ! $this->upload->do_upload('pFile')) {
-				$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> ' . $pFile . ' PDF upload: '.$this->upload->display_errors().' This function is not yet implemented. Click the blue "Choose a PDF file button" instead.</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', $pFile . ' PDF upload: '.$this->upload->display_errors().' This function is not yet implemented. Click the blue "Choose a PDF file button" instead.'));
 				redirect('Employee');
 				exit();
 			} else {
@@ -727,12 +727,12 @@ class Add_Controller extends CI_Controller {
 				);
 				$AddDocuments = $this->Model_Inserts->AddDocuments($data);
 				if ($AddDocuments) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Document added!</h5></div>');
+					$this->session->set_flashdata('prompts', array('success', 'Document added!'));
 					redirect('ViewEmployee?id=' . $ApplicantID . '#Documents');
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 					redirect('Employee');
 				}
 			}
@@ -749,7 +749,7 @@ class Add_Controller extends CI_Controller {
 		$total_with_ec = $this->input->post('total_with_ec',TRUE);
 
 		if ($f_range == NULL || $t_range == NULL || $contribution_er == NULL || $contribution_ee == NULL || $contribution_ec == NULL || $total == NULL || $total_with_ec == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			redirect('sss_table');
 		} else {
 			$data = array(
@@ -764,10 +764,10 @@ class Add_Controller extends CI_Controller {
 			$contri_add_SSS = $this->Model_Inserts->contri_add_SSS($data);
 
 			if ($contri_add_SSS == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
+				$this->session->set_flashdata('prompts', array('success', 'Row added!'));
 
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
+				
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'New';
 				$LogbookEvent = 'New SSS Row added! (Range: ' . $f_range . ' - ' . $t_range . ')';
@@ -785,7 +785,7 @@ class Add_Controller extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect('sss_table');
 			}
 		}
@@ -799,7 +799,7 @@ class Add_Controller extends CI_Controller {
 		$total = $this->input->post('total',TRUE);
 
 		if ($f_range == NULL || $t_range == NULL || $contribution_er == NULL || $contribution_ee == NULL || $total == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			redirect('hdmf_table');
 		} else {
 			$data = array(
@@ -812,10 +812,10 @@ class Add_Controller extends CI_Controller {
 			$contri_add_HDMF = $this->Model_Inserts->contri_add_HDMF($data);
 
 			if ($contri_add_HDMF == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
+				$this->session->set_flashdata('prompts', array('success', 'Row added!'));
 
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
+				
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'New';
 				$LogbookEvent = 'New HDMF Row added! (Range: ' . $f_range . ' - ' . $t_range . ')';
@@ -833,7 +833,7 @@ class Add_Controller extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect('hdmf_table');
 			}
 		}
@@ -846,7 +846,7 @@ class Add_Controller extends CI_Controller {
 		$contribution_ee = $this->input->post('contribution_ee',TRUE);
 
 		if ($f_range == NULL || $t_range == NULL || $contribution_rate == NULL || $contribution_ee == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			redirect('philhealth_table');
 		} else {
 			$data = array(
@@ -858,10 +858,10 @@ class Add_Controller extends CI_Controller {
 			$contri_add_PhilHealth = $this->Model_Inserts->contri_add_PhilHealth($data);
 
 			if ($contri_add_PhilHealth == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
+				$this->session->set_flashdata('prompts', array('success', 'Row added!'));
 
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
+				
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'New';
 				$LogbookEvent = 'New PhilHealth Row added! (Range: ' . $f_range . ' - ' . $t_range . ')';
@@ -879,7 +879,7 @@ class Add_Controller extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect('philhealth_table');
 			}
 		}
@@ -892,7 +892,7 @@ class Add_Controller extends CI_Controller {
 		$tax_rate = $this->input->post('tax_rate',TRUE);
 
 		if ($f_range == NULL || $t_range == NULL || $tax == NULL || $tax_rate == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			redirect('tax_table');
 		} else {
 			$data = array(
@@ -904,10 +904,10 @@ class Add_Controller extends CI_Controller {
 			$contri_add_Tax = $this->Model_Inserts->contri_add_Tax($data);
 
 			if ($contri_add_Tax == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Row added!</h5></div>');
+				$this->session->set_flashdata('prompts', array('success', 'Row added!'));
 
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
+				
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'New';
 				$LogbookEvent = 'New Tax Row added! (Range: ' . $f_range . ' - ' . $t_range . ')';
@@ -925,7 +925,7 @@ class Add_Controller extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect('tax_table');
 			}
 		}

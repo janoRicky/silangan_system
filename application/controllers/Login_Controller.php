@@ -13,7 +13,7 @@ class Login_Controller extends CI_Controller {
 		$Password = $this->input->post('Password',TRUE);
 		if ($UserName == NULL || $Password == NULL) {
 			$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> Input Username and Password!</div>';
-			$this->session->set_flashdata('prompt',$p_text);
+			$this->session->set_flashdata('prompts_login',$p_text);
 			redirect(base_url());
 		}
 		else
@@ -49,14 +49,13 @@ class Login_Controller extends CI_Controller {
 				else
 				{
 					$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> Incorrect password!</div>';
-					$this->session->set_flashdata('prompt',$p_text);
-					redirect(base_url());
+					$this->session->set_flashdata('prompts_login',$p_text);
 				}
 			}
 			else
 			{
 				$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> User doesn\'t exist!</div>';
-				$this->session->set_flashdata('prompt',$p_text);
+				$this->session->set_flashdata('prompts_login',$p_text);
 				redirect(base_url());
 			}
 		}

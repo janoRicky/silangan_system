@@ -72,7 +72,7 @@
 						<div class="text-center mb-5 mt-4">
 							<img src="assets/img/silangan_lumber-250px.png" style="width: 100%;">
 						</div>
-						<?php echo $this->session->flashdata('prompt');?>
+						<?php echo $this->session->flashdata('prompts_login');?>
 						<div class="form-row">
 							<div class="form-group w-100">
 								<label><i class="fas fa-users fa-fw"></i> <span class="l-spacing09 f-opensans">Username</span></label>
@@ -104,9 +104,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="footer">
-			<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position: relative;z-index: -1 !important;"><path fill="#0099ff" fill-opacity="1" d="M0,320L288,64L576,128L864,192L1152,224L1440,256L1440,320L1152,320L864,320L576,320L288,320L0,320Z"></path></svg> -->
-		</div>
+		<!-- <div class="footer">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position: relative;z-index: -1 !important;"><path fill="#0099ff" fill-opacity="1" d="M0,320L288,64L576,128L864,192L1152,224L1440,256L1440,320L1152,320L864,320L576,320L288,320L0,320Z"></path></svg>
+		</div> -->
 	</div>
 	
 </body>

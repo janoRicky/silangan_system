@@ -6,7 +6,6 @@
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
 				<div class="content m-4">
-					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="row content-body">
 						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 							<h4 class="tabs-icon">
@@ -343,11 +342,7 @@
 					<div class="form-row mb-2">
 						<div class="form-group col-sm-12">
 							<input type='file' id="imgInp" name="pImage" style="display: none;">
-							<?php if(!$this->agent->is_mobile()): ?>
-								<img class="image-hover" id="imgPreview" src="<?php echo base_url() ?>assets/img/silangan_change_photo.png" width="100%" height="120">
-							<?php else: ?>
-								<img class="image-hover" id="imgPreview" src="<?php echo base_url() ?>assets/img/silangan_change_photo_mobile.png" width="100%" height="120">
-							<?php endif; ?>
+							<img class="image-hover" id="imgPreview" src="<?php echo base_url() ?>assets/img/silangan_change_photo.png" width="100%" height="120">
 						</div>
 					</div>
 					<div class="form-row">
@@ -396,6 +391,22 @@
 							<input id="MainBG" class="form-control" type="color" name="brcolMainBG" value="<?=$this->session->flashdata('brcolMainBG')?>">
 						</div>
 						<div class="form-group col-sm-6">
+							<label>Main Font Color</label>
+							<input id="MainColor" class="form-control" type="color" name="brcolMainColor" value="<?=$this->session->flashdata('brcolMainColor')?>">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-6">
+							<label>Sidebar Color</label>
+							<input id="SidebarBG" class="form-control" type="color" name="brcolSidebarBG" value="<?=$this->session->flashdata('brcolSidebarBG')?>">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>Sidebar Font Color</label>
+							<input id="SidebarColor" class="form-control" type="color" name="brcolSidebarColor" value="<?=$this->session->flashdata('brcolSidebarColor')?>">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-sm-6">
 							<label>Border Color</label>
 							<input id="Borders" class="form-control" type="color" name="brcolBorders" value="<?=$this->session->flashdata('brcolBorders')?>">
 						</div>
@@ -430,6 +441,27 @@
 		});
 
 		$('[data-toggle="tooltip"]').tooltip();
+		<?php if ($this->session->flashdata('prompts')) { 
+			$prompts = json_encode($this->session->flashdata('prompts'));
+			echo "var prompts = " . $prompts . ";";
+			?>
+			toastr.options = {
+				"positionClass": "toast-bottom-right",
+				"showDuration": "300",
+				"hideDuration": "1000",
+				"timeOut": "5000",
+				"extendedTimeOut": "1000",
+			}
+			if (prompts[0] == "success") {
+				toastr.success(prompts[1]);
+			} else if (prompts[0] == "error") {
+				toastr.error(prompts[1]);
+			} else if (prompts[0] == "warning") {
+				toastr.warning(prompts[1]);
+			} else if (prompts[0] == "info") {
+				toastr.info(prompts[1]);
+			}
+		<?php } ?>
 		if (localStorage.getItem('SidebarVisible') == 'true') {
 			$('#sidebar').addClass('active');
 			$('.ncontent').addClass('shContent');

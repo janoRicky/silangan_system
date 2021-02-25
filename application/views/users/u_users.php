@@ -18,7 +18,6 @@
 							</li>
 						</ul>
 					</div>
-					<?php echo $this->session->flashdata('prompts'); ?>
 					<div class="row content-body">
 						<div class="col-4 col-sm-4 col-md-4 PrintPageName PrintOut">
 							<h4 class="tabs-icon">
@@ -160,6 +159,27 @@
 					$("#BlacklistNotice").fadeIn();
 			    }
 			});
+			<?php if ($this->session->flashdata('prompts')) { 
+				$prompts = json_encode($this->session->flashdata('prompts'));
+				echo "var prompts = " . $prompts . ";";
+				?>
+				toastr.options = {
+					"positionClass": "toast-bottom-right",
+					"showDuration": "300",
+					"hideDuration": "1000",
+					"timeOut": "5000",
+					"extendedTimeOut": "1000",
+				}
+				if (prompts[0] == "success") {
+					toastr.success(prompts[1]);
+				} else if (prompts[0] == "error") {
+					toastr.error(prompts[1]);
+				} else if (prompts[0] == "warning") {
+					toastr.warning(prompts[1]);
+				} else if (prompts[0] == "info") {
+					toastr.info(prompts[1]);
+				}
+			<?php } ?>
 			if (localStorage.getItem('SidebarVisible') == 'true') {
 				$('#sidebar').addClass('active');
 				$('.ncontent').addClass('shContent');

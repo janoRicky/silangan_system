@@ -10,6 +10,8 @@ class Update_Controller extends CI_Controller {
 		$this->load->model('Model_Inserts');
 		$this->load->model('Model_Deletes');
 		$this->load->model('Model_Updates');
+
+		date_default_timezone_set('Asia/Manila');
 	}
 	public function EmployApplicant()
 	{
@@ -34,7 +36,7 @@ class Update_Controller extends CI_Controller {
 			$Temp_ApplicantID++;
 
 			if ($ApplicantID == NULL || $BranchID == NULL || $EmployeeID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s) A:' . $ApplicantID . ' C:' . $BranchID .' D:' . $H_Days . ' H:' . $H_Months . ' Y:' . $H_Years . ' </h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -43,7 +45,7 @@ class Update_Controller extends CI_Controller {
 				if ($CheckApplicant->num_rows() > 0) {
 					$row = $CheckApplicant->row_array();
 
-					date_default_timezone_set('Asia/Manila');
+					
 
 					$DateStarted = date('Y-m-d h:i:s A');
 
@@ -80,12 +82,12 @@ class Update_Controller extends CI_Controller {
 					);
 					$EmployNewApplicant = $this->Model_Inserts->InsertToBranch($BranchID,$Temp_ApplicantID,$data);
 					if ($EmployNewApplicant == TRUE) {
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Applicant employed!</h5></div>');
+						$this->session->set_flashdata('prompts', array('success', 'Applicant employed!'));
 
 						// LOGBOOK
 						$GetBranchInfo = $this->Model_Selects->GetBranchDet($BranchID);
 						$BranchInfo = $GetBranchInfo->row_array();
-						date_default_timezone_set('Asia/Manila');
+						
 						$LogbookCurrentTime = date('Y-m-d h:i:s A');
 						$LogbookType = 'Employment';
 						$LogbookEvent = 'Applicant ID ' . $ApplicantID .' has been employed to Branch ' . $BranchInfo['Name'] . ' for ';
@@ -128,20 +130,20 @@ class Update_Controller extends CI_Controller {
 					}
 					else
 					{
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
@@ -155,7 +157,7 @@ class Update_Controller extends CI_Controller {
 			$E_Years = $this->input->post('E_Years',TRUE);
 
 			if ($E_CurrentDate == NULL || $ApplicantID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) </h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			elseif ($E_Days + $E_Months + $E_Years < 1) {
@@ -166,7 +168,7 @@ class Update_Controller extends CI_Controller {
 				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 				if ($CheckApplicant->num_rows() > 0) {
 
-					date_default_timezone_set('Asia/Manila');
+					
 
 					if ($E_Months == NULL) {
 						$DateEnds = date('Y-m-d h:i:s A', strtotime('+0 months', strtotime($E_CurrentDate)));
@@ -189,10 +191,10 @@ class Update_Controller extends CI_Controller {
 					);
 					$EmployNewApplicant = $this->Model_Updates->ExtendContract($ApplicantID,$data);
 					if ($EmployNewApplicant == TRUE) {
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Contract Extended to ' . $DateEnds . '!</h5></div>');
+						$this->session->set_flashdata('prompts', array('success', 'Contract Extended to ' . $DateEnds . '!'));
 
 						// LOGBOOK
-						date_default_timezone_set('Asia/Manila');
+						
 						$LogbookCurrentTime = date('Y-m-d h:i:s A');
 						$LogbookType = 'Update';
 						$LogbookEvent = 'Applicant ID ' . $ApplicantID .' has their contract extended by ';
@@ -235,20 +237,20 @@ class Update_Controller extends CI_Controller {
 					}
 					else
 					{
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
@@ -319,7 +321,7 @@ class Update_Controller extends CI_Controller {
 		$Address_Manila = $this->input->post('Address_Manila');
 
 		if ($pImage == NULL || $PositionGroup == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			$data = array(
 				'EmployeeID' => $EmployeeID,
 				'PositionGroup' => $PositionGroup,
@@ -400,7 +402,7 @@ class Update_Controller extends CI_Controller {
 
 				if (! $this->upload->do_upload('pImage'))
 				{
-					$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', $this->upload->display_errors()));
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				else
@@ -472,20 +474,28 @@ class Update_Controller extends CI_Controller {
 			if ($addedEmployee == TRUE) {
 
 				$BenCheckbox = $this->input->post('BenCheckbox');
-				$listCheck = "'" . implode("','", $BenCheckbox) . "'";
-				$this->Model_Deletes->RemoveBeneficiary($listCheck);
+				if (isset($BenCheckbox)) {
+					$listCheck = "'" . implode("','", $BenCheckbox) . "'";
+					$this->Model_Deletes->RemoveBeneficiary($listCheck);
+				}
 
 				$AcadHCheckbox = $this->input->post('AcadHCheckbox');
-				$listCheck = "'" . implode("','", $AcadHCheckbox) . "'";
-				$this->Model_Deletes->RemoveAcadHistory($listCheck);
+				if (isset($AcadHCheckbox)) {
+					$listCheck = "'" . implode("','", $AcadHCheckbox) . "'";
+					$this->Model_Deletes->RemoveAcadHistory($listCheck);
+				}
 
 				$CharRefCheckbox = $this->input->post('CharRefCheckbox');
-				$listCheck = "'" . implode("','", $CharRefCheckbox) . "'";
-				$this->Model_Deletes->RemoveCharRef($listCheck);
+				if (isset($CharRefCheckbox)) {
+					$listCheck = "'" . implode("','", $CharRefCheckbox) . "'";
+					$this->Model_Deletes->RemoveCharRef($listCheck);
+				}
 
 				$EmpRecordCheckbox = $this->input->post('EmpRecordCheckbox');
-				$listCheck = "'" . implode("','", $EmpRecordCheckbox) . "'";
-				$this->Model_Deletes->RemoveEmpRecord($listCheck);
+				if (isset($EmpRecordCheckbox)) {
+					$listCheck = "'" . implode("','", $EmpRecordCheckbox) . "'";
+					$this->Model_Deletes->RemoveEmpRecord($listCheck);
+				}
 
 				if (isset($_SESSION["bencart"])) {
 					foreach ($_SESSION["bencart"] as $s_da) {
@@ -546,10 +556,10 @@ class Update_Controller extends CI_Controller {
 				unset($_SESSION["emp_cart"]);
 				unset($_SESSION["mach_cart"]);
 
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+				$this->session->set_flashdata('prompts', array('success', 'Details updated!'));
 
 				// LOGBOOK
-				date_default_timezone_set('Asia/Manila');
+				
 				$LogbookCurrentTime = date('Y-m-d h:i:s A');
 				$LogbookType = 'Update';
 				$LogbookEvent = 'Updated details on Employee ID ' . $ApplicantID . '.';
@@ -567,7 +577,7 @@ class Update_Controller extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 		}
@@ -578,7 +588,7 @@ class Update_Controller extends CI_Controller {
 		$BranchID = $this->input->post('R_BranchID',TRUE);
 
 		if ($BranchID == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! </h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 			redirect('Admin_List');
 		}
 		else
@@ -603,10 +613,10 @@ class Update_Controller extends CI_Controller {
 				}
 
 				if ($UpdateAdminInfo) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Admin Reassigned!</h5></div>');
+					$this->session->set_flashdata('prompts', array('success', 'Admin Reassigned!'));
 
 					// LOGBOOK
-					date_default_timezone_set('Asia/Manila');
+					
 					$LogbookCurrentTime = date('Y-m-d h:i:s A');
 					$LogbookType = 'Update';
 					$LogbookEvent = 'Admin #' . $AdminNo . '\'s branch reassigned to ' . $BranchInfo['Name'] . '.';
@@ -624,13 +634,13 @@ class Update_Controller extends CI_Controller {
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 					redirect('Admin_List');
 				}
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect('Admin_List');
 			}
 		}
@@ -640,7 +650,6 @@ class Update_Controller extends CI_Controller {
 		if (isset($_POST['Note'])) {
 			$Note = $this->input->post('Note',TRUE);
 			// LOGBOOK
-			date_default_timezone_set('Asia/Manila');
 			$LogbookCurrentTime = date('Y-m-d h:i:s A');
 			$LogbookType = 'Note';
 			$data = array(
@@ -650,7 +659,9 @@ class Update_Controller extends CI_Controller {
 				'Event' => $Note,
 			);
 			$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
-			redirect(base_url() . 'Dashboard#Logbook');
+
+			$this->session->set_flashdata('prompts', array('success', 'Note successfully added!'));
+			redirect(base_url() . 'Dashboard');
 
 		}
 	}
@@ -660,17 +671,20 @@ class Update_Controller extends CI_Controller {
 			$ApplicantID = $this->input->post('ApplicantID',TRUE);
 			$Note = $this->input->post('NoteDocuments',TRUE);
 			$this->Model_Inserts->InsertDocumentsNote($ApplicantID, $Note);
+
 			// LOGBOOK
-			// date_default_timezone_set('Asia/Manila');
-			// $LogbookCurrentTime = date('Y-m-d h:i:s A');
-			// $LogbookType = 'Note';
-			// $data = array(
-			// 	'Time' => $LogbookCurrentTime,
-			// 	'Type' => $LogbookType,
-			// 'AdminID' => $_SESSION["AdminID"],
-			// 	'Event' => 'Added new note for ' . $ApplicantID . '.',
-			// );
-			// $LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+			
+			$LogbookCurrentTime = date('Y-m-d h:i:s A');
+			$LogbookType = 'Note';
+			$data = array(
+				'Time' => $LogbookCurrentTime,
+				'Type' => $LogbookType,
+				'AdminID' => $_SESSION["AdminID"],
+				'Event' => 'Added new note for ' . $ApplicantID . '.',
+			);
+			$LogbookInsert = $this->Model_Inserts->InsertLogbook($data);
+
+			$this->session->set_flashdata('prompts', array('success', 'Added new note for ' . $ApplicantID . '.'));
 			redirect(base_url() . 'ViewEmployee?id=' . $ApplicantID . '#Documents');
 
 		}
@@ -714,7 +728,7 @@ class Update_Controller extends CI_Controller {
 			$ReminderDate = 0;
 
 			if ($ApplicantID == NULL) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Extend Contract) A:' . $ApplicantID . ' D:' . $E_Days . ' H:' . $E_Months . ' Y:' . $E_Years . ' </h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 			else
@@ -722,7 +736,7 @@ class Update_Controller extends CI_Controller {
 				$CheckApplicant = $this->Model_Selects->CheckApplicant($ApplicantID);
 				if ($CheckApplicant->num_rows() > 0) {
 
-					date_default_timezone_set('Asia/Manila');
+					
 
 					if ($R_Months == NULL) {
 						$ReminderDate = $ReminderDate + 0;
@@ -748,9 +762,9 @@ class Update_Controller extends CI_Controller {
 					);
 					$SetReminder = $this->Model_Inserts->InsertReminder($ApplicantID,$data);
 					if ($SetReminder == TRUE) {
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Reminder set!</h5></div>');
+						$this->session->set_flashdata('prompts', array('success', 'Reminder set!'));
 						// LOGBOOK
-						date_default_timezone_set('Asia/Manila');
+						
 						$LogbookCurrentTime = date('Y-m-d h:i:s A');
 						$LogbookType = 'New';
 						$LogbookEvent = 'A reminder has been set for ID ' . $ApplicantID .', alerting after ';
@@ -792,20 +806,20 @@ class Update_Controller extends CI_Controller {
 					}
 					else
 					{
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 						redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
 				else
 				{
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
@@ -819,9 +833,9 @@ class Update_Controller extends CI_Controller {
 		{
 			$Removethis = $this->Model_Updates->BlacklistEmployee($ApplicantID);
 			if ($Removethis == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $ApplicantID . ' has been blacklisted.</h5></div>');
+				$this->session->set_flashdata('prompts', array('success', 'Employee ID ' . $ApplicantID . ' has been blacklisted.'));
 				// LOGBOOK
-				// date_default_timezone_set('Asia/Manila');
+				// 
 				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 				// $LogbookType = 'Archival';
 				// $LogbookEvent = 'Employee ID ' . $ApplicantID .' has been blacklisted.';
@@ -858,9 +872,10 @@ class Update_Controller extends CI_Controller {
 		{
 			$Removethis = $this->Model_Updates->RestoreEmployee($ApplicantID);
 			if ($Removethis == TRUE) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ID ' . $ApplicantID . ' has been restored as an Applicant.</h5></div>');
+				$this->session->set_flashdata('prompts', array('success', 'Employee ID ' . $ApplicantID . ' has been restored as an Applicant.'));
+
 				// LOGBOOK
-				// date_default_timezone_set('Asia/Manila');
+				// 
 				// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 				// $LogbookType = 'Update';
 				// $LogbookEvent = 'Employee ID ' . $ApplicantID .' has been restored as an Applicant.';
@@ -933,14 +948,11 @@ class Update_Controller extends CI_Controller {
 				}
 
 				if ($ApplicantID == NULL) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Field/s)</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				else
 				{
-
-					date_default_timezone_set('Asia/Manila');
-
 					$data = array(
 						'BranchID' => $BranchID,
 						'Date' => $Date,
@@ -961,9 +973,9 @@ class Update_Controller extends CI_Controller {
 					$UpdateWeeklyHours = $this->Model_Updates->UpdateWeeklyHours($ApplicantID,$data);
 					if ($UpdateWeeklyHours == TRUE) {
 						if ($ArrayInt >= $ArrayLength) {
-							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Updated!</h5></div>');
+							$this->session->set_flashdata('prompts', array('success', 'Updated!'));
 							// LOGBOOK
-							// date_default_timezone_set('Asia/Manila');
+							// 
 							// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 							// $LogbookType = 'Update';
 							// $LogbookEvent = 'Updated weekly hours for ' . $ApplicantID . '.';
@@ -982,7 +994,7 @@ class Update_Controller extends CI_Controller {
 					}
 					else
 					{
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+						$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 
 					}
 				}
@@ -1225,7 +1237,7 @@ class Update_Controller extends CI_Controller {
 	}
 	else
 	{
-		$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againsss!</h5></div>');
+		$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 }
@@ -1241,17 +1253,17 @@ class Update_Controller extends CI_Controller {
 		// $Day = substr($FromDate, -2);
 
 		if ($Mode == NULL || $FromDate == NULL || $ToDate == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Date range must be valid</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'Error: Date range must be valid!'));
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
 		if ($BranchID == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again! (Error: Missing Branch ID)</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 		else
 		{
-			date_default_timezone_set('Asia/Manila');
+			
 			$date1 = new DateTime($FromDate);
 			$date2 = new DateTime($ToDate);
 
@@ -1296,7 +1308,7 @@ class Update_Controller extends CI_Controller {
 	{
 		$BranchID = $this->input->post('ExcelBranchID',FALSE); // TODO: (Dec 12, 2019) Changed from TRUE to FALSE > No XSS filtering.
 		$File = $_FILES['file'];
-		date_default_timezone_set('Asia/Manila');
+		
 		// $this->load->library('SimpleXLSX');
 		if ( $xlsx = SimpleXLSX::parse( $File['tmp_name'] ) ) {
 			$arsss = $xlsx->rows();
@@ -1419,7 +1431,7 @@ class Update_Controller extends CI_Controller {
 			
 		} else {
 			$Error = SimpleXLSX::parseError();
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: ' . $Error . '</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 			redirect($_SERVER['HTTP_REFERER']);
 
 		}
@@ -1465,7 +1477,7 @@ class Update_Controller extends CI_Controller {
 		}
 		else
 		{
-			date_default_timezone_set('Asia/Manila');
+			
 
 			$CheckEmployee = $this->Model_Selects->CheckEmployee($ApplicantID);
 			$GetBranch = $this->Model_Selects->getBranchOption();
@@ -1486,7 +1498,7 @@ class Update_Controller extends CI_Controller {
 							$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);
 							$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantID);
 							if ($ApplicantExpired == TRUE) {
-								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . "'s contract has been terminated!</h5></div>");
+								$this->session->set_flashdata('prompts', array('success', 'Employee ' . $ApplicantID . '\'s contract has been terminated!'));
 							// LOGBOOK
 							// $LogbookCurrentTime = date('Y-m-d h:i:s A');
 							// $LogbookType = 'Update';
@@ -1504,7 +1516,7 @@ class Update_Controller extends CI_Controller {
 							}
 							else
 							{
-								$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+								$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 							}
 						}
 					}
@@ -1512,7 +1524,7 @@ class Update_Controller extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 			}
 		}
 	}
@@ -1527,7 +1539,7 @@ class Update_Controller extends CI_Controller {
 		$Address = $this->input->post('Address');
 
 		if ($LastName == NULL || $FirstName == NULL || $MiddleInitial == NULL || $ContactNumber == NULL || $Area == NULL || $Address == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			$data = array(
 				'EmployerID' => $EmployerID,
 				'LastName' => $LastName,
@@ -1552,12 +1564,12 @@ class Update_Controller extends CI_Controller {
 			);
 			$updatedEmployer = $this->Model_Updates->UpdateEmployer($EmployerID, $data);
 			if ($updatedEmployer) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+				$this->session->set_flashdata('prompts', array('success', 'Details updated!'));
 				redirect("Employers");
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect("Employers");
 			}
 		}
@@ -1573,10 +1585,10 @@ class Update_Controller extends CI_Controller {
 		$EmployeeIDSuffix = $this->input->post('EmployeeIDSuffix');
 
 		// color parts
-		$colors = array("NavbarBG", "NavbarColor", "MainBG", "Borders");
+		$colors = array("NavbarBG", "NavbarColor", "MainBG", "MainColor", "SidebarBG", "SidebarColor", "Borders");
 
 		if ($pImage == NULL || $EmployerID == NULL || $Name == NULL || $Address == NULL || $ContactNumber == NULL || $EmployeeIDSuffix == NULL) {
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> All fields are required!</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
 			$data = array(
 				'EmployerID' => $EmployerID,
 				'Name' => $Name,
@@ -1611,7 +1623,7 @@ class Update_Controller extends CI_Controller {
 
 				if (!$this->upload->do_upload('pImage'))
 				{
-					$this->session->set_flashdata('prompts', '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> '.$this->upload->display_errors().'</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', $this->upload->display_errors()));
 					redirect($_SERVER['HTTP_REFERER']);
 				}
 				else
@@ -1642,21 +1654,19 @@ class Update_Controller extends CI_Controller {
 			$updatedBranch = $this->Model_Updates->UpdateBranch($BranchID, $data);
 
 			$dataColors = array();
-			// update current colors
 			foreach ($colors as $key => $val) {
+				// update current colors
 				$dataColors[] = array(
 					'Part' => $val,
 					'HexColor' => $this->input->post('brcol' . $val,TRUE),
 				);
-			}
-			$sColors = $dataColors;
-			// update default colors
-			foreach ($colors as $key => $val) {
+				// update default colors
 				$dataColors[] = array(
 					'Part' => 'default_' . $val,
 					'HexColor' => $this->input->post('brcoldefault_' . $val,TRUE),
 				);
 			}
+			$sColors = $dataColors;
 			$this->Model_Updates->UpdateBranchColors($BranchID,$dataColors);
 
 			// update session values
@@ -1669,12 +1679,12 @@ class Update_Controller extends CI_Controller {
 			}
 
 			if ($updatedBranch) {
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Details updated!</h5></div>');
+				$this->session->set_flashdata('prompts', array('success', 'Details updated!'));
 				redirect("ModifyBranch?id=" . $BranchID);
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong!</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				redirect("Employers");
 			}
 		}
@@ -1902,13 +1912,13 @@ class Update_Controller extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Only .xls .csv or .xlsx file allowed</h5></div>');
+				$this->session->set_flashdata('prompts', array('error', 'Error: Only .xls .csv or .xlsx file allowed!'));
 				redirect($_SERVER['HTTP_REFERER']);
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Error: Please Select File</h5></div>');
+			$this->session->set_flashdata('prompts', array('error', 'Error: Please Select File!'));
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}

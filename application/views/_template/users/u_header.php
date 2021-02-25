@@ -39,6 +39,7 @@
 	<!-- CUSTOM LIBRARIES -->
 	<!-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet"> -->
 	<link href="<?=base_url()?>assets/css/bootstrap4-toggle.min.css" rel="stylesheet">
+	<link href="<?=base_url()?>assets/css/toastr.min.css" rel="stylesheet"/>
 	<!-- CUSTOM STYLE -->
 	<link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/css/style.css">
 	<link rel="icon" href="<?=base_url()?>favicon.ico" type="image/gif">

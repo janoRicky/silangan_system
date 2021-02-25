@@ -50,7 +50,7 @@ class Main_Controller extends CI_Controller {
 				}
 
 				if ($ApplicantID == NULL) {
-					$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try again!</h5></div>');
+					$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 				}
 				else
 				{
@@ -65,7 +65,7 @@ class Main_Controller extends CI_Controller {
 						$InsertContractHistory = $this->Model_Inserts->InsertContractHistory($data);
 						$ApplicantExpired = $this->Model_Updates->ApplicantExpired($ApplicantID);
 						if ($ApplicantExpired == TRUE) {
-							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #45C830;"><h5><i class="fas fa-check"></i> Employee ' . $ApplicantID . ' has expired!</h5></div>');
+							$this->session->set_flashdata('prompts', array('info', 'Employee ' . $ApplicantID . ' has expired!'));
 							// LOGBOOK
 							date_default_timezone_set('Asia/Manila');
 							$LogbookCurrentTime = date('Y-m-d h:i:s A');
@@ -83,12 +83,12 @@ class Main_Controller extends CI_Controller {
 						}
 						else
 						{
-							$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try agains!</h5></div>');
+							$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 						}
 					}
 					else
 					{
-						$this->session->set_flashdata('prompts','<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><h5><i class="fas fa-times"></i> Something\'s wrong, Please try againss!</h5></div>');
+						$this->session->set_flashdata('prompts', array('error', 'Something\'s wrong, Please try again!'));
 					}
 				}
 			}
@@ -120,8 +120,8 @@ class Main_Controller extends CI_Controller {
 	public function CheckUserLogin()
 	{
 		if (!isset($_SESSION['is_logged_in'])) {
-			$p_text = '<div class="text-center" style="width: 100%;padding: 21px; color: #F52F2F;"><i class="fas fa-times fa-fw"></i> User login required!</div>';
-			$this->session->set_flashdata('prompt',$p_text);
+			$this->session->set_flashdata('prompts_login', 'User login required!');
+
 			redirect('');
 			exit();
 		}
