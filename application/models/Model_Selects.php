@@ -716,4 +716,10 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result->row();
 	}
+	public function getSpecialRate()
+	{
+		$SQL = "SELECT * FROM tb_rates WHERE rate_title = 'Special'";
+		$result = $this->db->query($SQL);
+		return $result->row();
+	}
 }

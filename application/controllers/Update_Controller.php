@@ -1926,7 +1926,6 @@ class Update_Controller extends CI_Controller {
 		$pm_out = $this->input->post('time_outpm');
 		$regular_day = $this->input->post('regular_day');
 		$sp_day = $this->input->post('sp_day');
-		$nh_day = $this->input->post('nh_day');
 		$Note = $this->input->post('note');
 		$row_status = 1;
 
@@ -1934,6 +1933,11 @@ class Update_Controller extends CI_Controller {
 			$regular_day = 'yes';
 		} else {
 			$regular_day = 'no';
+		}
+		if ($sp_day == 'yes') {	### HOLIDAYS
+			$sp_day = 'yes';
+		} else {
+			$sp_day = 'no';
 		}
 
 		$CheckEmployeeOT = $this->Model_Selects->CheckEmployeeOT($ApplicantID);	### EMPLOYEE DATA
@@ -1947,6 +1951,7 @@ class Update_Controller extends CI_Controller {
 
 		$getRegularshift = $this->Model_Selects->getRegularshift();	### REGULAR SHIFT
 		$getREGholiday = $this->Model_Selects->getREGholiday();	### REGULAR HOLIDAY
+		$getSpecialRate = $this->Model_Selects->getSpecialRate();	### SPECIAL HOLIDAY
 		$getOTrates = $this->Model_Selects->getOTrates();	### OVERTIME RATE
 		
 		if ($am_in != NULL AND $am_out == NULL AND$pm_in == NULL AND $pm_out != NULL) {		## NO BREAK BETWEEN AM IN AND PM OUT
@@ -2046,7 +2051,7 @@ class Update_Controller extends CI_Controller {
 			$shiftVal = $getRegularshift->night_shift;
 		}
 
-		$ncrate = $ncrate * $shiftVal;
+		$ncrate = $ncrate * $shiftVal; ### HOURLY RATE = RATE PER HOUR * SHIFT VALUE (DAY OR NIGHT)
 		
 		if ($regular_day == 'yes') {	### IF REGULAR HOLIDAY
 			if ($shift_type == 'day') {
@@ -2057,8 +2062,17 @@ class Update_Controller extends CI_Controller {
 				$ncrate = $ncrate * $getREGholiday->night_shift;
 			}
 		}
-		$Day_Earned = ($total_regpay / 60) * $ncrate; ### EX: (480/60) * RATE PER HOUR
+		if ($sp_day == 'yes') {	### IF REGULAR HOLIDAY
+			if ($shift_type == 'day') {
+				$ncrate = $ncrate * $getSpecialRate->day_shift;
+			}
+			else
+			{
+				$ncrate = $ncrate * $getSpecialRate->night_shift;
+			}
+		}
 
+		$Day_Earned = ($total_regpay / 60) * $ncrate; ### EX: (480/60) * RATE PER HOUR
 		$data = array(
 			
 			'Timein_AM' => $nam_in,
@@ -2068,6 +2082,7 @@ class Update_Controller extends CI_Controller {
 			'Total_BYmin' => $total_regpay,
 			'shift_type' => $shift_type,
 			'regular_day' => $regular_day,
+			'sp_day' => $sp_day,
 			'overtime' => $overtime,
 			'row_status' => $row_status,
 			'Note' => $Note,

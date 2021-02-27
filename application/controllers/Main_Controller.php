@@ -1474,6 +1474,9 @@ class Main_Controller extends CI_Controller {
 		unset($_SESSION["emp_cart"]);
 		unset($_SESSION["mach_cart"]);
 
+		###	CHECK SESSION
+		$this->CheckUserLogin();
+		
 		$data['IsFromExcel'] = False;
 		$data['Breadcrumb'] = '
 		<nav aria-label="breadcrumb">
@@ -1664,7 +1667,6 @@ class Main_Controller extends CI_Controller {
 				'shift_type' => $row->shift_type,
 				'regular_day' => $row->regular_day,
 				'sp_day' => $row->sp_day,
-				'nh_day' => $row->nh_day,
 				'cur_rate' => $cur_rate,
 				'totalHrs' => $sumbyHRS,
 				'overtime' => $row->overtime,
