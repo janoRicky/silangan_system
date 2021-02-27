@@ -5,7 +5,6 @@
 		<div id="content" class="ncontent">
 			<div class="container-fluid">
 				<?php $this->load->view('_template/users/u_notifications'); ?>
-				<?php echo $this->session->flashdata('prompts'); ?>
 				<div class="col-12 col-sm-12 payroll-tabs">
 					<ul>
 						<li class=""><a href="<?php echo base_url() ?>ViewBranch?id=<?php echo $_GET['id']; ?>&Mode=<?php if (isset($_GET['Mode'])) { echo $_GET['Mode']; } ?>">Attendance</a></li>
@@ -170,6 +169,27 @@
 						}
 					});
 				});
+				<?php if ($this->session->flashdata('prompts')) { 
+					$prompts = json_encode($this->session->flashdata('prompts'));
+					echo "var prompts = " . $prompts . ";";
+					?>
+					toastr.options = {
+						"positionClass": "toast-bottom-right",
+						"showDuration": "300",
+						"hideDuration": "1000",
+						"timeOut": "5000",
+						"extendedTimeOut": "1000",
+					}
+					if (prompts[0] == "success") {
+						toastr.success(prompts[1]);
+					} else if (prompts[0] == "error") {
+						toastr.error(prompts[1]);
+					} else if (prompts[0] == "warning") {
+						toastr.warning(prompts[1]);
+					} else if (prompts[0] == "info") {
+						toastr.info(prompts[1]);
+					}
+				<?php } ?>
 				if (localStorage.getItem('SidebarVisible') == 'true') {
 					$('#sidebar').addClass('active');
 					$('.ncontent').addClass('shContent');

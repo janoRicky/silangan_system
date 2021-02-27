@@ -90,4 +90,10 @@ class Model_Deletes extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result;
 	}
+	public function removeLog($id)
+	{
+		$SQL = "DELETE FROM logbook WHERE No = '$id'";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 }

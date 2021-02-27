@@ -8,7 +8,6 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="p-5">
-							<?php echo $this->session->flashdata('prompts'); ?>
 							<!-- Start form -->
 							<form action="<?=base_url()?>UpdateEmployee" method="POST" enctype="multipart/form-data">
 								<div class="content mt-3">
@@ -22,16 +21,9 @@
 										<input type="hidden" name="M_ApplicantImage" value="<?php echo $ApplicantImage; ?>"> 
 										<div class="form-row mb-2">
 											<div class="form-group col-sm-12 image-holder">
-												<?php if($this->agent->is_mobile()): ?>
-													<p>
-														Tap the image to change
-													</p>
-												<?php endif; ?>
 												<input type='file' id="imgInp" name="pImage" style="display: none;">
 												<img class="image-hover" id="blah" src="<?php echo $ApplicantImage; ?>" width="120" height="120">
-												<?php if(!$this->agent->is_mobile()): ?>
-													<img class="image-text image-hidden" src="<?php echo base_url(); ?>assets/img/silangan_change_photo.png" width="120" height="120">
-												<?php endif; ?>
+												<img class="image-text image-hidden" src="<?php echo base_url(); ?>assets/img/silangan_change_photo.png" width="120" height="120">
 											</div>
 										</div>
 										<div class="form-row">
@@ -779,6 +771,27 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		<?php if ($this->session->flashdata('prompts')) { 
+			$prompts = json_encode($this->session->flashdata('prompts'));
+			echo "var prompts = " . $prompts . ";";
+			?>
+			toastr.options = {
+				"positionClass": "toast-bottom-right",
+				"showDuration": "300",
+				"hideDuration": "1000",
+				"timeOut": "5000",
+				"extendedTimeOut": "1000",
+			}
+			if (prompts[0] == "success") {
+				toastr.success(prompts[1]);
+			} else if (prompts[0] == "error") {
+				toastr.error(prompts[1]);
+			} else if (prompts[0] == "warning") {
+				toastr.warning(prompts[1]);
+			} else if (prompts[0] == "info") {
+				toastr.info(prompts[1]);
+			}
+		<?php } ?>
 		if (localStorage.getItem('SidebarVisible') == 'true') {
 			$('#sidebar').addClass('active');
 			$('.ncontent').addClass('shContent');

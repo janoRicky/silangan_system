@@ -8,7 +8,6 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="p-5">
-							<?php echo $this->session->flashdata('prompts'); ?>
 							<!-- Start form -->
 							<form action="<?=base_url()?>UpdateBranch" method="POST" enctype="multipart/form-data">
 								<div class="content mt-3">
@@ -22,16 +21,9 @@
 										<input type="hidden" name="M_BranchIcon" value="<?php echo $BranchIcon; ?>">
 										<div class="form-row mb-2">
 											<div class="form-group col-sm-12 image-holder">
-												<?php if($this->agent->is_mobile()): ?>
-													<p>
-														Tap the image to change
-													</p>
-												<?php endif; ?>
 												<input type='file' id="imgInp" name="pImage" style="display: none;">
 												<img class="image-hover" id="imgPreview" src="<?php echo $BranchIcon; ?>" width="100%" height="120">
-												<?php if(!$this->agent->is_mobile()): ?>
-													<img class="image-text image-hidden" src="<?php echo base_url(); ?>assets/img/silangan_change_photo.png" width="100%" height="120">
-												<?php endif; ?>
+												<img class="image-text image-hidden" src="<?php echo base_url(); ?>assets/img/silangan_change_photo.png" width="100%" height="120">
 											</div>
 										</div>
 										<div class="form-row">
@@ -85,6 +77,18 @@
 												<input id="MainBG" class="form-control" type="color" name="brcolMainBG" value="<?=$brcolMainBG?>">
 											</div>
 											<div class="form-group col-sm-6">
+												<label>Main Font Color</label>
+												<input id="MainColor" class="form-control" type="color" name="brcolMainColor" value="<?=$brcolMainColor?>">
+											</div>
+											<div class="form-group col-sm-6">
+												<label>Sidebar Color</label>
+												<input id="SidebarBG" class="form-control" type="color" name="brcolSidebarBG" value="<?=$brcolSidebarBG?>">
+											</div>
+											<div class="form-group col-sm-6">
+												<label>Sidebar Font Color</label>
+												<input id="SidebarColor" class="form-control" type="color" name="brcolSidebarColor" value="<?=$brcolSidebarColor?>">
+											</div>
+											<div class="form-group col-sm-6">
 												<label>Border Color</label>
 												<input id="Borders" class="form-control" type="color" name="brcolBorders" value="<?=$brcolBorders?>">
 											</div>
@@ -98,16 +102,28 @@
 										</div>
 										<div id="defaultColors" class="form-row" style="display: none;">
 											<div class="form-group col-sm-6">
-												<label>NavbarBG</label>
+												<label>Navbar BG</label>
 												<input id="default_NavbarBG" class="form-control" type="color" name="brcoldefault_NavbarBG" value="<?=$brcoldefault_NavbarBG?>">
 											</div>
 											<div class="form-group col-sm-6">
-												<label>NavbarColor</label>
+												<label>Navbar Color</label>
 												<input id="default_NavbarColor" class="form-control" type="color" name="brcoldefault_NavbarColor" value="<?=$brcoldefault_NavbarColor?>">
 											</div>
 											<div class="form-group col-sm-6">
-												<label>MainBG</label>
+												<label>Main BG</label>
 												<input id="default_MainBG" class="form-control" type="color" name="brcoldefault_MainBG" value="<?=$brcoldefault_MainBG?>">
+											</div>
+											<div class="form-group col-sm-6">
+												<label>Main Color</label>
+												<input id="default_MainColor" class="form-control" type="color" name="brcoldefault_MainColor" value="<?=$brcoldefault_MainColor?>">
+											</div>
+											<div class="form-group col-sm-6">
+												<label>Sidebar BG</label>
+												<input id="default_SidebarBG" class="form-control" type="color" name="brcoldefault_SidebarBG" value="<?=$brcoldefault_SidebarBG?>">
+											</div>
+											<div class="form-group col-sm-6">
+												<label>Sidebar Color</label>
+												<input id="default_SidebarColor" class="form-control" type="color" name="brcoldefault_SidebarColor" value="<?=$brcoldefault_SidebarColor?>">
 											</div>
 											<div class="form-group col-sm-6">
 												<label>Borders</label>
@@ -153,6 +169,27 @@
 <?php $this->load->view('_template/users/u_scripts'); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		<?php if ($this->session->flashdata('prompts')) { 
+			$prompts = json_encode($this->session->flashdata('prompts'));
+			echo "var prompts = " . $prompts . ";";
+			?>
+			toastr.options = {
+				"positionClass": "toast-bottom-right",
+				"showDuration": "300",
+				"hideDuration": "1000",
+				"timeOut": "5000",
+				"extendedTimeOut": "1000",
+			}
+			if (prompts[0] == "success") {
+				toastr.success(prompts[1]);
+			} else if (prompts[0] == "error") {
+				toastr.error(prompts[1]);
+			} else if (prompts[0] == "warning") {
+				toastr.warning(prompts[1]);
+			} else if (prompts[0] == "info") {
+				toastr.info(prompts[1]);
+			}
+		<?php } ?>
 		if (localStorage.getItem('SidebarVisible') == 'true') {
 			$('#sidebar').addClass('active');
 			$('.ncontent').addClass('shContent');
@@ -194,11 +231,17 @@
 				$("#NavbarBG").attr("data-prevColor", $("#NavbarBG").val());
 				$("#NavbarColor").attr("data-prevColor", $("#NavbarColor").val());
 				$("#MainBG").attr("data-prevColor", $("#MainBG").val());
+				$("#MainColor").attr("data-prevColor", $("#MainColor").val());
+				$("#SidebarBG").attr("data-prevColor", $("#SidebarBG").val());
+				$("#SidebarColor").attr("data-prevColor", $("#SidebarColor").val());
 				$("#Borders").attr("data-prevColor", $("#Borders").val());
 
 				$("#NavbarBG").val($("#default_NavbarBG").val());
 				$("#NavbarColor").val($("#default_NavbarColor").val());
 				$("#MainBG").val($("#default_MainBG").val());
+				$("#MainColor").val($("#default_MainColor").val());
+				$("#SidebarBG").val($("#default_SidebarBG").val());
+				$("#SidebarColor").val($("#default_SidebarColor").val());
 				$("#Borders").val($("#default_Borders").val());
 
 				$(this).attr("data-revert", "F");
@@ -207,6 +250,9 @@
 				$("#NavbarBG").val($("#NavbarBG").attr("data-prevColor"));
 				$("#NavbarColor").val($("#NavbarColor").attr("data-prevColor"));
 				$("#MainBG").val($("#MainBG").attr("data-prevColor"));
+				$("#MainColor").val($("#MainColor").attr("data-prevColor"));
+				$("#SidebarBG").val($("#SidebarBG").attr("data-prevColor"));
+				$("#SidebarColor").val($("#SidebarColor").attr("data-prevColor"));
 				$("#Borders").val($("#Borders").attr("data-prevColor"));
 
 				$(this).attr("data-revert", "T");
