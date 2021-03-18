@@ -131,6 +131,8 @@ $route['ViewBranchEmployees'] = 'Update_Controller/ViewBranchEmployees';
 $route['ImportExcel'] = 'Update_Controller/ImportExcel';
 $route['update_drates'] = 'Update_Controller/update_drates';
 
+$route['ImportDeviceAtt'] = 'Update_Controller/ImportDeviceAtt';
+
 
 
 $route['TerminateContract'] = 'Update_Controller/TerminateContract';

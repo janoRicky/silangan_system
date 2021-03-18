@@ -197,7 +197,7 @@
 								<div class="col-sm-6">
 									<div class="chart-title">
 										<h5>
-											<i class="fas fa-list"></i> Notifications
+											<i class="fas fa-list"></i> Notifications<a href="ImportDeviceAtt?ip=192.168.1.212&port=4370">test</a>
 										</h5>
 									</div>
 								</div>

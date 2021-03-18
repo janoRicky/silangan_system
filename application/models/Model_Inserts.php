@@ -164,4 +164,10 @@ class Model_Inserts extends CI_Model {
 	{
 		return $this->db->replace('tb_attendance', $data);
 	}
+
+	// DEVICE ATTENDANCE
+	public function InsertDeviceAtt($data)
+	{
+		return $this->db->insert('device_attendance', $data);
+	}
 }

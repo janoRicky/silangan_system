@@ -571,6 +571,21 @@ $('#regular_day').change(function() {
 	if(this.checked) {
 		$(this).prop( "checked",true);
 		$(this).val('yes');
+		$('#sp_day').prop( "checked",false).change();
+		$('#sp_day').val('no');
+	}
+	else
+	{
+		$(this).prop( "checked",false);
+		$(this).val('no');
+	}
+});
+$('#sp_day').change(function() {
+	if(this.checked) {
+		$(this).prop( "checked",true);
+		$(this).val('yes');
+		$('#regular_day').prop( "checked",false).change();
+		$('#regular_day').val('no');
 	}
 	else
 	{

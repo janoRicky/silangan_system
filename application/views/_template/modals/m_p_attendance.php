@@ -36,15 +36,11 @@
           <div class="form-group m-auto">
             <div class="col-3 d-inline">
               <!------------------ INPUT ------------------>
-              <input id="regular_day" class="holiday_btn" checked="" type="checkbox" data-toggle="toggle" data-width="140" data-style="android" data-on="<i class='fas fa-check fw'></i> Regular" data-off="<i class='fas fa-times fw'></i> Regular" data-onstyle="success" data-offstyle="danger" name="regular_day">
+              <input id="regular_day" class="holiday_btn" type="checkbox" data-toggle="toggle" data-width="140" data-style="android" data-on="<i class='fas fa-check fw'></i> Regular" data-off="<i class='fas fa-times fw'></i> Regular" data-onstyle="success" data-offstyle="danger" name="regular_day">
             </div>
             <div class="col-3 d-inline">
               <!------------------ INPUT ------------------>
-              <input id="sp_day" class="holiday_btn" checked="" type="checkbox" data-toggle="toggle" data-width="140" data-style="android" data-on="<i class='fas fa-check fw'></i> Special" data-off="<i class='fas fa-times fw'></i> Special" data-onstyle="success" data-offstyle="danger" name="sp_day">
-            </div>
-            <div class="col-3 d-inline">
-              <!------------------ INPUT ------------------>
-              <input id="nh_day" class="holiday_btn" checked="" type="checkbox" data-toggle="toggle" data-width="140" data-style="android" data-on="<i class='fas fa-check fw'></i> National" data-off="<i class='fas fa-times fw'></i> National" data-onstyle="success" data-offstyle="danger" name="nh_day">
+              <input id="sp_day" class="holiday_btn" type="checkbox" data-toggle="toggle" data-width="140" data-style="android" data-on="<i class='fas fa-check fw'></i> Special" data-off="<i class='fas fa-times fw'></i> Special" data-onstyle="success" data-offstyle="danger" name="sp_day">
             </div>
           </div>
         </div>

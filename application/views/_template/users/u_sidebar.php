@@ -47,11 +47,8 @@
 		<li class="nav-item">
 			<a class="link-s" href="<?=base_url()?>Payroll"><span class="fas fa-dollar-sign fa-fw"></span> Payroll </a>
 		</li>
-		<li class="nav-item">
-			<a class="link-s" href="<?=base_url()?>Admin_List"><i class="fas fa-table fa-fw"></i> Users </a>
-		</li>
 
-		<div class="pb-1 pt-3" style="border-bottom: 1px solid #E6E6E6; text-align: center;"> Tables </div>
+		<div class="pb-1 pt-3" style="border-bottom: 1px solid #E6E6E6; text-align: center;"> <!-- TABLES --> </div>
 		<li class="nav-item">
 			<a class="link-s" href="<?=base_url()?>sss_table"><i class="fas fa-table fa-fw"></i> SSS Table </a>
 		</li>
@@ -66,6 +63,9 @@
 		</li>
 
 		<div class="pb-1 pt-3" style="border-bottom: 1px solid #E6E6E6;"></div>
+		<li class="nav-item">
+			<a class="link-s" href="<?=base_url()?>Admin_List"><i class="fas fa-table fa-fw"></i> Users </a>
+		</li>
 		<li class="nav-item">
 			<a class="link-s" href="<?=base_url()?>day_rates"><i class="fas fa-table fa-fw"></i> Rates </a>
 		</li>

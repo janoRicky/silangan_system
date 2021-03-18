@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2021 at 09:09 PM
+-- Generation Time: Mar 18, 2021 at 07:34 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -443,6 +443,67 @@ INSERT INTO `dashboard_months` (`ID`, `Year`, `Month`, `Total`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `device_attendance`
+--
+
+CREATE TABLE `device_attendance` (
+  `ID` int(11) NOT NULL,
+  `AID` varchar(12) DEFAULT NULL,
+  `UID` varchar(11) DEFAULT NULL,
+  `DateTime` varchar(21) DEFAULT NULL,
+  `VerState` varchar(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `device_attendance`
+--
+
+INSERT INTO `device_attendance` (`ID`, `AID`, `UID`, `DateTime`, `VerState`) VALUES
+(215, '42', '1', '2021-02-23 17:17:38', '0'),
+(216, '43', '1', '2021-02-23 17:17:45', '1'),
+(217, '44', '32', '2021-02-23 17:17:50', '0'),
+(218, '45', '32', '2021-02-23 17:17:55', '1'),
+(219, '46', '1', '2021-03-01 18:53:09', '0'),
+(220, '47', '1', '2021-03-01 18:53:15', '1'),
+(221, '48', '32', '2021-03-01 18:53:29', '0'),
+(222, '49', '32', '2021-03-01 18:53:42', '1'),
+(223, '50', '1', '2021-03-01 19:10:15', '4'),
+(224, '51', '1', '2021-03-01 19:10:23', '5'),
+(225, '52', '32', '2021-03-03 01:29:26', '1'),
+(226, '53', '1', '2021-03-03 01:50:46', '0'),
+(227, '54', '32', '2021-03-03 01:50:57', '1'),
+(228, '55', '1', '2021-03-03 01:53:57', '0'),
+(229, '56', '1', '2021-03-03 01:54:06', '1'),
+(230, '57', '1', '2021-03-03 01:54:07', '1'),
+(231, '58', '36', '2021-03-03 01:58:14', '0'),
+(232, '59', '2', '2021-03-03 02:00:35', '0'),
+(233, '60', '2', '2021-03-03 02:00:36', '0'),
+(234, '61', '2', '2021-03-03 02:00:38', '0'),
+(235, '62', '1', '2021-03-03 02:09:10', '0'),
+(236, '63', '1', '2021-03-03 02:09:16', '1'),
+(237, '64', '1', '2021-03-03 02:09:22', '4'),
+(238, '65', '1', '2021-03-03 02:09:26', '5'),
+(239, '66', '1', '2021-03-03 02:37:17', '5'),
+(240, '67', '1', '2021-03-03 02:37:26', '5'),
+(241, '68', '1', '2021-03-03 02:37:32', '5'),
+(242, '69', '1', '2021-03-03 02:37:42', '0'),
+(243, '70', '1', '2021-03-03 02:37:46', '1'),
+(244, '71', '1', '2021-03-03 02:37:50', '4'),
+(245, '72', '1', '2021-03-03 02:37:53', '5'),
+(246, '73', '2', '2021-03-10 01:27:44', '0'),
+(247, '74', '2', '2021-03-10 01:27:45', '0'),
+(248, '75', '2', '2021-03-10 01:29:05', '0'),
+(249, '76', '2', '2021-03-10 01:29:06', '0'),
+(250, '77', '2', '2021-03-10 01:29:08', '0'),
+(251, '78', '2', '2021-03-10 01:32:14', '1'),
+(252, '79', '2', '2021-03-10 01:32:20', '1'),
+(253, '80', '2', '2021-03-10 01:34:06', '1'),
+(254, '81', '2', '2021-03-10 01:34:11', '1'),
+(255, '82', '1', '2021-03-10 01:44:20', '1');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dummy_hours`
 --
 
@@ -716,10 +777,6 @@ CREATE TABLE `logbook` (
 --
 
 INSERT INTO `logbook` (`No`, `Time`, `Type`, `AdminID`, `Event`, `Link`) VALUES
-(10, '2020-12-05 12:30:52 PM', 'Update', NULL, 'Admin #12\'s branch reassigned to Good Seed Mining Corporation.', 'Admin_List'),
-(11, '2020-12-05 12:31:04 PM', 'Update', NULL, 'Admin #16\'s branch reassigned to Silangan Lumber.', 'Admin_List'),
-(12, '2020-12-12 01:24:32 PM', 'New', 'dadadada', 'New SSS Row added! (Range: 6750 - 7249.99)', 'sss_table'),
-(13, '2020-12-12 01:24:55 PM', 'Deletion', 'dadadada', 'SSS Row 38 has been removed.', 'sss_table'),
 (14, '2021-01-29 06:19:08 PM', 'Update', 'dadadada', 'Admin #17\'s branch reassigned to Good Seed Mining Corporation.', 'Admin_List'),
 (15, '2021-01-30 05:00:40 AM', 'Deletion', 'dadadada', 'Admin ID 16 has been removed.', 'Admin_List'),
 (16, '2021-01-30 12:56:01 PM', 'Update', 'dadadada', 'Admin #15\'s branch reassigned to Good Seed Mining Corporation.', 'Admin_List'),
@@ -768,7 +825,9 @@ INSERT INTO `logbook` (`No`, `Time`, `Type`, `AdminID`, `Event`, `Link`) VALUES
 (59, '2021-02-26 03:31:01 AM', 'Update', 'Dev-RCR', 'Admin #15\'s branch reassigned to Silangan Lumber.', 'Admin_List'),
 (60, '2021-02-26 03:35:07 AM', 'Deletion', 'Dev-RCR', 'Branch ID 24 has been removed.', 'Branches'),
 (61, '2021-02-26 03:35:18 AM', 'Deletion', 'Dev-RCR', 'Branch ID 22 has been removed.', 'Branches'),
-(62, '2021-02-26 03:35:27 AM', 'Deletion', 'Dev-RCR', 'Branch ID 23 has been removed.', 'Branches');
+(62, '2021-02-26 03:35:27 AM', 'Deletion', 'Dev-RCR', 'Branch ID 23 has been removed.', 'Branches'),
+(63, '2021-03-10 08:02:11 PM', 'Note', 'Dev-RCR', 'tes', NULL),
+(64, '2021-03-10 08:02:56 PM', 'Note', 'Dev-RCR', 'sa', NULL);
 
 -- --------------------------------------------------------
 
@@ -1243,6 +1302,12 @@ ALTER TABLE `dashboard_months`
   ADD UNIQUE KEY `my_unique_key` (`Year`,`Month`);
 
 --
+-- Indexes for table `device_attendance`
+--
+ALTER TABLE `device_attendance`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `dummy_hours`
 --
 ALTER TABLE `dummy_hours`
@@ -1386,6 +1451,12 @@ ALTER TABLE `dashboard_months`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
+-- AUTO_INCREMENT for table `device_attendance`
+--
+ALTER TABLE `device_attendance`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
+
+--
 -- AUTO_INCREMENT for table `dummy_hours`
 --
 ALTER TABLE `dummy_hours`
@@ -1419,7 +1490,7 @@ ALTER TABLE `hours_weekly`
 -- AUTO_INCREMENT for table `logbook`
 --
 ALTER TABLE `logbook`
-  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `No` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `philhealth_table`
