@@ -716,8 +716,12 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL);
 		return $result->row();
 	}
-<<<<<<< HEAD
-
+	public function getSpecialRate()
+	{
+		$SQL = "SELECT * FROM tb_rates WHERE rate_title = 'Special'";
+		$result = $this->db->query($SQL);
+		return $result->row();
+	}
 
 	// DEVICE ATTENDANCE
 	public function getMaxAID()
@@ -725,12 +729,5 @@ class Model_Selects extends CI_Model {
 		$SQL = "SELECT MAX(AID) AS max FROM device_attendance";
 		$result = $this->db->query($SQL)->row_array();
 		return $result;
-=======
-	public function getSpecialRate()
-	{
-		$SQL = "SELECT * FROM tb_rates WHERE rate_title = 'Special'";
-		$result = $this->db->query($SQL);
-		return $result->row();
->>>>>>> 75fce27161cec31573757bcc68875a62e73ba648
 	}
 }
