@@ -370,508 +370,359 @@
 			}
 		});
 
-		$('#time_inam , #time_outam , #time_inpm ,#time_outpm').on('change', function () {
+		
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		});
+		$('#submitformslip').on('click', function () {
+			if ($('.checkSelectall').is(':checked')) {
+				var row_id = $('.for_submit').map(function(){ 
+					return this.value; 
+				}).get();
+			}
+			$.ajax({
+				type: 'POST',
+				url: 'generate_payslip',
+				data: {
+					'row_id[]': row_id,
+				},
+				success: function(data) {
+					alert(data);
+				}
+			});
+		});
+		$('#shift_type').change(function() {
+			if(this.checked) {
+				$(this).prop( "checked",true);
+				$(this).val('day');
+			}
+			else
+			{
+				$(this).prop( "checked",false);
+				$(this).val('night');
+			}
+		});
+		$('#regular_day').change(function() {
+			if(this.checked) {
+				$(this).prop( "checked",true);
+				$(this).val('yes');
+				$('#sp_day').prop( "checked",false).change();
+				$('#sp_day').val('no');
+			}
+			else
+			{
+				$(this).prop( "checked",false);
+				$(this).val('no');
+			}
+		});
+		$('#sp_day').change(function() {
+			if(this.checked) {
+				$(this).prop( "checked",true);
+				$(this).val('yes');
+				$('#regular_day').prop( "checked",false).change();
+				$('#regular_day').val('no');
+			}
+			else
+			{
+				$(this).prop( "checked",false);
+				$(this).val('no');
+			}
+		});
+		$('.checkSelectall').change(function() {
+			if(this.checked) {
+				$(this).addClass("for_submit");
+			}
+			else
+			{
+				$(this).removeClass("for_submit");
+			}
+		});
+		$('#regular_day , #sp_day , #time_inam , #time_outam , #time_inpm ,#time_outpm').change(function () {
 
 			var time_inam = $('#time_inam').val();
 			var time_outam = $('#time_outam').val();
 			var time_inpm = $('#time_inpm').val();
 			var time_outpm = $('#time_outpm').val();
 
-			if (time_outam == "" && time_inpm == "") 
-			{
-				var amtime1 = time_inam.split(':'), amtime2 = time_outpm.split(':');
-				var hours1 = parseInt(amtime1[0], 10), 
-				hours2 = parseInt(amtime2[0], 10),
-				mins1 = parseInt(amtime1[1], 10),
-				mins2 = parseInt(amtime2[1], 10);
-				var amhours = hours2 - hours1, mins = 0;
-				if(amhours < 0) amhours = 24 + amhours;
-				if(mins2 >= mins1) {
-					mins = mins2 - mins1;
+			if(this.checked) {
+				if (time_outam == "" && time_inpm == "") 
+				{
+					var amtime1 = time_inam.split(':'), amtime2 = time_outpm.split(':');
+					var hours1 = parseInt(amtime1[0], 10), 
+					hours2 = parseInt(amtime2[0], 10),
+					mins1 = parseInt(amtime1[1], 10),
+					mins2 = parseInt(amtime2[1], 10);
+					var amhours = hours2 - hours1, mins = 0;
+					if(amhours < 0) amhours = 24 + amhours;
+					if(mins2 >= mins1) {
+						mins = mins2 - mins1;
+					}
+					else {
+						mins = (mins2 + 60) - mins1;
+						amhours--;
+					}
+					mins = mins / 60; 
+					amhours += mins;
+					amhours = amhours.toFixed(2);
+					var newtotal = parseFloat(amhours);
 				}
-				else {
-					mins = (mins2 + 60) - mins1;
-					amhours--;
+				else if (time_inpm == "" && time_outpm == "")
+				{
+					var amtime1 = time_inam.split(':'), amtime2 = time_outam.split(':');
+					var hours1 = parseInt(amtime1[0], 10), 
+					hours2 = parseInt(amtime2[0], 10),
+					mins1 = parseInt(amtime1[1], 10),
+					mins2 = parseInt(amtime2[1], 10);
+					var amhours = hours2 - hours1, mins = 0;
+					if(amhours < 0) amhours = 24 + amhours;
+					if(mins2 >= mins1) {
+						mins = mins2 - mins1;
+					}
+					else {
+						mins = (mins2 + 60) - mins1;
+						amhours--;
+					}
+					mins = mins / 60; 
+					amhours += mins;
+					amhours = amhours.toFixed(2);
+					var newtotal = parseFloat(amhours);
 				}
-				mins = mins / 60; 
-				amhours += mins;
-				amhours = amhours.toFixed(2);
-				var newtotal = parseFloat(amhours);
+				else if (time_inam == "" && time_outam == "")
+				{
+					var amtime1 = time_inpm.split(':'), amtime2 = time_outpm.split(':');
+					var hours1 = parseInt(amtime1[0], 10), 
+					hours2 = parseInt(amtime2[0], 10),
+					mins1 = parseInt(amtime1[1], 10),
+					mins2 = parseInt(amtime2[1], 10);
+					var amhours = hours2 - hours1, mins = 0;
+					if(amhours < 0) amhours = 24 + amhours;
+					if(mins2 >= mins1) {
+						mins = mins2 - mins1;
+					}
+					else {
+						mins = (mins2 + 60) - mins1;
+						amhours--;
+					}
+					mins = mins / 60; 
+					amhours += mins;
+					amhours = amhours.toFixed(2);
+					var newtotal = parseFloat(amhours);
+				}
+				else if (time_inam != "" && time_outam != "" && time_inpm != "" && time_outpm != "")
+				{
+					var amin = time_inam.split(':'), amout = time_outam.split(':');
+					var h_amin = parseInt(amin[0], 10), 
+					h_amout = parseInt(amout[0], 10),
+					m_amin = parseInt(amin[1], 10),
+					m_amout = parseInt(amout[1], 10);
+					var amhours = h_amout - h_amin, minsam = 0;
+					if(amhours < 0) amhours = 24 + amhours;
+					if(m_amout >= m_amin) {
+						mins1 = m_amout - m_amin;
+					}
+					else {
+						mins1 = (m_amout + 60) - m_amin;
+						amhours--;
+					}
+					mins1 = mins1 / 60;
+					amhours += mins1;
+					amhours = amhours.toFixed(2);
 
-			}
-			else if (time_inpm == "" && time_outpm == "") {
-				var amtime1 = time_inam.split(':'), amtime2 = time_outam.split(':');
-				var hours1 = parseInt(amtime1[0], 10), 
-				hours2 = parseInt(amtime2[0], 10),
-				mins1 = parseInt(amtime1[1], 10),
-				mins2 = parseInt(amtime2[1], 10);
-				var amhours = hours2 - hours1, mins = 0;
-				if(amhours < 0) amhours = 24 + amhours;
-				if(mins2 >= mins1) {
-					mins = mins2 - mins1;
-				}
-				else {
-					mins = (mins2 + 60) - mins1;
-					amhours--;
-				}
-				mins = mins / 60; 
-				amhours += mins;
-				amhours = amhours.toFixed(2);
-				var newtotal = parseFloat(amhours);
-			}
-			else if (time_inam == "" && time_outam == "") {
-				var amtime1 = time_inpm.split(':'), amtime2 = time_outpm.split(':');
-				var hours1 = parseInt(amtime1[0], 10), 
-				hours2 = parseInt(amtime2[0], 10),
-				mins1 = parseInt(amtime1[1], 10),
-				mins2 = parseInt(amtime2[1], 10);
-				var amhours = hours2 - hours1, mins = 0;
-				if(amhours < 0) amhours = 24 + amhours;
-				if(mins2 >= mins1) {
-					mins = mins2 - mins1;
-				}
-				else {
-					mins = (mins2 + 60) - mins1;
-					amhours--;
-				}
-				mins = mins / 60; 
-				amhours += mins;
-				amhours = amhours.toFixed(2);
-				var newtotal = parseFloat(amhours);
-			}
-			else if (time_inam != "" && time_outam != "" && time_inpm != "" && time_outpm != "")
-			{
-				var amin = time_inam.split(':'), amout = time_outam.split(':');
-				var h_amin = parseInt(amin[0], 10), 
-				h_amout = parseInt(amout[0], 10),
-				m_amin = parseInt(amin[1], 10),
-				m_amout = parseInt(amout[1], 10);
-				var amhours = h_amout - h_amin, minsam = 0;
-				if(amhours < 0) amhours = 24 + amhours;
-				if(m_amout >= m_amin) {
-					mins1 = m_amout - m_amin;
-				}
-				else {
-					mins1 = (m_amout + 60) - m_amin;
-					amhours--;
-				}
-				mins1 = mins1 / 60;
-				amhours += mins1;
-				amhours = amhours.toFixed(2);
+					var pmin = time_inpm.split(':'), pmout = time_outpm.split(':');
+					var h_pmin = parseInt(pmin[0], 10), 
+					h_pmout = parseInt(pmout[0], 10),
+					m_pmin = parseInt(pmin[1], 10),
+					m_pmout = parseInt(pmout[1], 10);
+					var pmhours = h_pmout - h_pmin, minspm = 0;
+					if(pmhours < 0) pmhours = 24 + pmhours;
+					if(m_pmout >= m_pmin) {
+						mins2 = m_pmout - m_pmin;
+					}
+					else {
+						mins2 = (m_pmout + 60) - m_pmin;
+						pmhours--;
+					}
+					mins2 = mins2 / 60; 
+					pmhours += mins2;
+					pmhours = pmhours.toFixed(2);
 
-
-				var pmin = time_inpm.split(':'), pmout = time_outpm.split(':');
-				var h_pmin = parseInt(pmin[0], 10), 
-				h_pmout = parseInt(pmout[0], 10),
-				m_pmin = parseInt(pmin[1], 10),
-				m_pmout = parseInt(pmout[1], 10);
-				var pmhours = h_pmout - h_pmin, minspm = 0;
-				if(pmhours < 0) pmhours = 24 + pmhours;
-				if(m_pmout >= m_pmin) {
-					mins2 = m_pmout - m_pmin;
+					var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
 				}
-				else {
-					mins2 = (m_pmout + 60) - m_pmin;
-					pmhours--;
+
+				var c_rate = $('#cur_rate').val() / 8;
+				if (newtotal > 8) {
+					var dtotal = 8;
 				}
-				mins2 = mins2 / 60; 
-				pmhours += mins2;
-				pmhours = pmhours.toFixed(2);
+				else
+				{
+					var dtotal = newtotal;
+				}
+				var totalPay = dtotal * c_rate;
+				var novertime , totaOtearned
+				if (newtotal > 8) {
+					novertime = newtotal - 8;
+					novertime = novertime * 60;
+					overtimeh = newtotal - 8;
 
-				var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
-			}
+					var otvarrr = (parseFloat(c_rate) * 2.60);
+					totaOtearned = (parseFloat(otvarrr) * parseFloat(overtimeh));
 
-			var c_rate = $('#cur_rate').val() / 8;		//RATE
-
-			if (newtotal > 8) {		//CHECK IF EMPLOYEE HAVE OVERTIME
-				var dtotal = 8;
+				} else {
+					novertime = 0;
+					totaOtearned = 0;
+				}
 			}
 			else
 			{
-				var dtotal = newtotal;
-			}
+				if (time_outam == "" && time_inpm == "") 
+				{
+					var amtime1 = time_inam.split(':'), amtime2 = time_outpm.split(':');
+					var hours1 = parseInt(amtime1[0], 10), 
+					hours2 = parseInt(amtime2[0], 10),
+					mins1 = parseInt(amtime1[1], 10),
+					mins2 = parseInt(amtime2[1], 10);
 
-			var totalPay = dtotal * c_rate;
-			var novertime , totaOtearned , holidayrate
+					var amhours = hours2 - hours1, mins = 0;
+					if(amhours < 0) amhours = 24 + amhours;
+					if(mins2 >= mins1) {
+						mins = mins2 - mins1;
+					}
+					else {
+						mins = (mins2 + 60) - mins1;
+						amhours--;
+					}
 
-			if ($('#regular_day').is(':checked')) {
-				holidayrate = 2.60;
-			}
-			else if ($('#sp_day').is(':checked')) {
-				holidayrate = 1.69;
-			}
-			else {
-				holidayrate = 1.25;
-			}
-			
-			if (newtotal > 8) {
-				novertime = newtotal - 8;
-				novertime = novertime * 60;
-				overtimeh = newtotal - 8;
+					mins = mins / 60; 
 
-				var otvarrr = (parseFloat(c_rate) * holidayrate);
-				totaOtearned = (parseFloat(otvarrr) * parseFloat(overtimeh));
-
-			} else {
-				novertime = 0;
-				totaOtearned = 0;
-			}
-
-			$("#overtime").val(novertime);
-			$("#totalPay").val(totalPay);
-			$("#totalHrs").val(newtotal);
-			$("#otpay").val(totaOtearned);
-
-			if ($("#totalHrs").val() < 0) {
-				Command: toastr["error"]("Error in time checked-in.", "Warning!")
-				toastr.options = {
-					"showDuration": "300",
-					"hideDuration": "1000",
-					"timeOut": "5000",
-					"extendedTimeOut": "1000",
-					"showEasing": "swing",
-					"hideEasing": "linear",
-					"showMethod": "fadeIn",
-					"hideMethod": "fadeOut"
+					amhours += mins;
+					amhours = amhours.toFixed(2);
+					var newtotal = parseFloat(amhours);
 				}
+				else if (time_inpm == "" && time_outpm == "")
+				{
+					var amtime1 = time_inam.split(':'), amtime2 = time_outam.split(':');
+					var hours1 = parseInt(amtime1[0], 10), 
+					hours2 = parseInt(amtime2[0], 10),
+					mins1 = parseInt(amtime1[1], 10),
+					mins2 = parseInt(amtime2[1], 10);
+					var amhours = hours2 - hours1, mins = 0;
+					if(amhours < 0) amhours = 24 + amhours;
+					if(mins2 >= mins1) {
+						mins = mins2 - mins1;
+					}
+					else {
+						mins = (mins2 + 60) - mins1;
+						amhours--;
+					}
+					mins = mins / 60; 
+					amhours += mins;
+					amhours = amhours.toFixed(2);
+					var newtotal = parseFloat(amhours);
+				}
+				else if (time_inam == "" && time_outam == "")
+				{
+					var amtime1 = time_inpm.split(':'), amtime2 = time_outpm.split(':');
+					var hours1 = parseInt(amtime1[0], 10), 
+					hours2 = parseInt(amtime2[0], 10),
+					mins1 = parseInt(amtime1[1], 10),
+					mins2 = parseInt(amtime2[1], 10);
+					var amhours = hours2 - hours1, mins = 0;
+					if(amhours < 0) amhours = 24 + amhours;
+					if(mins2 >= mins1) {
+						mins = mins2 - mins1;
+					}
+					else {
+						mins = (mins2 + 60) - mins1;
+						amhours--;
+					}
+					mins = mins / 60; 
+					amhours += mins;
+					amhours = amhours.toFixed(2);
+					var newtotal = parseFloat(amhours);
+				}
+				else if (time_inam != "" && time_outam != "" && time_inpm != "" && time_outpm != "")
+				{
+					var amin = time_inam.split(':'), amout = time_outam.split(':');
+					var h_amin = parseInt(amin[0], 10), 
+					h_amout = parseInt(amout[0], 10),
+					m_amin = parseInt(amin[1], 10),
+					m_amout = parseInt(amout[1], 10);
+					var amhours = h_amout - h_amin, minsam = 0;
+					if(amhours < 0) amhours = 24 + amhours;
+					if(m_amout >= m_amin) {
+						mins1 = m_amout - m_amin;
+					}
+					else {
+						mins1 = (m_amout + 60) - m_amin;
+						amhours--;
+					}
+					mins1 = mins1 / 60;
+					amhours += mins1;
+					amhours = amhours;
+
+					var pmin = time_inpm.split(':'), pmout = time_outpm.split(':');
+					var h_pmin = parseInt(pmin[0], 10), 
+					h_pmout = parseInt(pmout[0], 10),
+					m_pmin = parseInt(pmin[1], 10),
+					m_pmout = parseInt(pmout[1], 10);
+
+					var pmhours = h_pmout - h_pmin, minspm = 0;
+					if(pmhours < 0) pmhours = 24 + pmhours;
+					if(m_pmout >= m_pmin) {
+						mins2 = m_pmout - m_pmin;
+					}
+					else {
+						mins2 = (m_pmout + 60) - m_pmin;
+						pmhours--;
+					}
+					mins2 = mins2 / 60;
+					pmhours += mins2;
+					pmhours = pmhours;
+
+
+					var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
+				}
+
+				var c_rate = $('#cur_rate').val() / 8;
+
+				var novertime , totaOtearned
+
+				var otavail = '<?php echo $getApplicantDataa['Overtime'];?>';
+				if (otavail == 'Yes') {
+
+					if (newtotal > 8) {
+
+						var dtotal = 8;
+						novertime =  (newtotal * 60) - 480;
+						overtimeh = newtotal - 8;
+
+						var otvarrr = (parseFloat(c_rate) * <?php print $OT_rates->day_shift; ?>);
+						totaOtearned = (parseFloat(otvarrr) * parseFloat(overtimeh));
+
+					} else {
+						var dtotal = newtotal;
+						novertime = 0;
+						totaOtearned = 0;
+					}
+				}
+				else
+				{
+					var dtotal = newtotal;
+					novertime = 0;
+					totaOtearned = 0;
+				}
+
+				var totalPay = dtotal * c_rate;
 			}
+
+			$("#overtime").val(novertime.toFixed(2));
+
+			$("#totalPay").val(totalPay.toFixed(2));
+
+			$("#totalHrs").val(newtotal.toFixed(2));
+
+			$("#otpay").val(totaOtearned.toFixed(2));
 		});
-$(function () {
-	$('[data-toggle="tooltip"]').tooltip()
-});
-$('#submitformslip').on('click', function () {
-	if ($('.checkSelectall').is(':checked')) {
-		var row_id = $('.for_submit').map(function(){ 
-			return this.value; 
-		}).get();
-	}
-	$.ajax({
-		type: 'POST',
-		url: 'generate_payslip',
-		data: {
-			'row_id[]': row_id,
-		},
-		success: function(data) {
-			alert(data);
-		}
-	});
-});
-$('#shift_type').change(function() {
-	if(this.checked) {
-		$(this).prop( "checked",true);
-		$(this).val('day');
-	}
-	else
-	{
-		$(this).prop( "checked",false);
-		$(this).val('night');
-	}
-});
-$('#regular_day').change(function() {
-	if(this.checked) {
-		$(this).prop( "checked",true);
-		$(this).val('yes');
-		$('#sp_day').prop( "checked",false).change();
-		$('#sp_day').val('no');
-	}
-	else
-	{
-		$(this).prop( "checked",false);
-		$(this).val('no');
-	}
-});
-$('#sp_day').change(function() {
-	if(this.checked) {
-		$(this).prop( "checked",true);
-		$(this).val('yes');
-		$('#regular_day').prop( "checked",false).change();
-		$('#regular_day').val('no');
-	}
-	else
-	{
-		$(this).prop( "checked",false);
-		$(this).val('no');
-	}
-});
-$('.checkSelectall').change(function() {
-	if(this.checked) {
-		$(this).addClass("for_submit");
-	}
-	else
-	{
-		$(this).removeClass("for_submit");
-	}
-});
-$('#regular_day').on('change', function () {
-
-	var time_inam = $('#time_inam').val();
-	var time_outam = $('#time_outam').val();
-	var time_inpm = $('#time_inpm').val();
-	var time_outpm = $('#time_outpm').val();
-
-	if(this.checked) {
-		if (time_outam == "" && time_inpm == "") 
-		{
-			var amtime1 = time_inam.split(':'), amtime2 = time_outpm.split(':');
-			var hours1 = parseInt(amtime1[0], 10), 
-			hours2 = parseInt(amtime2[0], 10),
-			mins1 = parseInt(amtime1[1], 10),
-			mins2 = parseInt(amtime2[1], 10);
-			var amhours = hours2 - hours1, mins = 0;
-			if(amhours < 0) amhours = 24 + amhours;
-			if(mins2 >= mins1) {
-				mins = mins2 - mins1;
-			}
-			else {
-				mins = (mins2 + 60) - mins1;
-				amhours--;
-			}
-			mins = mins / 60; 
-			amhours += mins;
-			amhours = amhours.toFixed(2);
-			var newtotal = parseFloat(amhours);
-		}
-		else if (time_inpm == "" && time_outpm == "")
-		{
-			var amtime1 = time_inam.split(':'), amtime2 = time_outam.split(':');
-			var hours1 = parseInt(amtime1[0], 10), 
-			hours2 = parseInt(amtime2[0], 10),
-			mins1 = parseInt(amtime1[1], 10),
-			mins2 = parseInt(amtime2[1], 10);
-			var amhours = hours2 - hours1, mins = 0;
-			if(amhours < 0) amhours = 24 + amhours;
-			if(mins2 >= mins1) {
-				mins = mins2 - mins1;
-			}
-			else {
-				mins = (mins2 + 60) - mins1;
-				amhours--;
-			}
-			mins = mins / 60; 
-			amhours += mins;
-			amhours = amhours.toFixed(2);
-			var newtotal = parseFloat(amhours);
-		}
-		else if (time_inam == "" && time_outam == "")
-		{
-			var amtime1 = time_inpm.split(':'), amtime2 = time_outpm.split(':');
-			var hours1 = parseInt(amtime1[0], 10), 
-			hours2 = parseInt(amtime2[0], 10),
-			mins1 = parseInt(amtime1[1], 10),
-			mins2 = parseInt(amtime2[1], 10);
-			var amhours = hours2 - hours1, mins = 0;
-			if(amhours < 0) amhours = 24 + amhours;
-			if(mins2 >= mins1) {
-				mins = mins2 - mins1;
-			}
-			else {
-				mins = (mins2 + 60) - mins1;
-				amhours--;
-			}
-			mins = mins / 60; 
-			amhours += mins;
-			amhours = amhours.toFixed(2);
-			var newtotal = parseFloat(amhours);
-		}
-		else if (time_inam != "" && time_outam != "" && time_inpm != "" && time_outpm != "")
-		{
-			var amin = time_inam.split(':'), amout = time_outam.split(':');
-			var h_amin = parseInt(amin[0], 10), 
-			h_amout = parseInt(amout[0], 10),
-			m_amin = parseInt(amin[1], 10),
-			m_amout = parseInt(amout[1], 10);
-			var amhours = h_amout - h_amin, minsam = 0;
-			if(amhours < 0) amhours = 24 + amhours;
-			if(m_amout >= m_amin) {
-				mins1 = m_amout - m_amin;
-			}
-			else {
-				mins1 = (m_amout + 60) - m_amin;
-				amhours--;
-			}
-			mins1 = mins1 / 60;
-			amhours += mins1;
-			amhours = amhours.toFixed(2);
-
-			var pmin = time_inpm.split(':'), pmout = time_outpm.split(':');
-			var h_pmin = parseInt(pmin[0], 10), 
-			h_pmout = parseInt(pmout[0], 10),
-			m_pmin = parseInt(pmin[1], 10),
-			m_pmout = parseInt(pmout[1], 10);
-			var pmhours = h_pmout - h_pmin, minspm = 0;
-			if(pmhours < 0) pmhours = 24 + pmhours;
-			if(m_pmout >= m_pmin) {
-				mins2 = m_pmout - m_pmin;
-			}
-			else {
-				mins2 = (m_pmout + 60) - m_pmin;
-				pmhours--;
-			}
-			mins2 = mins2 / 60; 
-			pmhours += mins2;
-			pmhours = pmhours.toFixed(2);
-
-			var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
-		}
-
-		var c_rate = $('#cur_rate').val() / 8;
-		if (newtotal > 8) {
-			var dtotal = 8;
-		}
-		else
-		{
-			var dtotal = newtotal;
-		}
-		var totalPay = dtotal * c_rate;
-		var novertime , totaOtearned
-		if (newtotal > 8) {
-			novertime = newtotal - 8;
-			novertime = novertime * 60;
-			overtimeh = newtotal - 8;
-
-			var otvarrr = (parseFloat(c_rate) * 2.60);
-			totaOtearned = (parseFloat(otvarrr) * parseFloat(overtimeh));
-
-		} else {
-			novertime = 0;
-			totaOtearned = 0;
-		}
-	}
-	else
-	{
-		if (time_outam == "" && time_inpm == "") 
-		{
-			var amtime1 = time_inam.split(':'), amtime2 = time_outpm.split(':');
-			var hours1 = parseInt(amtime1[0], 10), 
-			hours2 = parseInt(amtime2[0], 10),
-			mins1 = parseInt(amtime1[1], 10),
-			mins2 = parseInt(amtime2[1], 10);
-			var amhours = hours2 - hours1, mins = 0;
-			if(amhours < 0) amhours = 24 + amhours;
-			if(mins2 >= mins1) {
-				mins = mins2 - mins1;
-			}
-			else {
-				mins = (mins2 + 60) - mins1;
-				amhours--;
-			}
-			mins = mins / 60; 
-
-			amhours += mins;
-			amhours = amhours.toFixed(2);
-			var newtotal = parseFloat(amhours);
-		}
-		else if (time_inpm == "" && time_outpm == "")
-		{
-			var amtime1 = time_inam.split(':'), amtime2 = time_outam.split(':');
-			var hours1 = parseInt(amtime1[0], 10), 
-			hours2 = parseInt(amtime2[0], 10),
-			mins1 = parseInt(amtime1[1], 10),
-			mins2 = parseInt(amtime2[1], 10);
-			var amhours = hours2 - hours1, mins = 0;
-			if(amhours < 0) amhours = 24 + amhours;
-			if(mins2 >= mins1) {
-				mins = mins2 - mins1;
-			}
-			else {
-				mins = (mins2 + 60) - mins1;
-				amhours--;
-			}
-			mins = mins / 60; 
-			amhours += mins;
-			amhours = amhours.toFixed(2);
-			var newtotal = parseFloat(amhours);
-		}
-		else if (time_inam == "" && time_outam == "")
-		{
-			var amtime1 = time_inpm.split(':'), amtime2 = time_outpm.split(':');
-			var hours1 = parseInt(amtime1[0], 10), 
-			hours2 = parseInt(amtime2[0], 10),
-			mins1 = parseInt(amtime1[1], 10),
-			mins2 = parseInt(amtime2[1], 10);
-			var amhours = hours2 - hours1, mins = 0;
-			if(amhours < 0) amhours = 24 + amhours;
-			if(mins2 >= mins1) {
-				mins = mins2 - mins1;
-			}
-			else {
-				mins = (mins2 + 60) - mins1;
-				amhours--;
-			}
-			mins = mins / 60; 
-			amhours += mins;
-			amhours = amhours.toFixed(2);
-			var newtotal = parseFloat(amhours);
-		}
-		else if (time_inam != "" && time_outam != "" && time_inpm != "" && time_outpm != "")
-		{
-			var amin = time_inam.split(':'), amout = time_outam.split(':');
-			var h_amin = parseInt(amin[0], 10), 
-			h_amout = parseInt(amout[0], 10),
-			m_amin = parseInt(amin[1], 10),
-			m_amout = parseInt(amout[1], 10);
-			var amhours = h_amout - h_amin, minsam = 0;
-			if(amhours < 0) amhours = 24 + amhours;
-			if(m_amout >= m_amin) {
-				mins1 = m_amout - m_amin;
-			}
-			else {
-				mins1 = (m_amout + 60) - m_amin;
-				amhours--;
-			}
-			mins1 = mins1 / 60;
-			amhours += mins1;
-			amhours = amhours.toFixed(2);
-			var pmin = time_inpm.split(':'), pmout = time_outpm.split(':');
-			var h_pmin = parseInt(pmin[0], 10), 
-			h_pmout = parseInt(pmout[0], 10),
-			m_pmin = parseInt(pmin[1], 10),
-			m_pmout = parseInt(pmout[1], 10);
-			var pmhours = h_pmout - h_pmin, minspm = 0;
-			if(pmhours < 0) pmhours = 24 + pmhours;
-			if(m_pmout >= m_pmin) {
-				mins2 = m_pmout - m_pmin;
-			}
-			else {
-				mins2 = (m_pmout + 60) - m_pmin;
-				pmhours--;
-			}
-			mins2 = mins2 / 60; 
-			pmhours += mins2;
-			pmhours = pmhours.toFixed(2);
-			var newtotal = (parseFloat(amhours) + parseFloat(pmhours));
-		}
-
-		var c_rate = $('#cur_rate').val() / 8;
-
-		if (newtotal > 8) {
-			var dtotal = 8;
-		}
-		else
-		{
-			var dtotal = newtotal;
-		}
-		var totalPay = dtotal * c_rate;
-		var novertime , totaOtearned
-		if (newtotal > 8) {
-			novertime = newtotal - 8;
-			novertime = novertime * 60;
-			overtimeh = newtotal - 8;
-
-			var otvarrr = (parseFloat(c_rate) * 1.25);
-			totaOtearned = (parseFloat(otvarrr) * parseFloat(overtimeh));
-
-		} else {
-			novertime = 0;
-			totaOtearned = 0;
-		}
-	}
-
-	$("#overtime").val(novertime);
-	$("#totalPay").val(totalPay);
-	$("#totalHrs").val(newtotal);
-	$("#otpay").val(totaOtearned);
-});
 });
 </script>
 <script type="text/javascript">

@@ -2022,7 +2022,6 @@ class Update_Controller extends CI_Controller {
 			$tmins_am = $diff_am/60;
 			$tmins_pm = $diff_pm/60;
 
-
 			$hours_am = $tmins_am/60;
 			$hours_pm = $tmins_pm/60;
 
@@ -2036,9 +2035,20 @@ class Update_Controller extends CI_Controller {
 			$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
 		}
 
+		$cur_rate = $CheckEmployeeOT->Rate;	### DAY RATE EX: 400
+		$ncrate = $cur_rate / 8; ### EX:	400 / 8 = 50
+
 		if ($otAvailable == 'yes') {
 			if ($total_regpay > 480) {
 				$overtime = ($total_regpay - 480);
+				$Ot_Earned = ($overtime / 60) * $ncrate;
+				if ($shift_type == 'day') {
+					$Ot_Earned = $Ot_Earned * $getOTrates->day_shift;
+				}
+				else
+				{
+					$Ot_Earned = $Ot_Earned * $getOTrates->night_shift;
+				}
 			}
 			else
 			{
@@ -2049,9 +2059,6 @@ class Update_Controller extends CI_Controller {
 		{
 			$overtime = 0;
 		}
-
-		$cur_rate = $CheckEmployeeOT->Rate;	### DAY RATE EX: 400
-		$ncrate = $cur_rate / 8; ### EX:	400 / 8 = 50
 
 		if ($shift_type == 'day') {	### SHIFT DAY OR NIGHT
 			$shift_type = 'day';
@@ -2094,9 +2101,10 @@ class Update_Controller extends CI_Controller {
 			'regular_day' => $regular_day,
 			'sp_day' => $sp_day,
 			'overtime' => $overtime,
+			'Ot_Earned' => bcdiv($Ot_Earned ,1, 2),
 			'row_status' => $row_status,
 			'Note' => $Note,
-			'Day_Earned' => $Day_Earned,
+			'Day_Earned' => bcdiv($Day_Earned ,1, 2),
 		);
 		$UpdateArecord = $this->Model_Updates->UpdateArecord($date_id,$data);
 		if ($UpdateArecord == 'success') {

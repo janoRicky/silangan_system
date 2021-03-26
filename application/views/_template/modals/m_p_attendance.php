@@ -24,7 +24,7 @@
       <div class="modal-body">
         <div class="form-row p-4">
           <div class="form-group text-center col-12">
-            <h4 id="dateTitle" class="mb-5">
+            <h4 id="dateTitle" class="mb-3">
               Checked-in
             </h4>
             <!------------------ INPUT ------------------>
@@ -76,6 +76,7 @@
             </div>
           </div>
         </div>
+        
         <div class="form-row mt-4">
           <div class="form-group col-2 text-center ml-auto">
             <label for="">Rate</label>
@@ -98,8 +99,15 @@
             <input id="otpay" type="text" class="form-control text-center" readonly="">
           </div>
         </div>
+        <div class="col-10 ml-auto mr-auto mt-3" style="border-top: 5px solid #CC3D3D; border-radius: 100%;">
+        </div>
         <div class="form-row mt-4">
-          <div class="form-group m-auto col-11">
+          <div class="form-group m-auto col-10 text-center">
+            <h6>
+              Notes
+            </h6>
+          </div>
+          <div class="form-group m-auto col-10">
             <!------------------ INPUT ------------------>
             <textarea id="record_note" class="form-control" rows="7" name="note"></textarea>
           </div>

@@ -1512,6 +1512,7 @@ class Main_Controller extends CI_Controller {
 		if ($GetDateAttendance->num_rows() > 0) {
 			$data['GetDateAttendance'] = $GetDateAttendance;
 			$data['getApplicantDataa'] = $getApplicantDataaRow->row_array();
+			$data['OT_rates'] = $this->Model_Selects->getOTrates();
 
 			$this->load->view('payroll/p_attendance',$data);
 		}
@@ -1677,11 +1678,11 @@ class Main_Controller extends CI_Controller {
 				'regular_day' => $row->regular_day,
 				'sp_day' => $row->sp_day,
 				'cur_rate' => $cur_rate,
-				'totalHrs' => $sumbyHRS,
+				'totalHrs' => bcdiv($sumbyHRS,1,2),
 				'overtime' => $row->overtime,
-				'totalPay' => number_format($totalPay,2),
-				'ot_earned' => number_format($ot_earned,2),
-				'otAvailable' => number_format($ot_earned,2),
+				'totalPay' => bcdiv($row->Day_Earned,1,2),
+				'ot_earned' => bcdiv($ot_earned,1,2),
+				'otAvailable' => bcdiv($ot_earned,1,2),
 
 			);
 		}
