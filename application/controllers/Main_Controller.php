@@ -1682,7 +1682,6 @@ class Main_Controller extends CI_Controller {
 				'overtime' => $row->overtime,
 				'totalPay' => bcdiv($row->Day_Earned,1,2),
 				'ot_earned' => bcdiv($ot_earned,1,2),
-				'otAvailable' => bcdiv($ot_earned,1,2),
 
 			);
 		}

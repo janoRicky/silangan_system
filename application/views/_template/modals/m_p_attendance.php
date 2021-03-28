@@ -99,7 +99,7 @@
             <input id="otpay" type="text" class="form-control text-center" readonly="">
           </div>
         </div>
-        <div class="col-10 ml-auto mr-auto mt-3" style="border-top: 5px solid #CC3D3D; border-radius: 100%;">
+        <div class="col-10 ml-auto mr-auto mt-3" style="border-top: 5px solid #4E4E4E;">
         </div>
         <div class="form-row mt-4">
           <div class="form-group m-auto col-10 text-center">
