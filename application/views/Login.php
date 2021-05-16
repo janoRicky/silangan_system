@@ -12,13 +12,8 @@
 
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/all.css">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-	<!-- FONTAWESOME -->
-	<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css" integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/regular.css" integrity="sha384-IG162Tfx2WTn//TRUi9ahZHsz47lNKzYOp0b6Vv8qltVlPkub2yj9TVwzNck6GEF" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous"> -->
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<link href="<?=base_url()?>assets/css/toastr.min.css" rel="stylesheet"/>
 
 	<style type="text/css">
 		html , body
@@ -28,7 +23,7 @@
 			margin: 0px;
 			background-color: #2A2A2A;
 		}
-		.f-opensans { font-family: 'Open Sans', sans-serif; }
+		.f-opensans { font-family: 'Roboto', sans-serif; }
 		.header
 		{
 			height: 20%;
@@ -50,7 +45,7 @@
 			-moz-box-shadow: 0px 0px 57px -9px rgba(0,0,0,0.34);
 			box-shadow: 0px 0px 57px -9px rgba(0,0,0,0.34);
 		}
-		.l-spacing09 { letter-spacing: 0.9px !important; }
+		.l-spacing09 { letter-spacing: 0.7px !important; }
 	</style>
 </head>
 <body>
@@ -64,15 +59,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12 col-md-10 col-lg-4 m-auto">
-					<div class="login-container p-5" style="z-index: 1;">
+
+					<div class="login-container" style="z-index: 1; padding: 2rem;">
 						<?php echo form_open(base_url().'LoginValidation','method="post"'); ?>
-						<!-- <div class="text-center mb-3">
-							<img src="https://scontent.fmnl9-1.fna.fbcdn.net/v/t1.0-9/13240629_242086709504627_6587238279405995147_n.jpg?_nc_cat=111&_nc_eui2=AeFIkegEnuFMZPmHGeqO-6uIG-rM1RZ5XD-LNf9UTUgJmn0v1GaIwczrIaQhaOx612Te_DTWS27mrMXaP9PA5cLpK8kq-b9p50v730jmKNf0AqIIRSow2qCKyf0fw6FzNHY&_nc_oc=AQkTOQ3cESjy4W8r09IC7PA9h5THnvCINqcdQc5TM6tFP_vT2ZcGHt00ZXrKc8umZbs&_nc_ht=scontent.fmnl9-1.fna&oh=2d4b6f1485ef1087abad0bdee3661e2d&oe=5E22AE3E" alt="LOGO" width="100">
-						</div> -->
 						<div class="text-center mb-5 mt-4">
 							<img src="assets/img/silangan_lumber-250px.png" style="width: 100%;">
 						</div>
-						<?php echo $this->session->flashdata('prompts_login');?>
 						<div class="form-row">
 							<div class="form-group w-100">
 								<label><i class="fas fa-users fa-fw"></i> <span class="l-spacing09 f-opensans">Username</span></label>
@@ -87,31 +79,85 @@
 						</div>
 						<div class="form-row">
 							<div class="form-group w-100">
-								<!-- <button type="submit" class="btn btn-primary w-100"> Sign-in </button> -->
 								<button type="submit" class="btn btn-primary w-100"><i class="fas fa-sign-in-alt fa-fw"></i> <span class="l-spacing09 f-opensans">Login</span> </button>
 							</div>
-							<!-- <div class="form-group w-100">
-								<button class="btn btn-secondary w-100"> Sign-up </button>
-							</div> -->
 						</div>
-						<!-- <div class="form-row">
-							<div class="form-group w-100 text-center">
-								<a class="btn btn-link" href="#">Forgot password?</a>
-							</div>
-						</div> -->
+						
 						<?php echo form_close(); ?>
 					</div>
+					<?php echo $this->session->flashdata('prompts_login');?>
 				</div>
 			</div>
 		</div>
-		<!-- <div class="footer">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position: relative;z-index: -1 !important;"><path fill="#0099ff" fill-opacity="1" d="M0,320L288,64L576,128L864,192L1152,224L1440,256L1440,320L1152,320L864,320L576,320L288,320L0,320Z"></path></svg>
-		</div> -->
 	</div>
 	
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="<?=base_url()?>assets/js/toastr.min.js"></script>
+<script type="text/javascript">
+	<?php if ($this->session->flashdata('alert_error') == 'cred_error') { ?>
+		toastr.options = {
+			"closeButton": false,
+			"debug": false,
+			"newestOnTop": false,
+			"progressBar": false,
+			"positionClass": "toast-top-full-width",
+			"preventDuplicates": false,
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "5000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		}
+		toastr.error('Incorrect username or password!');
+
+	<?php } elseif ($this->session->flashdata('alert_error') == 'blank_error') { ?>
+		toastr.options = {
+			"closeButton": false,
+			"debug": false,
+			"newestOnTop": false,
+			"progressBar": false,
+			"positionClass": "toast-bottom-left",
+			"preventDuplicates": false,
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "5000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		}
+		toastr.error('Enter username and password!');
+		
+	<?php } elseif ($this->session->flashdata('alert_error') == 'no_user') { ?>
+		toastr.options = {
+			"closeButton": false,
+			"debug": false,
+			"newestOnTop": false,
+			"progressBar": false,
+			"positionClass": "toast-top-full-width",
+			"preventDuplicates": false,
+			"onclick": null,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeOut": "5000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		}
+		toastr.error('User doesn\'t exist. Please try again!');
+		
+	<?php } ?>
+</script>
 <noscript>JavaScript disabled. Enable JavaScript</noscript>
 </html>

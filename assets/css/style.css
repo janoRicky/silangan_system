@@ -740,6 +740,7 @@ a[data-toggle="collapse"] {
 .NightPremium {
 	display: none;
 }
+.btn { border-radius: 0px; }
 /*
 .sidebar-button-active {
 	width: 40px;
@@ -870,6 +871,7 @@ input[type=number]::-webkit-inner-spin-button {
 		height: 150px;
 	}
 }
+
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
