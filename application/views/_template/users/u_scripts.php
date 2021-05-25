@@ -35,3 +35,11 @@
 <!-- CUSTOM LIBRARIES -->
 <!-- <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
 <script src="<?=base_url()?>assets/js/bootstrap4-toggle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	   $('#notif-bells').click(function() {
+			$('#notif-panel').toggle('fast');
+		});
+	});
+</script>

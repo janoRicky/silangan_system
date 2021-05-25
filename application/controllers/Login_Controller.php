@@ -50,6 +50,7 @@ class Login_Controller extends CI_Controller {
 				{
 					$p_text = 'cred_error';
 					$this->session->set_flashdata('alert_error',$p_text);
+					redirect(base_url());
 				}
 			}
 			else

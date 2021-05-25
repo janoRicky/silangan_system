@@ -329,6 +329,9 @@ class Main_Controller extends CI_Controller {
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
+
 		$this->load->view('users/u_applicant',$data);
 
 	}
@@ -356,6 +359,8 @@ class Main_Controller extends CI_Controller {
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_applicantexpired',$data);
 	}
 	public function V_Archived()
@@ -382,6 +387,8 @@ class Main_Controller extends CI_Controller {
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['GetArchived'] = $this->Model_Selects->GetApplicantArchived();
 		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_archived',$data);
 	}
 	public function V_Blacklisted()
@@ -408,6 +415,8 @@ class Main_Controller extends CI_Controller {
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['GetBlacklisted'] = $this->Model_Selects->GetApplicantBlacklisted();
 		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_blacklisted',$data);
 	}
 	public function Employee()
@@ -433,6 +442,8 @@ class Main_Controller extends CI_Controller {
 		$data['get_applicant'] = $this->Model_Selects->getApplicant();
 		$data['get_ApplicantExpired'] = $this->Model_Selects->getApplicantExpired();
 		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_users',$data);
 	}
 
@@ -456,6 +467,8 @@ class Main_Controller extends CI_Controller {
 		</ol>
 		</nav>';
 		$data['get_ssstable'] = $this->Model_Selects->sss_Contri();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_ssstable',$data);
 	}
 	public function hdmf_table()
@@ -478,6 +491,8 @@ class Main_Controller extends CI_Controller {
 		</ol>
 		</nav>';
 		$data['get_hdmftable'] = $this->Model_Selects->hdmf_Contri();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_hdmftable',$data);
 	}
 	public function philhealth_table()
@@ -500,6 +515,8 @@ class Main_Controller extends CI_Controller {
 		</ol>
 		</nav>';
 		$data['get_philhealthtable'] = $this->Model_Selects->philhealth_Contri();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_philhealthtable',$data);
 	}
 	public function tax_table()
@@ -522,6 +539,8 @@ class Main_Controller extends CI_Controller {
 		</ol>
 		</nav>';
 		$data['get_taxtable'] = $this->Model_Selects->tax_Contri();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_taxtable',$data);
 	}
 
@@ -628,6 +647,8 @@ class Main_Controller extends CI_Controller {
 				$data['GetDocuments'] = $this->Model_Selects->GetDocuments($ApplicantID);
 				$data['GetDocumentsViolations'] = $this->Model_Selects->GetDocumentsViolations($ApplicantID);
 				$data['GetDocumentsNotes'] = $this->Model_Selects->GetDocumentsNotes($ApplicantID);
+				// LOGBOOK
+				$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 				// if ($data['Status'] == 'Employed') {
 				// 	$data['Breadcrumb'] = '
 				// 	<nav aria-label="breadcrumb">
@@ -753,6 +774,8 @@ class Main_Controller extends CI_Controller {
 				$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
 				$data['ShowBranches'] = $this->Model_Selects->GetBranches();
 				$data['GetContractHistory'] = $this->Model_Selects->GetContractHistory($ApplicantID);
+				// LOGBOOK
+				$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 				if ($data['Status'] == 'Employed') {
 					$data['Breadcrumb'] = '
 					<nav aria-label="breadcrumb">
@@ -805,6 +828,8 @@ class Main_Controller extends CI_Controller {
 		<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="NewEmployee">New</a></li>
 		</ol>
 		</nav>';
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_addemployee',$data);
 	}
 	public function View_Admins()
@@ -828,6 +853,8 @@ class Main_Controller extends CI_Controller {
 		</nav>';
 		$data['ShowAdmin'] = $this->Model_Selects->GetAdmin();
 		$data['getBranchOption'] = $this->Model_Selects->getBranchOption();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_admins',$data);
 	}
 	// public function Branches()
@@ -869,6 +896,8 @@ class Main_Controller extends CI_Controller {
 		</ol>
 		</nav>';
 		$data['ShowEmployers'] = $this->Model_Selects->GetEmployers();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_employers',$data);
 	}
 	public function ModifyEmployer()
@@ -910,7 +939,8 @@ class Main_Controller extends CI_Controller {
 				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
 				</ol>
 				</nav>';
-
+				// LOGBOOK
+				$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 				$this->load->view('users/u_modifyemployer',$data);
 			}
 			else
@@ -967,7 +997,8 @@ class Main_Controller extends CI_Controller {
 				<li class="breadcrumb-item" aria-current="page"><a class="silangan-breadcrumb-active" href="">Edit</a></li>
 				</ol>
 				</nav>';
-
+				// LOGBOOK
+				$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 				$this->load->view('users/u_modifybranch',$data);
 			}
 			else
@@ -1001,6 +1032,8 @@ class Main_Controller extends CI_Controller {
 		</nav>';
 		$data['ShowBranches'] = $this->Model_Selects->GetBranches();
 		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('payroll/p_branches',$data);
 	}
 	public function Payrollsss()
@@ -1046,6 +1079,8 @@ class Main_Controller extends CI_Controller {
 
 		// $data['ShowBranchs'] = $this->Model_Selects->GetBranchs();
 		$data['GetLogbookLatestHires'] =  $this->Model_Selects->GetLogbookLatestHires();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$data["Mode"]=$_GET['Mode'];
 		$this->load->view('payroll/p_payrolls',$data);
 	}
@@ -1084,6 +1119,8 @@ class Main_Controller extends CI_Controller {
 			</ol>
 			</nav>';
 			##### $this->load->view('payroll/p_viewBranch',$data);
+			#// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 			$this->load->view('payroll/p_viewbranch',$data);
 
 		}
@@ -1112,6 +1149,8 @@ class Main_Controller extends CI_Controller {
 		</ol>
 		</nav>';
 		$this->load->library('simplexlsx');
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_experimental',$data);
 	}
 
@@ -1513,7 +1552,8 @@ class Main_Controller extends CI_Controller {
 			$data['GetDateAttendance'] = $GetDateAttendance;
 			$data['getApplicantDataa'] = $getApplicantDataaRow->row_array();
 			$data['OT_rates'] = $this->Model_Selects->getOTrates();
-
+			// LOGBOOK
+			$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 			$this->load->view('payroll/p_attendance',$data);
 		}
 		else
@@ -1709,6 +1749,8 @@ class Main_Controller extends CI_Controller {
 		</ol>
 		</nav>';
 		$data['get_drates'] = $this->Model_Selects->get_drates();
+		// LOGBOOK
+		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
 		$this->load->view('users/u_dayrates',$data);
 		
 	}

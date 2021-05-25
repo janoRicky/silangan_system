@@ -59,9 +59,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12 col-md-10 col-lg-4 m-auto">
-
+					<?php echo form_open(base_url().'LoginValidation','method="post"'); ?>
 					<div class="login-container" style="z-index: 1; padding: 2rem;">
-						<?php echo form_open(base_url().'LoginValidation','method="post"'); ?>
 						<div class="text-center mb-5 mt-4">
 							<img src="assets/img/silangan_lumber-250px.png" style="width: 100%;">
 						</div>
@@ -103,7 +102,7 @@
 			"debug": false,
 			"newestOnTop": false,
 			"progressBar": false,
-			"positionClass": "toast-top-full-width",
+			"positionClass": "toast-bottom-full-width",
 			"preventDuplicates": false,
 			"onclick": null,
 			"showDuration": "300",
@@ -123,7 +122,7 @@
 			"debug": false,
 			"newestOnTop": false,
 			"progressBar": false,
-			"positionClass": "toast-bottom-left",
+			"positionClass": "toast-bottom-full-width",
 			"preventDuplicates": false,
 			"onclick": null,
 			"showDuration": "300",
@@ -143,7 +142,7 @@
 			"debug": false,
 			"newestOnTop": false,
 			"progressBar": false,
-			"positionClass": "toast-top-full-width",
+			"positionClass": "toast-bottom-full-width",
 			"preventDuplicates": false,
 			"onclick": null,
 			"showDuration": "300",

@@ -1859,7 +1859,6 @@ class Update_Controller extends CI_Controller {
 							'shift_type' => $shift_type,
 							'regular_day' => 'no',
 							'sp_day' => 'no',
-							'nh_day' => 'no',
 							'overtime' => $overtime,
 
 							'Day_Earned' => $Day_Earned,
@@ -1896,7 +1895,6 @@ class Update_Controller extends CI_Controller {
 							// days option
 							'regular_day' => 'no',
 							'sp_day' => 'no',
-							'nh_day' => 'no',
 							'overtime' => $overtime,
 
 							'Day_Earned' => $Day_Earned,
