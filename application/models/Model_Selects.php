@@ -724,10 +724,22 @@ class Model_Selects extends CI_Model {
 	}
 
 	// DEVICE ATTENDANCE
+	public function getDevAtt()
+	{
+		$SQL = "SELECT * FROM device_attendance ORDER BY Date ASC";
+		$result = $this->db->query($SQL);
+		return $result;
+	}
 	public function getMaxAID()
 	{
 		$SQL = "SELECT MAX(AID) AS max FROM device_attendance";
 		$result = $this->db->query($SQL)->row_array();
+		return $result;
+	}
+	public function getApplicantID($id)
+	{
+		$SQL = "SELECT * FROM applicants WHERE ApplicantID LIKE '$id'";
+		$result = $this->db->query($SQL);
 		return $result;
 	}
 }

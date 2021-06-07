@@ -186,11 +186,11 @@
 
 						<div class="col-1 ml-auto chart-hover-settings" style="margin-top: -30px; display: none;">
 							<button type="button" class="btn btn-primary btn-sm"><i class="fas fa-cog" style="margin-right: -1px;"></i></button>
+
 						</div>
 
 						<canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
 					</div>
-					
 				</div>
 			</div>
 		</div>

@@ -2155,6 +2155,9 @@ class Update_Controller extends CI_Controller {
 		$port = $this->input->get('port');
 
 		if ($ip != NULL && $port != NULL) {
+
+			// import from device
+
 			$zk = new ZKLibrary($ip, $port);
 			$zk->connect();
 			$zk->disableDevice();
@@ -2164,10 +2167,12 @@ class Update_Controller extends CI_Controller {
 			foreach ($att as $row) {
 				// if AID already exists don't add it
 				if ($row["aid"] > $maxAID['max']) {
+					$dateTime = explode(" ", $row["timestamp"]);
 					$data = array(
 						"AID" => $row["aid"], 
 						"UID" => $row["uid"], 
-						"DateTime" => $row["timestamp"], 
+						"Date" => $dateTime[0], 
+						"Time" => $dateTime[1], 
 						"VerState" => $row["v_state"]
 					);
 					$this->Model_Inserts->InsertDeviceAtt($data);
@@ -2176,13 +2181,291 @@ class Update_Controller extends CI_Controller {
 
 			$zk->enableDevice();
 			$zk->disconnect();
-
-			redirect($_SERVER['HTTP_REFERER']);
 		}
 		else
 		{
 			$this->session->set_flashdata('prompts','Please input valid value!');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
+
+		// sort imported attendance
+
+		$att = array();
+		$GetAtt = $this->Model_Selects->getDevAtt();
+		foreach ($GetAtt->result_array() as $row) {
+			$att[$row["UID"]]["DateTime"][$row["Date"]][$row["Time"]] = $row["VerState"];
+		}
+
+		$reports = array();
+		$rIndex = 0;
+
+		ksort($att); // sort by UID
+
+		foreach ($att as $uid => $row) {
+
+			ksort($att[$uid]["DateTime"]); // sort by Date
+
+			$date = array_key_first($row["DateTime"]);
+			
+			foreach ($row["DateTime"] as $date => $times) {
+
+				if (count($row["DateTime"][$date]) > 1) {
+					ksort($row["DateTime"][$date]); // sort by Time
+
+					$first_in = NULL;
+					$first_out = NULL;
+					$second_in = NULL;
+					$second_out = NULL;
+
+					$reports[$rIndex][0] = $uid;
+					$reports[$rIndex][1] = $date;
+
+					$min_time = min(array_keys(array_map(function($val) {return ($val == 0);}, $row["DateTime"][$date])));
+					$max_time = max(array_keys(array_map(function($val) {return ($val == 1);}, $row["DateTime"][$date])));
+					
+					if ($min_time > "12:00:00") {
+						// 0 0 1 1
+						$second_in = $min_time;
+						$second_out = $max_time;
+					} elseif ($max_time < "13:00:00") {
+						// 1 1 0 0
+						$first_in = $min_time;
+						$first_out = $max_time;
+					} elseif ($min_time < "12:00:00" && $max_time > "13:00:00") {
+						// 1 0 0 1
+						$first_in = $min_time;
+						$second_out = $max_time;
+						foreach ($row["DateTime"][$date] as $time => $state) {
+							// 1 1 1 1
+							if ($time < "13:00:00" && $state == 1) {
+								$first_out = $time;
+							} elseif ($time > "12:00:00" && $state == 0 && $second_in == NULL) {
+								$second_in = $time;
+							}
+						}
+					}
+
+					$reports[$rIndex][2] = $first_in;
+					$reports[$rIndex][3] = $first_out;
+					$reports[$rIndex][4] = $second_in;
+					$reports[$rIndex][5] = $second_out;
+
+					$rIndex++;
+				}
+			}
+		}
+
+		print_r($reports);
+
+		// insert to device attendance to the attendance table
+
+		foreach($reports as $row) {
+			$appplicant = $this->Model_Selects->getApplicantID($row[0]);
+			
+			if ($row[0] <= 0 || $appplicant->num_rows() <= 0) continue;
+
+			$aInfo = $this->Model_Selects->GetApplicantDet($row[0])->row_array();
+			$name = $aInfo["LastName"] .", ". $aInfo["FirstName"] ." ". $aInfo["MiddleInitial"] .".";
+			$branch = $aInfo["BranchEmployed"];
+
+			$data = array(
+				'ApplicantID' => $row[0],
+				'Date_Time' => $row[1],
+			);
+
+			$CheckDataImported = $this->Model_Selects->CheckDataImported($data);
+
+			$am_in = $row[2];
+			$am_out = $row[3];
+			$pm_in = $row[4];
+			$pm_out = $row[5];
+
+			if ($am_in != NULL AND $am_out == NULL AND $pm_in == NULL AND $pm_out != NULL) {		## NO BREAK BETWEEN AM IN AND PM OUT
+
+				// 1 0 0 1
+				$totaldiff = abs(strtotime($am_in) - strtotime($pm_out));
+				$mins = $totaldiff/60;	## total mins
+				$totalhours = $mins/60;	## total hours
+				$remmins = $mins%60;	## total remainder
+				$total_regpay = $mins;
+
+				$nam_in = str_pad($am_in,5,"0",STR_PAD_LEFT);
+				$nam_out = NULL;
+				$npm_in = NULL;
+				$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
+
+				$row_status = 0; // NEED UPDATES
+
+			}
+			elseif ($am_in == NULL AND $am_out == NULL AND $pm_in != NULL AND $pm_out != NULL) {		## HALFDAY PM
+				$totaldiff = abs(strtotime($pm_in) - strtotime($pm_out));
+
+				// 0 0 1 1
+				$mins = $totaldiff/60;	## total mins
+				$totalhours = $mins/60;	## total hours
+				$remmins = $mins%60;	## total remainder
+				$total_regpay = $mins;
+
+				$nam_in = NULL;
+				$nam_out = NULL;
+				$npm_in = str_pad($pm_in,5,"0",STR_PAD_LEFT);
+				$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
+
+				$row_status = 0; // NEED UPDATES
+			}
+			elseif ($am_in != NULL AND $am_out != NULL AND $pm_in == NULL AND $pm_out == NULL) {		## HALFDAY AM
+				$totaldiff = abs(strtotime($am_in) - strtotime($am_out));
+
+				// 1 1 0 0
+				$mins = $totaldiff/60;	## total mins
+				$totalhours = $mins/60;	## total hours
+				$remmins = $mins%60;	## total remainder
+				$total_regpay = $mins;
+				$nam_in = str_pad($am_in,5,"0",STR_PAD_LEFT);
+				$nam_out = str_pad($am_out,5,"0",STR_PAD_LEFT);
+				$npm_in = NULL;
+				$npm_out = NULL;
+
+				$row_status = 0; // NEED UPDATES
+			}
+			elseif ($am_in == null || $am_out == null || $pm_in == null || $pm_out == null) {		## ABSENT AM AND PM BLANK
+
+				// 0 0 0 0
+				$total_regpay = null;
+				$nam_in = null;
+				$nam_out = null;
+				$npm_in = NULL;
+				$npm_out = NULL;
+
+				$row_status = 2; // ABSENT
+			}
+			elseif ($am_in != null || $am_out != null || $pm_in != null || $pm_out != null)
+			{
+
+				// 1 1 1 1
+				$diff_am = abs(strtotime($am_in) - strtotime($am_out));
+				$diff_pm = abs(strtotime($pm_in) - strtotime($pm_out));
+
+				$tmins_am = $diff_am/60;
+				$tmins_pm = $diff_pm/60;
+
+
+				$hours_am = $tmins_am/60;
+				$hours_pm = $tmins_pm/60;
+
+				$mins_am = $tmins_am%60;
+				$mins_pm = $tmins_pm%60;
+
+				$total_regpay =$tmins_am + $tmins_pm;
+				$nam_in = str_pad($am_in,5,"0",STR_PAD_LEFT);
+				$nam_out = str_pad($am_out,5,"0",STR_PAD_LEFT);
+				$npm_in = str_pad($pm_in,5,"0",STR_PAD_LEFT);
+				$npm_out = str_pad($pm_out,5,"0",STR_PAD_LEFT);
+
+				$row_status = 0; // NEED UPDATES
+			}
+			// if ($row[12] == null) {
+			// 	$note = 'No existing note.';
+			// }
+			// else
+			// {
+			// 	$note = $row[12];
+			// }
+			if (isset($am_in)) {
+				$shift_type = 'day';
+			}
+			else
+			{
+				$shift_type = 'night';
+			}
+			if ($total_regpay > 480) {
+				$overtime = ($total_regpay - 480);
+				$total_regpay = 480;
+
+				$Current_Rate = 400 / 8;
+				$overtime_H = $overtime / 60;
+				$Ot_Earned = ($Current_Rate * $overtime_H) *  1.25; 
+
+				$Day_Earned = ($total_regpay / 60 ) * $Current_Rate;
+			}
+			else
+			{
+				$Current_Rate = 400 / 8;
+				$overtime = 0;
+				$total_regpay = $total_regpay;
+				$Ot_Earned = 0;
+				$Day_Earned = ($total_regpay / 60 ) * $Current_Rate;
+			}
+
+			if ($CheckDataImported->num_rows() > 0) {
+
+				$ApplicantID = $row[0];
+				$Date_Time = $row[1];
+
+				$data = array(
+					'Name' => $name, // no name on device att
+					'BranchID' => $branch, // no branch ID on device att
+					'Timein_AM' => $nam_in,
+					'Timeout_AM' => $nam_out,
+					'Timein_PM' => $npm_in,
+					'Timeout_PM' => $npm_out,
+					'Late_Time' => NULL, // no late time on device att
+					'Leave_Early' => NULL, // no leave early on device att
+					'Absence_Time' => NULL, // no absence time on device att
+					'Total_BYmin' => $total_regpay,
+					'Note' => NULL,  // no note on device att
+
+					'shift_type' => $shift_type,
+					'regular_day' => 'no',
+					'sp_day' => 'no',
+					'nh_day' => 'no',
+					'overtime' => $overtime,
+
+					'Day_Earned' => $Day_Earned,
+					'Ot_Earned' => $Ot_Earned,
+
+					'row_status' => $row_status,
+
+				);
+
+				$UpdateDatafromBio = $this->Model_Inserts->UpdateDatafromBio($ApplicantID,$Date_Time,$data);
+			}
+			else
+			{
+				$data = array(
+					'ApplicantID' => $row[0],
+					'Name' => $name, // no name on device att
+					'BranchID' => $branch, // no branch ID on device att
+					'Date_Time' => $row[1],
+
+					'Timein_AM' => $nam_in,
+					'Timeout_AM' => $nam_out,
+					'Timein_PM' => $npm_in,
+					'Timeout_PM' => $npm_out,
+
+					'Late_Time' => NULL, // no late time on device att
+					'Leave_Early' => NULL, // no leave early on device att
+					'Absence_Time' => NULL, // no absence time on device att
+					'Total_BYmin' => $total_regpay,
+					'Note' => NULL,  // no note on device att
+
+					'shift_type' => $shift_type,
+					// days option
+					'regular_day' => 'no',
+					'sp_day' => 'no',
+					'nh_day' => 'no',
+					'overtime' => $overtime,
+
+					'Day_Earned' => $Day_Earned,
+					'Ot_Earned' => $Ot_Earned,
+
+					'row_status' => 0,
+				);
+				$InsertDatafromBio = $this->Model_Inserts->InsertDatafromBio($data);
+			}
+		}
+
+		redirect($_SERVER['HTTP_REFERER']);
+		
 	}
 }

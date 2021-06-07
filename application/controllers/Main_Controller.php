@@ -175,6 +175,7 @@ class Main_Controller extends CI_Controller {
 		$data['result_cBranches'] =  $this->Model_Selects->GetBranches();
 		// LOGBOOK
 		$data['GetLogbook'] =  $this->Model_Selects->GetLogbook();
+		
 		// COUNT MONTHLY TOTAl
 		$CurrentYear = date('Y');
 		$Year = $CurrentYear;

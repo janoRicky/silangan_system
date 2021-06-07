@@ -12,6 +12,7 @@
 						</h4>
 					</div>
 					<div class="col-8 col-sm-8 col-md-8 text-right">
+						<button data-dismiss="modal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ImportDeviceAttModal"><i class="fas fa-plus"></i> Import Device Attendance</button>
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExportModal"><i class="fas fa-download"></i> Export</button>
 					</div>
 					<div class="col-sm-12">
@@ -96,6 +97,7 @@
 	</div>
 	<!-- MODALS -->
 	<?php $this->load->view('_template/modals/m_p_branchview'); ?>
+	<?php $this->load->view('_template/modals/m_importdeviceatt'); ?>
 	<!-- LOAD MODAL -->
 	<div class="modal fade" id="LoadModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog" role="document">

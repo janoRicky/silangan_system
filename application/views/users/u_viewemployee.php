@@ -527,14 +527,13 @@
 															<?php
 															// TODO: Find a better solution than this.
 															$found = false;
-															foreach ($get_employee->result_array() as $row) {
-																foreach ($getBranchOption->result_array() as $nrow) {
-																	if ($row['BranchEmployed'] == $nrow['BranchID'] && $found == false) {
-																		$found = true;
-																		echo $nrow['Name'];
-																	}
+															foreach ($getBranchOption->result_array() as $nrow) {
+																if ($BranchEmployed == $nrow['BranchID'] && $found == false) {
+																	$found = true;
+																	echo $nrow['Name'];
 																}
-															}?>
+															}
+															?>
 														</h5>
 														<p class="card-text">
 															<div class="col-sm-12 employee-static-item text-center mt-3">
@@ -545,14 +544,13 @@
 																	<?php
 																	// TODO: Find a better solution than this.
 																	$found = false;
-																	foreach ($get_employee->result_array() as $row) {
-																		foreach ($getBranchOption->result_array() as $nrow) {
-																			if ($row['BranchEmployed'] == $nrow['BranchID'] && $found == false) {
-																				$found = true;
-																				echo $nrow['ContactNumber'];
-																			}
+																	foreach ($getBranchOption->result_array() as $nrow) {
+																		if ($BranchEmployed == $nrow['BranchID'] && $found == false) {
+																			$found = true;
+																			echo $nrow['ContactNumber'];
 																		}
-																	}?>
+																	}
+																	?>
 																</div>
 															</div>
 															<div class="col-sm-12 employee-static-item text-center">
@@ -563,14 +561,13 @@
 																	<?php
 																	// TODO: Find a better solution than this.
 																	$found = false;
-																	foreach ($get_employee->result_array() as $row) {
-																		foreach ($getBranchOption->result_array() as $nrow) {
-																			if ($row['BranchEmployed'] == $nrow['BranchID'] && $found == false) {
-																				$found = true;
-																				echo $nrow['Address'];
-																			}
+																	foreach ($getBranchOption->result_array() as $nrow) {
+																		if ($BranchEmployed == $nrow['BranchID'] && $found == false) {
+																			$found = true;
+																			echo $nrow['Address'];
 																		}
-																	}?>
+																	}
+																	?>
 																</div>
 															</div>
 														</p>
