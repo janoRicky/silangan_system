@@ -633,6 +633,11 @@ class Main_Controller extends CI_Controller {
 					'ReminderDate' => $ged['ReminderDate'],
 					'ReminderDateString' => $ged['ReminderDateString'],
 
+					'BioID' => $ged['BioID'],
+					'TimeIn1' => $ged['TimeIn1'],
+					'TimeOut1' => $ged['TimeOut1'],
+					'TimeIn2' => $ged['TimeIn2'],
+					'TimeOut2' => $ged['TimeOut2'],
 				);
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetBeneficiaries'] = $this->Model_Selects->GetEmployeeBeneficiaries($ApplicantID);
@@ -765,6 +770,11 @@ class Main_Controller extends CI_Controller {
 					'DateEnds' => $ged['DateEnds'],
 					'AppliedOn' => $ged['AppliedOn'],
 
+					'BioID' => $ged['BioID'],
+					'TimeIn1' => $ged['TimeIn1'],
+					'TimeOut1' => $ged['TimeOut1'],
+					'TimeIn2' => $ged['TimeIn2'],
+					'TimeOut2' => $ged['TimeOut2'],
 				);
 				$ApplicantID = $ged['ApplicantID'];
 				$data['GetBeneficiaries'] = $this->Model_Selects->GetEmployeeBeneficiaries($ApplicantID);

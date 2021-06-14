@@ -72,6 +72,14 @@ class Add_Controller extends CI_Controller {
 		$H_Months = $this->input->post('H_Months');
 		$H_Days = $this->input->post('H_Days');
 		$EmployeeID = $this->input->post('EmployeeID');
+		
+		$BioID = $this->input->post('BioID');
+		$TimeIn1 = $this->input->post('TimeIn1');
+		$TimeOut1 = $this->input->post('TimeOut1');
+		$TimeIn2 = $this->input->post('TimeIn2');
+		$TimeOut2 = $this->input->post('TimeOut2');
+
+		$BioIDCheck = $this->Model_Selects->getApplicantBioID($BioID);
 
 
 		# ADDRESSES
@@ -79,8 +87,14 @@ class Add_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($PositionGroup == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL || $MotherName == NULL || $MotherOccupation == NULL || $FatherName == NULL || $FatherOccupation == NULL || $BranchID == NULL) {
-			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
+		if ($PositionGroup == NULL || $ContractType == NULL || $SalaryType == NULL || $Rate == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $Gender == NULL || $Age == NULL || $Height == NULL || $Weight == NULL || $Religion == NULL || $bDate == NULL || $bPlace == NULL || $Citizenship == NULL || $CivilStatus == NULL || $No_Children == NULL || $PhoneNumber == NULL || $Address_Present == NULL || $MotherName == NULL || $MotherOccupation == NULL || $FatherName == NULL || $FatherOccupation == NULL || $BranchID == NULL || $BioIDCheck->num_rows() > 0) {
+
+			if ($BioIDCheck->num_rows() > 0) {
+				$this->session->set_flashdata('prompts', array('error', 'BioID exists!'));
+			} else {
+				$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
+			}
+			
 			$data = array(
 				'PositionGroup' => $PositionGroup,
 				'PersonRecommending' => $PersonRecommending,
@@ -134,6 +148,12 @@ class Add_Controller extends CI_Controller {
 				'Address_Present' => $Address_Present,
 				'Address_Provincial' => $Address_Provincial,
 				'Address_Manila' => $Address_Manila,
+
+				'BioID' => $BioID,
+				'TimeIn1' => $TimeIn1,
+				'TimeOut1' => $TimeOut1,
+				'TimeIn2' => $TimeIn2,
+				'TimeOut2' => $TimeOut2,
 			);
 			$this->session->set_flashdata($data);
 			redirect('NewEmployee');
@@ -250,6 +270,12 @@ class Add_Controller extends CI_Controller {
 
 					'Status' => 'Applicant',
 					'AppliedOn' => $AppliedOn,
+
+					'BioID' => $BioID,
+					'TimeIn1' => $TimeIn1,
+					'TimeOut1' => $TimeOut1,
+					'TimeIn2' => $TimeIn2,
+					'TimeOut2' => $TimeOut2,
 				);
 				$addedEmployee = $this->Model_Inserts->AddThisEmployee($data);
 				if ($addedEmployee == TRUE) {

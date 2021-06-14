@@ -736,9 +736,9 @@ class Model_Selects extends CI_Model {
 		$result = $this->db->query($SQL)->row_array();
 		return $result;
 	}
-	public function getApplicantID($id)
+	public function getApplicantBioID($id)
 	{
-		$SQL = "SELECT * FROM applicants WHERE ApplicantID LIKE '$id'";
+		$SQL = "SELECT * FROM applicants WHERE BioID = '$id'";
 		$result = $this->db->query($SQL);
 		return $result;
 	}

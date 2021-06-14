@@ -216,6 +216,39 @@
 									<div class="content-body">
 										<div class="cbody-header mb-3">
 											<h5>
+												<i class="fas fa-clock fa-1x"></i> Biometrics
+											</h5>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-md-3">
+												<label>Biometrics ID</label>
+												<input class="form-control" type="number" name="BioID" autocomplete="off" value="<?php echo $this->session->flashdata('BioID'); ?>">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-sm-12 col-md-3">
+												<label>Time In 1</label>
+												<input class="form-control" type="time" name="TimeIn1" autocomplete="off" value="<?=($this->session->flashdata('TimeIn1')?$this->session->flashdata('TimeIn1'):'08:00:00')?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-3">
+												<label>Time Out 1</label>
+												<input class="form-control" type="time" name="TimeOut1" autocomplete="off" value="<?=($this->session->flashdata('TimeOut1')?$this->session->flashdata('TimeOut1'):'12:00:00')?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-3">
+												<label>Time In 2</label>
+												<input class="form-control" type="time" name="TimeIn2" autocomplete="off" value="<?=($this->session->flashdata('TimeIn2')?$this->session->flashdata('TimeIn2'):'13:00:00')?>">
+											</div>
+											<div class="form-group col-sm-12 col-md-3">
+												<label>Time Out 2</label>
+												<input class="form-control" type="time" name="TimeOut2" autocomplete="off" value="<?=($this->session->flashdata('TimeOut2')?$this->session->flashdata('TimeOut2'):'17:00:00')?>">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="content mt-5">
+									<div class="content-body">
+										<div class="cbody-header mb-3">
+											<h5>
 												<i class="fas fa-user-alt"></i> Relatives
 											</h5>
 											</div>

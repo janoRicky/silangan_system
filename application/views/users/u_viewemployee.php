@@ -297,6 +297,37 @@
 										</div>
 										<div class="row mt-5">
 											<div class="col-sm-12 info-header">
+												Biometrics
+											</div>
+										</div>
+										<div class="row mt-3">
+											<div class="col-sm-2 employee-dynamic-header">
+												<b>Biometrics ID</b>
+											</div>
+											<div class="col-sm-4 employee-dynamic-header">
+												<b>Time 1</b>
+											</div>
+											<div class="col-sm-4 employee-dynamic-header">
+												<b>Time 2</b>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-2 employee-dynamic-item">
+												<?php echo $BioID; ?>
+											</div>
+											<div class="col-sm-4 employee-dynamic-item">
+												<?php echo date("h:i A", strtotime($TimeIn1)); ?>
+												 - 
+												<?php echo date("h:i A", strtotime($TimeOut1)); ?>
+											</div>
+											<div class="col-sm-4 employee-dynamic-item">
+												<?php echo date("h:i A", strtotime($TimeIn2)); ?>
+												 - 
+												<?php echo date("h:i A", strtotime($TimeOut2)); ?>
+											</div>
+										</div>
+										<div class="row mt-5">
+											<div class="col-sm-12 info-header">
 												Relatives
 											</div>
 										</div>

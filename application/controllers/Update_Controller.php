@@ -320,8 +320,24 @@ class Update_Controller extends CI_Controller {
 		$Address_Provincial = $this->input->post('Address_Provincial');
 		$Address_Manila = $this->input->post('Address_Manila');
 
-		if ($pImage == NULL || $PositionGroup == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL) {
-			$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
+		$BioID = $this->input->post('BioID');
+		$TimeIn1 = $this->input->post('TimeIn1');
+		$TimeOut1 = $this->input->post('TimeOut1');
+		$TimeIn2 = $this->input->post('TimeIn2');
+		$TimeOut2 = $this->input->post('TimeOut2');
+
+
+		$EmployeeBio = $this->Model_Selects->getApplicantBioID($BioID);
+		$EmployeeDet = $this->Model_Selects->CheckEmployee($ApplicantID)->row_array();
+		
+
+		if ($pImage == NULL || $PositionGroup == NULL || $LastName == NULL || $FirstName == NULL || $MI == NULL || $BioID == NULL || ($EmployeeDet["BioID"] == $BioID && $EmployeeBio->num_rows() > 1) || ($EmployeeDet["BioID"] != $BioID && $EmployeeBio->num_rows() > 0)) {
+			
+			if (($EmployeeDet["BioID"] == $BioID && $EmployeeBio->num_rows() > 1) || ($EmployeeDet["BioID"] != $BioID && $EmployeeBio->num_rows() > 0)) {
+				$this->session->set_flashdata('prompts', array('error', 'BioID exists!'));
+			} else {
+				$this->session->set_flashdata('prompts', array('error', 'All fields are required!'));
+			}
 			$data = array(
 				'EmployeeID' => $EmployeeID,
 				'PositionGroup' => $PositionGroup,
@@ -376,6 +392,12 @@ class Update_Controller extends CI_Controller {
 				'Address_Present' => $Address_Present,
 				'Address_Provincial' => $Address_Provincial,
 				'Address_Manila' => $Address_Manila,
+
+				'BioID' => $BioID,
+				'TimeIn1' => $TimeIn1,
+				'TimeOut1' => $TimeOut1,
+				'TimeIn2' => $TimeIn2,
+				'TimeOut2' => $TimeOut2,
 			);
 			$this->session->set_flashdata($data);
 			redirect($_SERVER['HTTP_REFERER']);
@@ -469,6 +491,12 @@ class Update_Controller extends CI_Controller {
 				'PhilHealth' => $PhilHealth,
 
 				'AppliedOn' => $AppliedOn,
+
+				'BioID' => $BioID,
+				'TimeIn1' => $TimeIn1,
+				'TimeOut1' => $TimeOut1,
+				'TimeIn2' => $TimeIn2,
+				'TimeOut2' => $TimeOut2,
 			);
 			$addedEmployee = $this->Model_Updates->UpdateEmployee($ApplicantID, $data);
 			if ($addedEmployee == TRUE) {
@@ -2260,16 +2288,16 @@ class Update_Controller extends CI_Controller {
 		// insert to device attendance to the attendance table
 
 		foreach($reports as $row) {
-			$appplicant = $this->Model_Selects->getApplicantID($row[0]);
+			$appplicant = $this->Model_Selects->getApplicantBioID($row[0]);
 			
 			if ($row[0] <= 0 || $appplicant->num_rows() <= 0) continue;
 
-			$aInfo = $this->Model_Selects->GetApplicantDet($row[0])->row_array();
+			$aInfo = $appplicant->row_array();
 			$name = $aInfo["LastName"] .", ". $aInfo["FirstName"] ." ". $aInfo["MiddleInitial"] .".";
 			$branch = $aInfo["BranchEmployed"];
 
 			$data = array(
-				'ApplicantID' => $row[0],
+				'ApplicantID' => $aInfo["ApplicantID"],
 				'Date_Time' => $row[1],
 			);
 
@@ -2399,7 +2427,7 @@ class Update_Controller extends CI_Controller {
 
 			if ($CheckDataImported->num_rows() > 0) {
 
-				$ApplicantID = $row[0];
+				$ApplicantID = $aInfo["ApplicantID"];
 				$Date_Time = $row[1];
 
 				$data = array(
@@ -2433,7 +2461,7 @@ class Update_Controller extends CI_Controller {
 			else
 			{
 				$data = array(
-					'ApplicantID' => $row[0],
+					'ApplicantID' => $aInfo["ApplicantID"],
 					'Name' => $name, // no name on device att
 					'BranchID' => $branch, // no branch ID on device att
 					'Date_Time' => $row[1],
